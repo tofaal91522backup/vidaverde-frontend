@@ -6,27 +6,29 @@ import Link from "next/link";
 const programs = [
   {
     title: "Quito Immersion Program",
-    image: "https://vidaverde.com/wp-content/uploads/2019/01/El_Parque-300x300.jpg",
+    image: "/images/programmes/1.jpg",
     caption: "Classes + Field Trips + Homestay",
-    detail: "A complete Quito experience built around classroom confidence and daily local practice.",
+    detail:
+      "A complete Quito experience built around classroom confidence and daily local practice.",
     label: "City Immersion",
     href: "https://vidaverde.com/quito-immersion-program/",
   },
   {
     title: "Puerto López",
-    image:
-      "https://vidaverde.com/wp-content/uploads/2018/12/Monte-Libano-Study-at-the-Beach-300x300.jpg",
+    image: "/images/programmes/2.jpg",
+
     caption: "Relax + Study + Excursions on the beach",
-    detail: "Study Spanish by the coast with relaxed lessons, beach time, and guided excursions.",
+    detail:
+      "Study Spanish by the coast with relaxed lessons, beach time, and guided excursions.",
     label: "Beach Program",
     href: "https://vidaverde.com/puerto-lopez-spanish-program/",
   },
   {
     title: "The Traveling Classroom",
-    image:
-      "https://vidaverde.com/wp-content/uploads/2019/03/traveling-classroom-300x300.jpg",
+    image: "/images/programmes/3.jpg",
     caption: "Quito + Jungle Lodge + Beach Getaway",
-    detail: "Move through Ecuador while learning Spanish in real places, not only in a classroom.",
+    detail:
+      "Move through Ecuador while learning Spanish in real places, not only in a classroom.",
     label: "Travel Study",
     href: "https://vidaverde.com/traveling-classroom/",
   },
