@@ -5,8 +5,8 @@
   "author": "md-tofaal-ahmed",
   "github": "www.github.com/md-tofaal-ahmed",
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build --turbopack",
+    "dev": "dotenv -e .env -- next dev --turbopack",
+    "build": "dotenv -e .env -- next build --turbopack",
     "start": "dotenv -e .env -- next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
