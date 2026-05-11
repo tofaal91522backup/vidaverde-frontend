@@ -2,7 +2,7 @@
 
 import { Container } from "@/components/shared/Container";
 import { heroStats } from "@/features/marketing/data/marketing.data";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { MarketingButton } from "./MarketingButton";
 
 const words = ["Habla", "Speak", "Parla", "Parle", "Spreche", "Falar"];
@@ -38,19 +38,30 @@ export function HeroSection() {
       });
     return () => timers.forEach((timer) => cancelAnimationFrame(timer));
   }, []);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    video.muted = true; // must be set imperatively for Safari
+    video.play().catch((err) => {
+      console.warn("Autoplay blocked:", err);
+    });
+  }, []);
   return (
     <section className="hero" data-screen-label="01 Hero">
       <div className="hero-bg">
         <video
           autoPlay
+          ref={videoRef}
           muted
           loop
           playsInline
           preload="metadata"
           poster="https://images.pexels.com/videos/17118763/iglesia-san-francisco-quito-ecuador-17118763.jpeg?auto=compress&cs=tinysrgb&h=900&w=1600"
         >
-          <source src="/videos/quito-hero.mp4" type="video/mp4" />
+          <source src="/videos/hero_loop2.mp4" type="video/mp4" />
         </video>
         <div className="floating-card fc-1">
           <div className="ico">A1</div>
@@ -59,7 +70,7 @@ export function HeroSection() {
             <div className="val">No experience needed</div>
           </div>
         </div>
-      
+
         <div className="floating-card fc-2">
           <div className="ico ico-dark">★</div>
           <div>
@@ -89,9 +100,9 @@ export function HeroSection() {
             </span>
           </h1>
           <p className="hero-sub">
-            Learn Spanish in Quito with Vida Verde Centro de Espanol. Study in
-            a close-knit school, explore Ecuadorian culture, and make Quito
-            your classroom.
+            Learn Spanish in Quito with Vida Verde Centro de Espanol. Study in a
+            close-knit school, explore Ecuadorian culture, and make Quito your
+            classroom.
           </p>
           <div className="hero-cta">
             <MarketingButton href="/#book" tone="dark">
@@ -106,7 +117,7 @@ export function HeroSection() {
               <div className="stat" key={stat.label}>
                 <div className="num">
                   <span>
-                    {stat.target ? animated[index] ?? "0" : stat.value}
+                    {stat.target ? (animated[index] ?? "0") : stat.value}
                   </span>
                   {stat.suffix ? (
                     <span className="unit">{stat.suffix}</span>
