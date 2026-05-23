@@ -1,6 +1,6 @@
 "use client";
 
-import type { SubmitErrorItem } from "@/hooks/useZodTanstackForm";
+import type { SubmitErrorItem } from "@/hooks/use-zod-tanstack-form";
 
 export function SubmitErrorSummary({
   errors,

@@ -1,5 +1,5 @@
 import { Container } from "@/components/shared/Container";
-import { Facebook, Twitter } from "lucide-react";
+import { Facebook } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -52,7 +52,7 @@ export function TeachersSection() {
           </div>
           <p className="lede max-w-[42ch]">
             All of our teachers are University trained, native Ecuadorians with
-            years of experience! They’re dedicated to supporting you and
+            years of experience! They're dedicated to supporting you and
             inspiring you as you learn Spanish here in Quito.
           </p>
         </div>
@@ -93,12 +93,15 @@ function TeacherCard({ teacher }: { teacher: (typeof teachers)[number] }) {
           {teacher.description}
         </p>
 
-        <div className="flex gap-2 border-t border-[var(--vv-line)] pt-4">
-          <SocialLink href={teacher.facebook} label={`${teacher.name} Facebook`}>
+        <div className="flex items-center gap-3 border-t border-[var(--vv-line)] pt-4">
+          <Link
+            href="/#book"
+            className="vv-btn vv-btn-primary vv-btn-sm flex-1 text-center"
+          >
+            Book with {teacher.name.split(" ")[0]} →
+          </Link>
+          <SocialLink href={teacher.facebook} label={`${teacher.name} on Facebook`}>
             <Facebook aria-hidden="true" />
-          </SocialLink>
-          <SocialLink href={teacher.twitter} label={`${teacher.name} Twitter`}>
-            <Twitter aria-hidden="true" />
           </SocialLink>
         </div>
       </div>

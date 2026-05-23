@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git rm *)",
+      "Bash(git add *)",
+      "Bash(Remove-Item -Recurse -Force \"src/features/marketing/home\" -ErrorAction SilentlyContinue)",
+      "Bash(Remove-Item -Recurse -Force \"src/features/marketing/activities\" -ErrorAction SilentlyContinue)",
+      "Bash(Remove-Item -Recurse -Force \"src/features/marketing/courses\" -ErrorAction SilentlyContinue)",
+      "Bash(Remove-Item -Recurse -Force \"src/features/marketing/homestay\" -ErrorAction SilentlyContinue)",
+      "Bash(Write-Output \"Done\")"
+    ]
+  }
+}

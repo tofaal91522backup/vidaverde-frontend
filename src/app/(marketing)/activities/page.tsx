@@ -1,4 +1,4 @@
-import { ActivitiesRoute } from "@/features/marketing/activities/ui/ActivitiesRoute";
+import ActivitiesRoute from "@/features/marketing/pages/activities";
 
 export default function Page() {
   return <ActivitiesRoute />;

@@ -1,7 +1,7 @@
 "use client";
 
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { getErrorMessage } from "@/utils/getErrorMessage";
+import { getErrorMessage } from "@/utils/get-error-message";
 
 export function FormStatusAlert({
   isError,
