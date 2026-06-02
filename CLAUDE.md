@@ -1,3 +1,16 @@
+# Vida Verde Website Project
+
+## Project Documents
+./docs/VidaVerde_Website_Changes_v1.md
+./docs/website-spec-v2.md
+
+## How to use these docs
+- `VidaVerde_Website_Changes_v1.md` = what needs to be done (status tracker)
+- `website-spec-v2.md` = detailed spec for each page/section
+
+## Current Status
+Phase: Development
+
 # Project Patterns & Conventions
 
 ## Stack
