@@ -2,8 +2,8 @@ import type { NavItem } from "@/features/marketing/types";
 
 export const navItems: NavItem[] = [
   { label: "Online Classes", href: "/courses" },
-  { label: "Study in Quito", href: "/activities" },
+  { label: "Study in Quito", href: "/study-in-quito" },
   { label: "Homestay", href: "/homestay" },
-  // { label: "About", href: "/#about" },
-  { label: "Contact", href: "#contact" },
+  { label: "Our School", href: "/our-school" },
+  { label: "Contact", href: "/contact" },
 ];

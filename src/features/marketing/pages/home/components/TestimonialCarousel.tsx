@@ -4,6 +4,22 @@ import { testimonials } from "../data/marketing.data";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useRef, useState } from "react";
 
+function StarRating({ count = 5 }: { count?: number }) {
+  return (
+    <div className="flex gap-0.5" aria-label={`${count} out of 5 stars`}>
+      {Array.from({ length: 5 }).map((_, i) => (
+        <span
+          key={i}
+          className={i < count ? "text-amber-400" : "text-[var(--vv-line)]"}
+          aria-hidden="true"
+        >
+          ★
+        </span>
+      ))}
+    </div>
+  );
+}
+
 export function TestimonialCarousel() {
   const trackRef = useRef<HTMLDivElement>(null);
   const [index, setIndex] = useState(0);
@@ -30,6 +46,7 @@ export function TestimonialCarousel() {
       <div className="tcar-track" ref={trackRef} onScroll={update}>
         {testimonials.map((testimonial) => (
           <article className="tcar-card" key={testimonial.name}>
+            <StarRating />
             <span className="quote-mark">&quot;</span>
             <blockquote>{testimonial.quote}</blockquote>
             <div className="who">

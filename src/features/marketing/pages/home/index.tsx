@@ -4,6 +4,7 @@ import { SchoolIntroVideoSection } from "../../components/SchoolIntroVideoSectio
 import { TeachersSection } from "../../components/TeachersSection";
 import { HeroSection } from "./components/HeroSection";
 import { LearnAboutSchoolSection } from "./components/LearnAboutSchoolSection";
+import { LeadCaptureSection } from "./components/LeadCaptureSection";
 import ProgramsSection from "./components/ProgramsSection";
 import TestimonialSection from "./components/TestimonialSection";
 import TrustSection from "./components/TrustSection";
@@ -25,6 +26,7 @@ export default function HomeRoute() {
       <SchoolIntroVideoSection />
       <PopularProgramsSection />
       <TeachersSection />
+      <LeadCaptureSection />
       <MapLocationSection />
     </>
   );
