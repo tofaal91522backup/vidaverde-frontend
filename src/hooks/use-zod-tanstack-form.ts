@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { getSubmitFieldErrorsFromMeta } from "@/utils/form-errors";
 import { useForm } from "@tanstack/react-form";
@@ -7,7 +7,7 @@ import type { ZodSchema } from "zod";
 
 type AnyMutationLike<T> = {
   mutate: (data: T) => void;
-  mutateAsync: (data: T, options?: any) => Promise<any>;
+  mutateAsync: (data: T, options?: any) => Promise<any>; // ✅ এটি যোগ করুন
   reset: () => void;
   isPending: boolean;
   isError: boolean;
@@ -16,9 +16,9 @@ type AnyMutationLike<T> = {
 };
 
 export type SubmitErrorItem = {
-  field: string;
-  label?: string;
-  message: string;
+  field: string; // e.g. "phone_number"
+  label?: string; // e.g. "Phone Number"
+  message: string; // e.g. "Required"
 };
 
 type Options<TValues extends Record<string, any>> = {
@@ -27,11 +27,12 @@ type Options<TValues extends Record<string, any>> = {
   mutation: AnyMutationLike<TValues>;
   onValidSubmit?: (values: TValues) => void;
 
+  // ✅ optional configuration for reuse
   fieldLabels?:
     | Partial<Record<keyof TValues & string, string>>
     | Record<string, string>;
   formatError?: (item: { field: string; message: string }) => SubmitErrorItem;
-  clearErrorsOnChange?: boolean;
+  clearErrorsOnChange?: boolean; // default: false
 };
 
 export function useZodTanstackForm<TValues extends Record<string, any>>(
@@ -77,7 +78,9 @@ export function useZodTanstackForm<TValues extends Record<string, any>>(
     onSubmit: async ({ value }) => {
       onValidSubmit?.(value);
       try {
+        // ✅ mutateAsync ব্যবহার করলে API রেসপন্স আসা পর্যন্ত অপেক্ষা করবে
         await mutation.mutateAsync(value);
+        // ✅ API সফল হলে তারপর ফর্ম রিসেট হবে
         resetAll();
       } catch (error) {
         console.error("Mutation failed:", error);
@@ -96,6 +99,7 @@ export function useZodTanstackForm<TValues extends Record<string, any>>(
     return {
       hasErrors: submitErrors.length > 0,
       items: submitErrors,
+      // ready message helpers
       textItems: submitErrors.map((e) => `${e.label ?? e.field}: ${e.message}`),
     };
   }, [submitErrors]);
@@ -105,11 +109,13 @@ export function useZodTanstackForm<TValues extends Record<string, any>>(
     mutation,
     resetAll,
 
+    //  reusable error summary API
     submitErrors,
     setSubmitErrors,
     clearSubmitErrors,
     errorSummary,
 
+    // optional flag (যদি বাইরে থেকে use করতে চান)
     clearErrorsOnChange,
   };
 }

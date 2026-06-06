@@ -10,7 +10,7 @@ export function ProgramDetail({ program }: { program: Program }) {
       <section
         className="relative overflow-hidden"
         data-screen-label="01 Program Hero"
-        style={{ minHeight: "420px" }}
+        style={{ minHeight: "480px" }}
       >
         <div className="absolute inset-0">
           <Image
@@ -20,23 +20,30 @@ export function ProgramDetail({ program }: { program: Program }) {
             className="object-cover"
             unoptimized
           />
-          <div className="absolute inset-0 bg-[var(--vv-ink)]/60" />
+          {/* strong gradient from bottom-left so text is always readable */}
+          <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/60 to-black/20" />
         </div>
-        <Container className="relative z-10 py-20">
-          <div className="crumb text-[var(--vv-bg)]/70">
+        <Container className="relative z-10 py-24">
+          <div className="crumb" style={{ color: "rgba(255,255,255,0.65)" }}>
             Home <span>/</span>{" "}
-            <Link href="/study-in-quito" className="hover:text-[var(--vv-bg)]">
+            <Link href="/study-in-quito" style={{ color: "rgba(255,255,255,0.65)" }} className="hover:text-white">
               Study in Quito
             </Link>{" "}
             <span>/</span> {program.title}
           </div>
-          <h1 className="h1 text-[var(--vv-bg)] mt-4 max-w-[18ch]">
+          <h1
+            className="h1 mt-4 max-w-[18ch]"
+            style={{ color: "#ffffff", textShadow: "0 2px 12px rgba(0,0,0,0.4)" }}
+          >
             {program.title}
           </h1>
-          <p className="lede text-[var(--vv-bg)]/80 mt-3 max-w-[52ch]">
+          <p
+            className="lede mt-3 max-w-[52ch]"
+            style={{ color: "rgba(255,255,255,0.85)", textShadow: "0 1px 6px rgba(0,0,0,0.4)" }}
+          >
             {program.tagline}
           </p>
-          <div className="mt-6 flex flex-wrap gap-3">
+          <div className="mt-8 flex flex-wrap gap-3">
             <Link href="/contact" className="vv-btn vv-btn-primary">
               Enquire to Book →
             </Link>
@@ -44,7 +51,8 @@ export function ProgramDetail({ program }: { program: Program }) {
               href="https://wa.me/593998037473?text=Hi%2C+I%27d+like+to+enquire+about+the+Vida+Verde+immersion+programme."
               target="_blank"
               rel="noopener noreferrer"
-              className="vv-btn border border-[var(--vv-bg)]/40 text-[var(--vv-bg)] hover:bg-[var(--vv-bg)]/10"
+              className="vv-btn"
+              style={{ border: "1.5px solid rgba(255,255,255,0.5)", color: "#ffffff", background: "rgba(255,255,255,0.08)" }}
             >
               WhatsApp Us
             </a>

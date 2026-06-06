@@ -68,27 +68,28 @@ export default function Navbar() {
                 <Menu aria-hidden="true" />
               </button>
             </SheetTrigger>
-            <SheetContent side="right" className="bg-[var(--vv-bg)]">
+            <SheetContent side="right" className="bg-[var(--vv-bg)] ">
               <SheetHeader>
                 <SheetTitle className="brand">
                   <BrandMark />
                   <span>Vida Verde</span>
                 </SheetTitle>
+
+                <nav className="mt-8 flex flex-col gap-1">
+                  {navItems.map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className="border-b border-[var(--vv-line)] py-4 text-2xl font-semibold tracking-[-0.02em]"
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </nav>
+                <div className="mobile-language-switcher">
+                  <LanguageSwitcher value={language} onChange={setLanguage} />
+                </div>
               </SheetHeader>
-              <nav className="mt-8 flex flex-col gap-1">
-                {navItems.map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className="border-b border-[var(--vv-line)] py-4 text-2xl font-semibold tracking-[-0.02em]"
-                  >
-                    {item.label}
-                  </Link>
-                ))}
-              </nav>
-              <div className="mobile-language-switcher">
-                <LanguageSwitcher value={language} onChange={setLanguage} />
-              </div>
             </SheetContent>
           </Sheet>
         </div>

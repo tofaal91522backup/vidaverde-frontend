@@ -1,8 +1,10 @@
+import { env } from "@/lib/env";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+ output: !env.isDevelopment && process.env.DOCKER_ENV === 'true' ? 'standalone' : undefined,
   compiler: {
-    removeConsole: true,
+    removeConsole: !env.isDevelopment,
   },
   reactStrictMode: true,
   images: {

@@ -216,12 +216,10 @@ export function MultiStepFormWrapper<T extends FormData = FormData>({
       const savedData = localStorage.getItem(persistKey);
       if (savedData) {
         const parsedData = JSON.parse(savedData);
-        window.setTimeout(() => {
-          setFormData((prevData) => ({ ...prevData, ...parsedData }));
-          Object.entries(parsedData).forEach(([key, value]) => {
-            form.setValue(key as any, value as any);
-          });
-        }, 0);
+        setFormData((prevData) => ({ ...prevData, ...parsedData }));
+        Object.entries(parsedData).forEach(([key, value]) => {
+          form.setValue(key as any, value as any);
+        });
       }
     } catch (error) {
       console.warn("Failed to load form data from localStorage:", error);

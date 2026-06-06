@@ -5,6 +5,7 @@ type FieldMetaBase = Record<
   {
     errorMap?: {
       onSubmit?: ZodIssueLike[];
+      // future: onChange/onBlur...
       [key: string]: unknown;
     };
   }

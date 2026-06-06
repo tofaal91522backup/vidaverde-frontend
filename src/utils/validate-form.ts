@@ -6,6 +6,7 @@ export const validateForm = <T extends z.ZodTypeAny>(
 ): { errors: any } | null => {
   const data: Record<string, any> = {};
 
+
   for (const [key, value] of formData.entries()) {
     data[key] = value;
   }
