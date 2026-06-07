@@ -74,26 +74,32 @@ export default function OurSchoolRoute() {
   return (
     <>
       {/* Hero */}
-      <section className="page-head" data-screen-label="01 Our School Hero">
+      <section className="bg-vv-bg-warm border-b border-vv-line" data-screen-label="01 Our School Hero">
         <Container>
-          <div className="crumb">
-            Home <span>/</span> Our School
+          <div className="font-code text-vv-muted text-[12px] tracking-[0.06em] mb-6">
+            Home <span className="mx-1 text-vv-line-2">/</span> Our School
           </div>
-          <h1 className="h1">
+          <h1 className="text-[clamp(36px,5vw,68px)] font-semibold tracking-[-0.03em] leading-none m-0 mb-5">
             25 Years. 4,700 Students.
             <br />
             Lasting Connections.
           </h1>
-          <p className="lede">
+          <p className="text-vv-ink-2 text-[clamp(17px,1.4vw,20px)] leading-normal max-w-[52ch] text-pretty m-0">
             Vida Verde is an AECEE-certified Spanish school in La Floresta,
             Quito — founded in 1999 by Rosa Proaño, rooted in a love of
             language, culture, and Ecuador.
           </p>
           <div className="flex flex-wrap gap-3 mt-6">
-            <Link href="/courses" className="vv-btn vv-btn-primary">
+            <Link
+              href="/courses"
+              className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px"
+            >
               Start Learning Online →
             </Link>
-            <Link href="/study-in-quito" className="vv-btn vv-btn-ghost">
+            <Link
+              href="/study-in-quito"
+              className="inline-flex items-center justify-center gap-2.5 border border-vv-line-2 rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-transparent text-vv-ink hover:bg-vv-ink hover:border-vv-ink hover:text-vv-bg"
+            >
               Study in Quito
             </Link>
           </div>
@@ -102,13 +108,13 @@ export default function OurSchoolRoute() {
 
       {/* Rosa's Story */}
       <section
-        className="border-t border-[var(--vv-line)] bg-[var(--vv-bg-warm)] py-16"
+        className="border-t border-vv-line bg-vv-bg-warm py-16"
         data-screen-label="02 Rosa Story"
         id="story"
       >
         <Container>
           <div className="grid items-start gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-14">
-            <div className="relative aspect-[4/5] w-full overflow-hidden rounded-[var(--vv-radius-lg)] border border-[var(--vv-line)] bg-[var(--vv-bg)]">
+            <div className="relative aspect-4/5 w-full overflow-hidden rounded-[22px] border border-vv-line bg-vv-bg">
               <Image
                 src="/images/teachers/1.jpg"
                 alt="Rosa Proaño, founder of Vida Verde Spanish School"
@@ -119,9 +125,13 @@ export default function OurSchoolRoute() {
               />
             </div>
             <div className="flex flex-col gap-5">
-              <span className="eyebrow">{"// Rosa's Story"}</span>
-              <h2 className="h2">Teaching Spanish Since 1999</h2>
-              <div className="flex flex-col gap-4 text-[15px] leading-[1.7] text-[var(--vv-ink-2)]">
+              <span className="font-code text-vv-muted text-[11px] font-medium tracking-[0.14em] uppercase">
+                {"// Rosa's Story"}
+              </span>
+              <h2 className="text-[clamp(28px,3vw,44px)] font-semibold tracking-[-0.02em] leading-[1.08] m-0 text-balance">
+                Teaching Spanish Since 1999
+              </h2>
+              <div className="flex flex-col gap-4 text-[15px] leading-[1.7] text-vv-ink-2">
                 <p>
                   I started Vida Verde in 1999 with a simple belief: that
                   learning a language is most powerful when it happens inside
@@ -145,7 +155,7 @@ export default function OurSchoolRoute() {
                   online or in person, becomes part of our community.
                 </p>
                 <p>
-                  As a certified member of the AECEE — Ecuador's standard of
+                  As a certified member of the AECEE — Ecuador&apos;s standard of
                   excellence in Spanish education — we hold ourselves to the
                   highest professional standards. But behind every
                   certificate is something simpler: a commitment to showing
@@ -160,23 +170,27 @@ export default function OurSchoolRoute() {
 
       {/* AECEE Certification */}
       <section
-        className="border-t border-[var(--vv-line)] py-16"
+        className="border-t border-vv-line py-16"
         data-screen-label="03 AECEE"
         id="certification"
       >
         <Container>
           <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
             <div className="flex flex-col gap-5">
-              <span className="eyebrow">{"// Certification"}</span>
-              <h2 className="h2">AECEE Certified</h2>
-              <p className="text-[15px] leading-[1.7] text-[var(--vv-ink-2)]">
+              <span className="font-code text-vv-muted text-[11px] font-medium tracking-[0.14em] uppercase">
+                {"// Certification"}
+              </span>
+              <h2 className="text-[clamp(28px,3vw,44px)] font-semibold tracking-[-0.02em] leading-[1.08] m-0 text-balance">
+                AECEE Certified
+              </h2>
+              <p className="text-[15px] leading-[1.7] text-vv-ink-2">
                 The AECEE (Asociación Ecuatoriana de Centros de Español) is
-                Ecuador's professional association for Spanish language
+                Ecuador&apos;s professional association for Spanish language
                 schools. Certification means Vida Verde meets rigorous
                 standards for teacher qualifications, curriculum structure,
                 student safety, and professional practice.
               </p>
-              <p className="text-[15px] leading-[1.7] text-[var(--vv-ink-2)]">
+              <p className="text-[15px] leading-[1.7] text-vv-ink-2">
                 For students, AECEE certification is a signal that the school
                 is accountable — not a freelancer marketplace, not a hobbyist
                 operation, but a professional institution that has been
@@ -186,12 +200,12 @@ export default function OurSchoolRoute() {
                 href="https://www.aecee.org"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="vv-btn vv-btn-ghost w-fit"
+                className="inline-flex items-center justify-center gap-2.5 border border-vv-line-2 rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-transparent text-vv-ink hover:bg-vv-ink hover:border-vv-ink hover:text-vv-bg w-fit"
               >
                 Visit AECEE website →
               </a>
             </div>
-            <div className="rounded-[var(--vv-radius-lg)] border border-[var(--vv-line)] bg-[var(--vv-bg-warm)] p-8">
+            <div className="rounded-[22px] border border-vv-line bg-vv-bg-warm p-8">
               <div className="grid grid-cols-2 gap-6">
                 {[
                   { num: "25+", label: "Years teaching" },
@@ -200,10 +214,10 @@ export default function OurSchoolRoute() {
                   { num: "100%", label: "Native speakers" },
                 ].map((stat) => (
                   <div key={stat.label} className="flex flex-col gap-1">
-                    <div className="text-[32px] font-bold tracking-tight text-[var(--vv-ink)]">
+                    <div className="text-[32px] font-bold tracking-tight text-vv-ink">
                       {stat.num}
                     </div>
-                    <div className="text-[13px] text-[var(--vv-ink-2)]">
+                    <div className="text-[13px] text-vv-ink-2">
                       {stat.label}
                     </div>
                   </div>
@@ -216,13 +230,13 @@ export default function OurSchoolRoute() {
 
       {/* La Floresta */}
       <section
-        className="border-t border-[var(--vv-line)] bg-[var(--vv-bg-warm)] py-16"
+        className="border-t border-vv-line bg-vv-bg-warm py-16"
         data-screen-label="04 La Floresta"
         id="location"
       >
         <Container>
           <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
-            <div className="relative aspect-video w-full overflow-hidden rounded-[var(--vv-radius-lg)] border border-[var(--vv-line)]">
+            <div className="relative aspect-video w-full overflow-hidden rounded-[22px] border border-vv-line">
               <Image
                 src="https://images.unsplash.com/photo-1571260899304-425eee4c7efc?w=1000&q=80"
                 alt="La Floresta neighbourhood, Quito"
@@ -233,18 +247,22 @@ export default function OurSchoolRoute() {
               />
             </div>
             <div className="flex flex-col gap-5">
-              <span className="eyebrow">{"// Our Neighbourhood"}</span>
-              <h2 className="h2">La Floresta, Quito</h2>
-              <p className="text-[15px] leading-[1.7] text-[var(--vv-ink-2)]">
-                La Floresta is one of Quito's most vibrant and characterful
+              <span className="font-code text-vv-muted text-[11px] font-medium tracking-[0.14em] uppercase">
+                {"// Our Neighbourhood"}
+              </span>
+              <h2 className="text-[clamp(28px,3vw,44px)] font-semibold tracking-[-0.02em] leading-[1.08] m-0 text-balance">
+                La Floresta, Quito
+              </h2>
+              <p className="text-[15px] leading-[1.7] text-vv-ink-2">
+                La Floresta is one of Quito&apos;s most vibrant and characterful
                 neighbourhoods — bohemian, safe, walkable, and rich in
                 independent cafés, galleries, and restaurants. It sits close
-                to Quito's cultural heart and is consistently regarded as one
-                of the city's most liveable areas.
+                to Quito&apos;s cultural heart and is consistently regarded as one
+                of the city&apos;s most liveable areas.
               </p>
-              <p className="text-[15px] leading-[1.7] text-[var(--vv-ink-2)]">
+              <p className="text-[15px] leading-[1.7] text-vv-ink-2">
                 For immersion students, La Floresta is a classroom extension.
-                Host families are within 10 minutes' walk. The markets,
+                Host families are within 10 minutes&apos; walk. The markets,
                 parks, and street life give you Spanish to practise the
                 moment you leave the building.
               </p>
@@ -252,7 +270,7 @@ export default function OurSchoolRoute() {
                 {["Safe & walkable", "Close to cultural sites", "10 min from host families", "Vibrant café culture"].map((tag) => (
                   <span
                     key={tag}
-                    className="rounded-full border border-[var(--vv-line)] bg-[var(--vv-bg)] px-3 py-1 text-[12px] font-medium text-[var(--vv-ink-2)]"
+                    className="rounded-full border border-vv-line bg-vv-bg px-3 py-1 text-[12px] font-medium text-vv-ink-2"
                   >
                     {tag}
                   </span>
@@ -265,28 +283,32 @@ export default function OurSchoolRoute() {
 
       {/* Teachers */}
       <section
-        className="border-t border-[var(--vv-line)] py-16"
+        className="border-t border-vv-line py-16"
         data-screen-label="05 Teachers"
         id="teachers"
       >
         <Container>
-          <div className="section-head">
-            <div className="meta">
-              <span className="eyebrow">{"// Our Teachers"}</span>
-              <h2 className="h2">The Team</h2>
+          <div className="flex items-end justify-between gap-8 mb-12 max-[760px]:flex-col max-[760px]:items-start">
+            <div className="flex flex-col gap-3.5">
+              <span className="font-code text-vv-muted text-[11px] font-medium tracking-[0.14em] uppercase">
+                {"// Our Teachers"}
+              </span>
+              <h2 className="text-[clamp(28px,3vw,44px)] font-semibold tracking-[-0.02em] leading-[1.08] m-0 text-balance">
+                The Team
+              </h2>
             </div>
-            <p className="lede max-w-[44ch]">
+            <p className="text-vv-ink-2 text-[clamp(17px,1.4vw,20px)] leading-normal max-w-[44ch] text-pretty m-0">
               Every Vida Verde teacher is a university-trained Ecuadorian native
               speaker with a genuine passion for their craft.
             </p>
           </div>
-          <div className="mt-10 grid gap-6 lg:grid-cols-2">
+          <div className="grid gap-6 lg:grid-cols-2">
             {teachers.map((teacher) => (
               <article
                 key={teacher.name}
-                className="grid overflow-hidden rounded-[var(--vv-radius-lg)] border border-[var(--vv-line)] bg-[var(--vv-bg)] md:grid-cols-[180px_1fr]"
+                className="grid overflow-hidden rounded-[22px] border border-vv-line bg-vv-bg md:grid-cols-[180px_1fr]"
               >
-                <div className="relative aspect-[4/3] overflow-hidden bg-[var(--vv-bg-warm)] md:aspect-auto md:min-h-[240px]">
+                <div className="relative aspect-4/3 overflow-hidden bg-vv-bg-warm md:aspect-auto md:min-h-60">
                   <Image
                     src={teacher.image}
                     alt={teacher.name}
@@ -298,21 +320,21 @@ export default function OurSchoolRoute() {
                 </div>
                 <div className="flex flex-col gap-3 p-6">
                   <div>
-                    <h3 className="text-[20px] font-semibold leading-tight tracking-[-0.02em] text-[var(--vv-ink)]">
+                    <h3 className="text-[20px] font-semibold leading-tight tracking-[-0.02em] text-vv-ink">
                       {teacher.name}
                     </h3>
-                    <div className="mt-1 text-[12px] text-[var(--vv-ink-2)]">
+                    <div className="mt-1 text-[12px] text-vv-ink-2">
                       {teacher.credentials} · {teacher.experience}
                     </div>
                   </div>
-                  <p className="flex-1 text-[13px] leading-[1.6] text-[var(--vv-ink-2)]">
+                  <p className="flex-1 text-[13px] leading-[1.6] text-vv-ink-2">
                     {teacher.bio}
                   </p>
                   <div className="flex flex-wrap gap-1.5">
                     {teacher.specialisations.map((s) => (
                       <span
                         key={s}
-                        className="rounded-full border border-[var(--vv-line)] bg-[var(--vv-bg-warm)] px-2 py-0.5 text-[11px] text-[var(--vv-ink-2)]"
+                        className="rounded-full border border-vv-line bg-vv-bg-warm px-2 py-0.5 text-[11px] text-vv-ink-2"
                       >
                         {s}
                       </span>
@@ -327,19 +349,23 @@ export default function OurSchoolRoute() {
 
       {/* Gallery */}
       <section
-        className="border-t border-[var(--vv-line)] bg-[var(--vv-bg-warm)] py-16"
+        className="border-t border-vv-line bg-vv-bg-warm py-16"
         data-screen-label="06 Gallery"
         id="gallery"
       >
         <Container>
-          <span className="eyebrow">{"// School Gallery"}</span>
+          <span className="font-code text-vv-muted text-[11px] font-medium tracking-[0.14em] uppercase">
+            {"// School Gallery"}
+          </span>
           <div className="h-4" />
-          <h2 className="h2 mb-8">Life at Vida Verde</h2>
+          <h2 className="text-[clamp(28px,3vw,44px)] font-semibold tracking-[-0.02em] leading-[1.08] m-0 mb-8 text-balance">
+            Life at Vida Verde
+          </h2>
           <div className="grid grid-cols-2 gap-3 lg:grid-cols-3">
             {galleryImages.map((img, i) => (
               <div
                 key={img.alt}
-                className={`relative overflow-hidden rounded-[var(--vv-radius-lg)] border border-[var(--vv-line)] bg-[var(--vv-bg)] ${i === 0 ? "aspect-video col-span-2 lg:col-span-2" : "aspect-square"}`}
+                className={`relative overflow-hidden rounded-[22px] border border-vv-line bg-vv-bg ${i === 0 ? "aspect-video col-span-2 lg:col-span-2" : "aspect-square"}`}
               >
                 <Image
                   src={img.src}
@@ -357,22 +383,32 @@ export default function OurSchoolRoute() {
 
       {/* Bottom CTA */}
       <section
-        className="border-t border-[var(--vv-line)] py-16"
+        className="border-t border-vv-line py-16"
         data-screen-label="07 CTA"
       >
         <Container className="text-center">
-          <span className="eyebrow">{"// Ready to start?"}</span>
+          <span className="font-code text-vv-muted text-[11px] font-medium tracking-[0.14em] uppercase">
+            {"// Ready to start?"}
+          </span>
           <div className="h-4" />
-          <h2 className="h2">Join the Vida Verde Community</h2>
-          <p className="lede mt-3 max-w-[50ch] mx-auto text-[var(--vv-ink-2)]">
+          <h2 className="text-[clamp(28px,3vw,44px)] font-semibold tracking-[-0.02em] leading-[1.08] m-0 text-balance">
+            Join the Vida Verde Community
+          </h2>
+          <p className="text-vv-ink-2 text-[clamp(17px,1.4vw,20px)] leading-normal mt-3 max-w-[50ch] mx-auto">
             Whether you learn online or in person, you become part of a
             25-year tradition of connection, growth, and discovery.
           </p>
           <div className="mt-8 flex flex-wrap gap-3 justify-center">
-            <Link href="/courses" className="vv-btn vv-btn-primary">
+            <Link
+              href="/courses"
+              className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px"
+            >
               Book Your First Lesson →
             </Link>
-            <Link href="/study-in-quito" className="vv-btn vv-btn-ghost">
+            <Link
+              href="/study-in-quito"
+              className="inline-flex items-center justify-center gap-2.5 border border-vv-line-2 rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-transparent text-vv-ink hover:bg-vv-ink hover:border-vv-ink hover:text-vv-bg"
+            >
               Explore Immersion Programs
             </Link>
           </div>

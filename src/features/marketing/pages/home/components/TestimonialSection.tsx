@@ -1,6 +1,16 @@
 import { Container } from "@/components/shared/Container";
-import { SectionHeader } from "./SectionHeader";
 import { TestimonialCarousel } from "./TestimonialCarousel";
+import { socialStats } from "../data/marketing.data";
+
+function Stars({ color = "text-amber-400" }: { color?: string }) {
+  return (
+    <div className="flex gap-0.5" aria-label="5 out of 5 stars">
+      {Array.from({ length: 5 }).map((_, i) => (
+        <span key={i} className={color} aria-hidden="true">★</span>
+      ))}
+    </div>
+  );
+}
 
 function TripAdvisorBadge() {
   return (
@@ -8,62 +18,76 @@ function TripAdvisorBadge() {
       href="https://www.tripadvisor.com"
       target="_blank"
       rel="noopener noreferrer"
-      className="inline-flex items-center gap-3 rounded-xl border border-[var(--vv-line)] bg-[var(--vv-bg)] px-5 py-3 transition hover:border-[var(--vv-accent)]"
       aria-label="View Vida Verde on TripAdvisor"
+      className="group flex items-center gap-3 rounded-2xl border border-vv-line bg-vv-bg px-5 py-4 transition hover:border-[#34E0A1]/50 hover:shadow-[0_4px_20px_-4px_rgba(52,224,161,0.15)]"
     >
-      <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#34E0A1] text-[18px] font-bold text-white">
+      <div className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-[#34E0A1] text-white text-[20px] font-black leading-none select-none">
         t
       </div>
       <div>
-        <div className="flex gap-0.5 text-[#34E0A1]">
-          {"★★★★★".split("").map((s, i) => (
-            <span key={i} aria-hidden="true">{s}</span>
-          ))}
-        </div>
-        <div className="text-[12px] text-[var(--vv-ink-2)] mt-0.5">
-          Excellent · TripAdvisor
-        </div>
+        <Stars color="text-[#34E0A1]" />
+        <p className="text-[12px] text-vv-ink-2 mt-0.5 m-0">Rated Excellent · TripAdvisor</p>
       </div>
     </a>
   );
 }
 
-function AggregateRating() {
-  return (
-    <div className="flex flex-wrap items-center gap-4">
-      <div className="flex items-center gap-2">
-        <span className="text-[32px] font-bold tracking-tight text-[var(--vv-ink)]">
-          5.0
-        </span>
-        <div>
-          <div className="flex gap-0.5 text-amber-400" aria-label="5 out of 5 stars">
-            {"★★★★★".split("").map((s, i) => (
-              <span key={i} aria-hidden="true">{s}</span>
-            ))}
-          </div>
-          <div className="text-[12px] text-[var(--vv-ink-2)]">
-            Average rating · 200+ reviews
-          </div>
-        </div>
-      </div>
-      <TripAdvisorBadge />
-    </div>
-  );
-}
-
 const TestimonialSection = () => {
   return (
-    <section className="testimonials" data-screen-label="06 Testimonials">
+    <section className="bg-vv-bg-warm border-t border-vv-line" data-screen-label="06 Testimonials">
       <Container>
-        <SectionHeader
-          eyebrow="// What students say"
-          title="Real Students. Real Results."
-          lede="Students from around the world describe Vida Verde as welcoming, friendly, and transformative."
-        />
-        <div className="mb-8">
-          <AggregateRating />
+
+        {/* Header row — title left, rating right */}
+        <div className="grid lg:grid-cols-[1fr_auto] items-end gap-10 mb-12 max-[760px]:grid-cols-1">
+
+          {/* Left */}
+          <div className="flex flex-col gap-4">
+            <span className="font-code text-vv-muted text-[11px] font-medium tracking-[0.14em] uppercase">
+              {"// What students say"}
+            </span>
+            <h2 className="text-[clamp(30px,3.5vw,50px)] font-semibold tracking-[-0.02em] leading-[1.06] m-0 text-balance text-vv-ink">
+              Real Students. Real Results.
+            </h2>
+            <p className="text-vv-ink-2 text-[clamp(16px,1.2vw,18px)] leading-normal max-w-[48ch] text-pretty m-0">
+              Over 4,700 students from around the world have learned Spanish
+              with Vida Verde. Here&apos;s what some of them say.
+            </p>
+          </div>
+
+          {/* Right — rating block */}
+          <div className="flex items-center gap-5 shrink-0">
+            <div className="text-center">
+              <div className="text-[52px] font-bold text-vv-ink tracking-[-0.04em] leading-none">
+                5.0
+              </div>
+              <Stars />
+              <p className="text-vv-muted text-[11px] font-code mt-1.5 m-0">200+ reviews</p>
+            </div>
+            <div className="w-px h-14 bg-vv-line shrink-0" aria-hidden="true" />
+            <TripAdvisorBadge />
+          </div>
         </div>
+
+        {/* Stats grid */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-10">
+          {socialStats.map((stat) => (
+            <div
+              key={stat.label}
+              className="flex flex-col gap-1.5 rounded-[18px] border border-vv-line bg-vv-bg px-6 py-5"
+            >
+              <span className="text-[clamp(28px,3vw,40px)] font-bold tracking-[-0.03em] leading-none text-vv-accent-deep">
+                {stat.value}
+              </span>
+              <span className="font-code text-[11px] uppercase tracking-widest text-vv-muted">
+                {stat.label}
+              </span>
+            </div>
+          ))}
+        </div>
+
+        {/* Carousel */}
         <TestimonialCarousel />
+
       </Container>
     </section>
   );

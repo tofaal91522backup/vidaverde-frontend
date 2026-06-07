@@ -7,27 +7,33 @@ export default function StudyInQuitoRoute() {
   return (
     <>
       {/* Hero */}
-      <section className="page-head" data-screen-label="01 Study in Quito Hero">
+      <section className="bg-vv-bg-warm border-b border-vv-line" data-screen-label="01 Study in Quito Hero">
         <Container>
-          <div className="crumb">
-            Home <span>/</span> Study in Quito
+          <div className="font-code text-vv-muted text-[12px] tracking-[0.06em] mb-6">
+            Home <span className="mx-1 text-vv-line-2">/</span> Study in Quito
           </div>
-          <h1 className="h1">
+          <h1 className="text-[clamp(36px,5vw,68px)] font-semibold tracking-[-0.03em] leading-none m-0 mb-5">
             Immerse Yourself in Spanish.
             <br />
             Live It in Ecuador.
           </h1>
-          <p className="lede">
+          <p className="text-vv-ink-2 text-[clamp(17px,1.4vw,20px)] leading-normal max-w-[52ch] text-pretty m-0">
             From a week of classes and culture in Quito to a journey deep into
             the Amazon — Vida Verde&apos;s immersion programmes weave expert
             teaching, guided activities, and life with a local Ecuadorian
             family into a single, unforgettable experience.
           </p>
           <div className="flex flex-wrap gap-3 mt-6">
-            <a href="#programmes" className="vv-btn vv-btn-primary">
+            <a
+              href="#programmes"
+              className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px"
+            >
               Explore Programmes ↓
             </a>
-            <Link href="/contact" className="vv-btn vv-btn-ghost">
+            <Link
+              href="/contact"
+              className="inline-flex items-center justify-center gap-2.5 border border-vv-line-2 rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-transparent text-vv-ink hover:bg-vv-ink hover:border-vv-ink hover:text-vv-bg"
+            >
               Contact Us to Plan Your Stay
             </Link>
           </div>
@@ -36,24 +42,28 @@ export default function StudyInQuitoRoute() {
 
       {/* Programme Cards */}
       <section
-        className="border-t border-[var(--vv-line)] py-16"
+        className="border-t border-vv-line"
         data-screen-label="02 Programmes"
         id="programmes"
       >
         <Container>
-          <div className="section-head">
-            <div className="meta">
-              <span className="eyebrow">{"// Programmes"}</span>
-              <h2 className="h2">Choose Your Immersion</h2>
+          <div className="flex items-end justify-between gap-8 mb-12 max-[760px]:flex-col max-[760px]:items-start">
+            <div className="flex flex-col gap-3.5">
+              <span className="font-code text-vv-muted text-[11px] font-medium tracking-[0.14em] uppercase">
+                {"// Programmes"}
+              </span>
+              <h2 className="text-[clamp(28px,3vw,44px)] font-semibold tracking-[-0.02em] leading-[1.08] m-0 text-balance">
+                Choose Your Immersion
+              </h2>
             </div>
           </div>
-          <div className="mt-10 grid gap-6 lg:grid-cols-3">
+          <div className="grid gap-6 lg:grid-cols-3">
             {programs.map((program) => (
               <article
                 key={program.slug}
-                className="group flex flex-col overflow-hidden rounded-[var(--vv-radius-lg)] border border-[var(--vv-line)] bg-[var(--vv-bg)] transition hover:-translate-y-0.5 hover:border-[var(--vv-accent)]"
+                className="group flex flex-col overflow-hidden rounded-[22px] border border-vv-line bg-vv-bg transition hover:-translate-y-0.5 hover:border-vv-accent"
               >
-                <div className="relative aspect-video overflow-hidden bg-[var(--vv-bg-warm)]">
+                <div className="relative aspect-video overflow-hidden bg-vv-bg-warm">
                   <Image
                     src={program.heroImage}
                     alt={program.title}
@@ -65,23 +75,23 @@ export default function StudyInQuitoRoute() {
                 </div>
                 <div className="flex flex-col gap-3 p-6 flex-1">
                   <div>
-                    <h3 className="text-[20px] font-semibold leading-tight tracking-[-0.02em] text-[var(--vv-ink)]">
+                    <h3 className="text-[20px] font-semibold leading-tight tracking-[-0.02em] text-vv-ink m-0">
                       {program.title}
                     </h3>
-                    <div className="mt-1 text-[13px] text-[var(--vv-ink-2)]">
+                    <div className="mt-1 text-[13px] text-vv-ink-2">
                       From{" "}
-                      <strong className="text-[var(--vv-ink)]">
+                      <strong className="text-vv-ink font-semibold">
                         {program.priceFrom}
                       </strong>
                       {program.pricePeriod}
                     </div>
                   </div>
-                  <p className="text-[14px] leading-[1.6] text-[var(--vv-ink-2)] flex-1">
+                  <p className="text-[14px] leading-[1.6] text-vv-ink-2 flex-1 m-0">
                     {program.tagline}
                   </p>
                   <Link
                     href={`/study-in-quito/${program.slug}`}
-                    className="vv-btn vv-btn-ghost vv-btn-sm text-center mt-auto"
+                    className="mt-auto inline-flex items-center justify-center gap-2.5 border border-vv-line-2 rounded-full cursor-pointer text-[13px] font-semibold tracking-[-0.005em] py-2.25 px-3.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-transparent text-vv-ink hover:bg-vv-ink hover:border-vv-ink hover:text-vv-bg text-center"
                   >
                     View Programme →
                   </Link>
@@ -94,12 +104,12 @@ export default function StudyInQuitoRoute() {
 
       {/* Homestay Preview */}
       <section
-        className="border-t border-[var(--vv-line)] bg-[var(--vv-bg-warm)] py-16"
+        className="border-t border-vv-line bg-vv-bg-warm"
         data-screen-label="03 Homestay Preview"
       >
         <Container>
           <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
-            <div className="relative aspect-[4/3] overflow-hidden rounded-[var(--vv-radius-lg)] border border-[var(--vv-line)]">
+            <div className="relative aspect-4/3 overflow-hidden rounded-[22px] border border-vv-line">
               <Image
                 src="https://images.unsplash.com/photo-1511895426328-dc8714191300?w=1000&q=80"
                 alt="Ecuadorian host family at home"
@@ -110,22 +120,29 @@ export default function StudyInQuitoRoute() {
               />
             </div>
             <div className="flex flex-col gap-5">
-              <span className="eyebrow">{"// Homestay"}</span>
-              <h2 className="h2">Live Like a Local. Learn Faster.</h2>
-              <p className="text-[15px] leading-[1.7] text-[var(--vv-ink-2)]">
+              <span className="font-code text-vv-muted text-[11px] font-medium tracking-[0.14em] uppercase">
+                {"// Homestay"}
+              </span>
+              <h2 className="text-[clamp(28px,3vw,44px)] font-semibold tracking-[-0.02em] leading-[1.08] m-0 text-balance">
+                Live Like a Local. Learn Faster.
+              </h2>
+              <p className="text-[15px] leading-[1.7] text-vv-ink-2 m-0">
                 The best Spanish classroom isn&apos;t a classroom at all — it&apos;s a
                 family dinner table in Quito. Our homestay programme places you
                 with a vetted Ecuadorian family, so the immersion never stops
                 when the lesson does.
               </p>
-              <p className="text-[15px] leading-[1.7] text-[var(--vv-ink-2)]">
+              <p className="text-[15px] leading-[1.7] text-vv-ink-2 m-0">
                 Meals, conversation, local insight, and a warm home base —
                 all from{" "}
-                <strong className="text-[var(--vv-ink)]">$26/night</strong>.
+                <strong className="text-vv-ink font-semibold">$26/night</strong>.
                 Included in the Quito Immersion Program or bookable as an add-on
                 to any programme.
               </p>
-              <Link href="/homestay" className="vv-btn vv-btn-dark w-fit">
+              <Link
+                href="/homestay"
+                className="w-fit inline-flex items-center justify-center gap-2.5 border border-vv-ink rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-ink text-vv-bg hover:bg-vv-accent-deep hover:border-vv-accent-deep hover:-translate-y-px"
+              >
                 Find out about Homestay →
               </Link>
             </div>
@@ -135,14 +152,18 @@ export default function StudyInQuitoRoute() {
 
       {/* Enquiry CTA */}
       <section
-        className="border-t border-[var(--vv-line)] py-16"
+        className="border-t border-vv-line"
         data-screen-label="04 Enquiry"
       >
         <Container className="text-center">
-          <span className="eyebrow">{"// Need help choosing?"}</span>
+          <span className="font-code text-vv-muted text-[11px] font-medium tracking-[0.14em] uppercase">
+            {"// Need help choosing?"}
+          </span>
           <div className="h-4" />
-          <h2 className="h2">Not Sure Which Programme Is Right for You?</h2>
-          <p className="lede mt-3 max-w-[52ch] mx-auto text-[var(--vv-ink-2)]">
+          <h2 className="text-[clamp(28px,3vw,44px)] font-semibold tracking-[-0.02em] leading-[1.08] m-0 text-balance">
+            Not Sure Which Programme Is Right for You?
+          </h2>
+          <p className="text-vv-ink-2 text-[clamp(17px,1.4vw,20px)] leading-normal mt-3 max-w-[52ch] mx-auto m-0">
             Tell us a bit about your goals and we&apos;ll recommend the best fit.
             WhatsApp us or send a message — we respond within 24 hours.
           </p>
@@ -151,11 +172,14 @@ export default function StudyInQuitoRoute() {
               href="https://wa.me/593998037473?text=Hi%2C+I%27d+like+to+find+out+more+about+Vida+Verde%27s+immersion+programmes."
               target="_blank"
               rel="noopener noreferrer"
-              className="vv-btn vv-btn-primary"
+              className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px"
             >
               WhatsApp Us
             </a>
-            <Link href="/contact" className="vv-btn vv-btn-ghost">
+            <Link
+              href="/contact"
+              className="inline-flex items-center justify-center gap-2.5 border border-vv-line-2 rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-transparent text-vv-ink hover:bg-vv-ink hover:border-vv-ink hover:text-vv-bg"
+            >
               Send a Message →
             </Link>
           </div>

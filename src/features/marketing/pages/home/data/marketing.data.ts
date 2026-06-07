@@ -1,10 +1,11 @@
 import type { Course, CourseCategory, FeatureBlock, Stat, Testimonial } from "@/features/marketing/types";
 
 export const trustBadges = [
-  "Certified AECEE member",
-  "La Floresta, Quito",
-  "Spanish school since 1999",
-  "Ecuadorian culture and ecology",
+  "AECEE Certified",
+  "Est. 1999",
+  "4,700+ Students",
+  "All Levels Welcome",
+  "Classes via Google Meet",
 ];
 
 export const heroStats: Stat[] = [
@@ -18,45 +19,44 @@ export const featureBlocks: FeatureBlock[] = [
   {
     number: "01",
     eyebrow: "School",
-    title: "A small, close-knit Spanish school in Quito.",
+    title: "A Real School, Not a Platform",
     description:
-      "Vida Verde has helped students learn Spanish in Quito since 1999, with a promise of excellent Spanish teaching and dedication to Ecuador's green movement.",
+      "Vida Verde has been teaching Spanish since 1999. AECEE-certified, structured, and accountable — not a marketplace of strangers.",
     span: "span-6",
   },
   {
     number: "02",
-    eyebrow: "Quito",
-    title: "Spanish classes, cultural outings, and weekend excursions.",
+    eyebrow: "Teachers",
+    title: "Expert Native Teachers",
     description:
-      "Along with quality Spanish classes, the school leads students in cultural outings and helps organize weekend excursions around Quito and Ecuador.",
+      "Every teacher is a university-trained Ecuadorian native speaker with years of classroom experience. Not a hobbyist. Not a part-timer.",
     span: "span-6",
     tone: "dark",
   },
   {
     number: "03",
-    eyebrow: "Family",
-    title: "Live with a local Ecuadorian host family.",
+    eyebrow: "Learning",
+    title: "Personalised to You",
     description:
-      "Homestays increase exposure to native Spanish and give students a window into everyday Ecuadorian life.",
+      "No fixed syllabus. Your teacher adapts every lesson to your level, goals, and pace — whether you're a complete beginner or polishing your fluency.",
     span: "span-4",
     tone: "accent",
   },
   {
     number: "04",
-    eyebrow: "Culture",
-    title: "Learn the city through a local teacher's eyes.",
-    description:
-      "Vida Verde teachers guide cultural classes through museums, churches, parks, markets, and historic Quito.",
-    span: "span-4",
-  },
-  {
-    number: "05",
     eyebrow: "Flexibility",
-    title: "Study in Quito, online, in the jungle, or on the coast.",
+    title: "Learn Anywhere",
     description:
-      "Programs include Quito classes, online Spanish, jungle lodges, coast programs, and travelling classrooms across Ecuador.",
-    span: "span-4",
+      "Classes via Google Meet. Real conversation, real feedback, real progress — from your living room, office, or café.",
+    span: "span-8",
   },
+];
+
+export const socialStats = [
+  { value: "4,700+", label: "Students Taught" },
+  { value: "356", label: "Courses Delivered" },
+  { value: "25+", label: "Years of Teaching" },
+  { value: "AECEE", label: "Certified" },
 ];
 
 export const courseFilters: { label: string; value: CourseCategory }[] = [

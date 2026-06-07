@@ -1,42 +1,22 @@
+"use client";
+
 import { Container } from "@/components/shared/Container";
 import {
-  Facebook,
-  Instagram,
-  Leaf,
-  Mail,
-  MapPin,
-  MessageCircle,
-  Newspaper,
-  Phone,
-  Send,
-} from "lucide-react";
+  useLanguage,
+  type LanguageCode,
+} from "@/providers/language-provider";
+import { Facebook, Instagram, Leaf, Mail, MapPin, MessageCircle } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-
-const contactItems = [
-  { label: "WhatsApp", value: "+593 998 037 473", icon: MessageCircle },
-  { label: "Phone", value: "+593 998 037 473", icon: Phone },
-  { label: "Email", value: "info@vidaverde.com", icon: Mail },
-  {
-    label: "Address",
-    value: "Mallorca N24-55 y Barcelona, Quito",
-    icon: MapPin,
-  },
-];
-
-const socialLinks = [
-  { label: "Facebook", href: "https://www.facebook.com/vidaverdespanishschool/", icon: Facebook },
-  { label: "Instagram", href: "https://www.instagram.com/vidaverdequito/", icon: Instagram },
-];
 
 const quickLinks = [
   {
     heading: "Study",
     items: [
-      { label: "Online Classes", href: "/courses" },
+      { label: "Online Classes", href: "/online-classes" },
       { label: "Study in Quito", href: "/study-in-quito" },
+      { label: "Travel Spanish", href: "/travel-spanish" },
       { label: "Homestay", href: "/homestay" },
-      { label: "Book a Lesson", href: "/book" },
     ],
   },
   {
@@ -46,61 +26,53 @@ const quickLinks = [
       { label: "Blog", href: "/blog" },
       { label: "Contact", href: "/contact" },
       { label: "Privacy Policy", href: "/privacy" },
+      { label: "Terms", href: "/terms" },
     ],
   },
 ];
 
-const latestPosts = [
-  {
-    title: "Spanish immersion in Quito",
-    tag: "Courses",
-    excerpt: "How one-on-one lessons help students build confidence faster.",
-    image:
-      "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=240&q=80",
-  },
-  {
-    title: "Living with a host family",
-    tag: "Homestay",
-    excerpt: "A closer look at daily life, meals, and conversation practice.",
-    image:
-      "https://images.unsplash.com/photo-1543362906-acfc16c67564?w=240&q=80",
-  },
-  {
-    title: "Weekend culture in Ecuador",
-    tag: "Activities",
-    excerpt: "Markets, mountains, and local traditions around Quito.",
-    image:
-      "https://images.unsplash.com/photo-1580619305218-8423a7ef79b4?w=240&q=80",
-  },
+const socialLinks = [
+  { label: "Instagram", href: "https://www.instagram.com/vidaverdequito/", icon: Instagram },
+  { label: "Facebook", href: "https://www.facebook.com/vidaverdespanishschool/", icon: Facebook },
 ];
 
 export default function Footer() {
+  const { language, setLanguage } = useLanguage();
+
   return (
-    <footer className="foot" data-screen-label="Footer">
+    <footer
+      className="border-t border-vv-line bg-vv-bg-warm py-16"
+      data-screen-label="Footer"
+    >
       <Container>
-        <div className="footer-grid">
-          <div className="footer-col">
-            <FooterHeading icon={Leaf}>ABOUT US</FooterHeading>
-            <p className="footer-about">
-              Vida Verde Centro de Español is an AECEE-certified Spanish school
-              in La Floresta, Quito, Ecuador. Teaching Spanish since 1999 —
-              online and in person.
+        <div className="grid gap-10 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+          {/* Column 1 — Brand + AECEE + Social */}
+          <div className="flex flex-col gap-6">
+            <Link href="/" className="flex items-center gap-2.5">
+              <Image
+                src="/images/logo.png"
+                alt="Vida Verde logo"
+                width={48}
+                height={48}
+                unoptimized
+              />
+              <span className="text-[17px] font-bold tracking-[-0.02em] text-vv-ink">
+                Vida Verde Centro de Español
+              </span>
+            </Link>
+
+            <p className="text-[13px] leading-[1.7] text-vv-ink-2 m-0 max-w-[38ch]">
+              Teaching Spanish since 1999. AECEE-certified. La Floresta, Quito.
             </p>
-            <ul className="footer-contact-list">
-              {contactItems.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <li key={item.label}>
-                    <Icon aria-hidden="true" />
-                    <span>
-                      <strong>{item.label} </strong>
-                      {item.value}
-                    </span>
-                  </li>
-                );
-              })}
-            </ul>
-            <div className="footer-socials" aria-label="Social media links">
+
+            <div className="flex items-start gap-2.5">
+              <Leaf aria-hidden="true" className="h-4 w-4 mt-0.5 shrink-0 text-vv-accent" />
+              <p className="text-[13px] leading-[1.6] text-vv-ink-2 m-0">
+                Proud member of the Association of Spanish Language Schools (AECEE)
+              </p>
+            </div>
+
+            <div className="flex items-center gap-2" aria-label="Social media links">
               {socialLinks.map((item) => {
                 const Icon = item.icon;
                 return (
@@ -110,37 +82,42 @@ export default function Footer() {
                     aria-label={item.label}
                     target="_blank"
                     rel="noopener noreferrer"
+                    className="grid h-9 w-9 place-items-center rounded-full border border-vv-line bg-vv-bg text-vv-ink-2 transition hover:bg-vv-ink hover:border-vv-ink hover:text-vv-bg"
                   >
-                    <Icon aria-hidden="true" />
+                    <Icon aria-hidden="true" className="h-4 w-4" />
                   </Link>
                 );
               })}
             </div>
+
             <a
-              href="https://wa.me/593998037473?text=Hi%2C+I%27d+like+to+find+out+more+about+Vida+Verde%27s+Spanish+classes."
+              href="https://wa.me/593998037473?text=Hi%2C%20I%27d%20like%20to%20find%20out%20more%20about%20Vida%20Verde%27s%20Spanish%20classes."
               target="_blank"
               rel="noopener noreferrer"
-              className="footer-wa-btn"
+              className="inline-flex w-fit items-center gap-2.5 border border-[#25d366] rounded-full cursor-pointer text-[14px] font-semibold tracking-[-0.005em] py-2.5 px-5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-[#25d366] text-white hover:bg-[#1dbf59] hover:-translate-y-px"
             >
-              <MessageCircle aria-hidden="true" />
-              Chat on WhatsApp
+              <MessageCircle aria-hidden="true" className="h-4 w-4" />
+              WhatsApp Us
             </a>
           </div>
 
-          <div className="footer-col">
-            <FooterHeading icon={Newspaper}>QUICK LINKS</FooterHeading>
+          {/* Column 2 — Quick Links */}
+          <div>
+            <h4 className="text-[11px] font-semibold uppercase tracking-[0.12em] text-vv-ink m-0 mb-5">
+              Quick Links
+            </h4>
             <div className="grid grid-cols-2 gap-6">
               {quickLinks.map((group) => (
                 <div key={group.heading}>
-                  <div className="mb-3 text-[11px] font-semibold uppercase tracking-widest text-[var(--vv-ink-2)]">
+                  <div className="mb-3 text-[11px] font-semibold uppercase tracking-widest text-vv-ink-2">
                     {group.heading}
                   </div>
-                  <ul className="flex flex-col gap-2">
+                  <ul className="flex flex-col gap-2 list-none p-0 m-0">
                     {group.items.map((link) => (
                       <li key={link.label}>
                         <Link
                           href={link.href}
-                          className="text-[14px] text-[var(--vv-ink-2)] transition hover:text-[var(--vv-ink)]"
+                          className="text-[14px] text-vv-ink-2 transition hover:text-vv-ink"
                         >
                           {link.label}
                         </Link>
@@ -150,79 +127,88 @@ export default function Footer() {
                 </div>
               ))}
             </div>
+          </div>
 
-            <div className="mt-8">
-              <FooterHeading icon={Newspaper}>LATEST POSTS</FooterHeading>
-              <div className="footer-posts">
-                {latestPosts.map((post) => (
-                  <article className="footer-post" key={post.title}>
-                    <Image
-                      src={post.image}
-                      alt=""
-                      width={72}
-                      height={72}
-                      className="footer-post-thumb"
-                      unoptimized
-                    />
-                    <div>
-                      <div className="footer-post-tag">{post.tag}</div>
-                      <h3>{post.title}</h3>
-                      <p>{post.excerpt}</p>
-                    </div>
-                  </article>
-                ))}
+          {/* Column 3 — Contact */}
+          <div className="flex flex-col gap-6">
+            <div>
+              <h4 className="text-[11px] font-semibold uppercase tracking-[0.12em] text-vv-ink m-0 mb-4">
+                Find Us
+              </h4>
+              <div className="flex items-start gap-2.5 text-[13px] text-vv-ink-2">
+                <MapPin aria-hidden="true" className="h-4 w-4 mt-0.5 shrink-0 text-vv-accent" />
+                <span>La Floresta, Quito, Ecuador</span>
+              </div>
+            </div>
+
+            <div>
+              <h4 className="text-[11px] font-semibold uppercase tracking-[0.12em] text-vv-ink m-0 mb-4">
+                Get in Touch
+              </h4>
+              <div className="flex flex-col gap-3">
+                <div className="flex items-center gap-2.5 text-[13px] text-vv-ink-2">
+                  <Mail aria-hidden="true" className="h-4 w-4 shrink-0 text-vv-accent" />
+                  <span>info@vidaverde.com</span>
+                </div>
+                <div className="flex items-center gap-2.5 text-[13px] text-vv-ink-2">
+                  <MessageCircle aria-hidden="true" className="h-4 w-4 shrink-0 text-vv-accent" />
+                  <a
+                    href="https://wa.me/593998037473?text=Hi%2C%20I%27d%20like%20to%20find%20out%20more%20about%20Vida%20Verde%27s%20Spanish%20classes."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-vv-ink transition"
+                  >
+                    WhatsApp Us
+                  </a>
+                </div>
               </div>
             </div>
           </div>
-
-          <div className="footer-col" id="contact">
-            <FooterHeading icon={Send}>CONTACTS</FooterHeading>
-            <form className="footer-form">
-              <input type="text" name="name" placeholder="Name" aria-label="Name" />
-              <input
-                type="email"
-                name="email"
-                placeholder="Email"
-                aria-label="Email"
-              />
-              <input
-                type="tel"
-                name="phone"
-                placeholder="Phone"
-                aria-label="Phone"
-              />
-              <textarea
-                name="message"
-                placeholder="Message"
-                aria-label="Message"
-                rows={5}
-              />
-              <button className="vv-btn vv-btn-primary" type="submit">
-                Submit
-              </button>
-            </form>
-          </div>
         </div>
 
-        <div className="footer-bar">
-          © 2026 Vida Verde Centro de Español · All rights reserved · Quito, Ecuador
+        {/* Bottom bar */}
+        <div className="mt-12 border-t border-vv-line pt-6 flex flex-wrap items-center justify-between gap-4">
+          <p className="font-code text-[12px] text-vv-muted tracking-[0.04em] m-0">
+            © 2026 Vida Verde Centro de Español. All rights reserved.
+          </p>
+          <LanguageSwitcher value={language} onChange={setLanguage} />
         </div>
       </Container>
     </footer>
   );
 }
 
-function FooterHeading({
-  children,
-  icon: Icon,
+function LanguageSwitcher({
+  value,
+  onChange,
 }: {
-  children: React.ReactNode;
-  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
+  value: LanguageCode;
+  onChange: (value: LanguageCode) => void;
 }) {
+  const options: { code: LanguageCode; label: string }[] = [
+    { code: "en", label: "EN" },
+    { code: "es", label: "ES" },
+  ];
+
   return (
-    <h4 className="footer-heading">
-      <Icon aria-hidden="true" />
-      <span>{children}</span>
-    </h4>
+    <div
+      className="flex items-center gap-0.5 rounded-full border border-vv-line bg-vv-bg px-1 py-1"
+      aria-label="Language toggle"
+    >
+      {options.map((opt) => (
+        <button
+          key={opt.code}
+          type="button"
+          onClick={() => onChange(opt.code)}
+          className={`rounded-full px-2.5 py-0.5 font-code text-[11px] font-semibold tracking-[0.08em] transition-[background,color] duration-150 ${
+            value === opt.code
+              ? "bg-vv-ink text-vv-bg"
+              : "text-vv-muted hover:text-vv-ink"
+          }`}
+        >
+          {opt.label}
+        </button>
+      ))}
+    </div>
   );
 }

@@ -13,11 +13,16 @@ type GallerySectionProps = {
 
 export function GallerySection({ images }: GallerySectionProps) {
   return (
-    <div className="hs-mosaic">
+    <div className="mt-8 grid grid-cols-2 gap-4 max-[640px]:grid-cols-1">
       {images.map((image) => (
         <Image
           key={image.src}
-          className={cn(image.className)}
+          className={cn(
+            "w-full rounded-2xl object-cover border border-vv-line",
+            image.className === "a"
+              ? "col-span-2 aspect-video max-[640px]:col-span-1"
+              : "aspect-4/3",
+          )}
           src={image.src}
           alt={image.alt}
           width={image.className === "a" ? 1200 : 900}

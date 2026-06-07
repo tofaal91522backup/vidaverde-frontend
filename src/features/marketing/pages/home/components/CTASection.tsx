@@ -3,16 +3,16 @@ import { MarketingButton } from "@/features/marketing/components/MarketingButton
 
 export function CTASection() {
   return (
-    <section data-screen-label="CTA">
+    <section className="py-0" data-screen-label="CTA">
       <Container>
-        <div className="cta-strip">
+        <div className="flex items-center justify-between gap-8 rounded-3xl bg-vv-ink px-12 py-12 max-[760px]:flex-col max-[760px]:items-start max-[640px]:rounded-2xl max-[640px]:px-7 max-[640px]:py-8">
           <div>
-            <h2 className="h2">
+            <h2 className="text-[clamp(28px,3vw,44px)] font-semibold tracking-[-0.02em] leading-[1.08] m-0 text-vv-bg text-balance">
               Welcome to
               <br />
               the family.
             </h2>
-            <p>
+            <p className="mt-3 text-vv-bg/70 text-[clamp(15px,1.2vw,17px)] leading-normal m-0 max-w-[52ch]">
               Contact Vida Verde to design a personalized program, ask about
               extended-study discounts, or receive a free online trial class.
             </p>

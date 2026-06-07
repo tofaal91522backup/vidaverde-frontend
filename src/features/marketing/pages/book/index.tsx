@@ -101,14 +101,16 @@ export default function BookRoute() {
       <section className="min-h-[70vh] flex items-center" data-screen-label="Booking Confirmed">
         <Container className="text-center py-20">
           <div className="text-6xl mb-6">🎉</div>
-          <h1 className="h2 mb-4">You&apos;re booked!</h1>
-          <p className="lede max-w-[50ch] mx-auto text-[var(--vv-ink-2)]">
+          <h1 className="text-[clamp(28px,3vw,44px)] font-semibold tracking-[-0.02em] leading-[1.08] m-0 mb-4 text-balance">
+            You&apos;re booked!
+          </h1>
+          <p className="text-vv-ink-2 text-[clamp(17px,1.4vw,20px)] leading-normal max-w-[50ch] mx-auto m-0">
             A confirmation email with your Google Meet link and details about
             your teacher is on its way to{" "}
-            <strong className="text-[var(--vv-ink)]">{details.email}</strong>.
+            <strong className="text-vv-ink">{details.email}</strong>.
           </p>
-          <div className="mt-8 rounded-xl border border-[var(--vv-line)] bg-[var(--vv-bg-warm)] p-6 text-left max-w-md mx-auto">
-            <h3 className="font-semibold text-[var(--vv-ink)] mb-3">Booking Summary</h3>
+          <div className="mt-8 rounded-xl border border-vv-line bg-vv-bg-warm p-6 text-left max-w-md mx-auto">
+            <h3 className="font-semibold text-vv-ink mb-3">Booking Summary</h3>
             <dl className="flex flex-col gap-2 text-[14px]">
               {[
                 ["Teacher", selectedTeacher?.name],
@@ -118,13 +120,16 @@ export default function BookRoute() {
                 ["Platform", "Google Meet (link sent by email)"],
               ].map(([label, value]) => (
                 <div key={label} className="flex justify-between">
-                  <dt className="text-[var(--vv-ink-2)]">{label}</dt>
-                  <dd className="font-medium text-[var(--vv-ink)]">{value}</dd>
+                  <dt className="text-vv-ink-2">{label}</dt>
+                  <dd className="font-medium text-vv-ink">{value}</dd>
                 </div>
               ))}
             </dl>
           </div>
-          <a href="/" className="vv-btn vv-btn-ghost mt-6 inline-block">
+          <a
+            href="/"
+            className="inline-flex items-center justify-center gap-2.5 border border-vv-line-2 rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-transparent text-vv-ink hover:bg-vv-ink hover:border-vv-ink hover:text-vv-bg mt-6"
+          >
             ← Back to homepage
           </a>
         </Container>
@@ -134,11 +139,15 @@ export default function BookRoute() {
 
   return (
     <section className="py-12" data-screen-label="Book a Lesson">
-      <Container className="max-w-[860px]">
+      <Container className="max-w-215">
         {/* Progress */}
         <div className="mb-10">
-          <div className="crumb mb-4">Home <span>/</span> Book a Lesson</div>
-          <h1 className="h2 mb-6">Book Your Lesson</h1>
+          <div className="font-code text-vv-muted text-[12px] tracking-[0.06em] mb-4">
+            Home <span className="mx-1 text-vv-line-2">/</span> Book a Lesson
+          </div>
+          <h1 className="text-[clamp(28px,3vw,44px)] font-semibold tracking-[-0.02em] leading-[1.08] m-0 mb-6 text-balance">
+            Book Your Lesson
+          </h1>
           <div className="flex gap-1 overflow-x-auto pb-1">
             {STEPS.map((label, i) => (
               <div
@@ -146,10 +155,10 @@ export default function BookRoute() {
                 className={cn(
                   "flex items-center gap-1.5 whitespace-nowrap text-[12px] font-medium px-3 py-1.5 rounded-full",
                   i < step
-                    ? "bg-[var(--vv-accent)] text-[var(--vv-accent-deep)]"
+                    ? "bg-vv-accent text-vv-accent-deep"
                     : i === step
-                    ? "border border-[var(--vv-ink)] text-[var(--vv-ink)]"
-                    : "text-[var(--vv-ink-2)]",
+                    ? "border border-vv-ink text-vv-ink"
+                    : "text-vv-ink-2",
                 )}
               >
                 <span>{i + 1}.</span> {label}
@@ -161,7 +170,7 @@ export default function BookRoute() {
         {/* Step 0 — Teacher */}
         {step === 0 && (
           <div>
-            <h2 className="text-[20px] font-semibold mb-6 text-[var(--vv-ink)]">Choose Your Teacher</h2>
+            <h2 className="text-[20px] font-semibold mb-6 text-vv-ink">Choose Your Teacher</h2>
             <div className="grid gap-4 sm:grid-cols-2">
               {teachers.map((t) => (
                 <button
@@ -171,17 +180,17 @@ export default function BookRoute() {
                   className={cn(
                     "flex items-center gap-4 rounded-xl border p-4 text-left transition",
                     selectedTeacher?.name === t.name
-                      ? "border-[var(--vv-accent)] bg-[var(--vv-accent)]/10"
-                      : "border-[var(--vv-line)] hover:border-[var(--vv-ink)]",
+                      ? "border-vv-accent bg-vv-accent/10"
+                      : "border-vv-line hover:border-vv-ink",
                   )}
                 >
-                  <div className="h-12 w-12 shrink-0 rounded-full bg-[var(--vv-bg-warm)] overflow-hidden">
+                  <div className="h-12 w-12 shrink-0 rounded-full bg-vv-bg-warm overflow-hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={t.image} alt={t.name} className="h-full w-full object-cover" />
                   </div>
                   <div>
-                    <div className="font-semibold text-[var(--vv-ink)] text-[15px]">{t.name}</div>
-                    <div className="text-[12px] text-[var(--vv-ink-2)]">{t.availability}</div>
+                    <div className="font-semibold text-vv-ink text-[15px]">{t.name}</div>
+                    <div className="text-[12px] text-vv-ink-2">{t.availability}</div>
                   </div>
                 </button>
               ))}
@@ -192,7 +201,7 @@ export default function BookRoute() {
         {/* Step 1 — Package */}
         {step === 1 && (
           <div>
-            <h2 className="text-[20px] font-semibold mb-6 text-[var(--vv-ink)]">Select a Package</h2>
+            <h2 className="text-[20px] font-semibold mb-6 text-vv-ink">Select a Package</h2>
             <div className="grid gap-4 sm:grid-cols-2">
               {packages.map((pkg) => (
                 <button
@@ -202,20 +211,20 @@ export default function BookRoute() {
                   className={cn(
                     "relative flex flex-col gap-1.5 rounded-xl border p-5 text-left transition",
                     selectedPackage?.id === pkg.id
-                      ? "border-[var(--vv-accent)] bg-[var(--vv-accent)]/10"
-                      : "border-[var(--vv-line)] hover:border-[var(--vv-ink)]",
+                      ? "border-vv-accent bg-vv-accent/10"
+                      : "border-vv-line hover:border-vv-ink",
                   )}
                 >
                   {pkg.badge && (
-                    <span className="absolute -top-2.5 right-4 rounded-full bg-[var(--vv-accent)] px-2.5 py-0.5 text-[10px] font-semibold text-[var(--vv-accent-deep)]">
+                    <span className="absolute -top-2.5 right-4 rounded-full bg-vv-accent px-2.5 py-0.5 text-[10px] font-semibold text-vv-accent-deep">
                       {pkg.badge}
                     </span>
                   )}
                   <div className="flex justify-between items-start">
-                    <span className="font-semibold text-[var(--vv-ink)] text-[15px]">{pkg.label}</span>
-                    <span className="text-[18px] font-bold text-[var(--vv-ink)] ml-2">{pkg.price}</span>
+                    <span className="font-semibold text-vv-ink text-[15px]">{pkg.label}</span>
+                    <span className="text-[18px] font-bold text-vv-ink ml-2">{pkg.price}</span>
                   </div>
-                  <p className="text-[13px] text-[var(--vv-ink-2)]">{pkg.description}</p>
+                  <p className="text-[13px] text-vv-ink-2">{pkg.description}</p>
                 </button>
               ))}
             </div>
@@ -225,13 +234,13 @@ export default function BookRoute() {
         {/* Step 2 — Date & Time */}
         {step === 2 && (
           <div>
-            <h2 className="text-[20px] font-semibold mb-6 text-[var(--vv-ink)]">Choose Date &amp; Time</h2>
-            <p className="text-[13px] text-[var(--vv-ink-2)] mb-4">
+            <h2 className="text-[20px] font-semibold mb-6 text-vv-ink">Choose Date &amp; Time</h2>
+            <p className="text-[13px] text-vv-ink-2 mb-4">
               All times shown in your local timezone. Ecuador is GMT−5.
             </p>
             <div className="flex flex-col gap-5">
               <div className="flex flex-col gap-1.5">
-                <label className="text-[12px] font-medium uppercase tracking-wide text-[var(--vv-ink-2)]">
+                <label className="text-[12px] font-medium uppercase tracking-wide text-vv-ink-2">
                   Date
                 </label>
                 <input
@@ -239,11 +248,11 @@ export default function BookRoute() {
                   value={selectedDate}
                   min={new Date().toISOString().split("T")[0]}
                   onChange={(e) => setSelectedDate(e.target.value)}
-                  className="rounded-lg border border-[var(--vv-line)] bg-[var(--vv-bg-warm)] px-4 py-3 text-[15px] text-[var(--vv-ink)] outline-none focus:border-[var(--vv-accent)]"
+                  className="rounded-lg border border-vv-line bg-vv-bg-warm px-4 py-3 text-[15px] text-vv-ink outline-none focus:border-vv-accent"
                 />
               </div>
               <div className="flex flex-col gap-1.5">
-                <label className="text-[12px] font-medium uppercase tracking-wide text-[var(--vv-ink-2)]">
+                <label className="text-[12px] font-medium uppercase tracking-wide text-vv-ink-2">
                   Time
                 </label>
                 <div className="flex flex-wrap gap-2">
@@ -255,8 +264,8 @@ export default function BookRoute() {
                       className={cn(
                         "rounded-lg border px-4 py-2 text-[14px] transition",
                         selectedTime === time
-                          ? "border-[var(--vv-accent)] bg-[var(--vv-accent)]/10 font-medium text-[var(--vv-ink)]"
-                          : "border-[var(--vv-line)] text-[var(--vv-ink-2)] hover:border-[var(--vv-ink)]",
+                          ? "border-vv-accent bg-vv-accent/10 font-medium text-vv-ink"
+                          : "border-vv-line text-vv-ink-2 hover:border-vv-ink",
                       )}
                     >
                       {time}
@@ -271,11 +280,11 @@ export default function BookRoute() {
         {/* Step 3 — Details */}
         {step === 3 && (
           <div>
-            <h2 className="text-[20px] font-semibold mb-6 text-[var(--vv-ink)]">Your Details</h2>
+            <h2 className="text-[20px] font-semibold mb-6 text-vv-ink">Your Details</h2>
             <div className="grid gap-4 sm:grid-cols-2">
               {(["firstName", "lastName"] as const).map((field) => (
                 <div key={field} className="flex flex-col gap-1.5">
-                  <label className="text-[12px] font-medium uppercase tracking-wide text-[var(--vv-ink-2)]">
+                  <label className="text-[12px] font-medium uppercase tracking-wide text-vv-ink-2">
                     {field === "firstName" ? "First Name" : "Last Name"}
                   </label>
                   <input
@@ -283,12 +292,12 @@ export default function BookRoute() {
                     required
                     value={details[field]}
                     onChange={(e) => setDetails((d) => ({ ...d, [field]: e.target.value }))}
-                    className="rounded-lg border border-[var(--vv-line)] bg-[var(--vv-bg-warm)] px-4 py-3 text-[15px] text-[var(--vv-ink)] outline-none focus:border-[var(--vv-accent)]"
+                    className="rounded-lg border border-vv-line bg-vv-bg-warm px-4 py-3 text-[15px] text-vv-ink outline-none focus:border-vv-accent"
                   />
                 </div>
               ))}
               <div className="flex flex-col gap-1.5 sm:col-span-2">
-                <label className="text-[12px] font-medium uppercase tracking-wide text-[var(--vv-ink-2)]">
+                <label className="text-[12px] font-medium uppercase tracking-wide text-vv-ink-2">
                   Email Address
                 </label>
                 <input
@@ -296,17 +305,17 @@ export default function BookRoute() {
                   required
                   value={details.email}
                   onChange={(e) => setDetails((d) => ({ ...d, email: e.target.value }))}
-                  className="rounded-lg border border-[var(--vv-line)] bg-[var(--vv-bg-warm)] px-4 py-3 text-[15px] text-[var(--vv-ink)] outline-none focus:border-[var(--vv-accent)]"
+                  className="rounded-lg border border-vv-line bg-vv-bg-warm px-4 py-3 text-[15px] text-vv-ink outline-none focus:border-vv-accent"
                 />
               </div>
               <div className="flex flex-col gap-1.5 sm:col-span-2">
-                <label className="text-[12px] font-medium uppercase tracking-wide text-[var(--vv-ink-2)]">
+                <label className="text-[12px] font-medium uppercase tracking-wide text-vv-ink-2">
                   Current Spanish Level
                 </label>
                 <select
                   value={details.level}
                   onChange={(e) => setDetails((d) => ({ ...d, level: e.target.value }))}
-                  className="rounded-lg border border-[var(--vv-line)] bg-[var(--vv-bg-warm)] px-4 py-3 text-[15px] text-[var(--vv-ink)] outline-none focus:border-[var(--vv-accent)]"
+                  className="rounded-lg border border-vv-line bg-vv-bg-warm px-4 py-3 text-[15px] text-vv-ink outline-none focus:border-vv-accent"
                 >
                   {levels.map((l) => <option key={l} value={l}>{l}</option>)}
                 </select>
@@ -318,12 +327,12 @@ export default function BookRoute() {
         {/* Step 4 — Payment */}
         {step === 4 && (
           <div>
-            <h2 className="text-[20px] font-semibold mb-2 text-[var(--vv-ink)]">Payment</h2>
-            <p className="text-[13px] text-[var(--vv-ink-2)] mb-6">
+            <h2 className="text-[20px] font-semibold mb-2 text-vv-ink">Payment</h2>
+            <p className="text-[13px] text-vv-ink-2 mb-6">
               Secure payment processed by Stripe. Your card details never touch our servers.
             </p>
-            <div className="rounded-xl border border-[var(--vv-line)] bg-[var(--vv-bg-warm)] p-6 mb-6">
-              <h3 className="font-semibold text-[var(--vv-ink)] mb-3">Order Summary</h3>
+            <div className="rounded-xl border border-vv-line bg-vv-bg-warm p-6 mb-6">
+              <h3 className="font-semibold text-vv-ink mb-3">Order Summary</h3>
               <dl className="flex flex-col gap-2 text-[14px]">
                 {[
                   ["Teacher", selectedTeacher?.name],
@@ -332,53 +341,53 @@ export default function BookRoute() {
                   ["Platform", "Google Meet"],
                 ].map(([label, value]) => (
                   <div key={label} className="flex justify-between">
-                    <dt className="text-[var(--vv-ink-2)]">{label}</dt>
-                    <dd className="font-medium text-[var(--vv-ink)]">{value}</dd>
+                    <dt className="text-vv-ink-2">{label}</dt>
+                    <dd className="font-medium text-vv-ink">{value}</dd>
                   </div>
                 ))}
-                <div className="flex justify-between border-t border-[var(--vv-line)] pt-3 mt-1 text-[16px] font-bold">
-                  <dt className="text-[var(--vv-ink)]">Total</dt>
-                  <dd className="text-[var(--vv-ink)]">{selectedPackage?.price}</dd>
+                <div className="flex justify-between border-t border-vv-line pt-3 mt-1 text-[16px] font-bold">
+                  <dt className="text-vv-ink">Total</dt>
+                  <dd className="text-vv-ink">{selectedPackage?.price}</dd>
                 </div>
               </dl>
             </div>
-            <div className="rounded-xl border border-[var(--vv-line)] bg-[var(--vv-bg)] p-6 flex flex-col gap-4">
+            <div className="rounded-xl border border-vv-line bg-vv-bg p-6 flex flex-col gap-4">
               <div className="flex flex-col gap-1.5">
-                <label className="text-[12px] font-medium uppercase tracking-wide text-[var(--vv-ink-2)]">
+                <label className="text-[12px] font-medium uppercase tracking-wide text-vv-ink-2">
                   Card Number
                 </label>
                 <input
                   type="text"
                   placeholder="1234 5678 9012 3456"
                   maxLength={19}
-                  className="rounded-lg border border-[var(--vv-line)] bg-[var(--vv-bg-warm)] px-4 py-3 text-[15px] text-[var(--vv-ink)] outline-none font-mono focus:border-[var(--vv-accent)]"
+                  className="rounded-lg border border-vv-line bg-vv-bg-warm px-4 py-3 text-[15px] text-vv-ink outline-none font-mono focus:border-vv-accent"
                 />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-[12px] font-medium uppercase tracking-wide text-[var(--vv-ink-2)]">
+                  <label className="text-[12px] font-medium uppercase tracking-wide text-vv-ink-2">
                     Expiry
                   </label>
                   <input
                     type="text"
                     placeholder="MM / YY"
                     maxLength={7}
-                    className="rounded-lg border border-[var(--vv-line)] bg-[var(--vv-bg-warm)] px-4 py-3 text-[15px] text-[var(--vv-ink)] outline-none font-mono focus:border-[var(--vv-accent)]"
+                    className="rounded-lg border border-vv-line bg-vv-bg-warm px-4 py-3 text-[15px] text-vv-ink outline-none font-mono focus:border-vv-accent"
                   />
                 </div>
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-[12px] font-medium uppercase tracking-wide text-[var(--vv-ink-2)]">
+                  <label className="text-[12px] font-medium uppercase tracking-wide text-vv-ink-2">
                     CVC
                   </label>
                   <input
                     type="text"
                     placeholder="123"
                     maxLength={4}
-                    className="rounded-lg border border-[var(--vv-line)] bg-[var(--vv-bg-warm)] px-4 py-3 text-[15px] text-[var(--vv-ink)] outline-none font-mono focus:border-[var(--vv-accent)]"
+                    className="rounded-lg border border-vv-line bg-vv-bg-warm px-4 py-3 text-[15px] text-vv-ink outline-none font-mono focus:border-vv-accent"
                   />
                 </div>
               </div>
-              <p className="text-[11px] text-[var(--vv-ink-2)]">
+              <p className="text-[11px] text-vv-ink-2">
                 🔒 Payments powered by Stripe. We accept Visa, Mastercard, Apple Pay and Google Pay.
               </p>
             </div>
@@ -387,12 +396,12 @@ export default function BookRoute() {
 
         {/* Navigation buttons */}
         {step < 5 && (
-          <div className="mt-8 flex items-center justify-between border-t border-[var(--vv-line)] pt-6">
+          <div className="mt-8 flex items-center justify-between border-t border-vv-line pt-6">
             {step > 0 ? (
               <button
                 type="button"
                 onClick={() => setStep((s) => s - 1)}
-                className="vv-btn vv-btn-ghost"
+                className="inline-flex items-center justify-center gap-2.5 border border-vv-line-2 rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-transparent text-vv-ink hover:bg-vv-ink hover:border-vv-ink hover:text-vv-bg"
               >
                 ← Back
               </button>
@@ -404,7 +413,10 @@ export default function BookRoute() {
                 type="button"
                 disabled={!canAdvance()}
                 onClick={() => setStep((s) => s + 1)}
-                className={cn("vv-btn vv-btn-primary", !canAdvance() && "opacity-40 cursor-not-allowed")}
+                className={cn(
+                  "inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px",
+                  !canAdvance() && "opacity-40 cursor-not-allowed",
+                )}
               >
                 Continue →
               </button>
@@ -412,7 +424,7 @@ export default function BookRoute() {
               <button
                 type="button"
                 onClick={handleConfirm}
-                className="vv-btn vv-btn-primary"
+                className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px"
               >
                 Confirm & Pay {selectedPackage?.price} →
               </button>

@@ -28,31 +28,50 @@ const marqueeTestimonials = [...testimonials, ...testimonials];
 
 export function TextTestimonialsSection() {
   return (
-    <section className="text-testimonials" data-screen-label="Testimonials">
+    <section
+      className="overflow-hidden border-t border-vv-line bg-vv-bg"
+      data-screen-label="Testimonials"
+    >
       <Container>
-        <div className="section-head">
-          <div className="meta">
-            <span className="eyebrow">{"// Testimonials"}</span>
-            <h2 className="h2">Read Our Testimonials</h2>
-          </div>
-        </div>
-
-        <div className="text-testimonial-marquee" aria-label="Student testimonials">
-          <div className="text-testimonial-track">
-            {marqueeTestimonials.map((testimonial, index) => (
-              <article
-                className="text-testimonial-card"
-                key={`${testimonial.name}-${index}`}
-                aria-hidden={index >= testimonials.length}
-              >
-                <Quote aria-hidden="true" />
-                <blockquote>{testimonial.quote}</blockquote>
-                <footer>{testimonial.name}</footer>
-              </article>
-            ))}
+        <div className="flex items-end justify-between gap-8 mb-12 max-[760px]:flex-col max-[760px]:items-start">
+          <div className="flex flex-col gap-3.5 max-w-160">
+            <span className="font-code text-vv-muted text-[11px] font-medium tracking-[0.14em] uppercase">
+              {"// Testimonials"}
+            </span>
+            <h2 className="text-[clamp(28px,3vw,44px)] font-semibold tracking-[-0.02em] leading-[1.08] m-0 text-balance">
+              Read Our Testimonials
+            </h2>
           </div>
         </div>
       </Container>
+
+      {/* Marquee — full bleed, outside Container */}
+      <div
+        className="relative overflow-hidden before:absolute before:inset-y-0 before:left-0 before:z-10 before:w-20 before:bg-linear-to-r before:from-vv-bg before:to-transparent after:absolute after:inset-y-0 after:right-0 after:z-10 after:w-20 after:bg-linear-to-l after:from-vv-bg after:to-transparent"
+        aria-label="Student testimonials"
+        data-marquee
+      >
+        <div
+          className="flex gap-5.5 w-max animate-[testimonial-marquee_36s_linear_infinite]"
+          data-marquee-track
+        >
+          {marqueeTestimonials.map((testimonial, index) => (
+            <article
+              className="flex w-80 shrink-0 flex-col gap-4 rounded-2xl border border-vv-line bg-vv-bg-warm p-6 max-[640px]:w-72"
+              key={`${testimonial.name}-${index}`}
+              aria-hidden={index >= testimonials.length}
+            >
+              <Quote aria-hidden="true" className="h-5 w-5 text-vv-accent" />
+              <blockquote className="text-[15px] leading-[1.65] text-vv-ink-2 m-0 line-clamp-5">
+                {testimonial.quote}
+              </blockquote>
+              <footer className="font-code text-[12px] font-semibold text-vv-muted tracking-[0.06em] uppercase">
+                {testimonial.name}
+              </footer>
+            </article>
+          ))}
+        </div>
+      </div>
     </section>
   );
 }

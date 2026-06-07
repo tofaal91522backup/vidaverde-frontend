@@ -5,7 +5,7 @@ import { SectionHeader } from "./SectionHeader";
 
 const ProgramsSection = () => {
   return (
-    <section className="bg-[var(--vv-bg-warm)]" data-screen-label="03 Courses">
+    <section className="bg-vv-bg-warm" data-screen-label="03 Courses">
       <Container>
         <SectionHeader
           eyebrow="// Programs"

@@ -1,9 +1,10 @@
 export function WhatsAppFloat() {
   return (
     <a
-      className="wa"
-      href="https://wa.me/593998037473"
-      aria-label="Chat on WhatsApp"
+      className="fixed bottom-6 right-6 z-40 grid size-14 cursor-pointer place-items-center rounded-full bg-[#25d366] shadow-[0_12px_30px_-8px_rgba(37,211,102,0.5)] transition-transform duration-200 hover:scale-[1.06] after:absolute after:content-[''] after:-inset-1 after:rounded-full after:border-2 after:border-[#25d366] after:opacity-40 after:animate-[pulse_2s_infinite] [&>svg]:fill-white [&>svg]:size-7 max-[640px]:bottom-4 max-[640px]:right-4 max-[640px]:size-12.5"
+      href="https://wa.me/593998037473?text=Hi%2C%20I%27d%20like%20to%20find%20out%20more%20about%20Vida%20Verde%27s%20Spanish%20classes."
+      aria-label="Chat with us on WhatsApp"
+      title="Chat with us on WhatsApp"
       target="_blank"
       rel="noopener noreferrer"
     >
