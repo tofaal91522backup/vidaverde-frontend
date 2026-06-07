@@ -14,15 +14,15 @@ export function OnlineClassesHero() {
           Real Teacher. Anywhere.
         </h1>
         <p className="text-vv-ink-2 text-[clamp(17px,1.4vw,20px)] leading-normal max-w-[52ch] text-pretty m-0">
-          Personalised lessons with expert Ecuadorian native speakers — via
+          Personalised lessons with expert Ecuadorian native speakers, via
           Google Meet, at a time that works for you.
         </p>
         <div className="flex flex-wrap gap-3 mt-6">
           <Link
-            href="/book"
+            href="/online-classes/book"
             className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px"
           >
-            Start for $12 — Book Your First Lesson →
+            Book Your First Lesson · From $12 →
           </Link>
           <Link
             href="#teachers"

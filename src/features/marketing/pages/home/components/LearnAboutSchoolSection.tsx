@@ -30,10 +30,10 @@ export function LearnAboutSchoolSection() {
               Teaching Spanish Since 1999
             </h2>
             <p className="text-vv-ink-2 text-[clamp(16px,1.2vw,18px)] leading-relaxed max-w-[62ch] text-pretty m-0">
-              Since 1999, our teachers have been helping students learn Spanish —
+              Since 1999, our teachers have been helping students learn Spanish
               and through it, discover the culture, warmth, and remarkable natural
               world of Ecuador. Over 4,700 students from every corner of the world
-              have had that experience with us — online and in person.
+              have had that experience with us, online and in person.
             </p>
             <p className="text-vv-ink-2 text-[clamp(16px,1.2vw,18px)] leading-relaxed max-w-[62ch] text-pretty m-0">
               As a certified member of the AECEE, Ecuador&apos;s standard of

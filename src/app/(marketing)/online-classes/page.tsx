@@ -1,9 +1,5 @@
-const page = () => {
-    return (
-        <div>
-            Coming soon...
-        </div>
-    );
-}
+import CoursesRoute from "@/features/marketing/pages/courses";
 
-export default page;
+export default function Page() {
+  return <CoursesRoute />;
+}

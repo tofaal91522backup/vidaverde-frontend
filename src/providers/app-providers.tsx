@@ -1,7 +1,5 @@
-// import { Toaster } from "sonner";
 import { LanguageProvider } from "./language-provider";
 import QueryProvider from "./query-provider";
-
 import { ThemeProvider } from "./theme-provider";
 
 export default function AppProviders({
@@ -16,10 +14,9 @@ export default function AppProviders({
       enableSystem
       disableTransitionOnChange
     >
-      <LanguageProvider>
+      {/* <LanguageProvider> */}
         <QueryProvider>{children}</QueryProvider>
-      </LanguageProvider>
-      {/* <Toaster position="bottom-right" /> */}
+      {/* </LanguageProvider> */}
     </ThemeProvider>
   );
 }

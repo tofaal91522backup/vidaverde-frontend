@@ -2,6 +2,7 @@
 
 import {
   Sheet,
+  SheetClose,
   SheetContent,
   SheetHeader,
   SheetTitle,
@@ -9,18 +10,44 @@ import {
 } from "@/components/ui/sheet";
 import { BrandMark } from "@/features/marketing/components/BrandMark";
 import { navItems } from "@/features/marketing/data/marketing.data";
-import {
-  useLanguage,
-  type LanguageCode,
-} from "@/providers/language-provider";
+// import { type LanguageCode, useLanguage } from "@/providers/language-provider";
 import { Menu } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+// function LangToggle() {
+//   const { language, setLanguage } = useLanguage();
+//   const options: { code: LanguageCode; label: string }[] = [
+//     { code: "en", label: "EN" },
+//     { code: "es", label: "ES" },
+//   ];
+//   return (
+//     <div
+//       className="flex items-center gap-0.5 rounded-full border border-vv-line bg-vv-bg px-1 py-1"
+//       aria-label="Language toggle"
+//       translate="no"
+//     >
+//       {options.map((opt) => (
+//         <button
+//           key={opt.code}
+//           type="button"
+//           onClick={() => setLanguage(opt.code)}
+//           className={`rounded-full px-2.5 py-0.5 font-code text-[11px] font-semibold tracking-[0.08em] transition-[background,color] duration-150 ${
+//             language === opt.code
+//               ? "bg-vv-ink text-vv-bg"
+//               : "text-vv-muted hover:text-vv-ink"
+//           }`}
+//         >
+//           {opt.label}
+//         </button>
+//       ))}
+//     </div>
+//   );
+// }
+
 export default function Navbar() {
   const pathname = usePathname();
-  const { language, setLanguage } = useLanguage();
 
   return (
     <header className="sticky top-0 z-50 animate-nav-enter backdrop-blur-[14px] backdrop-saturate-140 bg-vv-nav-bg border-b border-b-vv-nav-border">
@@ -70,7 +97,7 @@ export default function Navbar() {
 
         {/* Desktop right side */}
         <div className="flex items-center gap-3 max-[900px]:hidden">
-          <LangToggle value={language} onChange={setLanguage} />
+          {/* <LangToggle /> */}
           <Link
             href="/online-classes/book"
             className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[13px] font-semibold tracking-[-0.005em] py-2.25 px-3.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px"
@@ -105,25 +132,29 @@ export default function Navbar() {
               </SheetTitle>
               <nav className="mt-8 flex flex-col gap-1">
                 {navItems.map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className="border-b border-vv-line py-4 text-2xl font-semibold tracking-[-0.02em]"
-                  >
-                    {item.label}
-                  </Link>
+                  <SheetClose asChild key={item.href}>
+                    <Link
+                      href={item.href}
+                      className="border-b border-vv-line py-4 text-2xl font-semibold tracking-[-0.02em]"
+                    >
+                      {item.label}
+                    </Link>
+                  </SheetClose>
                 ))}
               </nav>
-              <div className="mt-6">
-                <Link
-                  href="/online-classes/book"
-                  className="flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi"
-                >
-                  Book Your First Lesson
-                </Link>
-              </div>
-              <div className="mt-4 flex justify-center">
-                <LangToggle value={language} onChange={setLanguage} />
+              <div className="mt-6 flex flex-col gap-4">
+                <SheetClose asChild>
+                  <Link
+                    href="/online-classes/book"
+                    className="flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi"
+                  >
+                    Book Your First Lesson
+                  </Link>
+                </SheetClose>
+                <div className="flex items-center gap-2">
+                  <span className="text-[12px] text-vv-muted font-medium">Language</span>
+                  {/* <LangToggle /> */}
+                </div>
               </div>
             </SheetHeader>
           </SheetContent>
@@ -133,37 +164,3 @@ export default function Navbar() {
   );
 }
 
-function LangToggle({
-  value,
-  onChange,
-}: {
-  value: LanguageCode;
-  onChange: (value: LanguageCode) => void;
-}) {
-  const options: { code: LanguageCode; label: string }[] = [
-    { code: "en", label: "EN" },
-    { code: "es", label: "ES" },
-  ];
-
-  return (
-    <div
-      className="flex items-center gap-0.5 rounded-full border border-vv-line bg-vv-bg-warm px-1 py-1"
-      aria-label="Language toggle"
-    >
-      {options.map((opt) => (
-        <button
-          key={opt.code}
-          type="button"
-          onClick={() => onChange(opt.code)}
-          className={`rounded-full px-2.5 py-0.5 font-code text-[11px] font-semibold tracking-[0.08em] transition-[background,color] duration-150 ${
-            value === opt.code
-              ? "bg-vv-ink text-vv-bg"
-              : "text-vv-muted hover:text-vv-ink"
-          }`}
-        >
-          {opt.label}
-        </button>
-      ))}
-    </div>
-  );
-}

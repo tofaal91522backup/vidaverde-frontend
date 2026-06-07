@@ -34,7 +34,7 @@ export const howItWorksSteps: HowItWorksStep[] = [
     step: 1,
     label: "Book Your First Lesson",
     description:
-      "Choose a teacher, pick a time, and pay your discounted first lesson fee — all in under 5 minutes.",
+      "Choose a teacher, pick a time, and pay your discounted first lesson fee. All done in under 5 minutes.",
   },
   {
     step: 2,
@@ -92,7 +92,7 @@ export const pricingPackages: PricingPackage[] = [
     title: "20-Class Package",
     price: "$250",
     priceNote: "Valid for 6 months",
-    description: "20 × 60-minute private lessons. Best value — save the most per class.",
+    description: "20 × 60-minute private lessons. Best value, lowest price per class.",
     features: [
       "20 × 60-minute lessons",
       "Valid for 6 months",
@@ -146,11 +146,11 @@ export const onlineTeachers: OnlineTeacher[] = [
     name: "Fernando Báez Guzmán",
     firstName: "Fernando",
     image: "/images/teachers/4.jpg",
-    bio: "Fernando is our Academic Director and master teacher. He brings structure, warmth, and deep expertise to every lesson — students consistently rate him as the most effective teacher they've had.",
+    bio: "Fernando is our Academic Director and master teacher. He brings structure, warmth, and deep expertise to every lesson. Students consistently rate him as the most effective teacher they've had.",
     credentials: "Universidad de Cuenca — Spanish Literature",
     experience: "20+ years teaching",
     specialisations: ["All Levels", "Academic Spanish", "Advanced Conversation"],
-    availability: "Limited — Tue & Thu",
+    availability: "Limited: Tue & Thu",
     accepting: true,
   },
   {
@@ -170,7 +170,7 @@ export const onlineClassesFaqs: FaqItem[] = [
   {
     question: "What platform do you use?",
     answer:
-      "We teach via Google Meet for all online lessons. You'll receive a link before each class. No downloads required — it works in any browser.",
+      "We teach via Google Meet for all online lessons. You'll receive a link before each class. No downloads required, it works in any browser.",
   },
   {
     question: "What level do I need to be?",
@@ -195,7 +195,7 @@ export const onlineClassesFaqs: FaqItem[] = [
   {
     question: "Is there a contract or commitment?",
     answer:
-      "No. The discounted first lesson is a one-time purchase. After that, you choose a package or pay per class — no lock-in.",
+      "No. The discounted first lesson is a one-time purchase. After that, you choose a package or pay per class. No lock-in.",
   },
   {
     question: "How long are the classes?",

@@ -8,7 +8,7 @@ const bulletPoints = [
   "50 essential phrases for travellers",
   "Pronunciation guide included",
   "Designed by Vida Verde teachers",
-  "Instant download — no wait",
+  "Instant download, no wait",
 ];
 
 export function LeadCaptureSection() {
@@ -47,7 +47,7 @@ export function LeadCaptureSection() {
                 &ldquo;Survival Spanish for Ecuador: 50 Essential Phrases for
                 Travellers and Learners&rdquo;
               </em>{" "}
-              — free, instant, no commitment.
+              Free, instant, no commitment.
             </p>
             <ul className="mt-6 flex flex-col gap-2 list-none p-0 m-0">
               {bulletPoints.map((item) => (
@@ -78,7 +78,7 @@ export function LeadCaptureSection() {
                   your first lesson for just $12?
                 </p>
                 <Link
-                  href="/book"
+                  href="/online-classes/book"
                   className="mt-2 inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px"
                 >
                   Book My First Lesson →

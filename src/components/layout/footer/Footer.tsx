@@ -2,10 +2,13 @@
 
 import { Container } from "@/components/shared/Container";
 import {
-  useLanguage,
-  type LanguageCode,
-} from "@/providers/language-provider";
-import { Facebook, Instagram, Leaf, Mail, MapPin, MessageCircle } from "lucide-react";
+  Facebook,
+  Instagram,
+  Leaf,
+  Mail,
+  MapPin,
+  MessageCircle,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -32,13 +35,19 @@ const quickLinks = [
 ];
 
 const socialLinks = [
-  { label: "Instagram", href: "https://www.instagram.com/vidaverdequito/", icon: Instagram },
-  { label: "Facebook", href: "https://www.facebook.com/vidaverdespanishschool/", icon: Facebook },
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/vidaverdequito/",
+    icon: Instagram,
+  },
+  {
+    label: "Facebook",
+    href: "https://www.facebook.com/vidaverdespanishschool/",
+    icon: Facebook,
+  },
 ];
 
 export default function Footer() {
-  const { language, setLanguage } = useLanguage();
-
   return (
     <footer
       className="border-t border-vv-line bg-vv-bg-warm py-16"
@@ -66,13 +75,20 @@ export default function Footer() {
             </p>
 
             <div className="flex items-start gap-2.5">
-              <Leaf aria-hidden="true" className="h-4 w-4 mt-0.5 shrink-0 text-vv-accent" />
+              <Leaf
+                aria-hidden="true"
+                className="h-4 w-4 mt-0.5 shrink-0 text-vv-accent"
+              />
               <p className="text-[13px] leading-[1.6] text-vv-ink-2 m-0">
-                Proud member of the Association of Spanish Language Schools (AECEE)
+                Proud member of the Association of Spanish Language Schools
+                (AECEE)
               </p>
             </div>
 
-            <div className="flex items-center gap-2" aria-label="Social media links">
+            <div
+              className="flex items-center gap-2"
+              aria-label="Social media links"
+            >
               {socialLinks.map((item) => {
                 const Icon = item.icon;
                 return (
@@ -136,7 +152,10 @@ export default function Footer() {
                 Find Us
               </h4>
               <div className="flex items-start gap-2.5 text-[13px] text-vv-ink-2">
-                <MapPin aria-hidden="true" className="h-4 w-4 mt-0.5 shrink-0 text-vv-accent" />
+                <MapPin
+                  aria-hidden="true"
+                  className="h-4 w-4 mt-0.5 shrink-0 text-vv-accent"
+                />
                 <span>La Floresta, Quito, Ecuador</span>
               </div>
             </div>
@@ -147,11 +166,17 @@ export default function Footer() {
               </h4>
               <div className="flex flex-col gap-3">
                 <div className="flex items-center gap-2.5 text-[13px] text-vv-ink-2">
-                  <Mail aria-hidden="true" className="h-4 w-4 shrink-0 text-vv-accent" />
+                  <Mail
+                    aria-hidden="true"
+                    className="h-4 w-4 shrink-0 text-vv-accent"
+                  />
                   <span>info@vidaverde.com</span>
                 </div>
                 <div className="flex items-center gap-2.5 text-[13px] text-vv-ink-2">
-                  <MessageCircle aria-hidden="true" className="h-4 w-4 shrink-0 text-vv-accent" />
+                  <MessageCircle
+                    aria-hidden="true"
+                    className="h-4 w-4 shrink-0 text-vv-accent"
+                  />
                   <a
                     href="https://wa.me/593998037473?text=Hi%2C%20I%27d%20like%20to%20find%20out%20more%20about%20Vida%20Verde%27s%20Spanish%20classes."
                     target="_blank"
@@ -171,44 +196,9 @@ export default function Footer() {
           <p className="font-code text-[12px] text-vv-muted tracking-[0.04em] m-0">
             © 2026 Vida Verde Centro de Español. All rights reserved.
           </p>
-          <LanguageSwitcher value={language} onChange={setLanguage} />
         </div>
       </Container>
     </footer>
   );
 }
 
-function LanguageSwitcher({
-  value,
-  onChange,
-}: {
-  value: LanguageCode;
-  onChange: (value: LanguageCode) => void;
-}) {
-  const options: { code: LanguageCode; label: string }[] = [
-    { code: "en", label: "EN" },
-    { code: "es", label: "ES" },
-  ];
-
-  return (
-    <div
-      className="flex items-center gap-0.5 rounded-full border border-vv-line bg-vv-bg px-1 py-1"
-      aria-label="Language toggle"
-    >
-      {options.map((opt) => (
-        <button
-          key={opt.code}
-          type="button"
-          onClick={() => onChange(opt.code)}
-          className={`rounded-full px-2.5 py-0.5 font-code text-[11px] font-semibold tracking-[0.08em] transition-[background,color] duration-150 ${
-            value === opt.code
-              ? "bg-vv-ink text-vv-bg"
-              : "text-vv-muted hover:text-vv-ink"
-          }`}
-        >
-          {opt.label}
-        </button>
-      ))}
-    </div>
-  );
-}

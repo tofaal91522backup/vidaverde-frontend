@@ -2,7 +2,81 @@
 
 import { Container } from "@/components/shared/Container";
 import { MarketingButton } from "@/features/marketing/components/MarketingButton";
-import { useEffect, useRef } from "react";
+import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
+
+const TYPEWRITER_WORDS = [
+  { text: "Learn Spanish Online", accent: true },
+  { text: "One-on-One",           accent: true },
+];
+
+function TypewriterCycle() {
+  const [wordIdx, setWordIdx] = useState(0);
+  const [displayed, setDisplayed] = useState("");
+  const [phase, setPhase] = useState<"typing" | "pause" | "deleting">("typing");
+
+  useEffect(() => {
+    const word = TYPEWRITER_WORDS[wordIdx].text;
+    let timer: ReturnType<typeof setTimeout>;
+
+    if (phase === "typing") {
+      if (displayed.length < word.length) {
+        timer = setTimeout(() => setDisplayed(word.slice(0, displayed.length + 1)), 110);
+      } else {
+        timer = setTimeout(() => setPhase("pause"), 2200);
+      }
+    } else if (phase === "pause") {
+      timer = setTimeout(() => setPhase("deleting"), 300);
+    } else {
+      if (displayed.length > 0) {
+        timer = setTimeout(() => setDisplayed(displayed.slice(0, -1)), 65);
+      } else {
+        timer = setTimeout(() => {
+          setWordIdx((i) => (i + 1) % TYPEWRITER_WORDS.length);
+          setPhase("typing");
+        }, 0);
+      }
+    }
+
+    return () => clearTimeout(timer);
+  }, [displayed, phase, wordIdx]);
+
+  const isAccent = TYPEWRITER_WORDS[wordIdx].accent;
+
+  return (
+    <span className={isAccent ? "text-vv-accent" : "text-white"}>
+      {displayed}
+      {/* <span className="text-vv-accent animate-pulse ml-0.5">|</span> */}
+    </span>
+  );
+}
+
+function AnimatedBookButton() {
+  return (
+    <>
+      <style>{`
+        @keyframes book-cycle {
+          0%, 38%  { transform: translateY(0); }
+          48%, 83% { transform: translateY(-33.333%); }
+          93%, 100%{ transform: translateY(-66.666%); }
+        }
+        .book-cycle { animation: book-cycle 5s ease-in-out infinite; }
+      `}</style>
+      <Link
+        href="/online-classes"
+        className="inline-flex items-center justify-center border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px transition-[transform,background,border-color] duration-200 justify-center sm:w-auto overflow-hidden"
+      >
+        <span className="block overflow-hidden" style={{ height: "1.25em" }}>
+          <span className="book-cycle flex flex-col">
+            <span className="flex items-center justify-center" style={{ height: "1.25em" }}>Book Your First Lesson</span>
+            <span className="flex items-center justify-center" style={{ height: "1.25em" }}>From $12</span>
+            <span className="flex items-center justify-center" style={{ height: "1.25em" }}>Book Your First Lesson</span>
+          </span>
+        </span>
+      </Link>
+    </>
+  );
+}
 
 const trustItems = [
   { icon: "✓", label: "AECEE Certified", sub: "Accredited Spanish school" },
@@ -29,7 +103,7 @@ export function HeroSection() {
   }, []);
 
   return (
-    <section className="relative overflow-hidden h-[80vh]" data-screen-label="01 Hero">
+    <section className="relative overflow-hidden min-h-svh flex flex-col" data-screen-label="01 Hero">
       {/* Video background */}
       <div className="absolute inset-0 z-0">
         <video
@@ -66,37 +140,30 @@ export function HeroSection() {
         </div>
       </div>
 
-      <Container className="relative z-10 h-full">
-        <div className="grid lg:grid-cols-[1fr_auto] items-center gap-10 h-full py-16 max-[900px]:py-14 max-[640px]:py-12 max-[900px]:grid-cols-1">
+      <Container className="relative z-10 flex-1 flex items-center">
+        <div className="grid lg:grid-cols-[1fr_auto] items-center gap-10 w-full py-20 max-[900px]:py-16 max-[640px]:py-14 max-[900px]:grid-cols-1">
           {/* Left — main content */}
-          <div className="flex flex-col gap-6 max-w-145 text-white max-[640px]:gap-5">
+          <div className="flex flex-col gap-6 max-w-145 text-white max-[640px]:gap-5 max-[640px]:max-w-full">
             {/* Headline */}
-            <h1 className="text-[clamp(32px,4vw,58px)] font-semibold tracking-[-0.03em] leading-[1.12] m-0 animate-[hero-rise_0.55s_0.2s_ease_both]">
-              Learn{" "}
-              <span className="text-vv-accent">Spanish</span>{" "}
-              Online.
-              <br />
-              <span className="[font-family:var(--font-newsreader),Georgia,serif] italic font-normal text-white/90">
-                One-on-One.
-              </span>{" "}
-              <span className="font-semibold">With a Real Teacher.</span>
+            <h1 className="text-[clamp(38px,4vw,58px)] font-semibold tracking-[-0.03em] leading-[1.12] m-0 animate-[hero-rise_0.5s_0.1s_ease_both]">
+              <span className="block min-h-[1.2em]">
+                <TypewriterCycle />
+              </span>
+              <span className="block text-white/90">With a Real Teacher</span>
             </h1>
 
             {/* Subheadline */}
-            <p className="text-white/72 text-[clamp(16px,1.3vw,19px)] leading-normal m-0 max-w-[50ch] text-pretty animate-[hero-rise_0.55s_0.3s_ease_both]">
-              Expert Ecuadorian teachers, personalised lessons, flexible
-              scheduling — from anywhere in the world.
+            <p className="text-white/72 text-[clamp(17px,1.3vw,18px)] leading-relaxed m-0 max-w-[50ch] text-pretty animate-[hero-rise_0.55s_0.3s_ease_both]">
+              Expert Ecuadorian teachers, personalised lessons, flexible scheduling. Join from anywhere in the world.
             </p>
 
             {/* CTAs */}
-            <div className="flex flex-wrap items-center gap-3 animate-[hero-rise_0.55s_0.4s_ease_both]">
-              <MarketingButton href="/online-classes/book" tone="primary">
-                Start for $12 — Book Your First Lesson
-              </MarketingButton>
+            <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 animate-[hero-rise_0.55s_0.4s_ease_both]">
+              <AnimatedBookButton />
               <MarketingButton
                 href="/study-in-quito"
                 tone="ghost"
-                className="border-white/40 text-white hover:bg-white hover:border-white hover:text-vv-ink"
+                className="border-white/40 text-white hover:bg-white hover:border-white hover:text-vv-ink justify-center sm:w-auto"
               >
                 Explore all programs →
               </MarketingButton>

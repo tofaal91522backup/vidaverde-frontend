@@ -12,11 +12,6 @@ import {
 
 export const languages = [
   { code: "en", label: "English" },
-  { code: "fr", label: "French" },
-  { code: "de", label: "German" },
-  { code: "ja", label: "Japanese" },
-  { code: "pt", label: "Portuguese" },
-  { code: "ru", label: "Russian" },
   { code: "es", label: "Spanish" },
 ] as const;
 
@@ -149,14 +144,18 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
+    // Apply immediately — don't wait for the first interval tick
+    applyGoogleLanguage(language);
+
+    // Keep retrying in case the GT widget wasn't ready yet
     let attempts = 0;
     const timer = window.setInterval(() => {
       attempts += 1;
       const applied = applyGoogleLanguage(language);
-      if (applied || attempts > 20) {
+      if (applied || attempts > 40) {
         window.clearInterval(timer);
       }
-    }, 250);
+    }, 200);
 
     return () => window.clearInterval(timer);
   }, [language, pathname]);
