@@ -355,3 +355,13 @@ body.translated-rtl {
     transform: scale(1.4);
   }
 }
+
+@keyframes scroll-marquee {
+  to {
+    transform: translateX(calc(-50% - 0.75rem));
+  }
+}
+
+.animate-scroll-marquee {
+  animation: scroll-marquee var(--marquee-duration, 50s) var(--marquee-direction, forwards) linear infinite;
+}

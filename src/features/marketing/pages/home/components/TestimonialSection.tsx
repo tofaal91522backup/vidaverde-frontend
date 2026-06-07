@@ -1,5 +1,6 @@
 import { Container } from "@/components/shared/Container";
 import { TestimonialCarousel } from "./TestimonialCarousel";
+import { CountUpStat } from "./CountUpStat";
 import { socialStats } from "../data/marketing.data";
 
 function Stars({ color = "text-amber-400" }: { color?: string }) {
@@ -69,13 +70,14 @@ const TestimonialSection = () => {
         </div>
 
         {/* Stats inline row */}
-        <div className="flex flex-wrap items-center gap-x-8 gap-y-4 mb-10 border-t border-b border-vv-line py-6">
+        <div className="flex flex-wrap justify-evenly items-center gap-y-4 mb-10 border-t border-b border-vv-line py-6">
           {socialStats.map((stat, i) => (
-            <div key={stat.label} className="flex items-center gap-5">
+            <div key={stat.label} className="flex items-center justify-between gap-5">
               <div>
-                <span className="text-[clamp(24px,2.5vw,34px)] font-bold tracking-[-0.03em] leading-none text-vv-accent-deep block">
-                  {stat.value}
-                </span>
+                <CountUpStat
+                  value={stat.value}
+                  className="text-[clamp(24px,2.5vw,34px)] font-bold tracking-[-0.03em] leading-none text-vv-accent-deep block"
+                />
                 <span className="font-code text-[10px] uppercase tracking-widest text-vv-muted mt-0.5 block">
                   {stat.label}
                 </span>

@@ -4,7 +4,11 @@
       "Bash(Get-ChildItem -Path \"e:\\\\CSE\\\\ONGSHAK\\\\projects\\\\vida_verde\\\\client v2\\\\src\" -Recurse -Directory)",
       "Bash(Select-Object -ExpandProperty FullName)",
       "Bash(Get-ChildItem -Path \"e:\\\\CSE\\\\ONGSHAK\\\\projects\\\\vida_verde\\\\client v2\" -Force)",
-      "Bash(Select-Object Name, PSIsContainer)"
+      "Bash(Select-Object Name, PSIsContainer)",
+      "Bash(npx shadcn@latest add carousel --yes)",
+      "Bash(npm install *)",
+      "Skill(claude-api)",
+      "Skill(claude-api:*)"
     ]
   }
 }

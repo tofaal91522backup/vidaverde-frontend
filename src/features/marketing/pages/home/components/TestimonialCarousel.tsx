@@ -1,115 +1,66 @@
 "use client";
 
+import { cn } from "@/lib/utils";
+import { useEffect, useRef, useState } from "react";
 import { testimonials } from "../data/marketing.data";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useRef, useState } from "react";
-
-function StarRating({ count = 5 }: { count?: number }) {
-  return (
-    <div className="flex gap-0.5" aria-label={`${count} out of 5 stars`}>
-      {Array.from({ length: 5 }).map((_, i) => (
-        <span
-          key={i}
-          className={i < count ? "text-amber-400" : "text-vv-line"}
-          aria-hidden="true"
-        >
-          ★
-        </span>
-      ))}
-    </div>
-  );
-}
 
 export function TestimonialCarousel() {
-  const trackRef = useRef<HTMLDivElement>(null);
-  const [index, setIndex] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const scrollerRef = useRef<HTMLUListElement>(null);
+  const [ready, setReady] = useState(false);
 
-  const scrollBy = (direction: -1 | 1) => {
-    const track = trackRef.current;
-    const first = track?.querySelector<HTMLElement>("[data-card]");
-    if (!track || !first) return;
-    track.scrollBy({
-      left: direction * (first.offsetWidth + 24),
-      behavior: "smooth",
+  useEffect(() => {
+    const container = containerRef.current;
+    const scroller = scrollerRef.current;
+    if (!container || !scroller) return;
+
+    Array.from(scroller.children).forEach((item) => {
+      scroller.appendChild(item.cloneNode(true));
     });
-  };
 
-  const update = () => {
-    const track = trackRef.current;
-    const first = track?.querySelector<HTMLElement>("[data-card]");
-    if (!track || !first) return;
-    setIndex(Math.round(track.scrollLeft / (first.offsetWidth + 24)));
-  };
+    container.style.setProperty("--marquee-duration", "55s");
+    container.style.setProperty("--marquee-direction", "forwards");
+    setReady(true);
+  }, []);
 
   return (
-    <div>
-      {/* Track */}
-      <div
-        className="flex gap-6 overflow-x-auto p-1 pb-6 scroll-smooth snap-x snap-mandatory scrollbar-none [scrollbar-width:none] [&::-webkit-scrollbar]:hidden max-[640px]:gap-3.5 max-[640px]:-mx-5 max-[640px]:px-5"
-        ref={trackRef}
-        onScroll={update}
+    <div
+      ref={containerRef}
+      className="overflow-hidden mask-[linear-gradient(to_right,transparent,white_8%,white_92%,transparent)]"
+      aria-label="Student testimonials"
+    >
+      <ul
+        ref={scrollerRef}
+        className={cn(
+          "flex w-max min-w-full shrink-0 flex-nowrap gap-6 py-1",
+          ready && "animate-scroll-marquee",
+          "hover:paused",
+        )}
       >
         {testimonials.map((testimonial) => (
-          <article
-            data-card
-            className="flex flex-[0_0_calc(50%-12px)] flex-col gap-5 rounded-[22px] border border-vv-line bg-vv-bg p-8 snap-start max-[800px]:flex-[0_0_88%] max-[640px]:flex-[0_0_86%] max-[640px]:rounded-2xl max-[640px]:gap-4 max-[640px]:p-5.5"
-            key={testimonial.name}
-          >
-            <StarRating />
+          <li key={testimonial.name} className="w-95 max-[640px]:w-75 shrink-0">
+            <article className="flex h-full flex-col gap-4 rounded-[22px] border border-vv-line bg-vv-bg p-7 max-[640px]:p-5">
+              <blockquote className="flex-1 text-[16px] tracking-[-0.01em] leading-relaxed m-0 text-pretty text-vv-ink">
+                {testimonial.quote}
+              </blockquote>
 
-            <span
-              className="text-vv-accent-deep leading-[0.5] h-8 font-[var(--font-newsreader),Georgia,serif] text-[64px] italic"
-              aria-hidden="true"
-            >
-              &quot;
-            </span>
-
-            <blockquote className="flex-1 text-[18px] tracking-[-0.01em] leading-normal m-0 text-pretty text-vv-ink max-[640px]:text-[16px]">
-              {testimonial.quote}
-            </blockquote>
-
-            <div className="flex items-center gap-3.5 border-t border-vv-line pt-5">
-              <div className="grid h-11 w-11 place-items-center rounded-full bg-vv-accent text-vv-accent-deep text-[15px] font-bold shrink-0">
-                {testimonial.initials}
-              </div>
-              <div>
-                <div className="text-[15px] font-semibold text-vv-ink">
-                  {testimonial.name}
+              <div className="flex items-center gap-3 border-t border-vv-line pt-4">
+                <div className="grid h-10 w-10 place-items-center rounded-full bg-vv-accent text-vv-accent-deep text-[14px] font-bold shrink-0">
+                  {testimonial.initials}
                 </div>
-                <div className="text-vv-muted text-[12px] mt-0.5">
-                  {testimonial.meta}
+                <div>
+                  <div className="text-[14px] font-semibold text-vv-ink">
+                    {testimonial.name}
+                  </div>
+                  <div className="text-vv-muted text-[11px] mt-0.5">
+                    {testimonial.meta}
+                  </div>
                 </div>
               </div>
-            </div>
-          </article>
+            </article>
+          </li>
         ))}
-      </div>
-
-      {/* Controls */}
-      <div className="flex items-center justify-between mt-6 max-[640px]:flex-col max-[640px]:items-start max-[640px]:gap-3.5">
-        <div className="font-code text-vv-muted text-[12px] tracking-[0.05em]">
-          {String(index + 1).padStart(2, "0")} /{" "}
-          {String(testimonials.length).padStart(2, "0")}
-        </div>
-        <div className="flex gap-2">
-          <button
-            type="button"
-            aria-label="Previous"
-            className="grid h-11 w-11 place-items-center rounded-full border border-vv-line bg-vv-bg transition-all duration-150 hover:bg-vv-ink hover:border-vv-ink hover:text-vv-bg"
-            onClick={() => scrollBy(-1)}
-          >
-            <ChevronLeft aria-hidden="true" />
-          </button>
-          <button
-            type="button"
-            aria-label="Next"
-            className="grid h-11 w-11 place-items-center rounded-full border border-vv-line bg-vv-bg transition-all duration-150 hover:bg-vv-ink hover:border-vv-ink hover:text-vv-bg"
-            onClick={() => scrollBy(1)}
-          >
-            <ChevronRight aria-hidden="true" />
-          </button>
-        </div>
-      </div>
+      </ul>
     </div>
   );
 }
