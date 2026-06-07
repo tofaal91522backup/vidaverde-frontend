@@ -68,19 +68,21 @@ const TestimonialSection = () => {
           </div>
         </div>
 
-        {/* Stats grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-10">
-          {socialStats.map((stat) => (
-            <div
-              key={stat.label}
-              className="flex flex-col gap-1.5 rounded-[18px] border border-vv-line bg-vv-bg px-6 py-5"
-            >
-              <span className="text-[clamp(28px,3vw,40px)] font-bold tracking-[-0.03em] leading-none text-vv-accent-deep">
-                {stat.value}
-              </span>
-              <span className="font-code text-[11px] uppercase tracking-widest text-vv-muted">
-                {stat.label}
-              </span>
+        {/* Stats inline row */}
+        <div className="flex flex-wrap items-center gap-x-8 gap-y-4 mb-10 border-t border-b border-vv-line py-6">
+          {socialStats.map((stat, i) => (
+            <div key={stat.label} className="flex items-center gap-5">
+              <div>
+                <span className="text-[clamp(24px,2.5vw,34px)] font-bold tracking-[-0.03em] leading-none text-vv-accent-deep block">
+                  {stat.value}
+                </span>
+                <span className="font-code text-[10px] uppercase tracking-widest text-vv-muted mt-0.5 block">
+                  {stat.label}
+                </span>
+              </div>
+              {i < socialStats.length - 1 && (
+                <div className="h-8 w-px bg-vv-line shrink-0" aria-hidden="true" />
+              )}
             </div>
           ))}
         </div>
