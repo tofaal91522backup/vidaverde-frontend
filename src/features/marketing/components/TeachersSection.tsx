@@ -1,4 +1,5 @@
 import { Container } from "@/components/shared/Container";
+import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -57,19 +58,17 @@ export function TeachersSection() {
   return (
     <section className="border-t border-vv-line bg-vv-bg">
       <Container>
-        <div className="flex items-end justify-between gap-8 mb-12 max-[760px]:flex-col max-[760px]:items-start">
-          <div className="flex flex-col gap-3.5 max-w-160">
-            <span className="font-code text-vv-muted text-[11px] font-medium tracking-[0.14em] uppercase">
-              {"// Our Team"}
-            </span>
-            <h2 className="text-[clamp(28px,3vw,44px)] font-semibold tracking-[-0.02em] leading-[1.08] m-0 text-balance">
-              Meet Our Teachers
-            </h2>
-          </div>
-          <p className="text-vv-ink-2 text-[clamp(17px,1.4vw,20px)] leading-normal max-w-[42ch] text-pretty m-0">
-            All of our teachers are university-trained, native Ecuadorians with
-            years of experience. They&apos;re dedicated to supporting you and
-            inspiring you as you learn Spanish.
+        <div className="flex flex-col gap-3.5 mb-12 max-w-[54ch]">
+          <span className="font-code text-vv-muted text-[11px] font-medium tracking-[0.14em] uppercase">
+            {"// Meet the Teachers"}
+          </span>
+          <h2 className="text-[clamp(28px,3vw,44px)] font-semibold tracking-[-0.02em] leading-[1.08] m-0 text-balance">
+            Your Teacher Is Waiting
+          </h2>
+          <p className="text-vv-ink-2 text-[clamp(15px,1.1vw,17px)] leading-relaxed m-0 text-pretty">
+            Choose your teacher and book your first lesson today. All our
+            teachers are Ecuadorian native speakers with university-level
+            training.
           </p>
         </div>
 
@@ -77,6 +76,16 @@ export function TeachersSection() {
           {teachers.map((teacher) => (
             <TeacherCard key={teacher.name} teacher={teacher} />
           ))}
+        </div>
+
+        <div className="flex justify-center mt-10">
+          <Link
+            href="/teachers"
+            className="inline-flex items-center gap-2.5 border border-vv-line rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap hover:border-vv-ink hover:-translate-y-px"
+          >
+            Meet all our teachers
+            <ArrowRight aria-hidden="true" className="h-4 w-4" />
+          </Link>
         </div>
       </Container>
     </section>
@@ -136,7 +145,7 @@ function TeacherCard({ teacher }: { teacher: (typeof teachers)[number] }) {
         </div>
 
         <Link
-          href={`/book?teacher=${teacher.firstName.toLowerCase()}`}
+          href={`/online-classes/book?teacher=${teacher.firstName.toLowerCase()}`}
           className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[13px] font-semibold tracking-[-0.005em] py-2.25 px-3.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px text-center"
         >
           Book with {teacher.firstName} →

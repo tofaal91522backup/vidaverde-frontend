@@ -8,7 +8,13 @@
       "Bash(npx shadcn@latest add carousel --yes)",
       "Bash(npm install *)",
       "Skill(claude-api)",
-      "Skill(claude-api:*)"
+      "Skill(claude-api:*)",
+      "Bash(Remove-Item -Recurse -Force \"e:\\\\CSE\\\\ONGSHAK\\\\projects\\\\vida_verde\\\\client v2\\\\src\\\\app\\\\\\(marketing\\)\\\\book\")",
+      "WebFetch(domain:ui.aceternity.com)",
+      "WebSearch",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(node -e \"require\\('dotted-map'\\); console.log\\('ok'\\)\")",
+      "Bash(node -e \"require\\('motion'\\); console.log\\('ok'\\)\")"
     ]
   }
 }

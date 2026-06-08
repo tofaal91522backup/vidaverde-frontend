@@ -37,33 +37,39 @@ const packages = [
     id: "first-lesson",
     label: "Assessment & First Lesson",
     price: "$12",
-    description: "60-min session with level assessment. One per student.",
-    badge: "Recommended",
+    description: "60-min session with full level assessment and personalised learning plan. One per student.",
+    badge: "★ Recommended for new students",
   },
   {
     id: "single",
     label: "Single Class",
-    price: "$15",
-    description: "One 60-minute lesson. Pay as you go.",
+    price: "$[X]",
+    description: "One 60-minute lesson. No commitment.",
   },
   {
     id: "pack-10",
     label: "10-Class Package",
-    price: "$130",
-    description: "10 × 60-min lessons. Valid 3 months.",
+    price: "$[X]",
+    description: "10 × 60-min private lessons. Valid for 3 months.",
   },
   {
     id: "pack-20",
     label: "20-Class Package",
-    price: "$250",
-    description: "20 × 60-min lessons. Best value. Valid 6 months.",
-    badge: "Best Value",
+    price: "$254.64",
+    description: "20 × 60-min private lessons. Best-value package for serious learners. Valid for 6 months.",
+    badge: "★ Best value",
   },
 ];
 
-const levels = ["None — complete beginner", "Beginner (A1–A2)", "Intermediate (B1–B2)", "Advanced (C1)"];
+const levels = [
+  "Complete beginner — I know very little Spanish",
+  "Beginner — I know some basics",
+  "Intermediate — I can hold simple conversations",
+  "Upper intermediate — I'm fairly comfortable but want to improve",
+  "Advanced — I want to polish and perfect",
+];
 
-const STEPS = ["Teacher", "Package", "Date & Time", "Your Details", "Payment", "Confirmation"] as const;
+const STEPS = ["Choose Your Teacher", "Choose Your Package", "Date & Time", "Your Details", "Payment"] as const;
 
 export default function BookRoute() {
   const searchParams = useSearchParams();
@@ -74,6 +80,7 @@ export default function BookRoute() {
 
   const [step, setStep] = useState(initialTeacher ? 1 : 0);
   const [selectedTeacher, setSelectedTeacher] = useState<(typeof teachers)[number] | null>(initialTeacher);
+  const [matchMe, setMatchMe] = useState(false);
   const [selectedPackage, setSelectedPackage] = useState<(typeof packages)[number] | null>(packages[0]);
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
@@ -83,7 +90,7 @@ export default function BookRoute() {
   const availableTimes = ["9:00 AM", "10:00 AM", "11:00 AM", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM"];
 
   const canAdvance = () => {
-    if (step === 0) return !!selectedTeacher;
+    if (step === 0) return !!selectedTeacher || matchMe;
     if (step === 1) return !!selectedPackage;
     if (step === 2) return !!selectedDate && !!selectedTime;
     if (step === 3) return !!details.firstName && !!details.lastName && !!details.email;
@@ -93,7 +100,6 @@ export default function BookRoute() {
 
   const handleConfirm = () => {
     setConfirmed(true);
-    setStep(5);
   };
 
   if (confirmed) {
@@ -104,16 +110,21 @@ export default function BookRoute() {
           <h1 className="text-[clamp(28px,3vw,44px)] font-semibold tracking-[-0.02em] leading-[1.08] m-0 mb-4 text-balance">
             You&apos;re booked!
           </h1>
-          <p className="text-vv-ink-2 text-[clamp(17px,1.4vw,20px)] leading-normal max-w-[50ch] mx-auto m-0">
-            A confirmation email with your Google Meet link and details about
-            your teacher is on its way to{" "}
-            <strong className="text-vv-ink">{details.email}</strong>.
+          <p className="text-vv-ink-2 text-[clamp(17px,1.4vw,20px)] leading-normal max-w-[52ch] mx-auto m-0">
+            Your lesson with{" "}
+            <strong className="text-vv-ink">
+              {matchMe ? "your matched teacher" : selectedTeacher?.name}
+            </strong>{" "}
+            is confirmed for{" "}
+            <strong className="text-vv-ink">{selectedDate}</strong> at{" "}
+            <strong className="text-vv-ink">{selectedTime}</strong> in your timezone.
+            Check your inbox — we&apos;ve sent everything you need.
           </p>
           <div className="mt-8 rounded-xl border border-vv-line bg-vv-bg-warm p-6 text-left max-w-md mx-auto">
             <h3 className="font-semibold text-vv-ink mb-3">Booking Summary</h3>
             <dl className="flex flex-col gap-2 text-[14px]">
               {[
-                ["Teacher", selectedTeacher?.name],
+                ["Teacher", matchMe ? "Matched by Vida Verde" : selectedTeacher?.name],
                 ["Package", selectedPackage?.label],
                 ["Date", selectedDate],
                 ["Time", selectedTime],
@@ -127,10 +138,10 @@ export default function BookRoute() {
             </dl>
           </div>
           <a
-            href="/"
-            className="inline-flex items-center justify-center gap-2.5 border border-vv-line-2 rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-transparent text-vv-ink hover:bg-vv-ink hover:border-vv-ink hover:text-vv-bg mt-6"
+            href="#"
+            className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px mt-6"
           >
-            ← Back to homepage
+            Add to Calendar →
           </a>
         </Container>
       </section>
@@ -140,13 +151,14 @@ export default function BookRoute() {
   return (
     <section className="py-12" data-screen-label="Book a Lesson">
       <Container className="max-w-215">
-        {/* Progress */}
+        {/* Header + progress */}
         <div className="mb-10">
           <div className="font-code text-vv-muted text-[12px] tracking-[0.06em] mb-4">
-            Home <span className="mx-1 text-vv-line-2">/</span> Book a Lesson
+            Home <span className="mx-1 text-vv-line-2">/</span> Online Classes{" "}
+            <span className="mx-1 text-vv-line-2">/</span> Book
           </div>
           <h1 className="text-[clamp(28px,3vw,44px)] font-semibold tracking-[-0.02em] leading-[1.08] m-0 mb-6 text-balance">
-            Book Your Lesson
+            Book Your Spanish Lesson
           </h1>
           <div className="flex gap-1 overflow-x-auto pb-1">
             {STEPS.map((label, i) => (
@@ -170,16 +182,19 @@ export default function BookRoute() {
         {/* Step 0 — Teacher */}
         {step === 0 && (
           <div>
-            <h2 className="text-[20px] font-semibold mb-6 text-vv-ink">Choose Your Teacher</h2>
+            <h2 className="text-[20px] font-semibold mb-1 text-vv-ink">Choose Your Teacher</h2>
+            <p className="text-[14px] text-vv-ink-2 mb-6">
+              Not sure? We&apos;ll match you with the best available teacher.
+            </p>
             <div className="grid gap-4 sm:grid-cols-2">
               {teachers.map((t) => (
                 <button
                   key={t.name}
                   type="button"
-                  onClick={() => setSelectedTeacher(t)}
+                  onClick={() => { setSelectedTeacher(t); setMatchMe(false); }}
                   className={cn(
                     "flex items-center gap-4 rounded-xl border p-4 text-left transition",
-                    selectedTeacher?.name === t.name
+                    selectedTeacher?.name === t.name && !matchMe
                       ? "border-vv-accent bg-vv-accent/10"
                       : "border-vv-line hover:border-vv-ink",
                   )}
@@ -194,6 +209,28 @@ export default function BookRoute() {
                   </div>
                 </button>
               ))}
+
+              {/* Match me option */}
+              <button
+                type="button"
+                onClick={() => { setMatchMe(true); setSelectedTeacher(null); }}
+                className={cn(
+                  "flex items-center gap-4 rounded-xl border p-4 text-left transition sm:col-span-2",
+                  matchMe
+                    ? "border-vv-accent bg-vv-accent/10"
+                    : "border-vv-line border-dashed hover:border-vv-ink",
+                )}
+              >
+                <div className="h-12 w-12 shrink-0 rounded-full bg-vv-bg-warm border border-vv-line flex items-center justify-center text-xl">
+                  ✨
+                </div>
+                <div>
+                  <div className="font-semibold text-vv-ink text-[15px]">Match me with a teacher</div>
+                  <div className="text-[12px] text-vv-ink-2">
+                    Tell us your level and goals — we&apos;ll pick the best fit for you.
+                  </div>
+                </div>
+              </button>
             </div>
           </div>
         )}
@@ -201,7 +238,7 @@ export default function BookRoute() {
         {/* Step 1 — Package */}
         {step === 1 && (
           <div>
-            <h2 className="text-[20px] font-semibold mb-6 text-vv-ink">Select a Package</h2>
+            <h2 className="text-[20px] font-semibold mb-6 text-vv-ink">Choose Your Package</h2>
             <div className="grid gap-4 sm:grid-cols-2">
               {packages.map((pkg) => (
                 <button
@@ -220,9 +257,9 @@ export default function BookRoute() {
                       {pkg.badge}
                     </span>
                   )}
-                  <div className="flex justify-between items-start">
+                  <div className="flex justify-between items-start gap-2">
                     <span className="font-semibold text-vv-ink text-[15px]">{pkg.label}</span>
-                    <span className="text-[18px] font-bold text-vv-ink ml-2">{pkg.price}</span>
+                    <span className="text-[18px] font-bold text-vv-ink shrink-0">{pkg.price}</span>
                   </div>
                   <p className="text-[13px] text-vv-ink-2">{pkg.description}</p>
                 </button>
@@ -234,9 +271,9 @@ export default function BookRoute() {
         {/* Step 2 — Date & Time */}
         {step === 2 && (
           <div>
-            <h2 className="text-[20px] font-semibold mb-6 text-vv-ink">Choose Date &amp; Time</h2>
-            <p className="text-[13px] text-vv-ink-2 mb-4">
-              All times shown in your local timezone. Ecuador is GMT−5.
+            <h2 className="text-[20px] font-semibold mb-1 text-vv-ink">Choose Your Date &amp; Time</h2>
+            <p className="text-[13px] text-vv-ink-2 mb-6">
+              Times shown in your local timezone. Ecuador is GMT−5.
             </p>
             <div className="flex flex-col gap-5">
               <div className="flex flex-col gap-1.5">
@@ -282,23 +319,33 @@ export default function BookRoute() {
           <div>
             <h2 className="text-[20px] font-semibold mb-6 text-vv-ink">Your Details</h2>
             <div className="grid gap-4 sm:grid-cols-2">
-              {(["firstName", "lastName"] as const).map((field) => (
-                <div key={field} className="flex flex-col gap-1.5">
-                  <label className="text-[12px] font-medium uppercase tracking-wide text-vv-ink-2">
-                    {field === "firstName" ? "First Name" : "Last Name"}
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={details[field]}
-                    onChange={(e) => setDetails((d) => ({ ...d, [field]: e.target.value }))}
-                    className="rounded-lg border border-vv-line bg-vv-bg-warm px-4 py-3 text-[15px] text-vv-ink outline-none focus:border-vv-accent"
-                  />
-                </div>
-              ))}
+              <div className="flex flex-col gap-1.5">
+                <label className="text-[12px] font-medium uppercase tracking-wide text-vv-ink-2">
+                  First name
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={details.firstName}
+                  onChange={(e) => setDetails((d) => ({ ...d, firstName: e.target.value }))}
+                  className="rounded-lg border border-vv-line bg-vv-bg-warm px-4 py-3 text-[15px] text-vv-ink outline-none focus:border-vv-accent"
+                />
+              </div>
+              <div className="flex flex-col gap-1.5">
+                <label className="text-[12px] font-medium uppercase tracking-wide text-vv-ink-2">
+                  Last name
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={details.lastName}
+                  onChange={(e) => setDetails((d) => ({ ...d, lastName: e.target.value }))}
+                  className="rounded-lg border border-vv-line bg-vv-bg-warm px-4 py-3 text-[15px] text-vv-ink outline-none focus:border-vv-accent"
+                />
+              </div>
               <div className="flex flex-col gap-1.5 sm:col-span-2">
                 <label className="text-[12px] font-medium uppercase tracking-wide text-vv-ink-2">
-                  Email Address
+                  Email address
                 </label>
                 <input
                   type="email"
@@ -310,7 +357,7 @@ export default function BookRoute() {
               </div>
               <div className="flex flex-col gap-1.5 sm:col-span-2">
                 <label className="text-[12px] font-medium uppercase tracking-wide text-vv-ink-2">
-                  Current Spanish Level
+                  Your current Spanish level
                 </label>
                 <select
                   value={details.level}
@@ -329,13 +376,13 @@ export default function BookRoute() {
           <div>
             <h2 className="text-[20px] font-semibold mb-2 text-vv-ink">Payment</h2>
             <p className="text-[13px] text-vv-ink-2 mb-6">
-              Secure payment processed by Stripe. Your card details never touch our servers.
+              Secure payment via Stripe. Your card details are never stored on our servers.
             </p>
             <div className="rounded-xl border border-vv-line bg-vv-bg-warm p-6 mb-6">
               <h3 className="font-semibold text-vv-ink mb-3">Order Summary</h3>
               <dl className="flex flex-col gap-2 text-[14px]">
                 {[
-                  ["Teacher", selectedTeacher?.name],
+                  ["Teacher", matchMe ? "Matched by Vida Verde" : selectedTeacher?.name],
                   ["Package", selectedPackage?.label],
                   ["Date", `${selectedDate} at ${selectedTime}`],
                   ["Platform", "Google Meet"],
@@ -394,43 +441,42 @@ export default function BookRoute() {
           </div>
         )}
 
-        {/* Navigation buttons */}
-        {step < 5 && (
-          <div className="mt-8 flex items-center justify-between border-t border-vv-line pt-6">
-            {step > 0 ? (
-              <button
-                type="button"
-                onClick={() => setStep((s) => s - 1)}
-                className="inline-flex items-center justify-center gap-2.5 border border-vv-line-2 rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-transparent text-vv-ink hover:bg-vv-ink hover:border-vv-ink hover:text-vv-bg"
-              >
-                ← Back
-              </button>
-            ) : (
-              <div />
-            )}
-            {step < 4 ? (
-              <button
-                type="button"
-                disabled={!canAdvance()}
-                onClick={() => setStep((s) => s + 1)}
-                className={cn(
-                  "inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px",
-                  !canAdvance() && "opacity-40 cursor-not-allowed",
-                )}
-              >
-                Continue →
-              </button>
-            ) : (
-              <button
-                type="button"
-                onClick={handleConfirm}
-                className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px"
-              >
-                Confirm & Pay {selectedPackage?.price} →
-              </button>
-            )}
-          </div>
-        )}
+        {/* Navigation */}
+        <div className="mt-8 flex items-center justify-between border-t border-vv-line pt-6">
+          {step > 0 ? (
+            <button
+              type="button"
+              onClick={() => setStep((s) => s - 1)}
+              className="inline-flex items-center justify-center gap-2.5 border border-vv-line-2 rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-transparent text-vv-ink hover:bg-vv-ink hover:border-vv-ink hover:text-vv-bg"
+            >
+              ← Back
+            </button>
+          ) : (
+            <div />
+          )}
+
+          {step < 4 ? (
+            <button
+              type="button"
+              disabled={!canAdvance()}
+              onClick={() => setStep((s) => s + 1)}
+              className={cn(
+                "inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px",
+                !canAdvance() && "opacity-40 cursor-not-allowed",
+              )}
+            >
+              Continue →
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={handleConfirm}
+              className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px"
+            >
+              Confirm &amp; Pay — {selectedPackage?.price}
+            </button>
+          )}
+        </div>
       </Container>
     </section>
   );

@@ -67,7 +67,7 @@ export function PostDetail({ post }: { post: BlogPost }) {
               Book your first lesson with a Vida Verde teacher for just $12 — includes a level assessment and personalised learning plan.
             </p>
             <Link
-              href="/book"
+              href="/online-classes/book"
               className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px"
             >
               Book My First Lesson →

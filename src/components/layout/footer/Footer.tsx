@@ -50,7 +50,7 @@ const socialLinks = [
 export default function Footer() {
   return (
     <footer
-      className="border-t border-vv-line bg-vv-bg-warm py-16"
+      className="border-t border-vv-line bg-vv-accent/10 py-16"
       data-screen-label="Footer"
     >
       <Container>

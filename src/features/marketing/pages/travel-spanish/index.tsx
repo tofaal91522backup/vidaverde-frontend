@@ -1,29 +1,41 @@
 import { Container } from "@/components/shared/Container";
-import { MarketingButton } from "@/features/marketing/components/MarketingButton";
-import { SectionHeader } from "@/features/marketing/pages/home/components/SectionHeader";
-import { Calendar, Globe2, MapPin, Star } from "lucide-react";
+import WorldMap from "@/components/ui/world-map";
+import { Star } from "lucide-react";
 import Link from "next/link";
+
+const TRAVEL_DOTS = [
+  {
+    start: { lat: 40.71, lng: -74.0, label: "New York" },
+    end: { lat: -0.22, lng: -78.51, label: "Quito" },
+  },
+  {
+    start: { lat: 51.5, lng: -0.12, label: "London" },
+    end: { lat: -0.22, lng: -78.51, label: "Quito" },
+  },
+  {
+    start: { lat: 52.52, lng: 13.4, label: "Berlin" },
+    end: { lat: -0.22, lng: -78.51, label: "Quito" },
+  },
+  {
+    start: { lat: -33.86, lng: 151.2, label: "Sydney" },
+    end: { lat: -0.22, lng: -78.51, label: "Quito" },
+  },
+  {
+    start: { lat: 35.68, lng: 139.69, label: "Tokyo" },
+    end: { lat: -0.22, lng: -78.51, label: "Quito" },
+  },
+  {
+    start: { lat: 43.65, lng: -79.38, label: "Toronto" },
+    end: { lat: -0.22, lng: -78.51, label: "Quito" },
+  },
+  {
+    start: { lat: 48.85, lng: 2.35, label: "Paris" },
+    end: { lat: -0.22, lng: -78.51, label: "Quito" },
+  },
+];
 
 const WHATSAPP_HREF =
   "https://wa.me/593998037473?text=Hi%2C%20I%27d%20like%20to%20find%20out%20more%20about%20Travel%20Spanish%20classes%20at%20Vida%20Verde.";
-
-const offerings = [
-  {
-    icon: Calendar,
-    title: "Short-Stay Classes",
-    body: "Even a few days of focused one-on-one Spanish can transform your trip. We offer classes from a single day to several weeks, in person in Quito or via Google Meet before you arrive.",
-  },
-  {
-    icon: MapPin,
-    title: "In-Person or Online",
-    body: "Already in Ecuador? Join us at our La Floresta school in Quito. Planning ahead? Start online before your trip and continue in person when you arrive.",
-  },
-  {
-    icon: Globe2,
-    title: "Travel Advisory Included",
-    body: "Our team knows Ecuador. Along with your Spanish classes, we can advise on travel routes, safe neighbourhoods, local recommendations, and cultural customs to help your trip go smoothly.",
-  },
-];
 
 const reviews = [
   {
@@ -61,17 +73,17 @@ export default function TravelSpanishRoute() {
           <div className="font-code text-vv-muted text-[12px] tracking-[0.06em] mb-6">
             Home <span className="mx-1 text-vv-line-2">/</span> Travel Spanish
           </div>
-          <div className="grid lg:grid-cols-[1fr_auto] items-end gap-10 max-[900px]:grid-cols-1">
-            <div className="flex flex-col gap-5 max-w-160">
+          <div className="grid lg:grid-cols-[0.8fr_1.2fr]  gap-10 max-[900px]:grid-cols-1">
+            <div className="flex flex-col gap-5">
               <h1 className="text-[clamp(34px,4.5vw,64px)] font-semibold tracking-[-0.03em] leading-[1.08] m-0">
                 Travelling to Ecuador?{" "}
-                <span className="text-vv-accent">Learn the Spanish</span>{" "}
-                You'll Actually Use.
+                <span className="text-vv-accent-deep">Learn the Spanish</span>{" "}
+                You&apos;ll Actually Use.
               </h1>
-              <p className="text-vv-ink-2 text-[clamp(16px,1.3vw,19px)] leading-relaxed m-0 max-w-[52ch] text-pretty">
-                Short-stay classes in person in Quito or online before you
-                arrive. Native teachers, flexible scheduling, real results. Even
-                in just a few days.
+              <p className="text-vv-ink-2 text-[clamp(16px,1.3vw,19px)] leading-relaxed m-0 max-w-[56ch] text-pretty">
+                A few classes before or during your trip can transform your
+                experience. Our teachers specialise in practical, conversational
+                Spanish — the kind that gets you off the tourist trail.
               </p>
               <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 mt-1">
                 <Link
@@ -80,87 +92,110 @@ export default function TravelSpanishRoute() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px"
                 >
-                  Plan My Travel Spanish
+                  Plan My Travel Spanish — WhatsApp Us
                 </Link>
-                <MarketingButton href="/contact" tone="ghost">
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center justify-center gap-2.5 border border-vv-line-2 rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-transparent text-vv-ink hover:bg-vv-ink hover:border-vv-ink hover:text-vv-bg"
+                >
                   Send Us a Message →
-                </MarketingButton>
+                </Link>
               </div>
+              <p className="text-[13px] text-vv-muted m-0">
+                We respond within 24 hours, Monday to Friday.
+              </p>
             </div>
 
-            {/* Stat card */}
-            <div className="flex flex-col gap-4 rounded-2xl border border-vv-line bg-vv-bg px-7 py-6 min-w-56 max-[900px]:hidden">
-              <div className="flex items-center gap-1">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <Star
-                    key={i}
-                    className="h-4 w-4 fill-amber-400 text-amber-400"
-                    aria-hidden="true"
-                  />
-                ))}
-              </div>
-              <div>
-                <div className="text-[32px] font-bold tracking-tight text-vv-ink leading-none">
-                  5.0
-                </div>
-                <div className="text-[12px] text-vv-muted mt-1 font-code uppercase tracking-widest">
-                  Rated on TripAdvisor
-                </div>
-              </div>
-              <div className="border-t border-vv-line pt-4 text-[13px] text-vv-ink-2 leading-snug">
-                Trusted by travellers from over 50 countries since 1999.
-              </div>
+            <div className="max-[900px]:hidden overflow-hidden">
+              <WorldMap dots={TRAVEL_DOTS} lineColor="#a3d635" />
             </div>
           </div>
         </Container>
       </section>
 
-      {/* What to Expect */}
+      {/* Spanish for Travellers */}
       <section
         className="border-t border-vv-line bg-vv-bg"
-        data-screen-label="02 Offering"
+        data-screen-label="02 Offer"
       >
         <Container>
-          <SectionHeader
-            eyebrow="// What You Get"
-            title="Spanish built for your trip."
-            lede="No textbook grammar you'll never use. Just the words and phrases that get you through real situations in Ecuador."
-          />
-          <div className="grid gap-5 md:grid-cols-3">
-            {offerings.map((item) => {
-              const Icon = item.icon;
-              return (
-                <article
-                  key={item.title}
-                  className="flex flex-col gap-4 rounded-[22px] border border-vv-line bg-vv-bg-warm p-7"
+          <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-20 items-start">
+            <div className="flex flex-col gap-5">
+              <span className="font-code text-vv-muted text-[11px] font-medium tracking-[0.14em] uppercase">
+                {"// Spanish for Travellers"}
+              </span>
+              <h2 className="text-[clamp(28px,3vw,44px)] font-semibold tracking-[-0.02em] leading-[1.08] m-0 text-balance">
+                Spanish for Travellers
+              </h2>
+              <p className="text-[16px] leading-[1.75] text-vv-ink-2 m-0">
+                Whether you have a week or a month, a few targeted Spanish
+                classes can make a real difference to how you experience
+                Ecuador. Our travel Spanish programme is flexible, practical,
+                and built around you.
+              </p>
+              <p className="text-[16px] leading-[1.75] text-vv-ink-2 m-0">
+                Classes can be taken online before you arrive, or in person in
+                Quito. Add a homestay with a local family and you&apos;ll be
+                practising around the clock.
+              </p>
+              <p className="text-[16px] leading-[1.75] text-vv-ink-2 m-0">
+                If you&apos;d like advice on your itinerary, local
+                recommendations, or help navigating Ecuador as a traveller, our
+                team is happy to help. We&apos;ve been in Quito for 25 years —
+                we know the country well.
+              </p>
+            </div>
+
+            {/* Pricing note card */}
+            <div className="rounded-[22px] border border-vv-line bg-vv-bg-warm p-7 flex flex-col gap-4 lg:sticky lg:top-24">
+              <div className="font-code text-vv-muted text-[11px] font-medium tracking-[0.14em] uppercase">
+                {"// Pricing"}
+              </div>
+              <p className="text-[15px] leading-[1.7] text-vv-ink-2 m-0">
+                There&apos;s no fixed price for travel Spanish — it depends on
+                how many classes you want, whether you&apos;d like online or
+                in-person, and whether you&apos;re adding a homestay. Contact us
+                and we&apos;ll put together a custom quote.
+              </p>
+              <div className="flex flex-col gap-2.5 pt-2">
+                <Link
+                  href={WHATSAPP_HREF}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[14px] font-semibold tracking-[-0.005em] py-3 px-5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px text-center"
                 >
-                  <div className="grid h-11 w-11 place-items-center rounded-full bg-vv-accent text-vv-accent-deep shrink-0">
-                    <Icon className="h-5 w-5" aria-hidden="true" />
-                  </div>
-                  <h3 className="text-[18px] font-semibold tracking-[-0.02em] leading-tight text-vv-ink m-0">
-                    {item.title}
-                  </h3>
-                  <p className="text-[14px] leading-[1.6] text-vv-ink-2 m-0">
-                    {item.body}
-                  </p>
-                </article>
-              );
-            })}
+                  Plan My Travel Spanish — WhatsApp Us
+                </Link>
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center justify-center gap-2.5 border border-vv-line-2 rounded-full cursor-pointer text-[14px] font-semibold tracking-[-0.005em] py-3 px-5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-transparent text-vv-ink hover:bg-vv-ink hover:border-vv-ink hover:text-vv-bg text-center"
+                >
+                  Send Us a Message →
+                </Link>
+              </div>
+            </div>
           </div>
         </Container>
       </section>
 
-      {/* Reviews */}
+      {/* What Travellers Say */}
       <section
         className="border-t border-vv-line bg-vv-bg-warm"
         data-screen-label="03 Reviews"
       >
         <Container>
-          <SectionHeader
-            eyebrow="// Traveller Reviews"
-            title="What travellers say."
-            lede="Rated Excellent on TripAdvisor. Here's what Ecuador-bound students say about learning with us."
-          />
+          <div className="flex flex-col gap-3 mb-12">
+            <span className="font-code text-vv-muted text-[11px] font-medium tracking-[0.14em] uppercase">
+              {"// TripAdvisor"}
+            </span>
+            <h2 className="text-[clamp(28px,3vw,44px)] font-semibold tracking-[-0.02em] leading-[1.08] m-0 text-balance">
+              What Travellers Say About Us
+            </h2>
+            <p className="text-[13px] text-vv-muted italic">
+              TripAdvisor profile URL and badge to be supplied by Vida Verde.
+            </p>
+          </div>
+
           <div className="grid gap-5 md:grid-cols-3">
             {reviews.map((review) => (
               <article
@@ -194,105 +229,6 @@ export default function TravelSpanishRoute() {
                 </div>
               </article>
             ))}
-          </div>
-        </Container>
-      </section>
-
-      {/* Pricing note */}
-      <section
-        className="border-t border-vv-line bg-vv-bg"
-        data-screen-label="04 Pricing"
-      >
-        <Container className="max-w-220">
-          <div className="grid md:grid-cols-2 gap-10 items-center">
-            <div className="flex flex-col gap-4">
-              <span className="font-code text-vv-muted text-[11px] font-medium tracking-[0.14em] uppercase">
-                {"// Pricing"}
-              </span>
-              <h2 className="text-[clamp(26px,3vw,40px)] font-semibold tracking-[-0.02em] leading-tight m-0">
-                Custom pricing for every trip.
-              </h2>
-              <p className="text-vv-ink-2 text-[16px] leading-relaxed m-0">
-                Travel Spanish is bespoke. Pricing depends on how many days you
-                have, whether you want classes online or in person, and whether
-                you'd like to add homestay. Contact us and we'll put together a
-                plan that fits your trip and your budget.
-              </p>
-              <p className="text-vv-ink-2 text-[16px] leading-relaxed m-0">
-                Most travellers do 2–5 days of intensive classes. Online lessons
-                start from $12 per class. WhatsApp us and we'll reply within a
-                few hours with a tailored quote.
-              </p>
-            </div>
-            <div className="flex flex-col gap-4 rounded-[22px] border border-vv-line bg-vv-bg-warm p-8">
-              <div className="font-code text-vv-muted text-[11px] uppercase tracking-widest">
-                Custom quote
-              </div>
-              <div className="text-[42px] font-bold text-vv-ink tracking-tight leading-none">
-                Get a Quote
-              </div>
-              <p className="text-vv-ink-2 text-[14px] leading-relaxed m-0">
-                No fixed packages here. Tell us your trip dates and goals and
-                we'll build a plan around you.
-              </p>
-              <ul className="flex flex-col gap-2 list-none p-0 m-0">
-                {[
-                  "Flexible duration: 1 day to several weeks",
-                  "In-person in Quito or online via Google Meet",
-                  "Homestay add-on available",
-                  "We reply within a few hours",
-                ].map((f) => (
-                  <li key={f} className="flex items-start gap-2 text-[13px] text-vv-ink-2">
-                    <span className="text-vv-accent mt-0.5" aria-hidden="true">✓</span>
-                    {f}
-                  </li>
-                ))}
-              </ul>
-              <Link
-                href={WHATSAPP_HREF}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mt-2 inline-flex items-center justify-center gap-2.5 border border-vv-ink rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-ink text-vv-bg hover:bg-vv-accent-deep hover:border-vv-accent-deep hover:-translate-y-px"
-              >
-                WhatsApp Us for a Quote
-              </Link>
-            </div>
-          </div>
-        </Container>
-      </section>
-
-      {/* Bottom CTA */}
-      <section
-        className="border-t border-vv-line bg-vv-ink"
-        data-screen-label="05 Bottom CTA"
-      >
-        <Container className="text-center">
-          <span className="font-code text-vv-accent text-[11px] font-medium tracking-[0.14em] uppercase">
-            {"// Ready to go?"}
-          </span>
-          <div className="h-4" />
-          <h2 className="text-[clamp(28px,3vw,44px)] font-semibold tracking-[-0.02em] leading-[1.08] m-0 text-vv-bg text-balance">
-            Your trip will be better with Spanish.
-          </h2>
-          <p className="text-vv-bg/70 text-[clamp(16px,1.3vw,19px)] leading-normal mt-3 max-w-[50ch] mx-auto m-0">
-            Even a few lessons before you fly makes a real difference. WhatsApp us
-            and we'll have a plan ready for you today.
-          </p>
-          <div className="mt-8 flex flex-col sm:flex-row flex-wrap gap-3 justify-center">
-            <Link
-              href={WHATSAPP_HREF}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px"
-            >
-              Plan My Travel Spanish
-            </Link>
-            <Link
-              href="/contact"
-              className="inline-flex items-center justify-center gap-2.5 border border-vv-bg/30 rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-transparent text-vv-bg hover:bg-vv-bg/10"
-            >
-              Send Us a Message →
-            </Link>
           </div>
         </Container>
       </section>

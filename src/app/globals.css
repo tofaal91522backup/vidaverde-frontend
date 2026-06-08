@@ -58,6 +58,8 @@
   --color-vv-nav-border: var(--vv-nav-border);
   --font-code: var(--font-jetbrains), ui-monospace, monospace;
   --animate-nav-enter: nav-enter 0.55s ease both;
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
 }
 
 :root {
@@ -280,6 +282,26 @@ body.translated-rtl {
 .goog-text-highlight {
   background: transparent !important;
   box-shadow: none !important;
+}
+
+/* Date input calendar icon → vv-accent-deep (#1f3d1a) */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  filter: sepia(1) saturate(6) hue-rotate(72deg) brightness(0.45);
+  opacity: 0.7;
+}
+input[type="date"]::-webkit-calendar-picker-indicator:hover {
+  opacity: 1;
+}
+
+/* Accordion animations */
+@keyframes accordion-down {
+  from { height: 0; opacity: 0; }
+  to { height: var(--radix-accordion-content-height); opacity: 1; }
+}
+@keyframes accordion-up {
+  from { height: var(--radix-accordion-content-height); opacity: 1; }
+  to { height: 0; opacity: 0; }
 }
 
 /* Keyframes — cannot be inlined as Tailwind utilities */

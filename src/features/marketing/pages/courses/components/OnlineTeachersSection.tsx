@@ -11,18 +11,17 @@ export function OnlineTeachersSection() {
       id="teachers"
     >
       <Container>
-        <div className="flex items-end justify-between gap-8 mb-12 max-[760px]:flex-col max-[760px]:items-start">
-          <div className="flex flex-col gap-3.5">
-            <span className="font-code text-vv-muted text-[11px] font-medium tracking-[0.14em] uppercase">
-              {"// Choose Your Teacher"}
-            </span>
-            <h2 className="text-[clamp(28px,3vw,44px)] font-semibold tracking-[-0.02em] leading-[1.08] m-0 text-balance">
-              Your Teacher Is Waiting
-            </h2>
-          </div>
-          <p className="text-vv-ink-2 text-[clamp(17px,1.4vw,20px)] leading-normal max-w-[46ch] text-pretty m-0">
-            All teachers are university-trained Ecuadorian native speakers. Book
-            directly with the one that feels right for you.
+        <div className="flex flex-col gap-3.5 mb-12 max-w-[58ch]">
+          <span className="font-code text-vv-muted text-[11px] font-medium tracking-[0.14em] uppercase">
+            {"// Choose Your Teacher"}
+          </span>
+          <h2 className="text-[clamp(28px,3vw,44px)] font-semibold tracking-[-0.02em] leading-[1.08] m-0 text-balance">
+            Choose Your Teacher
+          </h2>
+          <p className="text-vv-ink-2 text-[clamp(15px,1.1vw,17px)] leading-relaxed m-0 text-pretty">
+            All our teachers are Ecuadorian native speakers with university-level
+            training and years of teaching experience. Pick the one that feels
+            right for you.
           </p>
         </div>
         <div className="grid gap-6 lg:grid-cols-2">
@@ -86,12 +85,20 @@ function OnlineTeacherCard({
             {teacher.availability}
           </span>
         </div>
-        <Link
-          href={`/book?teacher=${teacher.firstName.toLowerCase()}`}
-          className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[13px] font-semibold tracking-[-0.005em] py-2.25 px-3.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px text-center"
-        >
-          Book with {teacher.firstName} →
-        </Link>
+        <div className="flex items-center gap-3">
+          <Link
+            href={`/online-classes/book?teacher=${teacher.firstName.toLowerCase()}`}
+            className="flex-1 inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[13px] font-semibold tracking-[-0.005em] py-2.25 px-3.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px text-center"
+          >
+            Book with {teacher.firstName} →
+          </Link>
+          <Link
+            href={`/teachers/${teacher.firstName.toLowerCase()}`}
+            className="shrink-0 text-[13px] font-medium text-vv-ink-2 underline underline-offset-2 hover:text-vv-ink transition-colors duration-150 whitespace-nowrap"
+          >
+            View full profile →
+          </Link>
+        </div>
       </div>
     </article>
   );

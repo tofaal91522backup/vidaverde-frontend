@@ -1,13 +1,18 @@
 export type Program = {
   slug: string;
   title: string;
+  detailTitle: string;
+  detailSubheadline: string;
   tagline: string;
   description: string;
   priceFrom: string;
   pricePeriod: string;
   heroImage: string;
   included: string[];
+  scheduleDescription?: string;
   schedule: { day: string; activity: string; type: string }[];
+  pricingNote?: string;
+  pricingFooter?: string;
   pricing: { duration: string; price: string; note?: string }[];
   testimonial?: { quote: string; name: string; meta: string };
   active: boolean;
@@ -16,23 +21,27 @@ export type Program = {
 export const programs: Program[] = [
   {
     slug: "quito-immersion",
-    title: "Quito Immersion Program",
-    tagline: "The flagship programme. Daily classes, Ecuadorian homestay, and cultural Quito.",
+    title: "Quito Immersion Programme",
+    detailTitle: "The Quito Immersion Programme",
+    detailSubheadline:
+      "Daily one-on-one classes, a family homestay, and life in one of South America's most vibrant cities. The complete Spanish immersion experience.",
+    tagline:
+      "Our flagship. Daily classes in La Floresta, full homestay with an Ecuadorian family, and guided cultural activities in one of South America's most beautiful cities.",
     description:
-      "The most popular way to learn Spanish at Vida Verde. Twenty hours of one-on-one classes per week, ten hours of guided cultural activities, and an optional homestay with an Ecuadorian family. Everything you need to go from beginner to confident speaker — without ever leaving immersion.",
+      "The most popular way to learn Spanish at Vida Verde. Daily one-on-one classes in La Floresta, ten hours of guided cultural activities per week, and a homestay with a vetted Ecuadorian family. Everything you need to go from beginner to confident speaker — without ever leaving immersion.",
     priceFrom: "$140",
-    pricePeriod: "/week",
+    pricePeriod: " / week",
     heroImage: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1400&q=80",
     included: [
-      "20 hours of one-on-one Spanish classes per week",
-      "10 hours of guided cultural classes and field trips",
-      "Entrances and local transport for all activities",
-      "Personalised learning plan from day one",
-      "Optional homestay with an Ecuadorian family (from $26/night)",
-      "AECEE-certified curriculum",
-      "Completion certificate",
-      "School materials and Wi-Fi",
+      "2–6 hours of one-on-one Spanish classes per day (you choose)",
+      "Homestay accommodation with a vetted Ecuadorian host family",
+      "Breakfast and dinner with your host family",
+      "Guided cultural activities and excursions",
+      "Airport pickup and drop-off",
+      "24/7 support from the Vida Verde team",
     ],
+    scheduleDescription:
+      "Mornings are for Spanish. Afternoons are for living it. Most students take 3–4 hours of classes per day, leaving the afternoon free for exploring Quito, joining cultural activities arranged by Vida Verde, or simply practising Spanish in the wild.",
     schedule: [
       { day: "Mon – Fri", activity: "Spanish classes (9am – 1pm)", type: "Class" },
       { day: "Mon – Fri", activity: "Cultural activity or guided walk (1:30pm)", type: "Activity" },
@@ -41,6 +50,10 @@ export const programs: Program[] = [
       { day: "Thursday", activity: "Museum visit", type: "Included" },
       { day: "Weekend", activity: "Optional excursions (Otavalo, Cotopaxi, Mindo)", type: "Optional" },
     ],
+    pricingNote:
+      "All prices in USD per person, per week. Prices shown are for one-on-one classes with full homestay.",
+    pricingFooter:
+      "DELE preparation, pair classes, and group formats available at different rates. Contact us for a personalised quote.",
     pricing: [
       { duration: "1 week", price: "$399", note: "Classes only" },
       { duration: "2 weeks", price: "$740", note: "Classes only" },
@@ -59,11 +72,15 @@ export const programs: Program[] = [
   {
     slug: "travelling-classroom",
     title: "Travelling Classroom",
-    tagline: "Learn Spanish while exploring Ecuador. Classes in the morning, adventure in the afternoon.",
+    detailTitle: "The Travelling Classroom",
+    detailSubheadline:
+      "Learn Spanish while you explore Ecuador. Morning classes with your teacher, afternoon adventures — from the Andes to the Amazon.",
+    tagline:
+      "Learn Spanish while you explore Ecuador. Morning classes with your teacher, afternoon adventures — from the Andes to the Amazon.",
     description:
-      "The Travelling Classroom takes your Spanish lessons out of Quito and across Ecuador. Morning classes wherever you are, afternoons exploring — the Amazon, the Pacific coast, the Galápagos, or a custom route. Ideal for travellers who want to learn Spanish and see Ecuador at the same time.",
+      "The Travelling Classroom takes your Spanish lessons out of Quito and across Ecuador. Morning classes wherever you are, afternoons exploring — the Amazon, the Pacific coast, or a custom route. Ideal for travellers who want to learn Spanish and see Ecuador at the same time.",
     priceFrom: "$740",
-    pricePeriod: "/person",
+    pricePeriod: " / person",
     heroImage: "https://images.unsplash.com/photo-1578894381163-e72c17f2d45f?w=1400&q=80",
     included: [
       "One-on-one Spanish classes every morning",
@@ -73,12 +90,16 @@ export const programs: Program[] = [
       "Experienced Vida Verde guide and teacher",
       "Customisable route and duration",
     ],
+    scheduleDescription:
+      "Each day is a mix of learning and living. Mornings are structured — your teacher adapts every lesson to where you are and what you're seeing. Afternoons are yours, with guided options available at every stop.",
     schedule: [
       { day: "Day 1–3", activity: "Quito — orientation and city classes", type: "Class + City" },
       { day: "Day 4–6", activity: "Amazon lodge — jungle immersion", type: "Adventure" },
       { day: "Day 7–9", activity: "Pacific coast — beach and whale-watching", type: "Adventure" },
       { day: "Day 10–12", activity: "Return to Quito — final classes", type: "Class" },
     ],
+    pricingNote: "All prices in USD per person. Minimum 2 participants.",
+    pricingFooter: "Solo travel rates available on request. Contact us for a custom itinerary.",
     pricing: [
       { duration: "7 days", price: "$740", note: "Per person, min. 2" },
       { duration: "10 days", price: "$1,050", note: "Per person, min. 2" },
@@ -95,28 +116,35 @@ export const programs: Program[] = [
   {
     slug: "puerto-lopez",
     title: "Puerto López",
-    tagline: "Spanish on the Pacific coast. Morning classes, afternoon beach and whale-watching.",
+    detailTitle: "Puerto López Spanish Programme",
+    detailSubheadline:
+      "Spanish on the Pacific coast. Morning classes, afternoons on the beach or whale-watching. The most relaxed way to learn a language.",
+    tagline:
+      "Spanish on the Pacific coast. Morning classes, afternoons on the beach or whale-watching. The most relaxed way to learn a language.",
     description:
-      "Puerto López is Ecuador's premier whale-watching destination and one of the country's most charming coastal towns. Spend your mornings in one-on-one Spanish classes and your afternoons on the water, on the beach, or exploring the local fish market. Perfect for travellers who want an unhurried pace and real Spanish practice.",
-    priceFrom: "$140",
-    pricePeriod: "/week",
+      "Puerto López is Ecuador's premier whale-watching destination and one of the country's most charming coastal towns. Spend your mornings in one-on-one Spanish classes and your afternoons on the water, on the beach, or exploring the local fish market.",
+    priceFrom: "$[X]",
+    pricePeriod: " / week",
     heroImage: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1400&q=80",
     included: [
       "One-on-one Spanish classes every morning",
-      "Flexible afternoon — beach, town, whale-watching (seasonal)",
+      "Flexible afternoons — beach, town, whale-watching (seasonal)",
       "Accommodation options nearby",
       "Optional weekend excursion to Isla de la Plata",
       "Personalised curriculum adapted to your level",
     ],
+    scheduleDescription:
+      "Mornings belong to Spanish. Afternoons are yours — Pacific ocean, local markets, and the most relaxed pace of any Vida Verde programme.",
     schedule: [
       { day: "Mon – Fri", activity: "Spanish classes (9am – 1pm)", type: "Class" },
       { day: "Afternoons", activity: "Beach, town exploration, local culture", type: "Free" },
       { day: "Weekend", activity: "Whale-watching or Isla de la Plata (seasonal)", type: "Optional" },
     ],
+    pricingNote: "All prices in USD per person, per week. To be confirmed — contact us for current rates.",
+    pricingFooter: "Accommodation can be arranged nearby. Contact us for a personalised quote.",
     pricing: [
-      { duration: "1 week", price: "$280", note: "Classes only" },
-      { duration: "2 weeks", price: "$520", note: "Classes only" },
-      { duration: "1 week + accommodation", price: "$490", note: "Guesthouse included" },
+      { duration: "1 week", price: "$[X]", note: "Classes only — confirm with Vida Verde" },
+      { duration: "2 weeks", price: "$[X]", note: "Classes only — confirm with Vida Verde" },
     ],
     testimonial: {
       quote:
@@ -124,6 +152,41 @@ export const programs: Program[] = [
       name: "Marco Ribeiro",
       meta: "Brazil 🇧🇷 · Puerto López, 2 weeks",
     },
+    active: true,
+  },
+  {
+    slug: "jungle-programme",
+    title: "Jungle Programme",
+    detailTitle: "The Jungle Programme",
+    detailSubheadline:
+      "Deep immersion in the Ecuadorian Amazon. Classes surrounded by one of the world's most biodiverse ecosystems.",
+    tagline:
+      "Deep immersion in the Ecuadorian Amazon. Classes at GAIA or Yarina Lodge, surrounded by one of the world's most biodiverse ecosystems.",
+    description:
+      "The most immersive Vida Verde experience. Spanish classes at an Amazon lodge — GAIA or Yarina — surrounded by rainforest, wildlife, and a world away from daily life. Ideal for travellers who want to combine serious language study with an extraordinary natural experience.",
+    priceFrom: "$[X]",
+    pricePeriod: " / person",
+    heroImage: "https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=1400&q=80",
+    included: [
+      "One-on-one Spanish classes at the lodge every morning",
+      "Full-board accommodation at GAIA or Yarina Lodge",
+      "Guided jungle excursions and wildlife walks",
+      "Transport from Quito to the lodge",
+      "24/7 support from the Vida Verde team",
+    ],
+    scheduleDescription:
+      "Mornings are for Spanish. Afternoons take you deep into the Amazon — guided walks, canoe trips, wildlife spotting, and evenings under the rainforest canopy.",
+    schedule: [
+      { day: "Day 1", activity: "Travel Quito → Amazon lodge", type: "Travel" },
+      { day: "Day 2–6", activity: "Morning Spanish classes at the lodge", type: "Class" },
+      { day: "Day 2–6", activity: "Afternoon jungle excursions", type: "Adventure" },
+      { day: "Day 7", activity: "Return to Quito", type: "Travel" },
+    ],
+    pricingNote: "All prices in USD per person. To be confirmed — contact us for current rates.",
+    pricingFooter: "Lodge accommodation and meals are included. Contact us for availability and pricing.",
+    pricing: [
+      { duration: "1 week", price: "$[X]", note: "Classes + lodge — confirm with Vida Verde" },
+    ],
     active: true,
   },
 ];

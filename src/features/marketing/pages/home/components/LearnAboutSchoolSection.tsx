@@ -30,16 +30,19 @@ export function LearnAboutSchoolSection() {
               Teaching Spanish Since 1999
             </h2>
             <p className="text-vv-ink-2 text-[clamp(16px,1.2vw,18px)] leading-relaxed max-w-[62ch] text-pretty m-0">
-              Since 1999, our teachers have been helping students learn Spanish
-              and through it, discover the culture, warmth, and remarkable natural
-              world of Ecuador. Over 4,700 students from every corner of the world
-              have had that experience with us, online and in person.
+              Vida Verde was founded in 1999 by Rosa, a Spanish teacher with a
+              simple belief: the best way to learn a language is through a real
+              human connection.
             </p>
             <p className="text-vv-ink-2 text-[clamp(16px,1.2vw,18px)] leading-relaxed max-w-[62ch] text-pretty m-0">
-              As a certified member of the AECEE, Ecuador&apos;s standard of
-              excellence in Spanish language education, you can trust that every
-              lesson is taught by a qualified native speaker, designed around you,
-              and held to the highest professional standard.
+              From our home in La Floresta — one of Quito&apos;s most vibrant and
+              welcoming neighbourhoods — we&apos;ve grown to serve over 4,700
+              students from every corner of the world. Online and in person.
+              Beginners and advanced speakers. Travellers and professionals.
+            </p>
+            <p className="text-vv-ink-2 text-[clamp(16px,1.2vw,18px)] leading-relaxed max-w-[62ch] text-pretty m-0">
+              We&apos;re proud to hold AECEE certification, a quality standard
+              recognised across the Spanish-speaking world.
             </p>
 
             <div className="flex items-center gap-3 mt-1">

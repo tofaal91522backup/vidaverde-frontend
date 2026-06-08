@@ -21,10 +21,10 @@ export function PricingSection() {
             </h2>
           </div>
           <p className="text-vv-ink-2 text-[clamp(17px,1.4vw,20px)] leading-normal max-w-[46ch] text-pretty m-0">
-            All prices in USD. No hidden fees, no auto-renewals.
+            No hidden fees. No subscriptions. Pay for what you need.
           </p>
         </div>
-        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-4">
           {pricingPackages.map((pkg) => (
             <article
               key={pkg.title}
@@ -93,7 +93,7 @@ export function PricingSection() {
                 ))}
               </ul>
               <Link
-                href="/book"
+                href="/online-classes/book"
                 className={cn(
                   "mt-auto inline-flex items-center justify-center gap-2.5 border rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap text-center",
                   pkg.featured
@@ -106,6 +106,7 @@ export function PricingSection() {
             </article>
           ))}
         </div>
+        <p className="text-[13px] text-vv-muted mt-2">All prices in USD.</p>
       </Container>
     </section>
   );

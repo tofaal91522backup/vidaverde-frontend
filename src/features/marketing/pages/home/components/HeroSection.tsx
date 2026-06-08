@@ -51,7 +51,7 @@ function TypewriterCycle() {
   );
 }
 
-function AnimatedBookButton() {
+export function AnimatedBookButton() {
   return (
     <>
       <style>{`
@@ -63,7 +63,7 @@ function AnimatedBookButton() {
         .book-cycle { animation: book-cycle 5s ease-in-out infinite; }
       `}</style>
       <Link
-        href="/online-classes"
+        href="/online-classes/book"
         className="inline-flex items-center justify-center border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px transition-[transform,background,border-color] duration-200 justify-center sm:w-auto overflow-hidden"
       >
         <span className="block overflow-hidden" style={{ height: "1.25em" }}>

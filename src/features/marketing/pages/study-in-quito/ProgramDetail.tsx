@@ -1,7 +1,9 @@
 import { Container } from "@/components/shared/Container";
+import { CountUpStat } from "@/features/marketing/pages/home/components/CountUpStat";
 import type { Program } from "./data/programs.data";
 import Image from "next/image";
 import Link from "next/link";
+import { TestimonialCarousel } from "../home/components/TestimonialCarousel";
 
 export function ProgramDetail({ program }: { program: Program }) {
   return (
@@ -24,23 +26,26 @@ export function ProgramDetail({ program }: { program: Program }) {
         <Container className="relative z-10 py-24">
           <div className="font-code text-[12px] tracking-[0.06em] mb-6 text-white/65">
             Home <span className="mx-1">/</span>{" "}
-            <Link href="/study-in-quito" className="hover:text-white transition">
+            <Link
+              href="/study-in-quito"
+              className="hover:text-white transition"
+            >
               Study in Quito
             </Link>{" "}
             <span className="mx-1">/</span> {program.title}
           </div>
           <h1 className="text-[clamp(36px,5vw,68px)] font-semibold tracking-[-0.03em] leading-none m-0 mb-5 max-w-[18ch] text-white [text-shadow:0_2px_12px_rgba(0,0,0,0.4)]">
-            {program.title}
+            {program.detailTitle}
           </h1>
           <p className="text-[clamp(17px,1.4vw,20px)] leading-normal max-w-[52ch] text-pretty m-0 text-white/85 [text-shadow:0_1px_6px_rgba(0,0,0,0.4)]">
-            {program.tagline}
+            {program.detailSubheadline}
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
               href="/contact"
               className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px"
             >
-              Enquire to Book →
+              Enquire &amp; Reserve Your Place →
             </Link>
             <a
               href="https://wa.me/593998037473?text=Hi%2C+I%27d+like+to+enquire+about+the+Vida+Verde+immersion+programme."
@@ -79,8 +84,13 @@ export function ProgramDetail({ program }: { program: Program }) {
               </div>
               <ul className="flex flex-col gap-2.5">
                 {program.included.map((item) => (
-                  <li key={item} className="flex items-start gap-2 text-[14px] text-vv-ink-2">
-                    <span className="mt-0.5 text-vv-accent font-bold shrink-0">✓</span>
+                  <li
+                    key={item}
+                    className="flex items-start gap-2 text-[14px] text-vv-ink-2"
+                  >
+                    <span className="mt-0.5 text-vv-accent font-bold shrink-0">
+                      ✓
+                    </span>
                     {item}
                   </li>
                 ))}
@@ -100,9 +110,14 @@ export function ProgramDetail({ program }: { program: Program }) {
             {"// Sample Schedule"}
           </span>
           <div className="h-4" />
-          <h2 className="text-[clamp(28px,3vw,44px)] font-semibold tracking-[-0.02em] leading-[1.08] m-0 mb-8 text-balance">
+          <h2 className="text-[clamp(28px,3vw,44px)] font-semibold tracking-[-0.02em] leading-[1.08] m-0 mb-4 text-balance">
             A Typical Week
           </h2>
+          {program.scheduleDescription && (
+            <p className="text-[15px] leading-[1.7] text-vv-ink-2 mb-8 max-w-[64ch]">
+              {program.scheduleDescription}
+            </p>
+          )}
           <div className="overflow-x-auto">
             <table className="w-full border-collapse text-[14px]">
               <thead>
@@ -120,10 +135,7 @@ export function ProgramDetail({ program }: { program: Program }) {
               </thead>
               <tbody>
                 {program.schedule.map((row, i) => (
-                  <tr
-                    key={i}
-                    className="border-b border-vv-line last:border-0"
-                  >
+                  <tr key={i} className="border-b border-vv-line last:border-0">
                     <td className="py-3.5 pr-6 font-medium text-vv-ink">
                       {row.day}
                     </td>
@@ -153,9 +165,14 @@ export function ProgramDetail({ program }: { program: Program }) {
             {"// Pricing"}
           </span>
           <div className="h-4" />
-          <h2 className="text-[clamp(28px,3vw,44px)] font-semibold tracking-[-0.02em] leading-[1.08] m-0 mb-8 text-balance">
-            Programme Rates
+          <h2 className="text-[clamp(28px,3vw,44px)] font-semibold tracking-[-0.02em] leading-[1.08] m-0 mb-4 text-balance">
+            Pricing
           </h2>
+          {program.pricingNote && (
+            <p className="text-[14px] text-vv-ink-2 mb-6">
+              {program.pricingNote}
+            </p>
+          )}
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {program.pricing.map((tier) => (
               <div
@@ -166,21 +183,19 @@ export function ProgramDetail({ program }: { program: Program }) {
                   {tier.duration}
                 </div>
                 <div className="text-[32px] font-bold tracking-tight text-vv-ink">
-                  {tier.price}
+                  <CountUpStat value={tier.price} />
                 </div>
                 {tier.note && (
-                  <div className="text-[12px] text-vv-ink-2">
-                    {tier.note}
-                  </div>
+                  <div className="text-[12px] text-vv-ink-2">{tier.note}</div>
                 )}
               </div>
             ))}
           </div>
-          <p className="mt-6 text-[13px] text-vv-ink-2">
-            A one-time $35 registration fee covers personalised school
-            materials, completion certificate, and staff support.
-            Pricing confirmed at time of enquiry.
-          </p>
+          {program.pricingFooter && (
+            <p className="mt-6 text-[13px] text-vv-ink-2">
+              {program.pricingFooter}
+            </p>
+          )}
         </Container>
       </section>
 
@@ -190,13 +205,12 @@ export function ProgramDetail({ program }: { program: Program }) {
           className="border-t border-vv-line bg-vv-bg-warm py-16"
           data-screen-label="05 Testimonial"
         >
-          <Container className="max-w-195">
-            <blockquote className="text-[22px] leading-[1.5] font-medium text-vv-ink italic">
-              &ldquo;{program.testimonial.quote}&rdquo;
-            </blockquote>
-            <div className="mt-6 text-[14px] text-vv-ink-2">
-              — {program.testimonial.name} · {program.testimonial.meta}
-            </div>
+          <Container>
+            <span className="font-code text-vv-muted text-[11px] font-medium tracking-[0.14em] uppercase">
+              {"// What Our Students Say"}
+            </span>
+            <div className="h-8" />
+            <TestimonialCarousel />
           </Container>
         </section>
       )}
@@ -212,28 +226,20 @@ export function ProgramDetail({ program }: { program: Program }) {
           </span>
           <div className="h-4" />
           <h2 className="text-[clamp(28px,3vw,44px)] font-semibold tracking-[-0.02em] leading-[1.08] m-0 text-balance">
-            Reserve Your Place
+            Ready to Reserve Your Place?
           </h2>
           <p className="text-vv-ink-2 text-[clamp(17px,1.4vw,20px)] leading-normal mt-3 max-w-[50ch] mx-auto">
-            Immersion bookings need a little coordination — dates, levels,
-            homestay preferences. Send us a message and we&apos;ll sort it all
-            out within 24 hours.
+            Spots fill up quickly, especially during peak travel months. Send us
+            a message or WhatsApp us and we&apos;ll confirm availability and
+            hold your place.
           </p>
           <div className="mt-8 flex flex-wrap gap-3 justify-center">
             <Link
               href="/contact"
               className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px"
             >
-              Send an Enquiry →
+              Enquire Now →
             </Link>
-            <a
-              href="https://wa.me/593998037473?text=Hi%2C+I%27d+like+to+book+the+Vida+Verde+immersion+programme."
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2.5 border border-vv-line-2 rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-transparent text-vv-ink hover:bg-vv-ink hover:border-vv-ink hover:text-vv-bg"
-            >
-              WhatsApp Us
-            </a>
           </div>
           <div className="mt-4">
             <Link
