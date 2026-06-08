@@ -8,10 +8,166 @@ export default function StudyInQuitoRoute() {
     <>
       {/* Hero */}
       <section
-        className="bg-vv-bg-warm border-b border-vv-line"
+        className="relative overflow-hidden bg-vv-bg-warm border-b border-vv-line"
         data-screen-label="01 Study in Quito Hero"
       >
-        <Container>
+        {/* Background decoration */}
+        <svg
+          className="absolute inset-0 h-full w-full pointer-events-none select-none"
+          viewBox="0 0 1000 560"
+          preserveAspectRatio="xMidYMid slice"
+          aria-hidden="true"
+        >
+          <defs>
+            <linearGradient id="siq-fade" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#f7f5f0" stopOpacity="1" />
+              <stop offset="42%" stopColor="#f7f5f0" stopOpacity="0" />
+            </linearGradient>
+          </defs>
+
+          {/* Concentric arcs — top right */}
+          {[260, 340, 420, 500, 580].map((r, i) => (
+            <circle
+              key={r}
+              cx="1000"
+              cy="0"
+              r={r}
+              fill="none"
+              stroke="#1f3d1a"
+              strokeWidth="0.8"
+              opacity={0.07 - i * 0.01}
+            />
+          ))}
+
+          {/* Dot grid — right half */}
+          {Array.from({ length: 13 }, (_, row) =>
+            Array.from({ length: 16 }, (_, col) => (
+              <circle
+                key={`d-${row}-${col}`}
+                cx={480 + col * 40}
+                cy={row * 44 + 22}
+                r="1.4"
+                fill="#1f3d1a"
+                opacity="0.08"
+              />
+            ))
+          )}
+
+          {/* Andean mountain silhouette — bottom right */}
+          <path
+            d="M 480 560 L 560 420 L 600 450 L 660 360 L 710 400 L 770 300 L 830 348 L 890 260 L 950 310 L 1000 270 L 1000 560 Z"
+            fill="#1f3d1a"
+            opacity="0.055"
+          />
+          {/* Second range (closer, lighter) */}
+          <path
+            d="M 600 560 L 670 460 L 710 490 L 760 420 L 820 450 L 870 390 L 930 430 L 1000 380 L 1000 560 Z"
+            fill="#a3d635"
+            opacity="0.06"
+          />
+
+          {/* Colonial arch (Quito historic centre) */}
+          <g transform="translate(730, 100)" opacity="0.11">
+            <path
+              d="M 0 80 L 0 28 Q 0 0 24 0 Q 48 0 48 28 L 48 80"
+              fill="none"
+              stroke="#1f3d1a"
+              strokeWidth="1.8"
+              strokeLinejoin="round"
+            />
+            {/* Steps/base */}
+            <line x1="-8" y1="80" x2="56" y2="80" stroke="#1f3d1a" strokeWidth="1.4" />
+            <line x1="-4" y1="86" x2="52" y2="86" stroke="#1f3d1a" strokeWidth="1" />
+            {/* Arch detail */}
+            <path
+              d="M 8 80 L 8 34 Q 8 10 24 10 Q 40 10 40 34 L 40 80"
+              fill="none"
+              stroke="#1f3d1a"
+              strokeWidth="0.75"
+              opacity="0.5"
+            />
+          </g>
+
+          {/* Tropical leaf — top right */}
+          <g transform="translate(890, 60)" opacity="0.1">
+            <path
+              d="M 24 90 Q -18 60 0 10 Q 10 0 20 6 Q 52 20 66 60 Q 52 90 24 90Z"
+              fill="none"
+              stroke="#a3d635"
+              strokeWidth="1.6"
+            />
+            <line x1="24" y1="90" x2="34" y2="28" stroke="#a3d635" strokeWidth="1.1" />
+          </g>
+          {/* Second smaller leaf */}
+          <g transform="translate(940, 130)" opacity="0.07">
+            <path
+              d="M 14 56 Q -10 36 0 6 Q 4 0 12 4 Q 32 12 40 36 Q 32 56 14 56Z"
+              fill="none"
+              stroke="#a3d635"
+              strokeWidth="1.4"
+            />
+            <line x1="14" y1="56" x2="20" y2="18" stroke="#a3d635" strokeWidth="1" />
+          </g>
+
+          {/* Map pin — Ecuador */}
+          <g transform="translate(680, 230)" opacity="0.12">
+            <path
+              d="M 18 0 C 8 0 0 8 0 18 C 0 30 18 46 18 46 C 18 46 36 30 36 18 C 36 8 28 0 18 0Z"
+              fill="none"
+              stroke="#1f3d1a"
+              strokeWidth="1.6"
+            />
+            <circle cx="18" cy="18" r="6" fill="none" stroke="#a3d635" strokeWidth="1.3" />
+            {/* Equator line */}
+            <line x1="0" y1="18" x2="36" y2="18" stroke="#a3d635" strokeWidth="0.7" strokeDasharray="2 2" opacity="0.5" />
+          </g>
+
+          {/* Sun / horizon rays */}
+          <g transform="translate(840, 380)" opacity="0.08">
+            <circle cx="0" cy="0" r="18" fill="none" stroke="#a3d635" strokeWidth="1.4" />
+            <circle cx="0" cy="0" r="10" fill="none" stroke="#a3d635" strokeWidth="0.8" />
+            {[0, 45, 90, 135, 180, 225, 270, 315].map((deg, i) => {
+              const rad = (deg * Math.PI) / 180;
+              return (
+                <line
+                  key={i}
+                  x1={Math.cos(rad) * 22}
+                  y1={Math.sin(rad) * 22}
+                  x2={Math.cos(rad) * 30}
+                  y2={Math.sin(rad) * 30}
+                  stroke="#a3d635"
+                  strokeWidth="1.2"
+                />
+              );
+            })}
+          </g>
+
+          {/* Scattered dots */}
+          <circle cx="610" cy="170" r="3.5" fill="#a3d635" opacity="0.16" />
+          <circle cx="658" cy="310" r="2.5" fill="#a3d635" opacity="0.13" />
+          <circle cx="800" cy="180" r="4" fill="#1f3d1a" opacity="0.07" />
+          <circle cx="960" cy="210" r="3" fill="#a3d635" opacity="0.12" />
+          <circle cx="720" cy="440" r="3" fill="#1f3d1a" opacity="0.06" />
+          <circle cx="980" cy="440" r="4" fill="#a3d635" opacity="0.08" />
+
+          {/* Plus marks */}
+          {([
+            [640, 260, "#a3d635", 0.15],
+            [870, 300, "#1f3d1a", 0.1],
+            [960, 130, "#a3d635", 0.13],
+            [630, 440, "#1f3d1a", 0.08],
+          ] as const).map(([x, y, c, o], i) => (
+            <g key={`plus-${i}`} opacity={o}>
+              <line x1={x - 7} y1={y} x2={x + 7} y2={y} stroke={c} strokeWidth="1.1" />
+              <line x1={x} y1={y - 7} x2={x} y2={y + 7} stroke={c} strokeWidth="1.1" />
+            </g>
+          ))}
+
+          {/* Fade overlay */}
+          <rect x="0" y="0" width="1000" height="560" fill="url(#siq-fade)" />
+        </svg>
+
+        <Container className="relative z-10">
           <div className="font-code text-vv-muted text-[12px] tracking-[0.06em] mb-6">
             Home <span className="mx-1 text-vv-line-2">/</span> Study in Quito
           </div>
@@ -21,7 +177,7 @@ export default function StudyInQuitoRoute() {
             Live It in Ecuador.
           </h1>
           <p className="text-vv-ink-2 text-[clamp(17px,1.4vw,20px)] leading-normal max-w-[52ch] text-pretty m-0">
-            From a week in Quito to a journey along the Pacific coast — Vida
+            From a week in Quito to a journey along the Pacific coast, Vida
             Verde&apos;s immersion programmes combine expert teaching with real
             Ecuadorian life.
           </p>

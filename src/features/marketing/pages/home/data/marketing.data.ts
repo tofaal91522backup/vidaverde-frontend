@@ -104,37 +104,44 @@ export const previewCourses: Course[] = [
 export const testimonials: Testimonial[] = [
   {
     quote:
-      "Vida Verde was an exceptional experience. The professors were very impressive — my Spanish improved so quickly I was having real conversations by week two.",
-    initials: "VM",
-    name: "Vince Murphy",
-    meta: "California, USA 🇺🇸 · Got conversational in 2 weeks",
+      "I really loved the warm and welcoming atmosphere at Vida Verde. Irma is a great teacher who encouraged me every day to step up my skills. Our lessons were never boring. Thanks for the amazing experience, organised tours, and those funny Friday music sessions!",
+    initials: "AS",
+    name: "Anita S",
+    meta: "Germany 🇩🇪 · Solo · Quito Immersion · Jun 2023",
   },
   {
     quote:
-      "I came to Quito not knowing a word of Spanish and left six weeks later able to navigate the city, shop at the market, and chat with my host family over dinner.",
-    initials: "JC",
-    name: "Jennifer Cumming",
-    meta: "Canada 🇨🇦 · Zero to conversational in 6 weeks",
+      "The teachers at Vida Verde were wonderful, fun, knowledgeable and helpful! My 12-year-old son and I took daily lessons for a month. They were flexible with our schedule and we loved the location.",
+    initials: "TC",
+    name: "Tracy C",
+    meta: "USA 🇺🇸 · Family · 1-month stay · Jun 2022",
   },
   {
     quote:
-      "After 7 years of collaboration I can honestly say the teachers here are the best I have ever worked with. My Spanish finally reached the level I needed for my job.",
-    initials: "CH",
-    name: "Christian Herber",
-    meta: "Germany 🇩🇪 · Used Spanish in a professional setting",
+      "Vida Verde is one of the absolute best language schools I have attended. The instructors are kind, smart, dedicated and well trained. Each day my son and I walked away with new learning. I am definitely returning.",
+    initials: "RA",
+    name: "Rachael A",
+    meta: "Denver, Colorado 🇺🇸 · Family · Jun 2022",
   },
   {
     quote:
-      "I chose Vida Verde to prepare for volunteer work in Ecuador. The one-on-one lessons were perfectly tailored to my goals and I felt confident from day one in the field.",
-    initials: "FD",
-    name: "Franziska Denker",
-    meta: "Germany 🇩🇪 · Prepared for volunteer work in 3 weeks",
+      "The professors for all the classes were amazing! Fernando taught Spanish better than I have ever been taught. Rosa makes sure everyone feels welcome and is super fun.",
+    initials: "EA",
+    name: "Errol A",
+    meta: "USA 🇺🇸 · Group · Quito Immersion · May 2022",
   },
   {
     quote:
-      "The online classes are just as personal as being there in person. My teacher remembered exactly where I left off every session and pushed me at exactly the right pace.",
-    initials: "MR",
-    name: "Marco Ribeiro",
-    meta: "Brazil 🇧🇷 · Advanced from A2 to B2 online",
+      "Fantastic school with warm and welcoming staff. Vida Verde was my last stop after three months travelling Latin America and it was definitely one of the best. My only regret is I only stayed for one week.",
+    initials: "BW",
+    name: "Breanne W",
+    meta: "Whistler, Canada 🇨🇦 · Solo · Feb 2020",
+  },
+  {
+    quote:
+      "All of my teachers were great, always well-prepared, quickly adapting to my needs and putting a lot of passion into their work. Back home, I now take online classes at Vida Verde via Skype.",
+    initials: "S",
+    name: "Silke",
+    meta: "Germany 🇩🇪 · Solo · 3 weeks in Quito + Amazon · Feb 2019",
   },
 ];

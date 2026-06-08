@@ -16,7 +16,7 @@ function Stars({ color = "text-amber-400" }: { color?: string }) {
 function TripAdvisorBadge() {
   return (
     <a
-      href="https://www.tripadvisor.com"
+      href="https://www.tripadvisor.com/Attraction_Review-g294308-d12405709-Reviews-Vida_Verde-Quito_Pichincha_Province.html"
       target="_blank"
       rel="noopener noreferrer"
       aria-label="View Vida Verde on TripAdvisor"
