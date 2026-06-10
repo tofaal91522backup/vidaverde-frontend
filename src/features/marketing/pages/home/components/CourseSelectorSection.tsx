@@ -2,6 +2,7 @@ import { Container } from "@/components/shared/Container";
 import { ChevronRight } from "lucide-react";
 import { MarketingButton } from "@/features/marketing/components/MarketingButton";
 import { SectionHeader } from "./SectionHeader";
+import Image from "next/image";
 
 /* ── Inline SVG illustrations ───────────────────────────────────────────── */
 
@@ -151,6 +152,17 @@ function MountainsIllustration({ className }: { className?: string }) {
 }
 
 function AirplaneIllustration({ className }: { className?: string }) {
+  return (
+    <Image
+      src="/images/airplane.svg"
+      width={240}
+      height={158}
+      alt=""
+      aria-hidden="true"
+      className={className}
+    />
+  );
+
   return (
     <svg
       viewBox="0 0 120 90"

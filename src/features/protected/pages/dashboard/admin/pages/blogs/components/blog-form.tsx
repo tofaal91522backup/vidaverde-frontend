@@ -1,6 +1,7 @@
 "use client";
 
 import { FormFieldWrapper } from "@/components/shared/form-related/form-field-wrapper";
+import RichTextEditorField from "@/components/shared/form-related/RichTextEditor";
 import SingleFileUploader from "@/components/shared/form-related/single-file-uploader";
 import { SubmitButton } from "@/components/shared/form-related/submit-button";
 import { SubmitErrorSummary } from "@/components/shared/form-related/submit-error-summary";
@@ -134,16 +135,10 @@ export function BlogForm({
         {(field) => (
           <FormFieldWrapper<string> field={field} label="Content">
             {(p) => (
-              <Textarea
-                id={p.inputProps.id}
-                name={p.inputProps.name}
+              <RichTextEditorField
                 value={p.inputProps.value}
-                onBlur={p.inputProps.onBlur}
-                onChange={(e) => p.onChangeValue(e.target.value)}
-                aria-invalid={p.inputProps["aria-invalid"]}
-                placeholder="Write the full blog content here... (HTML or plain text)"
-                rows={16}
-                className="font-mono text-sm"
+                onChange={p.onChangeValue}
+                placeholder="Write the full blog content here..."
               />
             )}
           </FormFieldWrapper>

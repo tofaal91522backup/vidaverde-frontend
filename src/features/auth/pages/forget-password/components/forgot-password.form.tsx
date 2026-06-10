@@ -1,10 +1,17 @@
-﻿"use client";
+"use client";
 
 import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
-
 import { ForgotPasswordAction } from "@/features/auth/pages/forget-password/actions/forget-password.action";
+import Link from "next/link";
 import { useActionState, useEffect } from "react";
 import { toast } from "sonner";
 
@@ -15,45 +22,54 @@ const ForgotPasswordForm = () => {
   });
 
   useEffect(() => {
-    console.log(state);
     if (state.success === true) {
       toast.success(state.success_text);
     }
   }, [state]);
 
   return (
-    <form action={action}>
-      <div
-        style={{
-          boxShadow: "0px 0px 28px 0px rgba(46,46,255,0.9)",
-        }}
-        className="max-w-md w-full border p-8 rounded-lg shadow-md text-center"
-      >
-        <h2 className="text-2xl font-bold bg-linear-to-r from-blue-800 to-blue-500 text-transparent bg-clip-text mb-2">
-          Reset Password
-        </h2>
-
-        <p className="text-sm text-gray-600 dark:text-gray-400 mb-6">
-          Enter your email address to receive a password reset link.
-        </p>
-        <Input type="email" required name="email" placeholder="Email Address" />
-
-        {state.errors.email && (
-          <div className="bg-red-100 text-red-500 p-2 rounded-lg my-2">
-            {state.errors.email}
+    <Card className="w-full max-w-md border-vv-line bg-white/95 shadow-lg">
+      <CardHeader>
+        <CardTitle className="text-2xl text-vv-ink">Reset password</CardTitle>
+        <CardDescription>
+          Enter your email address and we will send you a reset link.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <form action={action} className="flex flex-col gap-4">
+          <div className="flex flex-col gap-2">
+            <label className="text-sm font-medium text-vv-ink">Email</label>
+            <Input
+              type="email"
+              required
+              name="email"
+              placeholder="Email address"
+            />
+            {state.errors.email && (
+              <p className="text-xs text-destructive">{state.errors.email}</p>
+            )}
           </div>
-        )}
-        <Button type="submit" disabled={isPending} className="w-full mt-4">
-          {isPending && <Spinner className="mr-2 h-4 w-4" />} Send Reset Link
-        </Button>
 
-        {state.errors.formError && (
-          <div className="bg-red-100 text-red-500 p-2 rounded-lg my-2">
-            {`${state.errors.formError} `}{" "}
-          </div>
-        )}
-      </div>
-    </form>
+          <Button type="submit" disabled={isPending} className="w-full">
+            {isPending && <Spinner className="mr-2" />}
+            Send Reset Link
+          </Button>
+
+          {state.errors.formError && (
+            <p className="rounded-lg border border-destructive/20 bg-destructive/10 px-3 py-2 text-sm text-destructive">
+              {state.errors.formError}
+            </p>
+          )}
+
+          <Link
+            href="/signin"
+            className="text-center text-sm font-medium text-vv-accent-deep hover:text-vv-ink"
+          >
+            Back to sign in
+          </Link>
+        </form>
+      </CardContent>
+    </Card>
   );
 };
 

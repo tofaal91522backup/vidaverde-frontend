@@ -9,6 +9,18 @@ export type LoginType = {
   };
 };
 
+export type RegistrationType = {
+  success?: boolean;
+  success_text?: string;
+  errors: {
+    email?: string[];
+    username?: string[];
+    password1?: string[];
+    password2?: string[];
+    formError?: string[];
+  };
+};
+
 export type Session = {
   user: {
     id: string;

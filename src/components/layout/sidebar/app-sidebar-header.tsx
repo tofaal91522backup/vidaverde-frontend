@@ -28,7 +28,7 @@ export function AppSidebarHeader({
               width={55}
               height={55}
               alt="logo"
-              className="rounded-md mr-2 object-cover"
+              className="rounded-md mr-2 object-cover bg-white"
             />
 
             <div className="grid flex-1 text-left text-sm leading-tight cursor-pointer gap-0.5">

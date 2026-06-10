@@ -1,15 +1,21 @@
-﻿"use client";
+"use client";
 
 import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-
+import { Spinner } from "@/components/ui/spinner";
 import { ResetPasswordAction } from "@/features/auth/pages/reset-password/actions/reset-password.action";
-import { Loader } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useActionState, useEffect } from "react";
 import { toast } from "sonner";
 
-const ResetPasswordForm = ({ uid, token }: any) => {
+const ResetPasswordForm = ({ uid, token }: { uid: string; token: string }) => {
   const router = useRouter();
 
   const [state, action, isPending] = useActionState(ResetPasswordAction, {
@@ -20,63 +26,72 @@ const ResetPasswordForm = ({ uid, token }: any) => {
   useEffect(() => {
     if (state.success === true) {
       toast.success("Password reset successfully");
-      router.push("/auth/signin");
+      router.push("/signin");
     }
   }, [state, router]);
 
   return (
-    <form action={action}>
-      <div
-        style={{
-          boxShadow: "0px 0px 28px 0px rgba(46,46,255,0.9)",
-        }}
-        className="max-w-md w-full border p-8 rounded-lg shadow-md text-center"
-      >
-        <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-800 to-blue-500 text-transparent bg-clip-text mb-2">
-          Reset Your Password
-        </h2>
-        <p className="text-sm text-gray-600 dark:text-gray-400 mb-6">
-          Enter your new password below. Make sure it meets the security
-          requirements.
-        </p>
-        <div className="flex flex-col gap-4">
-          <Input
-            type="password"
-            required
-            name="new_password1"
-            placeholder="Enter your new password"
-          />
-          {state.errors.new_password1 && (
-            <div className="bg-red-100 text-red-500 p-2 rounded-lg my-2">
-              {state.errors.new_password1}
-            </div>
-          )}
-          <Input
-            type="password"
-            required
-            name="new_password2"
-            placeholder="Confirm your new password"
-          />
-          {state.errors.new_password2 && (
-            <div className="bg-red-100 text-red-500 p-2 rounded-lg my-2">
-              {state.errors.new_password2}
-            </div>
-          )}
-        </div>
-        <Input type="text" required name="uid" hidden defaultValue={uid} />
-        <Input type="text" required name="token" hidden defaultValue={token} />
-
-        <Button type="submit" disabled={isPending} className="w-full mt-4">
-          {isPending && <Loader className="mr-2 animate-spin" size={18} />}
-          Reset Password
-        </Button>
-        {state.errors.formError && (
-          <div className="bg-red-100 text-red-500 p-2 rounded-lg my-2">
-            {state.errors.formError}
+    <Card className="w-full max-w-md border-vv-line bg-white/95 shadow-lg">
+      <CardHeader>
+        <CardTitle className="text-2xl text-vv-ink">
+          Create a new password
+        </CardTitle>
+        <CardDescription>
+          Choose a secure password for your Vida Verde account.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <form action={action} className="flex flex-col gap-4">
+          <div className="flex flex-col gap-2">
+            <label className="text-sm font-medium text-vv-ink">
+              New password
+            </label>
+            <Input
+              type="password"
+              required
+              name="new_password1"
+              placeholder="Enter your new password"
+            />
+            {state.errors.new_password1 && (
+              <p className="text-xs text-destructive">
+                {state.errors.new_password1}
+              </p>
+            )}
           </div>
-        )}
-      </div>
-    </form>
+
+          <div className="flex flex-col gap-2">
+            <label className="text-sm font-medium text-vv-ink">
+              Confirm password
+            </label>
+            <Input
+              type="password"
+              required
+              name="new_password2"
+              placeholder="Confirm your new password"
+            />
+            {state.errors.new_password2 && (
+              <p className="text-xs text-destructive">
+                {state.errors.new_password2}
+              </p>
+            )}
+          </div>
+
+          <Input type="text" required name="uid" hidden defaultValue={uid} />
+          <Input type="text" required name="token" hidden defaultValue={token} />
+
+          <Button type="submit" disabled={isPending} className="w-full">
+            {isPending && <Spinner className="mr-2" />}
+            Reset Password
+          </Button>
+
+          {state.errors.formError && (
+            <p className="rounded-lg border border-destructive/20 bg-destructive/10 px-3 py-2 text-sm text-destructive">
+              {state.errors.formError}
+            </p>
+          )}
+        </form>
+      </CardContent>
+    </Card>
   );
 };
 

@@ -14,7 +14,15 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import SignOut from "@/features/auth/components/sign-out";
-import { ChevronUp, Settings } from "lucide-react";
+import {
+  ChevronUp,
+  CircleHelp,
+  Home,
+  KeyRound,
+  Settings,
+  UserRound,
+} from "lucide-react";
+import Link from "next/link";
 
 export function AppSidebarFooter({
   footerInfo,
@@ -65,6 +73,32 @@ export function AppSidebarFooter({
                 </div>
               </div>
             </DropdownMenuLabel>
+            <DropdownMenuSeparator className="bg-sidebar-border" />
+
+            <DropdownMenuItem asChild>
+              <Link href="/profile" className="cursor-pointer gap-2">
+                <UserRound className="size-4" />
+                My Profile
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href="/forget-password" className="cursor-pointer gap-2">
+                <KeyRound className="size-4" />
+                Change Password
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href="/contact" className="cursor-pointer gap-2">
+                <CircleHelp className="size-4" />
+                Help & Support
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href="/" className="cursor-pointer gap-2">
+                <Home className="size-4" />
+                View Website
+              </Link>
+            </DropdownMenuItem>
             <DropdownMenuSeparator className="bg-sidebar-border" />
 
             <SignOut />
