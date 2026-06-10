@@ -1,7 +1,7 @@
 # Next.js Template (App Router + Turbopack)
 
 A production-ready **Next.js 15+ App Router** starter with a **feature-based modular architecture**.
-
+-
 ---
 
 ## Tech Stack
