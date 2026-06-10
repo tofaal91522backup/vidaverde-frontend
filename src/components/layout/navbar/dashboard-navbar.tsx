@@ -1,4 +1,4 @@
-import { ModeToggle } from "@/components/ui/theme-toggle";
+// import { ModeToggle } from "@/components/ui/theme-toggle";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 
 const DashboardNavbar = () => {
@@ -21,7 +21,7 @@ const DashboardNavbar = () => {
       <div className="flex items-center gap-3">
         <SidebarTrigger className="-ml-1" />
       </div>
-      <ModeToggle />
+      {/* <ModeToggle /> */}
     </header>
   );
 };

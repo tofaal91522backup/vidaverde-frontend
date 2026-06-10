@@ -16,12 +16,12 @@ import { AdminSidebarNavItems } from "./admin-sidebar-nav-items";
 
 export function AdminSidebar({ session }: { session: any }) {
   return (
-    <Sidebar collapsible="icon">
+    <Sidebar collapsible="icon" variant="inset">
       <SidebarHeader>
         <AppSidebarHeader
           headerInfo={{
-            imageSrc: null,
-            companyName: "Example Inc.",
+            imageSrc: "/images/logo.png",
+            companyName: "Vida Verde",
             dashboardType: "Admin Dashboard",
           }}
         />
@@ -38,7 +38,7 @@ export function AdminSidebar({ session }: { session: any }) {
           footerInfo={{
             name: session?.user?.name || "Guest User",
             email: session?.user?.email || "No email available",
-            avatar: "/noImage.png",
+            avatar: "/images/logo.png",
           }}
         />
       </SidebarFooter>

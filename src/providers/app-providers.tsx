@@ -8,15 +8,17 @@ export default function AppProviders({
   children: React.ReactNode;
 }) {
   return (
-    <ThemeProvider
-      attribute="class"
-      defaultTheme="light"
-      enableSystem
-      disableTransitionOnChange
-    >
-      {/* <LanguageProvider> */}
+    <>
+      {/* <ThemeProvider
+        attribute="class"
+        defaultTheme="light"
+        enableSystem
+        disableTransitionOnChange
+      > */}
+        {/* <LanguageProvider> */}
         <QueryProvider>{children}</QueryProvider>
-      {/* </LanguageProvider> */}
-    </ThemeProvider>
+        {/* </LanguageProvider> */}
+      {/* </ThemeProvider> */}
+    </>
   );
 }

@@ -3,15 +3,19 @@ import { ActivityTabs } from "./components/ActivityTabs";
 import { weeklySchedule } from "./data/marketing.data";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { ChevronRight } from "lucide-react";
 
 const btnPrimary =
-  "inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px";
+  "inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] leading-none py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px";
 
 export default function ActivitiesRoute() {
   return (
     <>
       {/* Hero */}
-      <section className="bg-vv-bg-warm border-b border-vv-line" data-screen-label="01 Activities Hero">
+      <section
+        className="bg-vv-bg-warm border-b border-vv-line"
+        data-screen-label="01 Activities Hero"
+      >
         <Container>
           <div className="font-code text-vv-muted text-[12px] tracking-[0.06em] mb-6">
             Home <span className="mx-1 text-vv-line-2">/</span> Activities
@@ -31,7 +35,10 @@ export default function ActivitiesRoute() {
       </section>
 
       {/* Weekly Schedule */}
-      <section className="border-t border-vv-line" data-screen-label="02 Weekly Schedule">
+      <section
+        className="border-t border-vv-line"
+        data-screen-label="02 Weekly Schedule"
+      >
         <Container>
           <span className="font-code text-vv-muted text-[11px] font-medium tracking-[0.14em] uppercase">
             {"// A typical week"}
@@ -41,7 +48,8 @@ export default function ActivitiesRoute() {
             What every Vida Verde week looks like.
           </h2>
           <p className="text-vv-ink-2 text-[17px] leading-normal m-0 mb-10">
-            Mornings are class. Afternoons and weekends are how you actually learn.
+            Mornings are class. Afternoons and weekends are how you actually
+            learn.
           </p>
 
           {/* Schedule table */}
@@ -64,7 +72,9 @@ export default function ActivitiesRoute() {
                 <div className="font-code font-semibold text-[12px] text-vv-muted uppercase tracking-[0.08em]">
                   {item.day}
                 </div>
-                <div className="text-vv-ink-2 text-[13px] font-code max-[640px]:hidden">{item.time}</div>
+                <div className="text-vv-ink-2 text-[13px] font-code max-[640px]:hidden">
+                  {item.time}
+                </div>
                 <div className="text-vv-ink">
                   <b className="font-semibold">{item.title}</b>
                   <span className="text-vv-ink-2"> · {item.description}</span>
@@ -102,11 +112,12 @@ export default function ActivitiesRoute() {
             </h2>
             <p className="text-vv-bg/70 text-[clamp(15px,1.2vw,17px)] leading-normal m-0 mb-8 max-w-[52ch] mx-auto">
               Activities are available Monday through Friday. Most students take
-              regular Spanish classes in the morning and leave for Quito cultural
-              Spanish classes around 1:30 pm.
+              regular Spanish classes in the morning and leave for Quito
+              cultural Spanish classes around 1:30 pm.
             </p>
             <Link href="/#book" className={btnPrimary}>
-              Plan a custom track →
+              Plan a custom track{" "}
+              <ChevronRight className="h-4 w-4 shrink-0 translate-y-0.5" />
             </Link>
           </div>
         </Container>

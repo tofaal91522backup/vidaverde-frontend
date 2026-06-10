@@ -22,7 +22,7 @@ export default function DashboardShell({
     >
       {sidebar}
 
-      <SidebarInset>
+      <SidebarInset className="bg-white dark:bg-[#020617] rounded-l-2xl overflow-hidden">
         {navbar}
         <div className="flex flex-1 flex-col">
           <div

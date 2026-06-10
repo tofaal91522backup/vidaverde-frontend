@@ -1,5 +1,5 @@
 import { Container } from "@/components/shared/Container";
-import { ArrowRight, MapPin, Sparkles } from "lucide-react";
+import { ChevronRight, MapPin, Sparkles } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -104,10 +104,10 @@ function ProgramCard({ program }: { program: (typeof programs)[number] }) {
           href={program.href}
           target="_blank"
           rel="noreferrer"
-          className="mt-auto inline-flex w-fit items-center gap-2.5 border border-vv-ink rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-ink text-vv-bg hover:bg-vv-accent-deep hover:border-vv-accent-deep hover:-translate-y-px"
+          className="mt-auto inline-flex w-fit items-center gap-2.5 border border-vv-ink rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] leading-none py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-ink text-vv-bg hover:bg-vv-accent-deep hover:border-vv-accent-deep hover:-translate-y-px"
         >
           Learn More
-          <ArrowRight aria-hidden="true" className="h-4 w-4" />
+          <ChevronRight aria-hidden="true" className="h-4 w-4 shrink-0" />
         </Link>
       </div>
     </article>

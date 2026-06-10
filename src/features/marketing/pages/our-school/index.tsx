@@ -1,6 +1,7 @@
 import { Container } from "@/components/shared/Container";
 import Image from "next/image";
 import Link from "next/link";
+import { ChevronRight } from "lucide-react";
 import {
   Accordion,
   AccordionContent,
@@ -103,20 +104,21 @@ export default function OurSchoolRoute() {
               </h1>
               <p className="text-vv-ink-2 text-[clamp(17px,1.4vw,20px)] leading-normal max-w-[52ch] text-pretty m-0">
                 We started with one teacher, a love of language, and a home in
-                La Floresta. Twenty-five years later, we&apos;re still here,
-                and we&apos;ve taught over 4,700 students from every corner of
-                the world.
+                La Floresta. Twenty-five years later, we&apos;re still here, and
+                we&apos;ve taught over 4,700 students from every corner of the
+                world.
               </p>
               <div className="flex flex-wrap gap-3 mt-6">
                 <Link
                   href="/online-classes/book"
-                  className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px"
+                  className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] leading-none py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px"
                 >
-                  Start Learning Online →
+                  Start Learning Online{" "}
+                  <ChevronRight className="h-4 w-4 shrink-0 translate-y-0.5" />
                 </Link>
                 <Link
                   href="/study-in-quito"
-                  className="inline-flex items-center justify-center gap-2.5 border border-vv-line-2 rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-transparent text-vv-ink hover:bg-vv-ink hover:border-vv-ink hover:text-vv-bg"
+                  className="inline-flex items-center justify-center gap-2.5 border border-vv-line-2 rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] leading-none py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-transparent text-vv-ink hover:bg-vv-ink hover:border-vv-ink hover:text-vv-bg"
                 >
                   Study in Quito
                 </Link>
@@ -132,54 +134,255 @@ export default function OurSchoolRoute() {
                 className="w-110"
               >
                 {/* Dashed halo behind card */}
-                <circle cx="91" cy="126" r="82" fill="none" stroke="#a3d635" strokeWidth="0.75" strokeDasharray="4 4" opacity="0.22" />
+                <circle
+                  cx="91"
+                  cy="126"
+                  r="82"
+                  fill="none"
+                  stroke="#a3d635"
+                  strokeWidth="0.75"
+                  strokeDasharray="4 4"
+                  opacity="0.22"
+                />
 
                 {/* Main credential card */}
-                <rect x="10" y="26" width="162" height="196" rx="22" fill="#f0f9d4" stroke="#a3d635" strokeWidth="1.5" />
-                <rect x="18" y="34" width="146" height="180" rx="15" fill="none" stroke="#a3d635" strokeWidth="0.75" opacity="0.45" />
+                <rect
+                  x="10"
+                  y="26"
+                  width="162"
+                  height="196"
+                  rx="22"
+                  fill="#f0f9d4"
+                  stroke="#a3d635"
+                  strokeWidth="1.5"
+                />
+                <rect
+                  x="18"
+                  y="34"
+                  width="146"
+                  height="180"
+                  rx="15"
+                  fill="none"
+                  stroke="#a3d635"
+                  strokeWidth="0.75"
+                  opacity="0.45"
+                />
 
                 {/* Leaf motif top */}
-                <path d="M 91 52 C 84 42 74 42 73 47 C 72 52 78 59 91 62 C 104 59 110 52 109 47 C 108 42 98 42 91 52Z" fill="#a3d635" opacity="0.6" />
-                <line x1="91" y1="62" x2="91" y2="74" stroke="#a3d635" strokeWidth="1.5" opacity="0.5" />
+                <path
+                  d="M 91 52 C 84 42 74 42 73 47 C 72 52 78 59 91 62 C 104 59 110 52 109 47 C 108 42 98 42 91 52Z"
+                  fill="#a3d635"
+                  opacity="0.6"
+                />
+                <line
+                  x1="91"
+                  y1="62"
+                  x2="91"
+                  y2="74"
+                  stroke="#a3d635"
+                  strokeWidth="1.5"
+                  opacity="0.5"
+                />
 
                 {/* Est. */}
-                <text x="91" y="90" textAnchor="middle" fontFamily="system-ui,sans-serif" fontSize="9" fill="#7a8a6a" letterSpacing="0.18em">EST.</text>
+                <text
+                  x="91"
+                  y="90"
+                  textAnchor="middle"
+                  fontFamily="system-ui,sans-serif"
+                  fontSize="9"
+                  fill="#7a8a6a"
+                  letterSpacing="0.18em"
+                >
+                  EST.
+                </text>
 
                 {/* 1999 */}
-                <text x="91" y="126" textAnchor="middle" fontFamily="system-ui,sans-serif" fontSize="44" fontWeight="800" fill="#1f3d1a" letterSpacing="-0.04em">1999</text>
+                <text
+                  x="91"
+                  y="126"
+                  textAnchor="middle"
+                  fontFamily="system-ui,sans-serif"
+                  fontSize="44"
+                  fontWeight="800"
+                  fill="#1f3d1a"
+                  letterSpacing="-0.04em"
+                >
+                  1999
+                </text>
 
                 {/* Divider */}
-                <line x1="28" y1="135" x2="154" y2="135" stroke="#a3d635" strokeWidth="1" opacity="0.55" />
+                <line
+                  x1="28"
+                  y1="135"
+                  x2="154"
+                  y2="135"
+                  stroke="#a3d635"
+                  strokeWidth="1"
+                  opacity="0.55"
+                />
 
                 {/* VIDA VERDE */}
-                <text x="91" y="155" textAnchor="middle" fontFamily="system-ui,sans-serif" fontSize="12" fontWeight="700" fill="#1f3d1a" letterSpacing="0.1em">VIDA VERDE</text>
+                <text
+                  x="91"
+                  y="155"
+                  textAnchor="middle"
+                  fontFamily="system-ui,sans-serif"
+                  fontSize="12"
+                  fontWeight="700"
+                  fill="#1f3d1a"
+                  letterSpacing="0.1em"
+                >
+                  VIDA VERDE
+                </text>
 
                 {/* Quito, Ecuador */}
-                <text x="91" y="170" textAnchor="middle" fontFamily="system-ui,sans-serif" fontSize="9.5" fill="#7a8a6a">Quito, Ecuador</text>
+                <text
+                  x="91"
+                  y="170"
+                  textAnchor="middle"
+                  fontFamily="system-ui,sans-serif"
+                  fontSize="9.5"
+                  fill="#7a8a6a"
+                >
+                  Quito, Ecuador
+                </text>
 
                 {/* AECEE badge */}
-                <rect x="56" y="181" width="70" height="26" rx="13" fill="#a3d635" />
-                <text x="91" y="198" textAnchor="middle" fontFamily="system-ui,sans-serif" fontSize="11" fontWeight="700" fill="#1f3d1a">AECEE ✓</text>
+                <rect
+                  x="56"
+                  y="181"
+                  width="70"
+                  height="26"
+                  rx="13"
+                  fill="#a3d635"
+                />
+                <text
+                  x="91"
+                  y="198"
+                  textAnchor="middle"
+                  fontFamily="system-ui,sans-serif"
+                  fontSize="11"
+                  fontWeight="700"
+                  fill="#1f3d1a"
+                >
+                  AECEE ✓
+                </text>
 
                 {/* Stat badge 1 — 25+ Years */}
-                <rect x="184" y="26" width="100" height="60" rx="18" fill="white" stroke="#a3d635" strokeWidth="1.5" />
-                <text x="234" y="52" textAnchor="middle" fontFamily="system-ui,sans-serif" fontSize="24" fontWeight="800" fill="#1f3d1a">25+</text>
-                <text x="234" y="68" textAnchor="middle" fontFamily="system-ui,sans-serif" fontSize="10" fill="#7a8a6a">Years teaching</text>
+                <rect
+                  x="184"
+                  y="26"
+                  width="100"
+                  height="60"
+                  rx="18"
+                  fill="white"
+                  stroke="#a3d635"
+                  strokeWidth="1.5"
+                />
+                <text
+                  x="234"
+                  y="52"
+                  textAnchor="middle"
+                  fontFamily="system-ui,sans-serif"
+                  fontSize="24"
+                  fontWeight="800"
+                  fill="#1f3d1a"
+                >
+                  25+
+                </text>
+                <text
+                  x="234"
+                  y="68"
+                  textAnchor="middle"
+                  fontFamily="system-ui,sans-serif"
+                  fontSize="10"
+                  fill="#7a8a6a"
+                >
+                  Years teaching
+                </text>
 
                 {/* Stat badge 2 — 4,700+ Students */}
-                <rect x="184" y="102" width="100" height="60" rx="18" fill="#1f3d1a" />
-                <text x="234" y="128" textAnchor="middle" fontFamily="system-ui,sans-serif" fontSize="20" fontWeight="800" fill="#a3d635">4,700+</text>
-                <text x="234" y="146" textAnchor="middle" fontFamily="system-ui,sans-serif" fontSize="10" fill="white" opacity="0.7">Students taught</text>
+                <rect
+                  x="184"
+                  y="102"
+                  width="100"
+                  height="60"
+                  rx="18"
+                  fill="#1f3d1a"
+                />
+                <text
+                  x="234"
+                  y="128"
+                  textAnchor="middle"
+                  fontFamily="system-ui,sans-serif"
+                  fontSize="20"
+                  fontWeight="800"
+                  fill="#a3d635"
+                >
+                  4,700+
+                </text>
+                <text
+                  x="234"
+                  y="146"
+                  textAnchor="middle"
+                  fontFamily="system-ui,sans-serif"
+                  fontSize="10"
+                  fill="white"
+                  opacity="0.7"
+                >
+                  Students taught
+                </text>
 
                 {/* Stat badge 3 — 50+ Countries */}
-                <rect x="184" y="178" width="100" height="60" rx="18" fill="#f0f9d4" stroke="#a3d635" strokeWidth="1.5" />
-                <text x="234" y="204" textAnchor="middle" fontFamily="system-ui,sans-serif" fontSize="24" fontWeight="800" fill="#1f3d1a">50+</text>
-                <text x="234" y="222" textAnchor="middle" fontFamily="system-ui,sans-serif" fontSize="10" fill="#7a8a6a">Countries</text>
+                <rect
+                  x="184"
+                  y="178"
+                  width="100"
+                  height="60"
+                  rx="18"
+                  fill="#f0f9d4"
+                  stroke="#a3d635"
+                  strokeWidth="1.5"
+                />
+                <text
+                  x="234"
+                  y="204"
+                  textAnchor="middle"
+                  fontFamily="system-ui,sans-serif"
+                  fontSize="24"
+                  fontWeight="800"
+                  fill="#1f3d1a"
+                >
+                  50+
+                </text>
+                <text
+                  x="234"
+                  y="222"
+                  textAnchor="middle"
+                  fontFamily="system-ui,sans-serif"
+                  fontSize="10"
+                  fill="#7a8a6a"
+                >
+                  Countries
+                </text>
 
                 {/* Decorative dots */}
                 <circle cx="174" cy="18" r="3" fill="#a3d635" opacity="0.4" />
-                <circle cx="178" cy="94" r="2.5" fill="#1f3d1a" opacity="0.14" />
-                <circle cx="178" cy="170" r="2.5" fill="#a3d635" opacity="0.32" />
+                <circle
+                  cx="178"
+                  cy="94"
+                  r="2.5"
+                  fill="#1f3d1a"
+                  opacity="0.14"
+                />
+                <circle
+                  cx="178"
+                  cy="170"
+                  r="2.5"
+                  fill="#a3d635"
+                  opacity="0.32"
+                />
                 <circle cx="174" cy="246" r="3" fill="#1f3d1a" opacity="0.12" />
                 <circle cx="8" cy="90" r="2" fill="#a3d635" opacity="0.28" />
                 <circle cx="8" cy="164" r="2.5" fill="#1f3d1a" opacity="0.12" />
@@ -222,10 +425,10 @@ export default function OurSchoolRoute() {
               </p>
               <p className="text-vv-ink-2 text-[clamp(16px,1.2vw,18px)] leading-relaxed max-w-[62ch] text-pretty m-0">
                 I started Vida Verde in 1999 with a simple belief: that learning
-                a language is most powerful when it happens inside a culture, not
-                just a classroom. La Floresta, our neighbourhood in Quito, has
-                always felt like the perfect place for that. Bohemian, walkable,
-                full of life.
+                a language is most powerful when it happens inside a culture,
+                not just a classroom. La Floresta, our neighbourhood in Quito,
+                has always felt like the perfect place for that. Bohemian,
+                walkable, full of life.
               </p>
               <p className="text-vv-ink-2 text-[clamp(16px,1.2vw,18px)] leading-relaxed max-w-[62ch] text-pretty m-0">
                 Over 25 years, I have watched students arrive not knowing a word
@@ -274,9 +477,10 @@ export default function OurSchoolRoute() {
                 href="https://www.aecee.es"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2.5 border border-vv-line-2 rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-transparent text-vv-ink hover:bg-vv-ink hover:border-vv-ink hover:text-vv-bg w-fit"
+                className="inline-flex items-center justify-center gap-2.5 border border-vv-line-2 rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] leading-none py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-transparent text-vv-ink hover:bg-vv-ink hover:border-vv-ink hover:text-vv-bg w-fit"
               >
-                Learn more about AECEE →
+                Learn more about AECEE{" "}
+                <ChevronRight className="h-4 w-4 shrink-0 translate-y-0.5" />
               </a>
             </div>
             <div className="rounded-[22px] border border-vv-line bg-vv-bg-warm p-8">
@@ -414,9 +618,10 @@ export default function OurSchoolRoute() {
             <div className="col-span-full flex justify-center mt-10">
               <Link
                 href="/online-classes/book"
-                className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px"
+                className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] leading-none py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px"
               >
-                Start Learning with Us →
+                Start Learning with Us{" "}
+                <ChevronRight className="h-4 w-4 shrink-0 translate-y-0.5" />
               </Link>
             </div>
           </div>

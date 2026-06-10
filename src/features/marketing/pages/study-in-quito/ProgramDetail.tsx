@@ -3,6 +3,7 @@ import { CountUpStat } from "@/features/marketing/pages/home/components/CountUpS
 import type { Program } from "./data/programs.data";
 import Image from "next/image";
 import Link from "next/link";
+import { ChevronRight } from "lucide-react";
 import { TestimonialCarousel } from "../home/components/TestimonialCarousel";
 
 export function ProgramDetail({ program }: { program: Program }) {
@@ -43,15 +44,16 @@ export function ProgramDetail({ program }: { program: Program }) {
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px"
+              className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] leading-none py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px"
             >
-              Enquire &amp; Reserve Your Place →
+              Enquire &amp; Reserve Your Place{" "}
+              <ChevronRight className="h-4 w-4 shrink-0 translate-y-0.5" />
             </Link>
             <a
               href="https://wa.me/593998037473?text=Hi%2C+I%27d+like+to+enquire+about+the+Vida+Verde+immersion+programme."
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2.5 rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap border border-white/50 text-white bg-white/8 hover:bg-white/15"
+              className="inline-flex items-center justify-center gap-2.5 rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] leading-none py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap border border-white/50 text-white bg-white/8 hover:bg-white/15"
             >
               WhatsApp Us
             </a>
@@ -236,9 +238,10 @@ export function ProgramDetail({ program }: { program: Program }) {
           <div className="mt-8 flex flex-wrap gap-3 justify-center">
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px"
+              className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] leading-none py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px"
             >
-              Enquire Now →
+              Enquire Now{" "}
+              <ChevronRight className="h-4 w-4 shrink-0 translate-y-0.5" />
             </Link>
           </div>
           <div className="mt-4">

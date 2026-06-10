@@ -1,5 +1,5 @@
 import { Container } from "@/components/shared/Container";
-import { ArrowRight } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -35,10 +35,11 @@ export function LearnAboutSchoolSection() {
               human connection.
             </p>
             <p className="text-vv-ink-2 text-[clamp(16px,1.2vw,18px)] leading-relaxed max-w-[62ch] text-pretty m-0">
-              From our home in La Floresta — one of Quito&apos;s most vibrant and
-              welcoming neighbourhoods — we&apos;ve grown to serve over 4,700
-              students from every corner of the world. Online and in person.
-              Beginners and advanced speakers. Travellers and professionals.
+              From our home in La Floresta — one of Quito&apos;s most vibrant
+              and welcoming neighbourhoods — we&apos;ve grown to serve over
+              4,700 students from every corner of the world. Online and in
+              person. Beginners and advanced speakers. Travellers and
+              professionals.
             </p>
             <p className="text-vv-ink-2 text-[clamp(16px,1.2vw,18px)] leading-relaxed max-w-[62ch] text-pretty m-0">
               We&apos;re proud to hold AECEE certification, a quality standard
@@ -58,10 +59,10 @@ export function LearnAboutSchoolSection() {
 
             <Link
               href="/our-school"
-              className="inline-flex w-fit items-center gap-2.5 border border-vv-ink rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-ink text-vv-bg hover:bg-vv-accent-deep hover:border-vv-accent-deep hover:-translate-y-px"
+              className="inline-flex w-fit items-center gap-2.5 border border-vv-ink rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] leading-none py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-ink text-vv-bg hover:bg-vv-accent-deep hover:border-vv-accent-deep hover:-translate-y-px"
             >
               Our Story
-              <ArrowRight aria-hidden="true" className="h-4 w-4" />
+              <ChevronRight aria-hidden="true" className="h-4 w-4 shrink-0" />
             </Link>
           </div>
         </div>

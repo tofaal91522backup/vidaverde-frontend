@@ -1,6 +1,6 @@
 import { Container } from "@/components/shared/Container";
 import WorldMap from "@/components/ui/world-map";
-import { Star } from "lucide-react";
+import { ChevronRight, Star } from "lucide-react";
 import Link from "next/link";
 
 const TRAVEL_DOTS = [
@@ -90,15 +90,16 @@ export default function TravelSpanishRoute() {
                   href={WHATSAPP_HREF}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px"
+                  className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] leading-none py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px"
                 >
                   Plan My Travel Spanish — WhatsApp Us
                 </Link>
                 <Link
                   href="/contact"
-                  className="inline-flex items-center justify-center gap-2.5 border border-vv-line-2 rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-transparent text-vv-ink hover:bg-vv-ink hover:border-vv-ink hover:text-vv-bg"
+                  className="inline-flex items-center justify-center gap-2.5 border border-vv-line-2 rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] leading-none py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-transparent text-vv-ink hover:bg-vv-ink hover:border-vv-ink hover:text-vv-bg"
                 >
-                  Send Us a Message →
+                  Send Us a Message{" "}
+                  <ChevronRight className="h-4 w-4 shrink-0 translate-y-0.5" />
                 </Link>
               </div>
               <p className="text-[13px] text-vv-muted m-0">
@@ -162,15 +163,16 @@ export default function TravelSpanishRoute() {
                   href={WHATSAPP_HREF}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[14px] font-semibold tracking-[-0.005em] py-3 px-5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px text-center"
+                  className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[14px] font-semibold tracking-[-0.005em] leading-none py-3 px-5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px text-center"
                 >
                   Plan My Travel Spanish — WhatsApp Us
                 </Link>
                 <Link
                   href="/contact"
-                  className="inline-flex items-center justify-center gap-2.5 border border-vv-line-2 rounded-full cursor-pointer text-[14px] font-semibold tracking-[-0.005em] py-3 px-5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-transparent text-vv-ink hover:bg-vv-ink hover:border-vv-ink hover:text-vv-bg text-center"
+                  className="inline-flex items-center justify-center gap-2.5 border border-vv-line-2 rounded-full cursor-pointer text-[14px] font-semibold tracking-[-0.005em] leading-none py-3 px-5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-transparent text-vv-ink hover:bg-vv-ink hover:border-vv-ink hover:text-vv-bg text-center"
                 >
-                  Send Us a Message →
+                  Send Us a Message{" "}
+                  <ChevronRight className="h-4 w-4 shrink-0 translate-y-0.5" />
                 </Link>
               </div>
             </div>

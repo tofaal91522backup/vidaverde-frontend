@@ -2,6 +2,7 @@ import { Container } from "@/components/shared/Container";
 import { onlineTeachers } from "../data/online-classes.data";
 import Image from "next/image";
 import Link from "next/link";
+import { ChevronRight } from "lucide-react";
 
 export function OnlineTeachersSection() {
   return (
@@ -19,9 +20,9 @@ export function OnlineTeachersSection() {
             Choose Your Teacher
           </h2>
           <p className="text-vv-ink-2 text-[clamp(15px,1.1vw,17px)] leading-relaxed m-0 text-pretty">
-            All our teachers are Ecuadorian native speakers with university-level
-            training and years of teaching experience. Pick the one that feels
-            right for you.
+            All our teachers are Ecuadorian native speakers with
+            university-level training and years of teaching experience. Pick the
+            one that feels right for you.
           </p>
         </div>
         <div className="grid gap-6 lg:grid-cols-2">
@@ -81,22 +82,26 @@ function OnlineTeacherCard({
             className={`h-2 w-2 rounded-full ${teacher.accepting ? "bg-green-500" : "bg-amber-400"}`}
           />
           <span className="text-[12px] text-vv-ink-2">
-            {teacher.accepting ? "Accepting new students" : "Limited availability"} ·{" "}
-            {teacher.availability}
+            {teacher.accepting
+              ? "Accepting new students"
+              : "Limited availability"}{" "}
+            · {teacher.availability}
           </span>
         </div>
         <div className="flex items-center gap-3">
           <Link
             href={`/online-classes/book?teacher=${teacher.firstName.toLowerCase()}`}
-            className="flex-1 inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[13px] font-semibold tracking-[-0.005em] py-2.25 px-3.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px text-center"
+            className="flex-1 inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[13px] font-semibold tracking-[-0.005em] leading-none py-2.25 px-3.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px text-center"
           >
-            Book with {teacher.firstName} →
+            Book with {teacher.firstName}{" "}
+            <ChevronRight className="h-4 w-4 shrink-0 translate-y-0.5" />
           </Link>
           <Link
             href={`/teachers/${teacher.firstName.toLowerCase()}`}
-            className="shrink-0 text-[13px] font-medium text-vv-ink-2 underline underline-offset-2 hover:text-vv-ink transition-colors duration-150 whitespace-nowrap"
+            className="shrink-0 inline-flex items-center gap-1.5 text-[13px] font-medium text-vv-ink-2 underline underline-offset-2 hover:text-vv-ink transition-colors duration-150 whitespace-nowrap"
           >
-            View full profile →
+            View full profile{" "}
+            <ChevronRight className="h-4 w-4 shrink-0 translate-y-0.5" />
           </Link>
         </div>
       </div>

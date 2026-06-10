@@ -4,6 +4,7 @@ import { Container } from "@/components/shared/Container";
 import { cn } from "@/lib/utils";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
+import { ChevronRight } from "lucide-react";
 
 const teachers = [
   {
@@ -37,7 +38,8 @@ const packages = [
     id: "first-lesson",
     label: "Assessment & First Lesson",
     price: "$12",
-    description: "60-min session with full level assessment and personalised learning plan. One per student.",
+    description:
+      "60-min session with full level assessment and personalised learning plan. One per student.",
     badge: "★ Recommended for new students",
   },
   {
@@ -56,7 +58,8 @@ const packages = [
     id: "pack-20",
     label: "20-Class Package",
     price: "$254.64",
-    description: "20 × 60-min private lessons. Best-value package for serious learners. Valid for 6 months.",
+    description:
+      "20 × 60-min private lessons. Best-value package for serious learners. Valid for 6 months.",
     badge: "★ Best value",
   },
 ];
@@ -69,31 +72,57 @@ const levels = [
   "Advanced — I want to polish and perfect",
 ];
 
-const STEPS = ["Choose Your Teacher", "Choose Your Package", "Date & Time", "Your Details", "Payment"] as const;
+const STEPS = [
+  "Choose Your Teacher",
+  "Choose Your Package",
+  "Date & Time",
+  "Your Details",
+  "Payment",
+] as const;
 
 export default function BookRoute() {
   const searchParams = useSearchParams();
   const preselectedTeacher = searchParams.get("teacher");
 
   const initialTeacher =
-    teachers.find((t) => t.firstName.toLowerCase() === preselectedTeacher?.toLowerCase()) ?? null;
+    teachers.find(
+      (t) => t.firstName.toLowerCase() === preselectedTeacher?.toLowerCase(),
+    ) ?? null;
 
   const [step, setStep] = useState(initialTeacher ? 1 : 0);
-  const [selectedTeacher, setSelectedTeacher] = useState<(typeof teachers)[number] | null>(initialTeacher);
+  const [selectedTeacher, setSelectedTeacher] = useState<
+    (typeof teachers)[number] | null
+  >(initialTeacher);
   const [matchMe, setMatchMe] = useState(false);
-  const [selectedPackage, setSelectedPackage] = useState<(typeof packages)[number] | null>(packages[0]);
+  const [selectedPackage, setSelectedPackage] = useState<
+    (typeof packages)[number] | null
+  >(packages[0]);
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
-  const [details, setDetails] = useState({ firstName: "", lastName: "", email: "", level: levels[0] });
+  const [details, setDetails] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    level: levels[0],
+  });
   const [confirmed, setConfirmed] = useState(false);
 
-  const availableTimes = ["9:00 AM", "10:00 AM", "11:00 AM", "1:00 PM", "2:00 PM", "3:00 PM", "4:00 PM"];
+  const availableTimes = [
+    "9:00 AM",
+    "10:00 AM",
+    "11:00 AM",
+    "1:00 PM",
+    "2:00 PM",
+    "3:00 PM",
+    "4:00 PM",
+  ];
 
   const canAdvance = () => {
     if (step === 0) return !!selectedTeacher || matchMe;
     if (step === 1) return !!selectedPackage;
     if (step === 2) return !!selectedDate && !!selectedTime;
-    if (step === 3) return !!details.firstName && !!details.lastName && !!details.email;
+    if (step === 3)
+      return !!details.firstName && !!details.lastName && !!details.email;
     if (step === 4) return true;
     return false;
   };
@@ -104,7 +133,10 @@ export default function BookRoute() {
 
   if (confirmed) {
     return (
-      <section className="min-h-[70vh] flex items-center" data-screen-label="Booking Confirmed">
+      <section
+        className="min-h-[70vh] flex items-center"
+        data-screen-label="Booking Confirmed"
+      >
         <Container className="text-center py-20">
           <div className="text-6xl mb-6">🎉</div>
           <h1 className="text-[clamp(28px,3vw,44px)] font-semibold tracking-[-0.02em] leading-[1.08] m-0 mb-4 text-balance">
@@ -117,14 +149,17 @@ export default function BookRoute() {
             </strong>{" "}
             is confirmed for{" "}
             <strong className="text-vv-ink">{selectedDate}</strong> at{" "}
-            <strong className="text-vv-ink">{selectedTime}</strong> in your timezone.
-            Check your inbox — we&apos;ve sent everything you need.
+            <strong className="text-vv-ink">{selectedTime}</strong> in your
+            timezone. Check your inbox — we&apos;ve sent everything you need.
           </p>
           <div className="mt-8 rounded-xl border border-vv-line bg-vv-bg-warm p-6 text-left max-w-md mx-auto">
             <h3 className="font-semibold text-vv-ink mb-3">Booking Summary</h3>
             <dl className="flex flex-col gap-2 text-[14px]">
               {[
-                ["Teacher", matchMe ? "Matched by Vida Verde" : selectedTeacher?.name],
+                [
+                  "Teacher",
+                  matchMe ? "Matched by Vida Verde" : selectedTeacher?.name,
+                ],
                 ["Package", selectedPackage?.label],
                 ["Date", selectedDate],
                 ["Time", selectedTime],
@@ -139,9 +174,10 @@ export default function BookRoute() {
           </div>
           <a
             href="#"
-            className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px mt-6"
+            className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] leading-none py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px mt-6"
           >
-            Add to Calendar →
+            Add to Calendar{" "}
+            <ChevronRight className="h-4 w-4 shrink-0 translate-y-0.5" />
           </a>
         </Container>
       </section>
@@ -169,8 +205,8 @@ export default function BookRoute() {
                   i < step
                     ? "bg-vv-accent text-vv-accent-deep"
                     : i === step
-                    ? "border border-vv-ink text-vv-ink"
-                    : "text-vv-ink-2",
+                      ? "border border-vv-ink text-vv-ink"
+                      : "text-vv-ink-2",
                 )}
               >
                 <span>{i + 1}.</span> {label}
@@ -182,7 +218,9 @@ export default function BookRoute() {
         {/* Step 0 — Teacher */}
         {step === 0 && (
           <div>
-            <h2 className="text-[20px] font-semibold mb-1 text-vv-ink">Choose Your Teacher</h2>
+            <h2 className="text-[20px] font-semibold mb-1 text-vv-ink">
+              Choose Your Teacher
+            </h2>
             <p className="text-[14px] text-vv-ink-2 mb-6">
               Not sure? We&apos;ll match you with the best available teacher.
             </p>
@@ -191,7 +229,10 @@ export default function BookRoute() {
                 <button
                   key={t.name}
                   type="button"
-                  onClick={() => { setSelectedTeacher(t); setMatchMe(false); }}
+                  onClick={() => {
+                    setSelectedTeacher(t);
+                    setMatchMe(false);
+                  }}
                   className={cn(
                     "flex items-center gap-4 rounded-xl border p-4 text-left transition",
                     selectedTeacher?.name === t.name && !matchMe
@@ -201,11 +242,19 @@ export default function BookRoute() {
                 >
                   <div className="h-12 w-12 shrink-0 rounded-full bg-vv-bg-warm overflow-hidden">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={t.image} alt={t.name} className="h-full w-full object-cover" />
+                    <img
+                      src={t.image}
+                      alt={t.name}
+                      className="h-full w-full object-cover"
+                    />
                   </div>
                   <div>
-                    <div className="font-semibold text-vv-ink text-[15px]">{t.name}</div>
-                    <div className="text-[12px] text-vv-ink-2">{t.availability}</div>
+                    <div className="font-semibold text-vv-ink text-[15px]">
+                      {t.name}
+                    </div>
+                    <div className="text-[12px] text-vv-ink-2">
+                      {t.availability}
+                    </div>
                   </div>
                 </button>
               ))}
@@ -213,7 +262,10 @@ export default function BookRoute() {
               {/* Match me option */}
               <button
                 type="button"
-                onClick={() => { setMatchMe(true); setSelectedTeacher(null); }}
+                onClick={() => {
+                  setMatchMe(true);
+                  setSelectedTeacher(null);
+                }}
                 className={cn(
                   "flex items-center gap-4 rounded-xl border p-4 text-left transition sm:col-span-2",
                   matchMe
@@ -225,9 +277,12 @@ export default function BookRoute() {
                   ✨
                 </div>
                 <div>
-                  <div className="font-semibold text-vv-ink text-[15px]">Match me with a teacher</div>
+                  <div className="font-semibold text-vv-ink text-[15px]">
+                    Match me with a teacher
+                  </div>
                   <div className="text-[12px] text-vv-ink-2">
-                    Tell us your level and goals — we&apos;ll pick the best fit for you.
+                    Tell us your level and goals — we&apos;ll pick the best fit
+                    for you.
                   </div>
                 </div>
               </button>
@@ -238,7 +293,9 @@ export default function BookRoute() {
         {/* Step 1 — Package */}
         {step === 1 && (
           <div>
-            <h2 className="text-[20px] font-semibold mb-6 text-vv-ink">Choose Your Package</h2>
+            <h2 className="text-[20px] font-semibold mb-6 text-vv-ink">
+              Choose Your Package
+            </h2>
             <div className="grid gap-4 sm:grid-cols-2">
               {packages.map((pkg) => (
                 <button
@@ -258,8 +315,12 @@ export default function BookRoute() {
                     </span>
                   )}
                   <div className="flex justify-between items-start gap-2">
-                    <span className="font-semibold text-vv-ink text-[15px]">{pkg.label}</span>
-                    <span className="text-[18px] font-bold text-vv-ink shrink-0">{pkg.price}</span>
+                    <span className="font-semibold text-vv-ink text-[15px]">
+                      {pkg.label}
+                    </span>
+                    <span className="text-[18px] font-bold text-vv-ink shrink-0">
+                      {pkg.price}
+                    </span>
                   </div>
                   <p className="text-[13px] text-vv-ink-2">{pkg.description}</p>
                 </button>
@@ -271,7 +332,9 @@ export default function BookRoute() {
         {/* Step 2 — Date & Time */}
         {step === 2 && (
           <div>
-            <h2 className="text-[20px] font-semibold mb-1 text-vv-ink">Choose Your Date &amp; Time</h2>
+            <h2 className="text-[20px] font-semibold mb-1 text-vv-ink">
+              Choose Your Date &amp; Time
+            </h2>
             <p className="text-[13px] text-vv-ink-2 mb-6">
               Times shown in your local timezone. Ecuador is GMT−5.
             </p>
@@ -317,7 +380,9 @@ export default function BookRoute() {
         {/* Step 3 — Details */}
         {step === 3 && (
           <div>
-            <h2 className="text-[20px] font-semibold mb-6 text-vv-ink">Your Details</h2>
+            <h2 className="text-[20px] font-semibold mb-6 text-vv-ink">
+              Your Details
+            </h2>
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="flex flex-col gap-1.5">
                 <label className="text-[12px] font-medium uppercase tracking-wide text-vv-ink-2">
@@ -327,7 +392,9 @@ export default function BookRoute() {
                   type="text"
                   required
                   value={details.firstName}
-                  onChange={(e) => setDetails((d) => ({ ...d, firstName: e.target.value }))}
+                  onChange={(e) =>
+                    setDetails((d) => ({ ...d, firstName: e.target.value }))
+                  }
                   className="rounded-lg border border-vv-line bg-vv-bg-warm px-4 py-3 text-[15px] text-vv-ink outline-none focus:border-vv-accent"
                 />
               </div>
@@ -339,7 +406,9 @@ export default function BookRoute() {
                   type="text"
                   required
                   value={details.lastName}
-                  onChange={(e) => setDetails((d) => ({ ...d, lastName: e.target.value }))}
+                  onChange={(e) =>
+                    setDetails((d) => ({ ...d, lastName: e.target.value }))
+                  }
                   className="rounded-lg border border-vv-line bg-vv-bg-warm px-4 py-3 text-[15px] text-vv-ink outline-none focus:border-vv-accent"
                 />
               </div>
@@ -351,7 +420,9 @@ export default function BookRoute() {
                   type="email"
                   required
                   value={details.email}
-                  onChange={(e) => setDetails((d) => ({ ...d, email: e.target.value }))}
+                  onChange={(e) =>
+                    setDetails((d) => ({ ...d, email: e.target.value }))
+                  }
                   className="rounded-lg border border-vv-line bg-vv-bg-warm px-4 py-3 text-[15px] text-vv-ink outline-none focus:border-vv-accent"
                 />
               </div>
@@ -361,10 +432,16 @@ export default function BookRoute() {
                 </label>
                 <select
                   value={details.level}
-                  onChange={(e) => setDetails((d) => ({ ...d, level: e.target.value }))}
+                  onChange={(e) =>
+                    setDetails((d) => ({ ...d, level: e.target.value }))
+                  }
                   className="rounded-lg border border-vv-line bg-vv-bg-warm px-4 py-3 text-[15px] text-vv-ink outline-none focus:border-vv-accent"
                 >
-                  {levels.map((l) => <option key={l} value={l}>{l}</option>)}
+                  {levels.map((l) => (
+                    <option key={l} value={l}>
+                      {l}
+                    </option>
+                  ))}
                 </select>
               </div>
             </div>
@@ -374,15 +451,21 @@ export default function BookRoute() {
         {/* Step 4 — Payment */}
         {step === 4 && (
           <div>
-            <h2 className="text-[20px] font-semibold mb-2 text-vv-ink">Payment</h2>
+            <h2 className="text-[20px] font-semibold mb-2 text-vv-ink">
+              Payment
+            </h2>
             <p className="text-[13px] text-vv-ink-2 mb-6">
-              Secure payment via Stripe. Your card details are never stored on our servers.
+              Secure payment via Stripe. Your card details are never stored on
+              our servers.
             </p>
             <div className="rounded-xl border border-vv-line bg-vv-bg-warm p-6 mb-6">
               <h3 className="font-semibold text-vv-ink mb-3">Order Summary</h3>
               <dl className="flex flex-col gap-2 text-[14px]">
                 {[
-                  ["Teacher", matchMe ? "Matched by Vida Verde" : selectedTeacher?.name],
+                  [
+                    "Teacher",
+                    matchMe ? "Matched by Vida Verde" : selectedTeacher?.name,
+                  ],
                   ["Package", selectedPackage?.label],
                   ["Date", `${selectedDate} at ${selectedTime}`],
                   ["Platform", "Google Meet"],
@@ -435,7 +518,8 @@ export default function BookRoute() {
                 </div>
               </div>
               <p className="text-[11px] text-vv-ink-2">
-                🔒 Payments powered by Stripe. We accept Visa, Mastercard, Apple Pay and Google Pay.
+                🔒 Payments powered by Stripe. We accept Visa, Mastercard, Apple
+                Pay and Google Pay.
               </p>
             </div>
           </div>
@@ -447,7 +531,7 @@ export default function BookRoute() {
             <button
               type="button"
               onClick={() => setStep((s) => s - 1)}
-              className="inline-flex items-center justify-center gap-2.5 border border-vv-line-2 rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-transparent text-vv-ink hover:bg-vv-ink hover:border-vv-ink hover:text-vv-bg"
+              className="inline-flex items-center justify-center gap-2.5 border border-vv-line-2 rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] leading-none py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-transparent text-vv-ink hover:bg-vv-ink hover:border-vv-ink hover:text-vv-bg"
             >
               ← Back
             </button>
@@ -461,17 +545,18 @@ export default function BookRoute() {
               disabled={!canAdvance()}
               onClick={() => setStep((s) => s + 1)}
               className={cn(
-                "inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px",
+                "inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] leading-none py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px",
                 !canAdvance() && "opacity-40 cursor-not-allowed",
               )}
             >
-              Continue →
+              Continue{" "}
+              <ChevronRight className="h-4 w-4 shrink-0 translate-y-0.5" />
             </button>
           ) : (
             <button
               type="button"
               onClick={handleConfirm}
-              className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px"
+              className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] leading-none py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px"
             >
               Confirm &amp; Pay — {selectedPackage?.price}
             </button>

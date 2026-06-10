@@ -2,11 +2,15 @@ import { Container } from "@/components/shared/Container";
 import { blogPosts, categories } from "./data/posts.data";
 import Image from "next/image";
 import Link from "next/link";
+import { ChevronRight } from "lucide-react";
 
 export default function BlogRoute() {
   return (
     <>
-      <section className="bg-vv-bg-warm border-b border-vv-line" data-screen-label="01 Blog">
+      <section
+        className="bg-vv-bg-warm border-b border-vv-line"
+        data-screen-label="01 Blog"
+      >
         <Container>
           <div className="font-code text-vv-muted text-[12px] tracking-[0.06em] mb-6">
             Home <span className="mx-1 text-vv-line-2">/</span> Blog
@@ -21,7 +25,10 @@ export default function BlogRoute() {
         </Container>
       </section>
 
-      <section className="border-t border-vv-line py-16" data-screen-label="02 Blog Grid">
+      <section
+        className="border-t border-vv-line py-16"
+        data-screen-label="02 Blog Grid"
+      >
         <Container>
           <div className="mb-8 flex flex-wrap gap-2">
             {["All", ...categories].map((cat) => (
@@ -55,7 +62,9 @@ export default function BlogRoute() {
                     <span className="rounded-full bg-vv-accent/20 px-2.5 py-0.5 text-[11px] font-semibold text-vv-accent-deep">
                       {post.category}
                     </span>
-                    <span className="text-[11px] text-vv-ink-2">{post.readingTime}</span>
+                    <span className="text-[11px] text-vv-ink-2">
+                      {post.readingTime}
+                    </span>
                   </div>
                   <h2 className="text-[18px] font-semibold leading-tight tracking-[-0.01em] text-vv-ink">
                     {post.title}
@@ -73,9 +82,10 @@ export default function BlogRoute() {
                     </span>
                     <Link
                       href={`/blog/${post.slug}`}
-                      className="text-[13px] font-medium text-vv-ink hover:text-vv-accent-deep transition"
+                      className="inline-flex items-center gap-1.5 text-[13px] font-medium text-vv-ink hover:text-vv-accent-deep transition"
                     >
-                      Read more →
+                      Read more{" "}
+                      <ChevronRight className="h-4 w-4 shrink-0 translate-y-0.5" />
                     </Link>
                   </div>
                 </div>

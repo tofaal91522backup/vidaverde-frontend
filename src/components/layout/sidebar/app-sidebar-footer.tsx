@@ -14,7 +14,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import SignOut from "@/features/auth/components/sign-out";
-import { EllipsisVertical } from "lucide-react";
+import { ChevronUp, Settings } from "lucide-react";
 
 export function AppSidebarFooter({
   footerInfo,
@@ -34,23 +34,15 @@ export function AppSidebarFooter({
           <DropdownMenuTrigger asChild>
             <SidebarMenuButton
               size="lg"
-              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground border-t cursor-pointer"
+              className="group cursor-pointer bg-sidebar-accent text-sidebar-accent-foreground"
             >
-              <Avatar className="h-8 w-8 rounded-lg grayscale">
-                <AvatarImage src={footerInfo.avatar} alt={footerInfo.name} />
-                <AvatarFallback className="rounded-lg">P</AvatarFallback>
-              </Avatar>
-              <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">{footerInfo.name}</span>
-                <span className="text-muted-foreground truncate text-xs">
-                  {footerInfo.email}
-                </span>
-              </div>
-              <EllipsisVertical className="ml-auto size-4" />
+              <Settings className="size-4" />
+              <span>Settings</span>
+              <ChevronUp className="ml-auto size-4 transition-transform duration-200 group-data-[state=open]:rotate-90" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
-            className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
+            className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg bg-sidebar text-sidebar-foreground border-sidebar-border **:[[role=menuitem]]:focus:bg-sidebar-accent **:[[role=menuitem]]:focus:text-sidebar-accent-foreground"
             side={isMobile ? "bottom" : "right"}
             align="end"
             sideOffset={4}
@@ -59,37 +51,23 @@ export function AppSidebarFooter({
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
                   <AvatarImage src={footerInfo.avatar} alt={footerInfo.name} />
-                  <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                  <AvatarFallback className="rounded-lg bg-sidebar-accent text-sidebar-accent-foreground">
+                    {footerInfo.name.charAt(0).toUpperCase()}
+                  </AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">
+                  <span className="truncate font-medium text-sidebar-foreground">
                     {footerInfo.name}
                   </span>
-                  <span className="text-muted-foreground truncate text-xs">
+                  <span className="truncate text-xs text-sidebar-foreground/50">
                     {footerInfo.email}
                   </span>
                 </div>
               </div>
             </DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            {/* <DropdownMenuGroup> */}
-            {/* <DropdownMenuItem>
-                <IconUserCircle />
-                Account
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <IconCreditCard />
-                Billing
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <IconNotification />
-                Notifications
-              </DropdownMenuItem> */}
-            {/* </DropdownMenuGroup> */}
-            {/* <DropdownMenuSeparator /> */}
-            <DropdownMenuItem>
-              <SignOut />
-            </DropdownMenuItem>
+            <DropdownMenuSeparator className="bg-sidebar-border" />
+
+            <SignOut />
           </DropdownMenuContent>
         </DropdownMenu>
       </SidebarMenuItem>

@@ -1,7 +1,7 @@
 "use client";
 
 import { Container } from "@/components/shared/Container";
-import { Mail, MapPin, MessageCircle } from "lucide-react";
+import { ChevronRight, Mail, MapPin, MessageCircle } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -61,59 +61,240 @@ export default function ContactRoute() {
                 className="w-120"
               >
                 {/* Card 1 — WhatsApp */}
-                <rect x="0" y="18" width="88" height="194" rx="20" fill="#a3d635" />
+                <rect
+                  x="0"
+                  y="18"
+                  width="88"
+                  height="194"
+                  rx="20"
+                  fill="#a3d635"
+                />
                 {/* Chat bubble icon */}
-                <rect x="18" y="38" width="52" height="42" rx="12" fill="#1f3d1a" opacity="0.18" />
-                <rect x="18" y="38" width="52" height="42" rx="12" fill="white" opacity="0.85" />
-                <path d="M 24 80 L 18 94 L 34 80 Z" fill="white" opacity="0.85" />
-                <rect x="26" y="48" width="30" height="5" rx="2.5" fill="#1f3d1a" opacity="0.28" />
-                <rect x="26" y="58" width="24" height="5" rx="2.5" fill="#1f3d1a" opacity="0.28" />
-                <rect x="26" y="68" width="18" height="5" rx="2.5" fill="#1f3d1a" opacity="0.28" />
+                <rect
+                  x="18"
+                  y="38"
+                  width="52"
+                  height="42"
+                  rx="12"
+                  fill="#1f3d1a"
+                  opacity="0.18"
+                />
+                <rect
+                  x="18"
+                  y="38"
+                  width="52"
+                  height="42"
+                  rx="12"
+                  fill="white"
+                  opacity="0.85"
+                />
+                <path
+                  d="M 24 80 L 18 94 L 34 80 Z"
+                  fill="white"
+                  opacity="0.85"
+                />
+                <rect
+                  x="26"
+                  y="48"
+                  width="30"
+                  height="5"
+                  rx="2.5"
+                  fill="#1f3d1a"
+                  opacity="0.28"
+                />
+                <rect
+                  x="26"
+                  y="58"
+                  width="24"
+                  height="5"
+                  rx="2.5"
+                  fill="#1f3d1a"
+                  opacity="0.28"
+                />
+                <rect
+                  x="26"
+                  y="68"
+                  width="18"
+                  height="5"
+                  rx="2.5"
+                  fill="#1f3d1a"
+                  opacity="0.28"
+                />
                 {/* Label */}
-                <text x="44" y="112" textAnchor="middle" fontFamily="system-ui,sans-serif" fontSize="11" fontWeight="700" fill="#1f3d1a">WhatsApp</text>
-                <text x="44" y="128" textAnchor="middle" fontFamily="system-ui,sans-serif" fontSize="9" fill="#1f3d1a" opacity="0.65">+593 998 037 473</text>
+                <text
+                  x="44"
+                  y="112"
+                  textAnchor="middle"
+                  fontFamily="system-ui,sans-serif"
+                  fontSize="11"
+                  fontWeight="700"
+                  fill="#1f3d1a"
+                >
+                  WhatsApp
+                </text>
+                <text
+                  x="44"
+                  y="128"
+                  textAnchor="middle"
+                  fontFamily="system-ui,sans-serif"
+                  fontSize="9"
+                  fill="#1f3d1a"
+                  opacity="0.65"
+                >
+                  +593 998 037 473
+                </text>
                 {/* Badge */}
-                <rect x="10" y="152" width="68" height="26" rx="13" fill="#1f3d1a" opacity="0.12" />
-                <text x="44" y="169" textAnchor="middle" fontFamily="system-ui,sans-serif" fontSize="9.5" fontWeight="600" fill="#1f3d1a" opacity="0.8">Replies fast</text>
-                {/* Online dot */}
-                <circle cx="44" cy="202" r="6" fill="#1f3d1a" opacity="0.15" />
-                <circle cx="44" cy="202" r="4" fill="#1f3d1a" opacity="0.5" />
+                <rect x="5" y="150" width="78" height="28" rx="14" fill="white" />
+                <text
+                  x="44"
+                  y="168"
+                  textAnchor="middle"
+                  fontFamily="system-ui,sans-serif"
+                  fontSize="9.5"
+                  fontWeight="600"
+                  fill="#1f3d1a"
+                >
+                  Replies fast
+                </text>
 
                 {/* Card 2 — Email */}
-                <rect x="109" y="0" width="88" height="215" rx="20" fill="#f0f9d4" stroke="#a3d635" strokeWidth="1.5" />
+                <rect
+                  x="109"
+                  y="0"
+                  width="88"
+                  height="215"
+                  rx="20"
+                  fill="#f0f9d4"
+                  stroke="#a3d635"
+                  strokeWidth="1.5"
+                />
                 {/* Envelope icon */}
-                <rect x="127" y="30" width="52" height="38" rx="7" fill="none" stroke="#1f3d1a" strokeWidth="2.2" />
-                <polyline points="127,32 153,56 179,32" stroke="#1f3d1a" strokeWidth="2.2" fill="none" strokeLinejoin="round" />
+                <rect
+                  x="127"
+                  y="30"
+                  width="52"
+                  height="38"
+                  rx="7"
+                  fill="none"
+                  stroke="#1f3d1a"
+                  strokeWidth="2.2"
+                />
+                <polyline
+                  points="127,32 153,56 179,32"
+                  stroke="#1f3d1a"
+                  strokeWidth="2.2"
+                  fill="none"
+                  strokeLinejoin="round"
+                />
                 {/* Label */}
-                <text x="153" y="106" textAnchor="middle" fontFamily="system-ui,sans-serif" fontSize="11" fontWeight="700" fill="#1f3d1a">Email</text>
-                <text x="153" y="122" textAnchor="middle" fontFamily="system-ui,sans-serif" fontSize="8.5" fill="#1f3d1a" opacity="0.6">info@vidaverde.com</text>
+                <text
+                  x="153"
+                  y="106"
+                  textAnchor="middle"
+                  fontFamily="system-ui,sans-serif"
+                  fontSize="11"
+                  fontWeight="700"
+                  fill="#1f3d1a"
+                >
+                  Email
+                </text>
+                <text
+                  x="153"
+                  y="122"
+                  textAnchor="middle"
+                  fontFamily="system-ui,sans-serif"
+                  fontSize="8.5"
+                  fill="#1f3d1a"
+                  opacity="0.6"
+                >
+                  info@vidaverde.com
+                </text>
                 {/* Badge */}
-                <rect x="119" y="148" width="68" height="26" rx="13" fill="#a3d635" opacity="0.4" />
-                <text x="153" y="165" textAnchor="middle" fontFamily="system-ui,sans-serif" fontSize="9.5" fontWeight="600" fill="#1f3d1a">24hr response</text>
-                {/* Stars */}
-                {[0,1,2,3,4].map((i) => (
-                  <text key={i} x={127 + i * 11} y="198" fontFamily="system-ui,sans-serif" fontSize="12" fill="#f59e0b">★</text>
-                ))}
+                <rect x="114" y="146" width="78" height="28" rx="14" fill="#1f3d1a" />
+                <text
+                  x="153"
+                  y="164"
+                  textAnchor="middle"
+                  fontFamily="system-ui,sans-serif"
+                  fontSize="9.5"
+                  fontWeight="600"
+                  fill="white"
+                >
+                  24hr response
+                </text>
 
                 {/* Card 3 — Location */}
-                <rect x="218" y="18" width="88" height="194" rx="20" fill="#1f3d1a" />
+                <rect
+                  x="218"
+                  y="18"
+                  width="88"
+                  height="194"
+                  rx="20"
+                  fill="#1f3d1a"
+                />
                 {/* Map pin icon */}
-                <path d="M 262 36 C 250 36 240 46 240 58 C 240 72 262 92 262 92 C 262 92 284 72 284 58 C 284 46 274 36 262 36Z" fill="#a3d635" />
+                <path
+                  d="M 262 36 C 250 36 240 46 240 58 C 240 72 262 92 262 92 C 262 92 284 72 284 58 C 284 46 274 36 262 36Z"
+                  fill="#a3d635"
+                />
                 <circle cx="262" cy="58" r="9" fill="#1f3d1a" />
                 {/* Label */}
-                <text x="262" y="112" textAnchor="middle" fontFamily="system-ui,sans-serif" fontSize="11" fontWeight="700" fill="white">Location</text>
-                <text x="262" y="128" textAnchor="middle" fontFamily="system-ui,sans-serif" fontSize="9" fill="white" opacity="0.65">La Floresta</text>
-                <text x="262" y="142" textAnchor="middle" fontFamily="system-ui,sans-serif" fontSize="9" fill="white" opacity="0.65">Quito, Ecuador</text>
+                <text
+                  x="262"
+                  y="112"
+                  textAnchor="middle"
+                  fontFamily="system-ui,sans-serif"
+                  fontSize="11"
+                  fontWeight="700"
+                  fill="white"
+                >
+                  Location
+                </text>
+                <text
+                  x="262"
+                  y="128"
+                  textAnchor="middle"
+                  fontFamily="system-ui,sans-serif"
+                  fontSize="9"
+                  fill="white"
+                  opacity="0.65"
+                >
+                  La Floresta
+                </text>
+                <text
+                  x="262"
+                  y="142"
+                  textAnchor="middle"
+                  fontFamily="system-ui,sans-serif"
+                  fontSize="9"
+                  fill="white"
+                  opacity="0.65"
+                >
+                  Quito, Ecuador
+                </text>
                 {/* Badge */}
-                <rect x="228" y="162" width="68" height="26" rx="13" fill="white" opacity="0.1" />
-                <text x="262" y="179" textAnchor="middle" fontFamily="system-ui,sans-serif" fontSize="9" fill="white" opacity="0.6">Online classes</text>
-                {/* Globe dots */}
-                <circle cx="262" cy="206" r="7" fill="white" opacity="0.08" />
-                <circle cx="262" cy="206" r="4" fill="#a3d635" opacity="0.4" />
+                <rect x="223" y="160" width="78" height="28" rx="14" fill="#a3d635" />
+                <text
+                  x="262"
+                  y="178"
+                  textAnchor="middle"
+                  fontFamily="system-ui,sans-serif"
+                  fontSize="9"
+                  fontWeight="600"
+                  fill="#1f3d1a"
+                >
+                  Online classes
+                </text>
 
                 {/* Scattered dots */}
                 <circle cx="94" cy="14" r="3" fill="#a3d635" opacity="0.45" />
-                <circle cx="100" cy="220" r="2.5" fill="#1f3d1a" opacity="0.18" />
+                <circle
+                  cx="100"
+                  cy="220"
+                  r="2.5"
+                  fill="#1f3d1a"
+                  opacity="0.18"
+                />
                 <circle cx="204" cy="8" r="2" fill="#a3d635" opacity="0.4" />
                 <circle cx="210" cy="220" r="3" fill="#1f3d1a" opacity="0.15" />
               </svg>
@@ -218,13 +399,14 @@ export default function ContactRoute() {
                   <div className="flex flex-wrap gap-3 mt-2">
                     <Link
                       href="/online-classes"
-                      className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[14px] font-semibold tracking-[-0.005em] py-3 px-5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px"
+                      className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[14px] font-semibold tracking-[-0.005em] leading-none py-3 px-5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px"
                     >
-                      Explore Online Classes →
+                      Explore Online Classes{" "}
+                      <ChevronRight className="h-4 w-4 shrink-0 translate-y-0.5" />
                     </Link>
                     <Link
                       href="/study-in-quito"
-                      className="inline-flex items-center justify-center gap-2.5 border border-vv-line-2 rounded-full cursor-pointer text-[14px] font-semibold tracking-[-0.005em] py-3 px-5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-transparent text-vv-ink hover:bg-vv-ink hover:border-vv-ink hover:text-vv-bg"
+                      className="inline-flex items-center justify-center gap-2.5 border border-vv-line-2 rounded-full cursor-pointer text-[14px] font-semibold tracking-[-0.005em] leading-none py-3 px-5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-transparent text-vv-ink hover:bg-vv-ink hover:border-vv-ink hover:text-vv-bg"
                     >
                       Study in Quito
                     </Link>
@@ -301,7 +483,7 @@ export default function ContactRoute() {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] leading-none py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {loading ? "Sending…" : "Send Message"}
                   </button>
@@ -335,10 +517,11 @@ export default function ContactRoute() {
               href={WHATSAPP_HREF}
               target="_blank"
               rel="noopener noreferrer"
-              className="shrink-0 inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px"
+              className="shrink-0 inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] leading-none py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px"
             >
               <MessageCircle className="h-4 w-4" aria-hidden="true" />
-              WhatsApp Us →
+              WhatsApp Us{" "}
+              <ChevronRight className="h-4 w-4 shrink-0 translate-y-0.5" />
             </a>
           </div>
         </Container>

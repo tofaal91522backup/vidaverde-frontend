@@ -25,10 +25,10 @@ export function AppSidebarHeader({
           >
             <AppImage
               src={headerInfo.imageSrc}
-              width={35}
-              height={35}
+              width={55}
+              height={55}
               alt="logo"
-              className="rounded-md p-1 mr-2"
+              className="rounded-md mr-2 object-cover"
             />
 
             <div className="grid flex-1 text-left text-sm leading-tight cursor-pointer gap-0.5">

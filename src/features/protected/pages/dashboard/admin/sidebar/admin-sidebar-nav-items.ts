@@ -1,11 +1,11 @@
 import {
-  BarChart3,
-  Briefcase,
-  Building2,
-  FileText,
+  BookOpen,
+  CalendarCheck2,
+  CalendarDays,
+  Clock,
+  GraduationCap,
   LayoutDashboard,
-  MapPin,
-  Users,
+  Package,
 } from "lucide-react";
 
 export const AdminSidebarNavItems = [
@@ -15,35 +15,33 @@ export const AdminSidebarNavItems = [
     icon: LayoutDashboard,
   },
   {
-    title: "User Management",
-    url: "/dashboard/admin/user-management",
-    icon: MapPin,
+    title: "Teachers",
+    url: "/dashboard/admin/teachers",
+    icon: GraduationCap,
   },
   {
-    title: "Student Management",
-    icon: Users,
-    defaultOpen: true, // ✅ open by default (auto-collapsed option)
-    items: [
-      {
-        title: "Students",
-        url: "/dashboard/admin/student-management/students",
-        icon: Building2, // ✅ icon required
-      },
-      {
-        title: "Services",
-        url: "/dashboard/admin/student-management/services",
-        icon: Briefcase,
-      },
-      {
-        title: "Student Performance",
-        url: "/dashboard/admin/student-management/student-performance",
-        icon: BarChart3,
-      },
-      {
-        title: "Revenue Report",
-        url: "/dashboard/admin/student-management/revenue-report",
-        icon: FileText,
-      },
-    ],
+    title: "Bookings",
+    url: "/dashboard/admin/bookings",
+    icon: CalendarCheck2,
+  },
+  {
+    title: "Sessions",
+    url: "/dashboard/admin/sessions",
+    icon: Clock,
+  },
+  {
+    title: "Packages",
+    url: "/dashboard/admin/packages",
+    icon: Package,
+  },
+  {
+    title: "Blogs",
+    url: "/dashboard/admin/blogs",
+    icon: BookOpen,
+  },
+  {
+    title: "Calendar",
+    url: "/dashboard/admin/calendar",
+    icon: CalendarDays,
   },
 ];

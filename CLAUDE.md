@@ -1,15 +1,5 @@
 # Vida Verde Website Project
 
-## Project Documents
-./docs/homePage.md
-./docs/VidaVerde_DevPlan_Phase1_v1.md
-./docs/website-spec-v2.md
-
-## How to use these docs
-- `homePage.md` = Homepage 
-- `VidaVerde_DevPlan_Phase1_v1.md` = Dev plan for Phase 1; it's an overview of Phase 1 with content that may also be in website-spec-v2.md
-- `website-spec-v2.md` = Detailed spec for each page/section
-
 ## Current Status
 Phase: Development
 

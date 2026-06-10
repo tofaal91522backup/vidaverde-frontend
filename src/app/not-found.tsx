@@ -1,5 +1,5 @@
 import { buttonVariants } from "@/components/ui/button";
-import { ArrowLeftIcon } from "lucide-react";
+import { ChevronLeftIcon } from "lucide-react";
 import Link from "next/link";
 
 const NotFound = () => {
@@ -37,7 +37,7 @@ const NotFound = () => {
         href="/"
         className={buttonVariants({ variant: "outline", size: "lg" }) + " mt-6"}
       >
-        <ArrowLeftIcon className="mr-2 h-5 w-5" />
+        <ChevronLeftIcon className="mr-2 h-5 w-5" />
         Back to Home
       </Link>
     </div>

@@ -29,10 +29,10 @@ const SignOut = () => {
       disabled={loading}
       variant="default"
       size="sm"
-      className="w-full"
+      className="w-full items-center justify-start"
     >
       {loading && <Spinner className="mr-2" />}
-      <LogOut size={16} />
+      <LogOut className="text-white translate-y-0.1" size={16} />
       Sign Out
     </Button>
   );

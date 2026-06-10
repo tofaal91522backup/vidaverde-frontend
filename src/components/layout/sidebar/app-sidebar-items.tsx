@@ -3,6 +3,7 @@
 import type { LucideIcon } from "lucide-react";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 import {
   SidebarMenu,
@@ -48,22 +49,31 @@ function isGroupItem(item: SidebarNavItem): item is SidebarGroupItem {
   return Array.isArray((item as SidebarGroupItem).items);
 }
 
+function isActive(pathname: string, url: string) {
+  return pathname === url;
+}
+
 export default function AppSidebarItems({
   items,
 }: {
   items: SidebarNavItem[];
 }) {
+  const pathname = usePathname();
+
   return (
     <SidebarMenu>
       {items.map((item) => {
         // GROUP
         if (isGroupItem(item)) {
           const Icon = item.icon;
+          const groupHasActive = item.items.some((sub) =>
+            isActive(pathname, sub.url)
+          );
 
           return (
             <Collapsible
               key={item.title}
-              defaultOpen={item.defaultOpen ?? false}
+              defaultOpen={item.defaultOpen ?? groupHasActive}
             >
               <SidebarMenuItem>
                 <CollapsibleTrigger asChild>
@@ -81,7 +91,10 @@ export default function AppSidebarItems({
 
                       return (
                         <SidebarMenuSubItem key={sub.title}>
-                          <SidebarMenuSubButton asChild>
+                          <SidebarMenuSubButton
+                            asChild
+                            isActive={isActive(pathname, sub.url)}
+                          >
                             <Link href={sub.url}>
                               <SubIcon className="mr-2 h-4 w-4" />
                               {sub.title}
@@ -101,7 +114,7 @@ export default function AppSidebarItems({
         const Icon = item.icon;
         return (
           <SidebarMenuItem key={item.title}>
-            <SidebarMenuButton asChild>
+            <SidebarMenuButton asChild isActive={isActive(pathname, item.url)}>
               <Link href={item.url}>
                 <Icon className="mr-2 h-4 w-4" />
                 {item.title}

@@ -1,5 +1,5 @@
 import { Container } from "@/components/shared/Container";
-import { ArrowRight } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -12,7 +12,11 @@ const teachers = [
       "Students say class hours with Ximena pass by in a flash. She has been teaching Spanish since 2011 and is fluent in English, making her especially effective with beginners.",
     credentials: "Universidad Central del Ecuador — Linguistics",
     experience: "13+ years teaching",
-    specialisations: ["Beginner-friendly", "Conversational Spanish", "DELE Preparation"],
+    specialisations: [
+      "Beginner-friendly",
+      "Conversational Spanish",
+      "DELE Preparation",
+    ],
     availability: "Mon – Fri mornings & afternoons",
     accepting: true,
   },
@@ -24,7 +28,11 @@ const teachers = [
       "Lucía is a language nerd who loves to teach the nuts and bolts of Spanish. She excels at helping students understand grammar intuitively and speaks at a clear, easy-to-follow pace.",
     credentials: "PUCE Quito — Modern Languages",
     experience: "10+ years teaching",
-    specialisations: ["Grammar Focus", "Intermediate to Advanced", "Business Spanish"],
+    specialisations: [
+      "Grammar Focus",
+      "Intermediate to Advanced",
+      "Business Spanish",
+    ],
     availability: "Mon – Fri afternoons",
     accepting: true,
   },
@@ -36,7 +44,11 @@ const teachers = [
       "Fernando is our Academic Director and master teacher. He brings structure, warmth, and deep expertise to every lesson — students consistently rate him as the most effective teacher they have had.",
     credentials: "Universidad de Cuenca — Spanish Literature",
     experience: "20+ years teaching",
-    specialisations: ["All Levels", "Academic Spanish", "Advanced Conversation"],
+    specialisations: [
+      "All Levels",
+      "Academic Spanish",
+      "Advanced Conversation",
+    ],
     availability: "Limited — Tue & Thu",
     accepting: true,
   },
@@ -81,10 +93,10 @@ export function TeachersSection() {
         <div className="flex justify-center mt-10">
           <Link
             href="/teachers"
-            className="inline-flex items-center gap-2.5 border border-vv-line rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap hover:border-vv-ink hover:-translate-y-px"
+            className="inline-flex items-center gap-2.5 border border-vv-line rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] leading-none py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap hover:border-vv-ink hover:-translate-y-px"
           >
             Meet all our teachers
-            <ArrowRight aria-hidden="true" className="h-4 w-4" />
+            <ChevronRight aria-hidden="true" className="h-4 w-4 shrink-0" />
           </Link>
         </div>
       </Container>
@@ -139,16 +151,19 @@ function TeacherCard({ teacher }: { teacher: (typeof teachers)[number] }) {
             className={`h-2 w-2 rounded-full ${teacher.accepting ? "bg-green-500" : "bg-amber-400"}`}
           />
           <span className="text-[12px] text-vv-ink-2">
-            {teacher.accepting ? "Accepting new students" : "Limited availability"} ·{" "}
-            {teacher.availability}
+            {teacher.accepting
+              ? "Accepting new students"
+              : "Limited availability"}{" "}
+            · {teacher.availability}
           </span>
         </div>
 
         <Link
           href={`/online-classes/book?teacher=${teacher.firstName.toLowerCase()}`}
-          className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[13px] font-semibold tracking-[-0.005em] py-2.25 px-3.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px text-center"
+          className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[13px] font-semibold tracking-[-0.005em] leading-none py-2.25 px-3.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px text-center"
         >
-          Book with {teacher.firstName} →
+          Book with {teacher.firstName}{" "}
+          <ChevronRight className="h-4 w-4 shrink-0 translate-y-0.5" />
         </Link>
       </div>
     </article>

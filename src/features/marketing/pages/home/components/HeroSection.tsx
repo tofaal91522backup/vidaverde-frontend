@@ -3,11 +3,13 @@
 import { Container } from "@/components/shared/Container";
 import { MarketingButton } from "@/features/marketing/components/MarketingButton";
 import Link from "next/link";
+import { ChevronRight } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { Button } from "@/components/ui/button";
 
 const TYPEWRITER_WORDS = [
   { text: "Learn Spanish Online", accent: true },
-  { text: "One-on-One",           accent: true },
+  { text: "One-on-One", accent: true },
 ];
 
 function TypewriterCycle() {
@@ -21,7 +23,10 @@ function TypewriterCycle() {
 
     if (phase === "typing") {
       if (displayed.length < word.length) {
-        timer = setTimeout(() => setDisplayed(word.slice(0, displayed.length + 1)), 110);
+        timer = setTimeout(
+          () => setDisplayed(word.slice(0, displayed.length + 1)),
+          110,
+        );
       } else {
         timer = setTimeout(() => setPhase("pause"), 2200);
       }
@@ -64,13 +69,28 @@ export function AnimatedBookButton() {
       `}</style>
       <Link
         href="/online-classes/book"
-        className="inline-flex items-center justify-center border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px transition-[transform,background,border-color] duration-200 justify-center sm:w-auto overflow-hidden"
+        className="inline-flex items-center justify-center border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] leading-none py-3.5 px-5.5 bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px transition-[transform,background,border-color] duration-200 sm:w-auto overflow-hidden"
       >
         <span className="block overflow-hidden" style={{ height: "1.25em" }}>
           <span className="book-cycle flex flex-col">
-            <span className="flex items-center justify-center" style={{ height: "1.25em" }}>Book Your First Lesson</span>
-            <span className="flex items-center justify-center" style={{ height: "1.25em" }}>From $12</span>
-            <span className="flex items-center justify-center" style={{ height: "1.25em" }}>Book Your First Lesson</span>
+            <span
+              className="flex items-center justify-center"
+              style={{ height: "1.25em" }}
+            >
+              Book Your First Lesson
+            </span>
+            <span
+              className="flex items-center justify-center"
+              style={{ height: "1.25em" }}
+            >
+              From $12
+            </span>
+            <span
+              className="flex items-center justify-center"
+              style={{ height: "1.25em" }}
+            >
+              Book Your First Lesson
+            </span>
           </span>
         </span>
       </Link>
@@ -103,7 +123,10 @@ export function HeroSection() {
   }, []);
 
   return (
-    <section className="relative overflow-hidden min-h-svh flex flex-col" data-screen-label="01 Hero">
+    <section
+      className="relative overflow-hidden min-h-svh flex flex-col"
+      data-screen-label="01 Hero"
+    >
       {/* Video background */}
       <div className="absolute inset-0 z-0">
         <video
@@ -154,7 +177,8 @@ export function HeroSection() {
 
             {/* Subheadline */}
             <p className="text-white/72 text-[clamp(17px,1.3vw,18px)] leading-relaxed m-0 max-w-[50ch] text-pretty animate-[hero-rise_0.55s_0.3s_ease_both]">
-              Expert Ecuadorian teachers, personalised lessons, flexible scheduling. Join from anywhere in the world.
+              Expert Ecuadorian teachers, personalised lessons, flexible
+              scheduling. Join from anywhere in the world.
             </p>
 
             {/* CTAs */}
@@ -165,7 +189,8 @@ export function HeroSection() {
                 tone="ghost"
                 className="border-white/40 text-white hover:bg-white hover:border-white hover:text-vv-ink justify-center sm:w-auto"
               >
-                Explore all programs →
+                Explore all programs{" "}
+                <ChevronRight className="h-4 w-4 shrink-0 translate-y-0.5 translate-y-0.5" />
               </MarketingButton>
             </div>
           </div>

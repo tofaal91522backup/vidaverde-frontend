@@ -2,6 +2,7 @@ import { Container } from "@/components/shared/Container";
 import { programs } from "./data/programs.data";
 import Image from "next/image";
 import Link from "next/link";
+import { ChevronRight } from "lucide-react";
 
 export default function StudyInQuitoRoute() {
   return (
@@ -50,7 +51,7 @@ export default function StudyInQuitoRoute() {
                 fill="#1f3d1a"
                 opacity="0.08"
               />
-            ))
+            )),
           )}
 
           {/* Andean mountain silhouette — bottom right */}
@@ -76,8 +77,22 @@ export default function StudyInQuitoRoute() {
               strokeLinejoin="round"
             />
             {/* Steps/base */}
-            <line x1="-8" y1="80" x2="56" y2="80" stroke="#1f3d1a" strokeWidth="1.4" />
-            <line x1="-4" y1="86" x2="52" y2="86" stroke="#1f3d1a" strokeWidth="1" />
+            <line
+              x1="-8"
+              y1="80"
+              x2="56"
+              y2="80"
+              stroke="#1f3d1a"
+              strokeWidth="1.4"
+            />
+            <line
+              x1="-4"
+              y1="86"
+              x2="52"
+              y2="86"
+              stroke="#1f3d1a"
+              strokeWidth="1"
+            />
             {/* Arch detail */}
             <path
               d="M 8 80 L 8 34 Q 8 10 24 10 Q 40 10 40 34 L 40 80"
@@ -96,7 +111,14 @@ export default function StudyInQuitoRoute() {
               stroke="#a3d635"
               strokeWidth="1.6"
             />
-            <line x1="24" y1="90" x2="34" y2="28" stroke="#a3d635" strokeWidth="1.1" />
+            <line
+              x1="24"
+              y1="90"
+              x2="34"
+              y2="28"
+              stroke="#a3d635"
+              strokeWidth="1.1"
+            />
           </g>
           {/* Second smaller leaf */}
           <g transform="translate(940, 130)" opacity="0.07">
@@ -106,7 +128,14 @@ export default function StudyInQuitoRoute() {
               stroke="#a3d635"
               strokeWidth="1.4"
             />
-            <line x1="14" y1="56" x2="20" y2="18" stroke="#a3d635" strokeWidth="1" />
+            <line
+              x1="14"
+              y1="56"
+              x2="20"
+              y2="18"
+              stroke="#a3d635"
+              strokeWidth="1"
+            />
           </g>
 
           {/* Map pin — Ecuador */}
@@ -117,15 +146,45 @@ export default function StudyInQuitoRoute() {
               stroke="#1f3d1a"
               strokeWidth="1.6"
             />
-            <circle cx="18" cy="18" r="6" fill="none" stroke="#a3d635" strokeWidth="1.3" />
+            <circle
+              cx="18"
+              cy="18"
+              r="6"
+              fill="none"
+              stroke="#a3d635"
+              strokeWidth="1.3"
+            />
             {/* Equator line */}
-            <line x1="0" y1="18" x2="36" y2="18" stroke="#a3d635" strokeWidth="0.7" strokeDasharray="2 2" opacity="0.5" />
+            <line
+              x1="0"
+              y1="18"
+              x2="36"
+              y2="18"
+              stroke="#a3d635"
+              strokeWidth="0.7"
+              strokeDasharray="2 2"
+              opacity="0.5"
+            />
           </g>
 
           {/* Sun / horizon rays */}
           <g transform="translate(840, 380)" opacity="0.08">
-            <circle cx="0" cy="0" r="18" fill="none" stroke="#a3d635" strokeWidth="1.4" />
-            <circle cx="0" cy="0" r="10" fill="none" stroke="#a3d635" strokeWidth="0.8" />
+            <circle
+              cx="0"
+              cy="0"
+              r="18"
+              fill="none"
+              stroke="#a3d635"
+              strokeWidth="1.4"
+            />
+            <circle
+              cx="0"
+              cy="0"
+              r="10"
+              fill="none"
+              stroke="#a3d635"
+              strokeWidth="0.8"
+            />
             {[0, 45, 90, 135, 180, 225, 270, 315].map((deg, i) => {
               const rad = (deg * Math.PI) / 180;
               return (
@@ -151,15 +210,31 @@ export default function StudyInQuitoRoute() {
           <circle cx="980" cy="440" r="4" fill="#a3d635" opacity="0.08" />
 
           {/* Plus marks */}
-          {([
-            [640, 260, "#a3d635", 0.15],
-            [870, 300, "#1f3d1a", 0.1],
-            [960, 130, "#a3d635", 0.13],
-            [630, 440, "#1f3d1a", 0.08],
-          ] as const).map(([x, y, c, o], i) => (
+          {(
+            [
+              [640, 260, "#a3d635", 0.15],
+              [870, 300, "#1f3d1a", 0.1],
+              [960, 130, "#a3d635", 0.13],
+              [630, 440, "#1f3d1a", 0.08],
+            ] as const
+          ).map(([x, y, c, o], i) => (
             <g key={`plus-${i}`} opacity={o}>
-              <line x1={x - 7} y1={y} x2={x + 7} y2={y} stroke={c} strokeWidth="1.1" />
-              <line x1={x} y1={y - 7} x2={x} y2={y + 7} stroke={c} strokeWidth="1.1" />
+              <line
+                x1={x - 7}
+                y1={y}
+                x2={x + 7}
+                y2={y}
+                stroke={c}
+                strokeWidth="1.1"
+              />
+              <line
+                x1={x}
+                y1={y - 7}
+                x2={x}
+                y2={y + 7}
+                stroke={c}
+                strokeWidth="1.1"
+              />
             </g>
           ))}
 
@@ -184,13 +259,13 @@ export default function StudyInQuitoRoute() {
           <div className="flex flex-wrap gap-3 mt-6">
             <a
               href="#programmes"
-              className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px"
+              className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] leading-none py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px"
             >
               Explore Our Programmes ↓
             </a>
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center gap-2.5 border border-vv-line-2 rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-transparent text-vv-ink hover:bg-vv-ink hover:border-vv-ink hover:text-vv-bg"
+              className="inline-flex items-center justify-center gap-2.5 border border-vv-line-2 rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] leading-none py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-transparent text-vv-ink hover:bg-vv-ink hover:border-vv-ink hover:text-vv-bg"
             >
               Contact Us to Plan Your Stay
             </Link>
@@ -251,9 +326,10 @@ export default function StudyInQuitoRoute() {
                   </p>
                   <Link
                     href={`/study-in-quito/${program.slug}`}
-                    className="mt-auto inline-flex items-center justify-center gap-2.5 border border-vv-line-2 rounded-full cursor-pointer text-[13px] font-semibold tracking-[-0.005em] py-2.25 px-3.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-transparent text-vv-ink hover:bg-vv-ink hover:border-vv-ink hover:text-vv-bg text-center"
+                    className="mt-auto inline-flex items-center justify-center gap-2.5 border border-vv-line-2 rounded-full cursor-pointer text-[13px] font-semibold tracking-[-0.005em] leading-none py-2.25 px-3.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-transparent text-vv-ink hover:bg-vv-ink hover:border-vv-ink hover:text-vv-bg text-center"
                   >
-                    View Programme →
+                    View Programme{" "}
+                    <ChevronRight className="h-4 w-4 shrink-0 translate-y-0.5" />
                   </Link>
                 </div>
               </article>
@@ -301,7 +377,7 @@ export default function StudyInQuitoRoute() {
               </p>
               <Link
                 href="/homestay"
-                className="w-fit inline-flex items-center justify-center gap-2.5 border border-vv-ink rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-ink text-vv-bg hover:bg-vv-accent-deep hover:border-vv-accent-deep hover:-translate-y-px"
+                className="w-fit inline-flex items-center justify-center gap-2.5 border border-vv-ink rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] leading-none py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-ink text-vv-bg hover:bg-vv-accent-deep hover:border-vv-accent-deep hover:-translate-y-px"
               >
                 Find out about Homestay →
               </Link>
@@ -333,15 +409,16 @@ export default function StudyInQuitoRoute() {
               href="https://wa.me/593998037473?text=Hi%2C+I%27d+like+to+find+out+more+about+Vida+Verde%27s+immersion+programmes."
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px"
+              className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] leading-none py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px"
             >
               WhatsApp Us
             </a>
             <Link
               href="/contact"
-              className="inline-flex items-center justify-center gap-2.5 border border-vv-line-2 rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-transparent text-vv-ink hover:bg-vv-ink hover:border-vv-ink hover:text-vv-bg"
+              className="inline-flex items-center justify-center gap-2.5 border border-vv-line-2 rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] leading-none py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-transparent text-vv-ink hover:bg-vv-ink hover:border-vv-ink hover:text-vv-bg"
             >
-              Send a Message →
+              Send a Message{" "}
+              <ChevronRight className="h-4 w-4 shrink-0 translate-y-0.5" />
             </Link>
           </div>
           <p className="mt-5 text-[13px] text-vv-muted">

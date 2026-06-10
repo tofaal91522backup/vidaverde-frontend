@@ -14,7 +14,8 @@
       "WebSearch",
       "WebFetch(domain:raw.githubusercontent.com)",
       "Bash(node -e \"require\\('dotted-map'\\); console.log\\('ok'\\)\")",
-      "Bash(node -e \"require\\('motion'\\); console.log\\('ok'\\)\")"
+      "Bash(node -e \"require\\('motion'\\); console.log\\('ok'\\)\")",
+      "Bash(Get-ChildItem -Path \"e:\\\\CSE\\\\ONGSHAK\\\\projects\\\\vida_verde\\\\client\" -Directory)"
     ]
   }
 }

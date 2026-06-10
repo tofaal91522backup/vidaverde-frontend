@@ -2,6 +2,7 @@ import { Container } from "@/components/shared/Container";
 import { pricingPackages } from "../data/online-classes.data";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { ChevronRight } from "lucide-react";
 
 export function PricingSection() {
   return (
@@ -83,10 +84,19 @@ export function PricingSection() {
               <ul className="flex flex-col gap-2 flex-1 list-none p-0 m-0">
                 {pkg.features.map((f) => (
                   <li key={f} className="flex items-start gap-2 text-[13px]">
-                    <span className={pkg.featured ? "text-vv-accent-deep" : "text-vv-accent"} aria-hidden="true">
+                    <span
+                      className={
+                        pkg.featured ? "text-vv-accent-deep" : "text-vv-accent"
+                      }
+                      aria-hidden="true"
+                    >
                       ✓
                     </span>
-                    <span className={pkg.featured ? "text-vv-accent-deep" : "text-vv-ink-2"}>
+                    <span
+                      className={
+                        pkg.featured ? "text-vv-accent-deep" : "text-vv-ink-2"
+                      }
+                    >
                       {f}
                     </span>
                   </li>
@@ -95,13 +105,14 @@ export function PricingSection() {
               <Link
                 href="/online-classes/book"
                 className={cn(
-                  "mt-auto inline-flex items-center justify-center gap-2.5 border rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap text-center",
+                  "mt-auto inline-flex items-center justify-center gap-2.5 border rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] leading-none py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap text-center",
                   pkg.featured
                     ? "border-vv-ink bg-vv-ink text-vv-bg hover:bg-vv-accent-deep hover:border-vv-accent-deep hover:-translate-y-px"
                     : "border-vv-line-2 bg-transparent text-vv-ink hover:bg-vv-ink hover:border-vv-ink hover:text-vv-bg",
                 )}
               >
-                {pkg.cta} →
+                {pkg.cta}{" "}
+                <ChevronRight className="h-4 w-4 shrink-0 translate-y-0.5" />
               </Link>
             </article>
           ))}

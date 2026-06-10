@@ -1,5 +1,6 @@
 import { Container } from "@/components/shared/Container";
 import { MarketingButton } from "@/features/marketing/components/MarketingButton";
+import { ChevronRight } from "lucide-react";
 
 export function CTASection() {
   return (
@@ -18,7 +19,8 @@ export function CTASection() {
             </p>
           </div>
           <MarketingButton href="/#book" tone="primary">
-            Contact us →
+            Contact us{" "}
+            <ChevronRight className="h-4 w-4 shrink-0 translate-y-0.5" />
           </MarketingButton>
         </div>
       </Container>

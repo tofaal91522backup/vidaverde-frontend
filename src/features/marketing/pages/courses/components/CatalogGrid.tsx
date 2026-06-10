@@ -3,6 +3,7 @@
 import { catalogCourses } from "../data/marketing.data";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { ChevronRight } from "lucide-react";
 import { useMemo, useState } from "react";
 
 const levels = [
@@ -113,8 +114,9 @@ export function CatalogGrid() {
         {/* Results header */}
         <div className="flex items-center justify-between mb-6">
           <div className="text-[13px] text-vv-ink-2">
-            Showing <span className="font-semibold text-vv-ink">{courses.length}</span> of{" "}
-            {catalogCourses.length} courses
+            Showing{" "}
+            <span className="font-semibold text-vv-ink">{courses.length}</span>{" "}
+            of {catalogCourses.length} courses
           </div>
           <label className="flex items-center gap-2 text-[13px]">
             <span className="text-vv-ink-2">Sort by</span>
@@ -164,14 +166,22 @@ export function CatalogGrid() {
               <div className="grid grid-cols-3 gap-3 border-t border-vv-line pt-4">
                 {[
                   { label: "Duration", value: course.duration },
-                  { label: course.hours ? "Hours" : "Group size", value: course.hours ?? course.formatLabel },
-                  { label: course.extraLabel ?? "Format", value: course.extraValue ?? course.formatLabel },
+                  {
+                    label: course.hours ? "Hours" : "Group size",
+                    value: course.hours ?? course.formatLabel,
+                  },
+                  {
+                    label: course.extraLabel ?? "Format",
+                    value: course.extraValue ?? course.formatLabel,
+                  },
                 ].map((meta) => (
                   <div key={meta.label} className="flex flex-col gap-0.5">
                     <span className="font-code text-[10px] tracking-widest text-vv-muted uppercase">
                       {meta.label}
                     </span>
-                    <span className="text-[13px] font-semibold text-vv-ink">{meta.value}</span>
+                    <span className="text-[13px] font-semibold text-vv-ink">
+                      {meta.value}
+                    </span>
                   </div>
                 ))}
               </div>
@@ -179,14 +189,17 @@ export function CatalogGrid() {
                 <div className="text-[15px] text-vv-ink">
                   From <b className="font-bold">{course.price}</b>
                   {course.priceNote ? (
-                    <div className="font-code text-[11px] text-vv-muted mt-0.5">{course.priceNote}</div>
+                    <div className="font-code text-[11px] text-vv-muted mt-0.5">
+                      {course.priceNote}
+                    </div>
                   ) : null}
                 </div>
                 <Link
                   href="/#book"
-                  className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[13px] font-semibold tracking-[-0.005em] py-2.25 px-3.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px"
+                  className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[13px] font-semibold tracking-[-0.005em] leading-none py-2.25 px-3.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px"
                 >
-                  Enroll →
+                  Enroll{" "}
+                  <ChevronRight className="h-4 w-4 shrink-0 translate-y-0.5" />
                 </Link>
               </div>
             </article>
@@ -205,9 +218,10 @@ export function CatalogGrid() {
           </p>
           <Link
             href="/#book"
-            className="inline-flex items-center justify-center gap-2.5 border border-vv-ink rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-ink text-vv-bg hover:bg-vv-accent-deep hover:border-vv-accent-deep hover:-translate-y-px"
+            className="inline-flex items-center justify-center gap-2.5 border border-vv-ink rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] leading-none py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-ink text-vv-bg hover:bg-vv-accent-deep hover:border-vv-accent-deep hover:-translate-y-px"
           >
-            Contact us →
+            Contact us{" "}
+            <ChevronRight className="h-4 w-4 shrink-0 translate-y-0.5" />
           </Link>
         </div>
       </div>
@@ -234,7 +248,10 @@ function FilterGroup({
         {title}
       </h4>
       {options.map(([value, label]) => (
-        <label key={value} className="flex items-center gap-2 text-[13px] text-vv-ink-2 cursor-pointer">
+        <label
+          key={value}
+          className="flex items-center gap-2 text-[13px] text-vv-ink-2 cursor-pointer"
+        >
           <input
             type="checkbox"
             checked={values.includes(value)}
