@@ -161,7 +161,7 @@ export const sessionsColumns: ColumnDef<Session>[] = [
     id: "actions",
     header: "Actions",
     cell: ({ row }) => (
-      <div className="flex items-center gap-1">
+      <div className="flex items-center justify-end gap-1">
         <SessionActions session={row.original} />
         <AdminNotesButton session={row.original} />
       </div>

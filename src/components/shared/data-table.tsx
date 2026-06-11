@@ -40,13 +40,18 @@ export default function DataTable<TData>({
   return (
     <AsyncStateWrapper loading={loading} error={error}>
       <div className="w-full ">
-        <div className="overflow-hidden rounded-md border">
+        <div className="overflow-hidden rounded-md border bg-white">
           <Table>
             <TableHeader>
               {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id}>
                   {headerGroup.headers.map((header) => (
-                    <TableHead key={header.id}>
+                    <TableHead
+                      key={header.id}
+                      className={
+                        header.column.id === "actions" ? "text-right" : ""
+                      }
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -66,7 +71,12 @@ export default function DataTable<TData>({
                     data-state={row.getIsSelected() && "selected"}
                   >
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id}>
+                      <TableCell
+                        key={cell.id}
+                        className={
+                          cell.column.id === "actions" ? "text-right" : ""
+                        }
+                      >
                         {flexRender(
                           cell.column.columnDef.cell,
                           cell.getContext(),

@@ -66,7 +66,7 @@ export const blogsColumns: ColumnDef<Blog>[] = [
     id: "actions",
     header: "Actions",
     cell: ({ row }) => (
-      <div className="flex items-center gap-2">
+      <div className="flex items-center justify-end gap-2">
         <Button variant="outline" size="sm" asChild className="gap-1">
           <Link href={`/dashboard/admin/blogs/${row.original.id}/edit`}>
             <Edit className="h-3.5 w-3.5" />
