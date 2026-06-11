@@ -124,7 +124,7 @@ export const activities: Activity[] = [
 export const weeklySchedule: ScheduleItem[] = [
   {
     day: "Mon",
-    time: "8:30 - 12:30",
+    time: "8:30 to 12:30",
     title: "Morning Spanish classes",
     description: "classes are 55 minutes with a social coffee break",
     badge: "Course",

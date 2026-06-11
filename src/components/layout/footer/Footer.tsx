@@ -55,7 +55,7 @@ export default function Footer() {
     >
       <Container>
         <div className="grid gap-10 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
-          {/* Column 1 — Brand + AECEE + Social */}
+          {/* Column 1. Brand + AECEE + Social */}
           <div className="flex flex-col gap-6">
             <Link href="/" className="flex items-center gap-2.5">
               <Image
@@ -117,7 +117,7 @@ export default function Footer() {
             </a>
           </div>
 
-          {/* Column 2 — Quick Links */}
+          {/* Column 2. Quick Links */}
           <div>
             <h4 className="text-[11px] font-semibold uppercase tracking-[0.12em] text-vv-ink m-0 mb-5">
               Quick Links
@@ -145,7 +145,7 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Column 3 — Contact */}
+          {/* Column 3. Contact */}
           <div className="flex flex-col gap-6">
             <div>
               <h4 className="text-[11px] font-semibold uppercase tracking-[0.12em] text-vv-ink m-0 mb-4">

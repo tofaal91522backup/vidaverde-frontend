@@ -20,7 +20,7 @@ export default function BlogRoute() {
           </h1>
           <p className="text-vv-ink-2 text-[clamp(17px,1.4vw,20px)] leading-normal max-w-[52ch] text-pretty m-0">
             Tips, stories, and insights from Vida Verde&apos;s teachers and
-            students — to help you learn faster and travel smarter.
+            students. To help you learn faster and travel smarter.
           </p>
         </Container>
       </section>

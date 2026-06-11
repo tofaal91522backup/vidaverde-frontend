@@ -10,7 +10,7 @@
 
 Prepared by: Jeremy / Vida Verde Advisory  ·  May 2026  ·  Confidential
 
-| How to Use This Document This specification defines the content, copy direction, and functional requirements for every page of the redesigned Vida Verde website. It is the primary reference for Ongshak during Phase 1.2 (Figma design) and Phase 1.3 (development and integration). Layout and visual design decisions are intentionally left to Ongshak’s designers. This document specifies WHAT each page must contain and DO, not how it should look. Where suggested headline or CTA copy is provided, treat it as directional — the intent and tone must be preserved, but wording may be refined during Phase 1.1 discovery. Sections marked \[VIDA VERDE TO SUPPLY\] require content or assets from Rosa and Mateo before development can begin. These should be flagged and collected during Phase 1.1. |
+| How to Use This Document This specification defines the content, copy direction, and functional requirements for every page of the redesigned Vida Verde website. It is the primary reference for Ongshak during Phase 1.2 (Figma design) and Phase 1.3 (development and integration). Layout and visual design decisions are intentionally left to Ongshak’s designers. This document specifies WHAT each page must contain and DO, not how it should look. Where suggested headline or CTA copy is provided, treat it as directional. The intent and tone must be preserved, but wording may be refined during Phase 1.1 discovery. Sections marked \[VIDA VERDE TO SUPPLY\] require content or assets from Rosa and Mateo before development can begin. These should be flagged and collected during Phase 1.1. |
 | :---- |
 
 # **1\.  Site Architecture**
@@ -34,17 +34,17 @@ The language toggle (English / Español) appears in the top navigation bar as a 
 | Page | URL | Notes |
 | :---- | :---- | :---- |
 | **Homepage** | / | Primary conversion surface for all three segments |
-| **Online Classes** | /online-classes | Product page — flagship offering |
+| **Online Classes** | /online-classes | Product page. Flagship offering |
 |   **└ Book a Lesson** | /online-classes/book | Booking flow: select teacher, date, pay |
 |   **└ Teacher: \[Name\]** | /online-classes/teachers/\[name\] | Individual teacher profile (one per teacher) |
 | **Study in Quito** | /study-in-quito | Immersion programs overview |
 |   **└ Quito Immersion Program** | /study-in-quito/quito-immersion | Program detail page |
 |   **└ Travelling Classroom** | /study-in-quito/travelling-classroom | Program detail page |
 |   **└ Puerto López** | /study-in-quito/puerto-lopez | Program detail page |
-|   **└ \[Jungle Programs — confirm active status\]** | /study-in-quito/jungle | Program detail page — only if confirmed active |
+|   **└ \[Jungle Programs. Confirm active status\]** | /study-in-quito/jungle | Program detail page. Only if confirmed active |
 | **Travel Spanish** | /travel-spanish | Dedicated page for Ecuador travellers wanting conversational or travel Spanish. Future ad campaign landing page. |
 | **Our School** | /our-school | School story, certification, team |
-| **Blog** | /blog | Content hub — structure only at launch; content TBD |
+| **Blog** | /blog | Content hub. Structure only at launch; content TBD |
 |   **└ \[Post slug\]** | /blog/\[slug\] | Individual blog post |
 | **Contact** | /contact | Contact form and location |
 | **Privacy Policy** | /privacy | Required for GDPR / email capture compliance |
@@ -56,13 +56,13 @@ These elements appear on every page of the site and must be consistent, accessib
 
 ## **2.1  Header / Navigation Bar**
 
-* Vida Verde logo (left-aligned) — links to homepage
+* Vida Verde logo (left-aligned). Links to homepage
 
 * Primary nav items: Online Classes, Study in Quito (sub: Quito Immersion, Travelling Classroom, Puerto López, Homestay), Our School, Contact
 
 * Language toggle: EN | ES (right side of nav, persistent)
 
-* Primary CTA button in nav: “Book Your First Lesson” — this button must be visible at all times on desktop
+* Primary CTA button in nav: “Book Your First Lesson”. This button must be visible at all times on desktop
 
 * On mobile: hamburger menu with the same items. The CTA button collapses into the menu.
 
@@ -79,7 +79,7 @@ These elements appear on every page of the site and must be consistent, accessib
 
 * Contact block: email address, WhatsApp number, physical address (La Floresta, Quito)
 
-* Social media icons: Instagram and Facebook only (if active) — no Twitter/X, no LinkedIn unless confirmed active
+* Social media icons: Instagram and Facebook only (if active). No Twitter/X, no LinkedIn unless confirmed active
 
 * Copyright line: © 2026 Vida Verde Centro de Español. All rights reserved.
 
@@ -118,25 +118,25 @@ A compact horizontal bar displaying key credibility signals. Must appear on the 
 
 The homepage serves all three visitor segments but is optimised for the primary segment: online Spanish learners. Every section must advance a visitor toward one of the three primary CTAs. Sections are listed in recommended scroll order.
 
-### **Section A — Hero**
+### **Section A. Hero**
 
-| Homepage — Hero | *Section A* |
+| Homepage. Hero | *Section A* |
 | :---- | ----: |
 
 | Element | Specification |
 | :---- | :---- |
 | **Purpose** | Immediately communicate what Vida Verde is, establish trust, and drive the primary CTA |
-| **Primary CTA** | “Start for $12 — Book Your First Lesson” → links to /online-classes/book |
+| **Primary CTA** | “Start for $12. Book Your First Lesson” → links to /online-classes/book |
 | **Secondary CTA** | “Explore All Programs” → links to /study-in-quito |
 | **Trust bar** | Appears directly below the CTA buttons: AECEE Certified · Est. 1999 · 4,700+ Students · All Levels Welcome · Classes via Google Meet |
-| **Background image** | \[VIDA VERDE TO SUPPLY\] — real photo of teacher and student in session, or school exterior / garden. No stock imagery. |
+| **Background image** | \[VIDA VERDE TO SUPPLY\]. Real photo of teacher and student in session, or school exterior / garden. No stock imagery. |
 
-| Suggested Hero Copy Headline: “Learn Spanish Online. One-on-One. With a Real Teacher.” Subheadline: “Expert Ecuadorian teachers, personalised lessons, flexible scheduling — from anywhere in the world.” Primary CTA button: “Start for $12 — Book Your First Lesson” Secondary CTA link: “Explore all programs →” |
+| Suggested Hero Copy Headline: “Learn Spanish Online. One-on-One. With a Real Teacher.” Subheadline: “Expert Ecuadorian teachers, personalised lessons, flexible scheduling. From anywhere in the world.” Primary CTA button: “Start for $12. Book Your First Lesson” Secondary CTA link: “Explore all programs →” |
 | :---- |
 
-### **Section B — Why Vida Verde?**
+### **Section B. Why Vida Verde?**
 
-| Homepage — Why Vida Verde? | *Section B* |
+| Homepage. Why Vida Verde? | *Section B* |
 | :---- | ----: |
 
 | Element | Specification |
@@ -149,14 +149,14 @@ Suggested differentiator headlines and copy:
 
 | Headline | Supporting Copy |
 | :---- | :---- |
-| **🏫 A Real School, Not a Platform** | Vida Verde has been teaching Spanish since 1999\. AECEE-certified, structured, and accountable — not a marketplace of strangers. |
+| **🏫 A Real School, Not a Platform** | Vida Verde has been teaching Spanish since 1999\. AECEE-certified, structured, and accountable. Not a marketplace of strangers. |
 | **👩‍🏫 Expert Native Teachers** | Every teacher is a university-trained Ecuadorian native speaker with years of classroom experience. Not a hobbyist. Not a part-timer. |
-| **🎯 Personalised to You** | No fixed syllabus. Your teacher adapts every lesson to your level, goals, and pace — whether you’re a complete beginner or polishing your fluency. |
-| **💻 Learn Anywhere** | Classes via Google Meet. Real conversation, real feedback, real progress — from your living room, office, or café. |
+| **🎯 Personalised to You** | No fixed syllabus. Your teacher adapts every lesson to your level, goals, and pace. Whether you’re a complete beginner or polishing your fluency. |
+| **💻 Learn Anywhere** | Classes via Google Meet. Real conversation, real feedback, real progress. From your living room, office, or café. |
 
-### **Section C — Course Selector**
+### **Section C. Course Selector**
 
-| Homepage — Course Selector | *Section C* |
+| Homepage. Course Selector | *Section C* |
 | :---- | ----: |
 
 | Element | Specification |
@@ -167,14 +167,14 @@ Suggested differentiator headlines and copy:
 
 | Card | Description | CTA | Links to |
 | :---- | :---- | :---- | :---- |
-| **Online Classes** | One-on-one lessons with a native teacher via Google Meet. Flexible scheduling, all levels. | From $12 — Book Your First Lesson | /online-classes |
-| **Study in Quito** | Full immersion: daily classes, homestay with an Ecuadorian family, and cultural activities. | From $140/week — Explore Programs | /study-in-quito |
+| **Online Classes** | One-on-one lessons with a native teacher via Google Meet. Flexible scheduling, all levels. | From $12. Book Your First Lesson | /online-classes |
+| **Study in Quito** | Full immersion: daily classes, homestay with an Ecuadorian family, and cultural activities. | From $140/week. Explore Programs | /study-in-quito |
 | **Travel Spanish** | Short-stay classes for Ecuador travellers. A few days or weeks, in-person or online. | Contact Us for a Custom Plan | /contact |
-| **Free Spanish Guide** | Not sure where to start? Download our free guide and get a taste of Vida Verde. | Download Free — No Commitment | \#lead-capture |
+| **Free Spanish Guide** | Not sure where to start? Download our free guide and get a taste of Vida Verde. | Download Free. No Commitment | \#lead-capture |
 
-### **Section D — Social Proof**
+### **Section D. Social Proof**
 
-| Homepage — Social Proof | *Section D* |
+| Homepage. Social Proof | *Section D* |
 | :---- | ----: |
 
 | Element | Specification |
@@ -182,15 +182,15 @@ Suggested differentiator headlines and copy:
 | **Purpose** | Build trust through student outcomes and third-party validation |
 | **Section headline** | “Real Students. Real Results.” |
 | **Testimonial format** | 3–5 testimonials. Each must include: student photo, first name, country flag, and a specific outcome (not a generic compliment). \[VIDA VERDE TO SUPPLY\] |
-| **TripAdvisor badge** | Vida Verde’s TripAdvisor rating displayed as an embedded badge or static graphic with star rating and review count. \[VIDA VERDE TO SUPPLY — TripAdvisor profile URL\] |
+| **TripAdvisor badge** | Vida Verde’s TripAdvisor rating displayed as an embedded badge or static graphic with star rating and review count. \[VIDA VERDE TO SUPPLY. TripAdvisor profile URL\] |
 | **Stats block** | 4 key numbers displayed prominently: 4,781 Students Taught · 356 Courses · 25+ Years · AECEE Certified |
 
 | Note on Testimonials Generic testimonials (“Great school\!”, “I loved my teacher”) do not convert. Each testimonial must describe a specific outcome: “After 8 weeks with Lucía, I was able to hold a full conversation with my partner’s family in Guayaquil.” “My teacher helped me prepare for a job interview conducted entirely in Spanish. I got the job.” If existing testimonials are generic, Vida Verde should reach out to past students to request updated, outcome-specific versions before launch. |
 | :---- |
 
-### **Section E — Meet the Teachers**
+### **Section E. Meet the Teachers**
 
-| Homepage — Meet the Teachers | *Section E* |
+| Homepage. Meet the Teachers | *Section E* |
 | :---- | ----: |
 
 | Element | Specification |
@@ -198,62 +198,62 @@ Suggested differentiator headlines and copy:
 | **Purpose** | Create a human connection and reduce anxiety about booking with an unknown teacher |
 | **Section headline** | “Your Teacher Is Waiting” |
 | **Format** | One card per teacher. Each card: professional photo, name, 1–2 sentence teaching style description, “Book with \[Name\]” CTA button. |
-| **Teachers** | Fernando, Ximena, Lucía, Laura — show only those confirmed available for online classes. \[VIDA VERDE TO CONFIRM\] |
-| **Photos** | \[VIDA VERDE TO SUPPLY\] — professional or high-quality phone headshots. Consistent background or treatment across all teachers. |
+| **Teachers** | Fernando, Ximena, Lucía, Laura. Show only those confirmed available for online classes. \[VIDA VERDE TO CONFIRM\] |
+| **Photos** | \[VIDA VERDE TO SUPPLY\]. Professional or high-quality phone headshots. Consistent background or treatment across all teachers. |
 | **CTA per card** | “Book with \[Teacher Name\]” → links to /online-classes/book?teacher=\[name\] |
 
-### **Section F — About the School (Short)**
+### **Section F. About the School (Short)**
 
-| Homepage — About Block | *Section F* |
+| Homepage. About Block | *Section F* |
 | :---- | ----: |
 
 | Element | Specification |
 | :---- | :---- |
-| **Purpose** | Brief credibility block — not a full About page, just enough to establish legitimacy |
+| **Purpose** | Brief credibility block. Not a full About page, just enough to establish legitimacy |
 | **Section headline** | “Teaching Spanish Since 1999” |
 | **Content** | 2–3 sentences about the school’s founding, AECEE certification, and La Floresta location. Links to the full About page. |
-| **Image** | \[VIDA VERDE TO SUPPLY\] — exterior of school building or garden patio |
+| **Image** | \[VIDA VERDE TO SUPPLY\]. Exterior of school building or garden patio |
 | **CTA** | “Our Story →” links to /our-school |
 | **AECEE badge** | Certification logo displayed with a one-line explanation: “AECEE-certified Spanish school” and a link to the AECEE website |
 
-| Suggested About Block Copy “Since 1999, our teachers have been helping students learn Spanish — and through it, discover the culture, warmth, and remarkable natural world of Ecuador. Imagine ordering your meal in Spanish without hesitating. Following a conversation around the table without losing the thread. Travelling through Ecuador and actually connecting with the people you meet — not just observing them. Over 4,700 students from every corner of the world have had that experience with us — online and in person. As a certified member of the AECEE, Ecuador's standard of excellence in Spanish language education, you can trust that every lesson is taught by a qualified native speaker, designed around you, and held to the highest professional standard.” |
+| Suggested About Block Copy “Since 1999, our teachers have been helping students learn Spanish. And through it, discover the culture, warmth, and remarkable natural world of Ecuador. Imagine ordering your meal in Spanish without hesitating. Following a conversation around the table without losing the thread. Travelling through Ecuador and actually connecting with the people you meet. Not just observing them. Over 4,700 students from every corner of the world have had that experience with us. Online and in person. As a certified member of the AECEE, Ecuador's standard of excellence in Spanish language education, you can trust that every lesson is taught by a qualified native speaker, designed around you, and held to the highest professional standard.” |
 | :---- |
 
-### **Section G — Lead Capture**
+### **Section G. Lead Capture**
 
-| Homepage — Lead Capture | *Section G* |
+| Homepage. Lead Capture | *Section G* |
 | :---- | ----: |
 
 | Element | Specification |
 | :---- | :---- |
 | **Purpose** | Capture email addresses from visitors not yet ready to book. Entry point to the Tier 1 nurture funnel. |
 | **Section headline** | “Not Sure Where to Start? Get Your Free Spanish Guide.” |
-| **Offer** | A downloadable PDF: “Survival Spanish for Ecuador: 50 Essential Phrases for Travellers and Learners” (or equivalent). \[VIDA VERDE TO SUPPLY — content; Ongshak to design PDF template\] |
+| **Offer** | A downloadable PDF: “Survival Spanish for Ecuador: 50 Essential Phrases for Travellers and Learners” (or equivalent). \[VIDA VERDE TO SUPPLY. Content; Ongshak to design PDF template\] |
 | **Form fields** | First name \+ email address only. No phone number. No other fields. |
 | **Form action** | On submit: (1) deliver PDF download link by email; (2) add to email nurture sequence (see Section 8: Functional Requirements); (3) show on-page success message. |
 | **Anchor** | This section should have anchor ID \#lead-capture so the Course Selector card can link to it directly |
 
 ## **3.2  Online Classes Page  ( /online-classes )**
 
-This is the most important product page on the site. It must function as a standalone landing page — a visitor arriving here from a Google ad or an iTalki profile link should have everything they need to understand the offering and book without visiting any other page.
+This is the most important product page on the site. It must function as a standalone landing page. A visitor arriving here from a Google ad or an iTalki profile link should have everything they need to understand the offering and book without visiting any other page.
 
-### **Section A — Page Hero**
+### **Section A. Page Hero**
 
-| Online Classes — Hero | *Section A* |
+| Online Classes. Hero | *Section A* |
 | :---- | ----: |
 
 | Element | Specification |
 | :---- | :---- |
 | **Purpose** | Restate the core value proposition for visitors arriving directly on this page (not via homepage) |
-| **Primary CTA** | “Start for $12 — Book Your Assessment & First Lesson” → links to /online-classes/book |
+| **Primary CTA** | “Start for $12. Book Your Assessment & First Lesson” → links to /online-classes/book |
 | **Trust bar** | Same trust bar as homepage: AECEE Certified · Est. 1999 · 4,700+ Students · Classes via Google Meet |
 
-| Suggested Page Hero Copy Headline: “One-on-One Spanish Classes. Real Teacher. Anywhere in the World.” Subheadline: “Personalised lessons with expert Ecuadorian native speakers — via Google Meet, at a time that works for you.” |
+| Suggested Page Hero Copy Headline: “One-on-One Spanish Classes. Real Teacher. Anywhere in the World.” Subheadline: “Personalised lessons with expert Ecuadorian native speakers. Via Google Meet, at a time that works for you.” |
 | :---- |
 
-### **Section B — How It Works**
+### **Section B. How It Works**
 
-| Online Classes — How It Works | *Section B* |
+| Online Classes. How It Works | *Section B* |
 | :---- | ----: |
 
 | Element | Specification |
@@ -263,14 +263,14 @@ This is the most important product page on the site. It must function as a stand
 
 | Step | Label | Description |
 | :---- | :---- | :---- |
-| **1** | Book Your First Lesson | Choose a teacher, pick a time, and pay your discounted first lesson fee — all in under 5 minutes. |
+| **1** | Book Your First Lesson | Choose a teacher, pick a time, and pay your discounted first lesson fee. All in under 5 minutes. |
 | **2** | Meet Your Teacher | Join via Google Meet at your scheduled time. Your teacher will assess your level and learning goals. |
 | **3** | Get a Personalised Plan | After the first session, your teacher recommends a package tailored to your goals and timeline. |
 | **4** | Make Real Progress | Regular sessions, structured feedback, and access to learning resources between classes. |
 
-### **Section C — Pricing & Packages**
+### **Section C. Pricing & Packages**
 
-| Online Classes — Pricing | *Section C* |
+| Online Classes. Pricing | *Section C* |
 | :---- | ----: |
 
 | Element | Specification |
@@ -281,7 +281,7 @@ This is the most important product page on the site. It must function as a stand
 
 | Package | Price | What’s Included | CTA | Notes |
 | :---- | :---- | :---- | :---- | :---- |
-| **Assessment & First Lesson** | $10–$15 (confirm exact price with Vida Verde) | 60-minute session. Includes level assessment, personalised learning plan, and your first full lesson. One per student. | Book Now → | PRIMARY — most prominent card |
+| **Assessment & First Lesson** | $10–$15 (confirm exact price with Vida Verde) | 60-minute session. Includes level assessment, personalised learning plan, and your first full lesson. One per student. | Book Now → | PRIMARY. Most prominent card |
 | **10-Class Package** | $X (confirm price) | 10 x 60-minute private lessons. Valid for 3 months. | Get Started → |  |
 | **20-Class Package** | $250.00 (confirm / update) | 20 x 60-minute private lessons. Best value. Valid for 6 months. | Get Started → | Highlight as “Best Value” |
 | **Single Class** | $X per hour (confirm price) | Pay-as-you-go. No commitment. | Book a Class → |  |
@@ -289,9 +289,9 @@ This is the most important product page on the site. It must function as a stand
 | Note All prices marked \[confirm\] must be verified with Rosa and Mateo before Phase 1.2 design. Current pricing from the live site may be outdated. |
 | :---- |
 
-### **Section D — Choose Your Teacher**
+### **Section D. Choose Your Teacher**
 
-| Online Classes — Teachers | *Section D* |
+| Online Classes. Teachers | *Section D* |
 | :---- | ----: |
 
 | Element | Specification |
@@ -301,11 +301,11 @@ This is the most important product page on the site. It must function as a stand
 | **Card content** | Each teacher card: professional photo, name, short teaching bio (2–3 sentences), availability indicator (e.g. “Accepting new students” or “Limited availability”), “Book with \[Name\]” CTA |
 | **Availability** | Only show teachers confirmed available for online classes. \[VIDA VERDE TO CONFIRM per teacher\] |
 | **Full bios** | Each card links to a full teacher profile page at /online-classes/teachers/\[name\] (see Section 3.3) |
-| **Content needed** | \[VIDA VERDE TO SUPPLY\] — teacher bios (2–3 sentences each), availability status, headshot photos |
+| **Content needed** | \[VIDA VERDE TO SUPPLY\]. Teacher bios (2–3 sentences each), availability status, headshot photos |
 
-### **Section E — FAQ**
+### **Section E. FAQ**
 
-| Online Classes — FAQ | *Section E* |
+| Online Classes. FAQ | *Section E* |
 | :---- | ----: |
 
 | Element | Specification |
@@ -315,21 +315,21 @@ This is the most important product page on the site. It must function as a stand
 
 | Question | Suggested Answer |
 | :---- | :---- |
-| **What platform do you use?** | We teach via Google Meet. You’ll receive a link before each class. No downloads required — it works in any browser. |
+| **What platform do you use?** | We teach via Google Meet. You’ll receive a link before each class. No downloads required. It works in any browser. |
 | **What level do I need to be?** | None. We teach complete beginners through to advanced speakers. Your first lesson includes a level assessment so your teacher can tailor the course to you. |
 | **How do I pay?** | Securely online via credit/debit card, Apple Pay, or Google Pay. Payment is processed at the time of booking. |
 | **Can I choose my teacher?** | Yes. Browse our teachers, read their profiles, and book directly with the one that feels right for you. |
 | **What if I need to reschedule?** | You can reschedule up to 24 hours before your class. Contact your teacher directly or use the booking system. \[Confirm cancellation policy with Vida Verde\] |
-| **Is there a contract or commitment?** | No. The discounted first lesson is a one-time purchase. After that, you choose a package or pay per class — no lock-in. |
-| **How long are the classes?** | Standard classes are 60 minutes. Some packages may offer 45-minute options — confirm with your teacher. |
+| **Is there a contract or commitment?** | No. The discounted first lesson is a one-time purchase. After that, you choose a package or pay per class. No lock-in. |
+| **How long are the classes?** | Standard classes are 60 minutes. Some packages may offer 45-minute options. Confirm with your teacher. |
 | **Do you offer group classes?** | Our online programme focuses on one-on-one instruction for maximum personalisation. Group classes are available for our Quito immersion programmes. |
 
-### **Section F — Bottom CTA**
+### **Section F. Bottom CTA**
 
-| Online Classes — Bottom CTA | *Section F* |
+| Online Classes. Bottom CTA | *Section F* |
 | :---- | ----: |
 
-| Suggested Bottom CTA Copy Headline: “Ready to Start? Your First Lesson Is Just $12.” Subheadline: “Book your Spanish Assessment & First Lesson today. No commitment. Cancel or continue — it’s your call.” CTA button: “Book My First Lesson →” |
+| Suggested Bottom CTA Copy Headline: “Ready to Start? Your First Lesson Is Just $12.” Subheadline: “Book your Spanish Assessment & First Lesson today. No commitment. Cancel or continue. It’s your call.” CTA button: “Book My First Lesson →” |
 | :---- |
 
 ## **3.3  Teacher Profile Page  ( /online-classes/teachers/\[name\] )**
@@ -342,12 +342,12 @@ One page per teacher. These pages serve two purposes: building trust before book
 | **Name and credentials** | Full name, university/qualification, years of experience, languages spoken |
 | **Teaching bio** | 3–5 sentences in first person: teaching philosophy, favourite student moments, what makes their approach unique. \[VIDA VERDE TO SUPPLY per teacher\] |
 | **Specialisations** | e.g. Beginner-friendly, DELE preparation, Business Spanish, Conversational practice |
-| **Availability** | Current availability status: “Accepting new students — next available: \[date\]” or “Limited availability” |
+| **Availability** | Current availability status: “Accepting new students. Next available: \[date\]” or “Limited availability” |
 | **Student reviews** | 2–3 testimonials specifically mentioning this teacher (pulled from the global testimonial pool) |
 | **Primary CTA** | “Book Your First Lesson with \[Name\]” → /online-classes/book?teacher=\[name\] |
 | **Secondary CTA** | “Back to all teachers →” |
 
-| Content Needed per Teacher — \[VIDA VERDE TO SUPPLY\] Professional headshot photo (consistent lighting / background across all teachers) University qualification and year Years of teaching experience Teaching bio in first person (3–5 sentences) Specialisations (2–3 bullet points) Current availability status |
+| Content Needed per Teacher. \[VIDA VERDE TO SUPPLY\] Professional headshot photo (consistent lighting / background across all teachers) University qualification and year Years of teaching experience Teaching bio in first person (3–5 sentences) Specialisations (2–3 bullet points) Current availability status |
 | :---- |
 
 ## **3.4  Booking Flow  ( /online-classes/book )**
@@ -370,17 +370,17 @@ The booking flow is a critical functional requirement. It must be fully self-ser
 
 Overview page for all in-person and travel immersion programmes. Visitors arrive here from the homepage Course Selector or the main navigation. The page should orient them quickly and route them to the relevant programme detail page.
 
-### **Section A — Page Hero**
+### **Section A. Page Hero**
 
-| Study in Quito — Hero | *Section A* |
+| Study in Quito. Hero | *Section A* |
 | :---- | ----: |
 
-| Suggested Hero Copy Headline: “Immerse Yourself in Spanish. Live It in Ecuador.” Subheadline: “From a week of classes and culture in Quito to a journey deep into the Amazon — Vida Verde's immersion programmes weave expert teaching, guided activities, tourism and life with a local Ecuadorian family into a single, unforgettable experience” Primary CTA: “Explore Programmes ↓” (smooth scroll to programme cards) Secondary CTA: “Contact Us to Plan Your Stay” → /contact |
+| Suggested Hero Copy Headline: “Immerse Yourself in Spanish. Live It in Ecuador.” Subheadline: “From a week of classes and culture in Quito to a journey deep into the Amazon. Vida Verde's immersion programmes weave expert teaching, guided activities, tourism and life with a local Ecuadorian family into a single, unforgettable experience” Primary CTA: “Explore Programmes ↓” (smooth scroll to programme cards) Secondary CTA: “Contact Us to Plan Your Stay” → /contact |
 | :---- |
 
-### **Section B — Programme Cards**
+### **Section B. Programme Cards**
 
-| Study in Quito — Programmes | *Section B* |
+| Study in Quito. Programmes | *Section B* |
 | :---- | ----: |
 
 | Programme | Description | Price from | CTA | Links to |
@@ -390,9 +390,9 @@ Overview page for all in-person and travel immersion programmes. Visitors arrive
 | **Puerto López** | Spanish on the Pacific coast. Morning classes, afternoon beach and whale-watching. | From $X/week | View Programme → | /study-in-quito/puerto-lopez |
 | **Jungle Programme**   | Immersion in the Ecuadorian Amazon at GAIA or Yarina Lodge. \[Confirm active status with Vida Verde\] | From $X/person | View Programme → | /study-in-quito/jungle |
 
-### **Section C — Homestay Preview**
+### **Section C. Homestay Preview**
 
-| Study in Quito — Homestay Preview | *Section C* |
+| Study in Quito. Homestay Preview | *Section C* |
 | :---- | ----: |
 
 | Element | Specification |
@@ -401,15 +401,15 @@ Overview page for all in-person and travel immersion programmes. Visitors arrive
 | **Content** | 2–3 sentences describing the homestay experience. 1–2 photos of a host family or family home setting. \[VIDA VERDE TO SUPPLY\] |
 | **CTA** | “Learn About Homestay →” links to /homestay |
 
-| Suggested Enquiry CTA Copy Body: "The best Spanish classroom isn't a classroom at all — it's a family dinner table in Quito. Our homestay programme places you with a vetted Ecuadorian family, so the immersion never stops when the lesson does." CTA: "Find out about Homestay →" |
+| Suggested Enquiry CTA Copy Body: "The best Spanish classroom isn't a classroom at all. It's a family dinner table in Quito. Our homestay programme places you with a vetted Ecuadorian family, so the immersion never stops when the lesson does." CTA: "Find out about Homestay →" |
 | :---- |
 
-### **Section D — Enquiry CTA**
+### **Section D. Enquiry CTA**
 
-| Study in Quito — Enquiry | *Section D* |
+| Study in Quito. Enquiry | *Section D* |
 | :---- | ----: |
 
-| Suggested Enquiry CTA Copy Headline: “Not Sure Which Programme Is Right for You?” Subheadline: “Tell us a bit about your goals and we’ll recommend the best fit. WhatsApp us or send a message — we respond within 24 hours.” CTA 1: “WhatsApp Us” (opens WhatsApp) CTA 2: “Send a Message” → /contact |
+| Suggested Enquiry CTA Copy Headline: “Not Sure Which Programme Is Right for You?” Subheadline: “Tell us a bit about your goals and we’ll recommend the best fit. WhatsApp us or send a message. We respond within 24 hours.” CTA 1: “WhatsApp Us” (opens WhatsApp) CTA 2: “Send a Message” → /contact |
 | :---- |
 
 ## **3.6  Programme Detail Pages**
@@ -421,10 +421,10 @@ One page per programme. Same structure for all. Use the Quito Immersion Programm
 | **Hero** | Programme name, 1-line description, primary CTA. Background: real photo from programme location. \[VIDA VERDE TO SUPPLY\] |
 | **What’s Included** | Bullet list: classes per day, class format, homestay (if included), activities, airport transfer (if included), meals (if included) |
 | **Sample Schedule** | A typical week laid out day by day or as a simple table. e.g. Mon–Fri: 9am–1pm classes, afternoon activities. |
-| **Pricing Table** | By duration (1 week, 2 weeks, 4 weeks) and format (individual, pair, group). \[VIDA VERDE TO SUPPLY — confirm current pricing\] |
+| **Pricing Table** | By duration (1 week, 2 weeks, 4 weeks) and format (individual, pair, group). \[VIDA VERDE TO SUPPLY. Confirm current pricing\] |
 | **Programme-Specific Photos** | Gallery of 3–6 real photos from the programme. \[VIDA VERDE TO SUPPLY\] |
 | **Testimonial** | 1–2 testimonials from students who completed this specific programme |
-| **Enquiry CTA** | “Ready to Book? Contact Us to Reserve Your Place.” — form or WhatsApp link (not a self-service checkout; immersion bookings require coordination) |
+| **Enquiry CTA** | “Ready to Book? Contact Us to Reserve Your Place.”. Form or WhatsApp link (not a self-service checkout; immersion bookings require coordination) |
 
 ## **3.7  Homestay Page  ( /homestay )**
 
@@ -435,7 +435,7 @@ The Homestay page sits under Study in Quito in the navigation but has its own UR
 | **Hero** | Warm, human image of a host family or family home. Headline: “Live Like a Local. Learn Faster.” |
 | **What is a Homestay?** | 2–3 paragraph explanation of the experience: living with an Ecuadorian family, meals included, language practice around the clock, cultural immersion beyond the classroom. |
 | **What’s Included** | Bullet list: private room, meals per day, laundry, WiFi, local transport guidance, 24/7 support from Vida Verde |
-| **Host Family Profiles** | 2–3 host family vignettes: family photo, first names, neighbourhood, a short ‘about us’ blurb. \[VIDA VERDE TO SUPPLY — with family consent\] |
+| **Host Family Profiles** | 2–3 host family vignettes: family photo, first names, neighbourhood, a short ‘about us’ blurb. \[VIDA VERDE TO SUPPLY. With family consent\] |
 | **Pricing** | $26/night (confirm / update). Note any included / optional extras. |
 | **Combination offers** | Highlight that homestay \+ classes can be booked together as part of any immersion programme. |
 | **Safety note** | Brief reassurance paragraph: Vida Verde vets all host families, all homes are in safe Quito neighbourhoods, 24/7 support available. Important for parents of younger students. |
@@ -450,9 +450,9 @@ A lightweight page for the third audience segment: Ecuador-bound travellers who 
 | **Hero headline** | “Travelling to Ecuador? Learn the Spanish You’ll Actually Use.” |
 | **Offering description** | 2–3 paragraphs: short-stay classes (a few days to a few weeks), in-person in Quito or via Google Meet, homestay option, travel advisory and cultural orientation from Vida Verde’s team. |
 | **Travel advisory mention** | Brief mention that Vida Verde can advise on Ecuador travel routes, safety, local recommendations, and logistics. \[Confirm scope of this service with Rosa/Mateo\] |
-| **TripAdvisor reviews** | Prominent display of TripAdvisor rating and 2–3 review excerpts from travellers (not long-term students). \[VIDA VERDE TO SUPPLY — TripAdvisor profile link\] |
-| **Pricing note** | No fixed pricing table — bespoke arrangements. “Pricing depends on duration and format — contact us for a custom quote.” |
-| **Primary CTA** | “Plan My Travel Spanish — WhatsApp Us” (opens WhatsApp with pre-filled message) |
+| **TripAdvisor reviews** | Prominent display of TripAdvisor rating and 2–3 review excerpts from travellers (not long-term students). \[VIDA VERDE TO SUPPLY. TripAdvisor profile link\] |
+| **Pricing note** | No fixed pricing table. Bespoke arrangements. “Pricing depends on duration and format. Contact us for a custom quote.” |
+| **Primary CTA** | “Plan My Travel Spanish. WhatsApp Us” (opens WhatsApp with pre-filled message) |
 | **Secondary CTA** | “Send Us a Message →” /contact |
 
 ## **3.9  Our School  ( /our-school )**
@@ -465,7 +465,7 @@ The Our School page is a credibility conversion lever, especially for internatio
 | **Rosa’s story** | First-person narrative from Rosa about founding the school in 1999, the ethos behind it, and what Vida Verde means to her. 3–5 paragraphs. \[VIDA VERDE TO SUPPLY\] |
 | **Photo** | Photo of Rosa and/or the team at the school. \[VIDA VERDE TO SUPPLY\] |
 | **AECEE Certification** | Dedicated sub-section: what AECEE is, what certification means for students (quality assurance, structured curriculum, accountability), AECEE logo, link to AECEE website. |
-| **La Floresta context** | Short paragraph: La Floresta neighbourhood — safe, vibrant, bohemian, close to Quito’s cultural heart. Reassures immersion students about the school’s location. |
+| **La Floresta context** | Short paragraph: La Floresta neighbourhood. Safe, vibrant, bohemian, close to Quito’s cultural heart. Reassures immersion students about the school’s location. |
 | **Teacher bios** | Full bios for all teachers (not just those available online). Photo, name, qualifications, years of experience, teaching philosophy. \[VIDA VERDE TO SUPPLY\] |
 | **School gallery** | 6–12 photos: classrooms, garden/patio, teachers in session, school exterior, La Floresta street scenes. \[VIDA VERDE TO SUPPLY\] |
 | **CTA** | “Ready to Start? →” links to /online-classes |
@@ -491,10 +491,10 @@ The blog is a long-term SEO and content marketing asset. At launch, the structur
 | **Contact form fields** | Name, email, subject (dropdown: Online Classes / Immersion Programme / Homestay / Travel Spanish / Other), message. Submit button: “Send Message”. |
 | **Response time note** | “We respond to all enquiries within 48 hours, Monday to Friday.” |
 | **WhatsApp CTA** | Large, prominent WhatsApp button with pre-filled message. For visitors who prefer instant messaging. |
-| **Email address** | Displayed as plain text for visitors who prefer to copy/paste. \[VIDA VERDE TO SUPPLY — school contact email\] |
+| **Email address** | Displayed as plain text for visitors who prefer to copy/paste. \[VIDA VERDE TO SUPPLY. School contact email\] |
 | **Phone / WhatsApp number** | \[VIDA VERDE TO SUPPLY\] |
 | **Location** | Embedded Google Map showing La Floresta, Quito. School address displayed below map. |
-| **School address** | \[VIDA VERDE TO SUPPLY — full street address\] |
+| **School address** | \[VIDA VERDE TO SUPPLY. Full street address\] |
 
 # **4\.  Functional Requirements**
 
@@ -502,8 +502,8 @@ The blog is a long-term SEO and content marketing asset. At launch, the structur
 
 | Requirement | Specification |
 | :---- | :---- |
-| **Scheduling** | Teachers must be able to set their own availability. Students see only available slots. Timezone auto-detection on student side is essential — Ecuador is GMT-5. |
-| **Booking options** | Recommend Calendly (Teams or higher), Acuity Scheduling, or a custom booking module. \[Vida Verde to confirm preference — see Open Questions in Strategy doc\] |
+| **Scheduling** | Teachers must be able to set their own availability. Students see only available slots. Timezone auto-detection on student side is essential. Ecuador is GMT-5. |
+| **Booking options** | Recommend Calendly (Teams or higher), Acuity Scheduling, or a custom booking module. \[Vida Verde to confirm preference. See Open Questions in Strategy doc\] |
 | **Payment on booking** | Payment is captured at time of booking, not after. No “pay later” option for the discounted first lesson or packages. |
 | **Cancellation / reschedule** | Policy to be defined by Vida Verde. Suggest: free reschedule up to 24hrs; cancellations within 24hrs forfeit the booking fee. Clearly displayed before payment. |
 | **Teacher notifications** | Automatic email to teacher on new booking: student name, level, date/time, Google Meet link. |
@@ -516,7 +516,7 @@ The blog is a long-term SEO and content marketing asset. At launch, the structur
 | **Recommended gateway** | Stripe (subject to Ecuador-specific availability and banking considerations). Alternatives: PayPal, Wise Payments, or local gateway if preferred. \[To be confirmed with Ongshak and Vida Verde before Phase 1.3\] |
 | **Accepted methods** | Credit card (Visa, Mastercard), debit card, Apple Pay, Google Pay |
 | **Currency** | USD (primary). Consider displaying local currency equivalents where feasible. |
-| **Security** | PCI-compliant processing. Stripe handles all card data — card numbers never touch Vida Verde’s servers. |
+| **Security** | PCI-compliant processing. Stripe handles all card data. Card numbers never touch Vida Verde’s servers. |
 | **Receipts** | Automated payment receipts emailed to student on successful payment. |
 | **Refunds** | Refund capability must be accessible to Vida Verde admin without requiring developer intervention. |
 
@@ -536,7 +536,7 @@ The blog is a long-term SEO and content marketing asset. At launch, the structur
 | Requirement | Specification |
 | :---- | :---- |
 | **URL structure** | English: /page-name. Spanish: /es/nombre-pagina. Separate URLs for SEO benefit in both languages. |
-| **Content** | Full Spanish translation of all pages. \[Note: Spanish content will need to be supplied by Vida Verde or translated — agree responsibility with Ongshak in Phase 1.1\] |
+| **Content** | Full Spanish translation of all pages. \[Note: Spanish content will need to be supplied by Vida Verde or translated. Agree responsibility with Ongshak in Phase 1.1\] |
 | **hreflang tags** | Required on all pages to signal language/region to Google. format: \<link rel=”hreflang” hreflang=”en” href=”...”\> and \<link rel=”hreflang” hreflang=”es” href=”...”\> |
 | **Toggle behaviour** | Language preference persists across the session. Store in a cookie or localStorage. |
 
@@ -556,7 +556,7 @@ The following meta titles and descriptions are starting-point suggestions. They 
 | Page | Meta Title (max 60 chars) | Meta Description (max 155 chars) |
 | :---- | :---- | :---- |
 | **Homepage** | Learn Spanish Online with a Real Teacher | Vida Verde | Expert Ecuadorian Spanish teachers. One-on-one online classes via Google Meet. AECEE-certified school since 1999\. Book your first lesson for $12. |
-| **Online Classes** | Online Spanish Classes | One-on-One with Native Teachers | Vida Verde | Personalised online Spanish lessons with certified native Ecuadorian teachers. Flexible scheduling, all levels. Start for $12 — includes level assessment. |
+| **Online Classes** | Online Spanish Classes | One-on-One with Native Teachers | Vida Verde | Personalised online Spanish lessons with certified native Ecuadorian teachers. Flexible scheduling, all levels. Start for $12. Includes level assessment. |
 | **Study in Quito** | Spanish Immersion in Quito, Ecuador | Vida Verde | Full Spanish immersion programmes in Quito: daily classes, Ecuadorian homestay, and cultural activities. AECEE-certified school since 1999\. |
 | **Travel Spanish** | Ecuadorian Homestay for Spanish Students | Vida Verde Quito | Live with an Ecuadorian family while studying Spanish in Quito. Includes meals, private room, and 24/7 Vida Verde support. From $26/night. |
 | **Our School** | Our School | Vida Verde Spanish School in Quito Since 1999 | Vida Verde is an AECEE-certified Spanish school in La Floresta, Quito. Founded in 1999 by Rosa, we’ve taught 4,700+ students from around the world. |
@@ -605,7 +605,7 @@ The following table summarises all content items that must be supplied by Vida V
 | **Accounts** | Payment gateway account (Stripe or alternative) | Required | Before Phase 1.3 |
 | **Accounts** | Email marketing account (Mailchimp, Brevo, or existing) | Required | Before Phase 1.3 |
 
-| A Note to Ongshak’s Design and Development Teams This specification has been developed in parallel with the Website Redesign Strategy document, which provides the strategic rationale behind every requirement listed here. If any requirement in this spec seems unclear or arbitrary, the Strategy doc will explain the “why” behind it. The most important single decision in this project is the first-page experience for an online Spanish learner: they must know within 5 seconds what Vida Verde is, why it’s better than an app or a freelance teacher, and what to do next. Everything else in this spec serves that moment. We welcome Ongshak’s input on technical feasibility, platform choices, and implementation approach throughout Phase 1.1. This spec is a starting point for that conversation — not a closed brief. |
+| A Note to Ongshak’s Design and Development Teams This specification has been developed in parallel with the Website Redesign Strategy document, which provides the strategic rationale behind every requirement listed here. If any requirement in this spec seems unclear or arbitrary, the Strategy doc will explain the “why” behind it. The most important single decision in this project is the first-page experience for an online Spanish learner: they must know within 5 seconds what Vida Verde is, why it’s better than an app or a freelance teacher, and what to do next. Everything else in this spec serves that moment. We welcome Ongshak’s input on technical feasibility, platform choices, and implementation approach throughout Phase 1.1. This spec is a starting point for that conversation. Not a closed brief. |
 | :---- |
 
 *Vida Verde Centro de Español  ·  Est. 1999  ·  La Floresta, Quito, Ecuador*

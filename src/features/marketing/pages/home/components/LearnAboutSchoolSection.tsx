@@ -35,8 +35,8 @@ export function LearnAboutSchoolSection() {
               human connection.
             </p>
             <p className="text-vv-ink-2 text-[clamp(16px,1.2vw,18px)] leading-relaxed max-w-[62ch] text-pretty m-0">
-              From our home in La Floresta — one of Quito&apos;s most vibrant
-              and welcoming neighbourhoods — we&apos;ve grown to serve over
+              From our home in La Floresta. One of Quito&apos;s most vibrant
+              and welcoming neighbourhoods. We&apos;ve grown to serve over
               4,700 students from every corner of the world. Online and in
               person. Beginners and advanced speakers. Travellers and
               professionals.

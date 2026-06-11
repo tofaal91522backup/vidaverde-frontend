@@ -34,7 +34,7 @@ export function HowItWorksSection() {
             How It Works
           </h2>
           <p className="text-vv-ink-2 text-[clamp(15px,1.1vw,17px)] leading-relaxed m-0 text-pretty">
-            From your first click to your first conversation — here&apos;s what
+            From your first click to your first conversation. Here&apos;s what
             to expect.
           </p>
         </div>

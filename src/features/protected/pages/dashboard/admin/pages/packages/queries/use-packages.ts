@@ -20,15 +20,15 @@ type PackageParams = { page?: number; search?: string };
 // ─── DEMO DATA ────────────────────────────────────────────────────────────────
 const MOCK_PACKAGES: Package[] = [
   { id: "p1", name: "Assessment + First Lesson", price: 12, classesCount: 1, validityDays: 14, isActive: true },
-  { id: "p2", name: "Starter Pack — 5 Classes", price: 55, classesCount: 5, validityDays: 60, isActive: true },
-  { id: "p3", name: "Regular Pack — 10 Classes", price: 100, classesCount: 10, validityDays: 90, isActive: true },
-  { id: "p4", name: "Intensive — 20 Classes", price: 180, classesCount: 20, validityDays: 120, isActive: true },
+  { id: "p2", name: "Starter Pack. 5 Classes", price: 55, classesCount: 5, validityDays: 60, isActive: true },
+  { id: "p3", name: "Regular Pack. 10 Classes", price: 100, classesCount: 10, validityDays: 90, isActive: true },
+  { id: "p4", name: "Intensive. 20 Classes", price: 180, classesCount: 20, validityDays: 120, isActive: true },
   { id: "p5", name: "Trial Lesson", price: 0, classesCount: 1, validityDays: 7, isActive: false },
 ];
 // ─────────────────────────────────────────────────────────────────────────────
 
 export function usePackages(params: PackageParams) {
-  // ✅ REAL API — uncomment this and remove the demo block below:
+  // ✅ REAL API. Uncomment this and remove the demo block below:
   // return useFetchData<PackagesResponse>({
   //   url: makeEndpoint("/api/packages/", params),
   //   querykey: [PACKAGES_QUERY_KEY, params],
@@ -51,7 +51,7 @@ export function usePackages(params: PackageParams) {
 }
 
 export function usePackageDetails(id: string) {
-  // ✅ REAL API — uncomment this and remove the demo block below:
+  // ✅ REAL API. Uncomment this and remove the demo block below:
   // return useFetchData<Package>({
   //   url: `/api/packages/${id}/`,
   //   querykey: [PACKAGE_DETAILS_QUERY_KEY, id],
@@ -67,7 +67,7 @@ export function usePackageDetails(id: string) {
 }
 
 export function useCreatePackage() {
-  // ✅ REAL API — swap mutationFn and restore invalidateKeys:
+  // ✅ REAL API. Swap mutationFn and restore invalidateKeys:
   // mutationFn: (data) => request.post("/api/packages/", data),
   // invalidateKeys: [[PACKAGES_QUERY_KEY]],
   return useMutationHandler<any, any>({
@@ -78,7 +78,7 @@ export function useCreatePackage() {
 }
 
 export function useUpdatePackage(_id: string) {
-  // ✅ REAL API — swap mutationFn and restore invalidateKeys:
+  // ✅ REAL API. Swap mutationFn and restore invalidateKeys:
   // mutationFn: (data) => request.put(`/api/packages/${_id}/`, data),
   // invalidateKeys: [[PACKAGES_QUERY_KEY], [PACKAGE_DETAILS_QUERY_KEY, _id]],
   return useMutationHandler<any, any>({
@@ -89,7 +89,7 @@ export function useUpdatePackage(_id: string) {
 }
 
 export function useTogglePackageStatus() {
-  // ✅ REAL API — swap mutationFn and restore invalidateKeys:
+  // ✅ REAL API. Swap mutationFn and restore invalidateKeys:
   // mutationFn: ({ id, isActive }) => request.patch(`/api/packages/${id}/`, { isActive }),
   // invalidateKeys: [[PACKAGES_QUERY_KEY]],
   return useMutationHandler<any, { id: string; isActive: boolean }>({

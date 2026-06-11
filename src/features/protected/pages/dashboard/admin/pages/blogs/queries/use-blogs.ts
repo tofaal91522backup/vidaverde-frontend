@@ -79,7 +79,7 @@ const MOCK_BLOGS: Blog[] = [
 // ─────────────────────────────────────────────────────────────────────────────
 
 export function useBlogs(params: BlogParams) {
-  // ✅ REAL API — uncomment this and remove the demo block below:
+  // ✅ REAL API. Uncomment this and remove the demo block below:
   // return useFetchData<BlogsResponse>({
   //   url: makeEndpoint("/api/blogs/", params),
   //   querykey: [BLOGS_QUERY_KEY, params],
@@ -104,7 +104,7 @@ export function useBlogs(params: BlogParams) {
 }
 
 export function useBlogDetails(id: string) {
-  // ✅ REAL API — uncomment this and remove the demo block below:
+  // ✅ REAL API. Uncomment this and remove the demo block below:
   // return useFetchData<Blog>({
   //   url: `/api/blogs/${id}/`,
   //   querykey: [BLOG_DETAILS_QUERY_KEY, id],
@@ -120,7 +120,7 @@ export function useBlogDetails(id: string) {
 }
 
 export function useCreateBlog() {
-  // ✅ REAL API — swap mutationFn and restore invalidateKeys:
+  // ✅ REAL API. Swap mutationFn and restore invalidateKeys:
   // mutationFn: (data) => request.post("/api/blogs/", data),
   // invalidateKeys: [[BLOGS_QUERY_KEY]],
   return useMutationHandler<any, any>({
@@ -131,7 +131,7 @@ export function useCreateBlog() {
 }
 
 export function useUpdateBlog(_id: string) {
-  // ✅ REAL API — swap mutationFn and restore invalidateKeys:
+  // ✅ REAL API. Swap mutationFn and restore invalidateKeys:
   // mutationFn: (data) => request.put(`/api/blogs/${_id}/`, data),
   // invalidateKeys: [[BLOGS_QUERY_KEY], [BLOG_DETAILS_QUERY_KEY, _id]],
   return useMutationHandler<any, any>({
@@ -142,7 +142,7 @@ export function useUpdateBlog(_id: string) {
 }
 
 export function useToggleBlogStatus() {
-  // ✅ REAL API — swap mutationFn and restore invalidateKeys:
+  // ✅ REAL API. Swap mutationFn and restore invalidateKeys:
   // mutationFn: ({ id, status }) => request.patch(`/api/blogs/${id}/`, { status }),
   // invalidateKeys: [[BLOGS_QUERY_KEY]],
   return useMutationHandler<any, { id: string; status: "draft" | "published" }>({

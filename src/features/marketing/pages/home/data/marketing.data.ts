@@ -21,7 +21,7 @@ export const featureBlocks: FeatureBlock[] = [
     eyebrow: "School",
     title: "A Real School, Not a Platform",
     description:
-      "Vida Verde has been teaching Spanish since 1999. AECEE-certified, structured, and accountable — not a marketplace of strangers.",
+      "Vida Verde has been teaching Spanish since 1999. AECEE-certified, structured, and accountable. Not a marketplace of strangers.",
     span: "span-6",
   },
   {
@@ -38,7 +38,7 @@ export const featureBlocks: FeatureBlock[] = [
     eyebrow: "Learning",
     title: "Personalised to You",
     description:
-      "No fixed syllabus. Your teacher adapts every lesson to your level, goals, and pace — whether you're a complete beginner or polishing your fluency.",
+      "No fixed syllabus. Your teacher adapts every lesson to your level, goals, and pace. Whether you're a complete beginner or polishing your fluency.",
     span: "span-4",
     tone: "accent",
   },
@@ -47,7 +47,7 @@ export const featureBlocks: FeatureBlock[] = [
     eyebrow: "Flexibility",
     title: "Learn Anywhere",
     description:
-      "Classes via Google Meet. Real conversation, real feedback, real progress — from your living room, office, or café.",
+      "Classes via Google Meet. Real conversation, real feedback, real progress. From your living room, office, or café.",
     span: "span-8",
   },
 ];

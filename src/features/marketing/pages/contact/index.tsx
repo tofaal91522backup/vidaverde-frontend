@@ -60,7 +60,7 @@ export default function ContactRoute() {
                 aria-hidden="true"
                 className="w-120"
               >
-                {/* Card 1 — WhatsApp */}
+                {/* Card 1. WhatsApp */}
                 <rect
                   x="0"
                   y="18"
@@ -157,7 +157,7 @@ export default function ContactRoute() {
                   Replies fast
                 </text>
 
-                {/* Card 2 — Email */}
+                {/* Card 2. Email */}
                 <rect
                   x="109"
                   y="0"
@@ -223,7 +223,7 @@ export default function ContactRoute() {
                   24hr response
                 </text>
 
-                {/* Card 3 — Location */}
+                {/* Card 3. Location */}
                 <rect
                   x="218"
                   y="18"
@@ -555,7 +555,7 @@ export default function ContactRoute() {
                     Address
                   </div>
                   <p className="text-[14px] text-vv-muted m-0 leading-snug border-l-2 border-vv-line pl-3">
-                    {/* [VIDA VERDE TO SUPPLY — full street address] */}
+                    {/* [VIDA VERDE TO SUPPLY. Full street address] */}
                     {/* <br /> */}
                     La Floresta, Quito, Ecuador
                   </p>

@@ -75,7 +75,7 @@ export function PostDetail({ post }: { post: BlogPost }) {
               Ready to put this into practice?
             </h3>
             <p className="text-[14px] text-vv-ink-2 mb-4">
-              Book your first lesson with a Vida Verde teacher for just $12 —
+              Book your first lesson with a Vida Verde teacher for just $12.
               includes a level assessment and personalised learning plan.
             </p>
             <Link

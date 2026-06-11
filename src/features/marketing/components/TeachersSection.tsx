@@ -10,7 +10,7 @@ const teachers = [
     image: "/images/teachers/2.jpg",
     description:
       "Students say class hours with Ximena pass by in a flash. She has been teaching Spanish since 2011 and is fluent in English, making her especially effective with beginners.",
-    credentials: "Universidad Central del Ecuador — Linguistics",
+    credentials: "Universidad Central del Ecuador. Linguistics",
     experience: "13+ years teaching",
     specialisations: [
       "Beginner-friendly",
@@ -26,7 +26,7 @@ const teachers = [
     image: "/images/teachers/3.jpg",
     description:
       "Lucía is a language nerd who loves to teach the nuts and bolts of Spanish. She excels at helping students understand grammar intuitively and speaks at a clear, easy-to-follow pace.",
-    credentials: "PUCE Quito — Modern Languages",
+    credentials: "PUCE Quito. Modern Languages",
     experience: "10+ years teaching",
     specialisations: [
       "Grammar Focus",
@@ -41,15 +41,15 @@ const teachers = [
     firstName: "Fernando",
     image: "/images/teachers/4.jpg",
     description:
-      "Fernando is our Academic Director and master teacher. He brings structure, warmth, and deep expertise to every lesson — students consistently rate him as the most effective teacher they have had.",
-    credentials: "Universidad de Cuenca — Spanish Literature",
+      "Fernando is our Academic Director and master teacher. He brings structure, warmth, and deep expertise to every lesson. Students consistently rate him as the most effective teacher they have had.",
+    credentials: "Universidad de Cuenca. Spanish Literature",
     experience: "20+ years teaching",
     specialisations: [
       "All Levels",
       "Academic Spanish",
       "Advanced Conversation",
     ],
-    availability: "Limited — Tue & Thu",
+    availability: "Limited. Tue & Thu",
     accepting: true,
   },
   {
@@ -58,7 +58,7 @@ const teachers = [
     image: "/images/teachers/5.jpg",
     description:
       "Laura has taught Spanish since 1991. She has a passion for sharing Ecuadorian culture with her students and considers herself not just a teacher but an ambassador of her culture and her language.",
-    credentials: "Universidad Central del Ecuador — Education",
+    credentials: "Universidad Central del Ecuador. Education",
     experience: "33+ years teaching",
     specialisations: ["Culture & Language", "Beginners", "Travel Spanish"],
     availability: "Mon, Wed & Fri",

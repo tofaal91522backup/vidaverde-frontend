@@ -44,7 +44,7 @@ const MOCK_SESSIONS: Session[] = [
 // ─────────────────────────────────────────────────────────────────────────────
 
 export function useSessions(params: SessionParams) {
-  // ✅ REAL API — uncomment this and remove the demo block below:
+  // ✅ REAL API. Uncomment this and remove the demo block below:
   // return useFetchData<SessionsResponse>({
   //   url: makeEndpoint("/api/sessions/", params),
   //   querykey: [SESSIONS_QUERY_KEY, params],
@@ -77,7 +77,7 @@ export function useSessions(params: SessionParams) {
 }
 
 export function useUpdateSession() {
-  // ✅ REAL API — swap mutationFn and restore invalidateKeys:
+  // ✅ REAL API. Swap mutationFn and restore invalidateKeys:
   // mutationFn: ({ id, ...data }) => request.patch(`/api/sessions/${id}/`, data),
   // invalidateKeys: [[SESSIONS_QUERY_KEY]],
   return useMutationHandler<any, { id: string; status?: SessionStatus; adminNotes?: string }>({

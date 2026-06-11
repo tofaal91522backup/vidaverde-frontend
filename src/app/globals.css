@@ -304,7 +304,7 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
   to { height: 0; opacity: 0; }
 }
 
-/* Keyframes — cannot be inlined as Tailwind utilities */
+/* Keyframes. Cannot be inlined as Tailwind utilities */
 @keyframes word-in {
   from {
     opacity: 0;

@@ -16,7 +16,7 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# All other vars (secrets, URLs) are injected at runtime by docker-compose — never baked in.
+# All other vars (secrets, URLs) are injected at runtime by docker-compose. Never baked in.
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV DOCKER_ENV="true"
 # Runs: tsc --noEmit && next build --turbopack
@@ -47,6 +47,6 @@ USER nextjs
 
 EXPOSE 3000
 
-# Built-in fetch available in Node 20; no dotenv-cli needed — env vars
+# Built-in fetch available in Node 20; no dotenv-cli needed. Env vars
 # are injected by Docker/docker-compose at runtime.
 CMD ["node", "server.js"]

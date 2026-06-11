@@ -30,7 +30,7 @@ export function OnlineClassesBottomCTA() {
           </Link>
         </div>
         <p className="mt-5 text-[13px] text-vv-bg/50">
-          No contracts. Cancel or continue — it&apos;s your call.
+          No contracts. Cancel or continue. It&apos;s your call.
         </p>
       </Container>
     </section>

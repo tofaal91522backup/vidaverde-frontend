@@ -40,7 +40,7 @@ const MOCK_CALENDAR_SESSIONS: CalendarSession[] = [
 // ─────────────────────────────────────────────────────────────────────────────
 
 export function useCalendarSessions(params: CalendarParams) {
-  // ✅ REAL API — uncomment this and remove the demo block below:
+  // ✅ REAL API. Uncomment this and remove the demo block below:
   // return useFetchData<CalendarSession[]>({
   //   url: makeEndpoint("/api/sessions/calendar/", params),
   //   querykey: [CALENDAR_SESSIONS_QUERY_KEY, params],

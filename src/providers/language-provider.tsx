@@ -144,7 +144,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
-    // Apply immediately — don't wait for the first interval tick
+    // Apply immediately. Don't wait for the first interval tick
     applyGoogleLanguage(language);
 
     // Keep retrying in case the GT widget wasn't ready yet

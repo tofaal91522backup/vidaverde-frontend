@@ -180,7 +180,7 @@ function AirplaneIllustration({ className }: { className?: string }) {
         strokeOpacity="0.3"
       />
 
-      {/* Cloud 1 — upper left */}
+      {/* Cloud 1. Upper left */}
       <path
         d="M6,30 Q6,24 12,23 Q15,18 22,20 Q28,19 30,24 Q35,24 35,29 Q35,33 30,33 L11,33 Q6,33 6,30 Z"
         stroke="currentColor"
@@ -189,7 +189,7 @@ function AirplaneIllustration({ className }: { className?: string }) {
         fill="currentColor"
         fillOpacity="0.05"
       />
-      {/* Cloud 2 — upper right */}
+      {/* Cloud 2. Upper right */}
       <path
         d="M82,25 Q82,19 88,18 Q91,14 97,15 Q103,14 105,19 Q110,19 110,24 Q110,28 105,28 L87,28 Q82,28 82,25 Z"
         stroke="currentColor"
@@ -198,7 +198,7 @@ function AirplaneIllustration({ className }: { className?: string }) {
         fill="currentColor"
         fillOpacity="0.05"
       />
-      {/* Cloud 3 — small, centre */}
+      {/* Cloud 3. Small, centre */}
       <path
         d="M42,36 Q42,32 46,31 Q48,28 53,29 Q57,28 58,32 Q61,32 61,35 Q61,38 58,38 L45,38 Q42,38 42,36 Z"
         stroke="currentColor"
@@ -459,7 +459,7 @@ const programs = [
   {
     label: "Free Spanish Guide",
     description:
-      "Not sure where to start? Download our free guide and take your first steps — no commitment needed.",
+      "Not sure where to start? Download our free guide and take your first steps. No commitment needed.",
     price: "Free",
     priceSub: "No commitment needed",
     cta: "Download Free",
@@ -479,7 +479,7 @@ export function CourseSelectorSection() {
         <SectionHeader
           eyebrow="// Programs"
           title="Find Your Perfect Spanish Program"
-          lede="Whether you're at home or heading to Ecuador — we have a programme for you."
+          lede="Whether you're at home or heading to Ecuador. We have a programme for you."
         />
         <div className="grid gap-5 md:grid-cols-2">
           {programs.map((prog) => {

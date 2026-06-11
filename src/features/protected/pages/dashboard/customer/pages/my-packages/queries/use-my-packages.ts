@@ -17,7 +17,7 @@ export type MyPackage = {
 const MOCK_MY_PACKAGES: MyPackage[] = [
   {
     id: "mp1",
-    name: "Regular Pack — 10 Classes",
+    name: "Regular Pack. 10 Classes",
     classesTotal: 10,
     classesUsed: 3,
     purchaseDate: "2026-06-02",
@@ -27,7 +27,7 @@ const MOCK_MY_PACKAGES: MyPackage[] = [
   },
   {
     id: "mp2",
-    name: "Starter Pack — 5 Classes",
+    name: "Starter Pack. 5 Classes",
     classesTotal: 5,
     classesUsed: 5,
     purchaseDate: "2026-05-18",
@@ -37,7 +37,7 @@ const MOCK_MY_PACKAGES: MyPackage[] = [
   },
   {
     id: "mp3",
-    name: "Intensive — 20 Classes",
+    name: "Intensive. 20 Classes",
     classesTotal: 20,
     classesUsed: 0,
     purchaseDate: "2026-06-10",
@@ -59,7 +59,7 @@ const MOCK_MY_PACKAGES: MyPackage[] = [
 // ─────────────────────────────────────────────────────────────────────────────
 
 export function useMyPackages() {
-  // ✅ REAL API — uncomment this and remove the demo block below:
+  // ✅ REAL API. Uncomment this and remove the demo block below:
   // return useFetchData<MyPackage[]>({
   //   url: "/api/customer/packages/",
   //   querykey: [MY_PACKAGES_QUERY_KEY],

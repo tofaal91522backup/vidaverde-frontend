@@ -547,7 +547,7 @@ export function MultiStepFormWrapper<T extends FormData = FormData>({
           {(showStepTitle || showStepIndicator) && (
             <p className="mt-1 text-center text-xs text-gray-500 dark:text-white/45">
               Step {currentStep + 1} of {steps.length}
-              {description ? ` — ${description}` : ""}
+              {description ? `. ${description}` : ""}
             </p>
           )}
 

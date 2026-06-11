@@ -39,7 +39,7 @@ const jetBrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Vida Verde - Spanish School in Quito, Ecuador",
+  title: "Vida Verde Spanish School in Quito, Ecuador",
   description:
     "One-on-one Spanish immersion, homestays, and cultural activities in Quito, Ecuador.",
 };

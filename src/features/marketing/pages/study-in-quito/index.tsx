@@ -26,7 +26,7 @@ export default function StudyInQuitoRoute() {
             </linearGradient>
           </defs>
 
-          {/* Concentric arcs — top right */}
+          {/* Concentric arcs. Top right */}
           {[260, 340, 420, 500, 580].map((r, i) => (
             <circle
               key={r}
@@ -40,7 +40,7 @@ export default function StudyInQuitoRoute() {
             />
           ))}
 
-          {/* Dot grid — right half */}
+          {/* Dot grid. Right half */}
           {Array.from({ length: 13 }, (_, row) =>
             Array.from({ length: 16 }, (_, col) => (
               <circle
@@ -54,7 +54,7 @@ export default function StudyInQuitoRoute() {
             )),
           )}
 
-          {/* Andean mountain silhouette — bottom right */}
+          {/* Andean mountain silhouette. Bottom right */}
           <path
             d="M 480 560 L 560 420 L 600 450 L 660 360 L 710 400 L 770 300 L 830 348 L 890 260 L 950 310 L 1000 270 L 1000 560 Z"
             fill="#1f3d1a"
@@ -103,7 +103,7 @@ export default function StudyInQuitoRoute() {
             />
           </g>
 
-          {/* Tropical leaf — top right */}
+          {/* Tropical leaf. Top right */}
           <g transform="translate(890, 60)" opacity="0.1">
             <path
               d="M 24 90 Q -18 60 0 10 Q 10 0 20 6 Q 52 20 66 60 Q 52 90 24 90Z"
@@ -138,7 +138,7 @@ export default function StudyInQuitoRoute() {
             />
           </g>
 
-          {/* Map pin — Ecuador */}
+          {/* Map pin. Ecuador */}
           <g transform="translate(680, 230)" opacity="0.12">
             <path
               d="M 18 0 C 8 0 0 8 0 18 C 0 30 18 46 18 46 C 18 46 36 30 36 18 C 36 8 28 0 18 0Z"
@@ -363,13 +363,13 @@ export default function StudyInQuitoRoute() {
                 Live Like a Local. Learn Faster.
               </h2>
               <p className="text-[15px] leading-[1.7] text-vv-ink-2 m-0">
-                The best Spanish classroom isn&apos;t a classroom at all — it&apos;s a
+                The best Spanish classroom isn&apos;t a classroom at all. It&apos;s a
                 family dinner table in Quito. Our homestay programme places you
                 with a vetted Ecuadorian family, so the immersion never stops
                 when the lesson does.
               </p>
               <p className="text-[15px] leading-[1.7] text-vv-ink-2 m-0">
-                Meals, conversation, local insight, and a warm home base —
+                Meals, conversation, local insight, and a warm home base.
                 all from{" "}
                 <strong className="text-vv-ink font-semibold">$26/night</strong>.
                 Included in the Quito Immersion Program or bookable as an add-on
@@ -402,7 +402,7 @@ export default function StudyInQuitoRoute() {
           <p className="text-vv-ink-2 text-[clamp(17px,1.4vw,20px)] leading-normal mt-3 max-w-[52ch] mx-auto m-0">
             Tell us a little about your goals, your schedule, and what kind of
             experience you&apos;re looking for. We&apos;ll recommend the best
-            fit and answer any questions — in English or Spanish.
+            fit and answer any questions. In English or Spanish.
           </p>
           <div className="mt-8 flex flex-wrap gap-3 justify-center">
             <a

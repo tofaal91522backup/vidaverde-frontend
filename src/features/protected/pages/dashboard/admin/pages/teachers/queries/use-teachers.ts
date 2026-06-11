@@ -68,7 +68,7 @@ const MOCK_TEACHERS: Teacher[] = [
 // ─────────────────────────────────────────────────────────────────────────────
 
 export function useTeachers(params: TeacherParams) {
-  // ✅ REAL API — uncomment this and remove the demo block below:
+  // ✅ REAL API. Uncomment this and remove the demo block below:
   // return useFetchData<TeachersResponse>({
   //   url: makeEndpoint("/api/teachers/", params),
   //   querykey: [TEACHERS_QUERY_KEY, params],
@@ -90,7 +90,7 @@ export function useTeachers(params: TeacherParams) {
 }
 
 export function useTeacherDetails(id: string) {
-  // ✅ REAL API — uncomment this and remove the demo block below:
+  // ✅ REAL API. Uncomment this and remove the demo block below:
   // return useFetchData<Teacher>({
   //   url: `/api/teachers/${id}/`,
   //   querykey: [TEACHER_DETAILS_QUERY_KEY, id],
@@ -106,7 +106,7 @@ export function useTeacherDetails(id: string) {
 }
 
 export function useCreateTeacher() {
-  // ✅ REAL API — swap mutationFn and restore invalidateKeys:
+  // ✅ REAL API. Swap mutationFn and restore invalidateKeys:
   // mutationFn: (data) => request.post("/api/teachers/", data),
   // invalidateKeys: [[TEACHERS_QUERY_KEY]],
   return useMutationHandler<any, any>({
@@ -117,7 +117,7 @@ export function useCreateTeacher() {
 }
 
 export function useUpdateTeacher(_id: string) {
-  // ✅ REAL API — swap mutationFn and restore invalidateKeys:
+  // ✅ REAL API. Swap mutationFn and restore invalidateKeys:
   // mutationFn: (data) => request.put(`/api/teachers/${_id}/`, data),
   // invalidateKeys: [[TEACHERS_QUERY_KEY], [TEACHER_DETAILS_QUERY_KEY, _id]],
   return useMutationHandler<any, any>({
@@ -128,7 +128,7 @@ export function useUpdateTeacher(_id: string) {
 }
 
 export function useToggleTeacherStatus() {
-  // ✅ REAL API — swap mutationFn and restore invalidateKeys:
+  // ✅ REAL API. Swap mutationFn and restore invalidateKeys:
   // mutationFn: ({ id, isActive }) => request.patch(`/api/teachers/${id}/`, { isActive }),
   // invalidateKeys: [[TEACHERS_QUERY_KEY]],
   return useMutationHandler<any, { id: string; isActive: boolean }>({

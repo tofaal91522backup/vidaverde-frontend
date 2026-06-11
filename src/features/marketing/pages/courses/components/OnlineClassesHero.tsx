@@ -37,7 +37,7 @@ export function OnlineClassesHero() {
           />
         ))}
 
-        {/* Dot grid — right half only */}
+        {/* Dot grid. Right half only */}
         {Array.from({ length: 13 }, (_, row) =>
           Array.from({ length: 16 }, (_, col) => (
             <circle
@@ -118,7 +118,7 @@ export function OnlineClassesHero() {
           </g>
         ))}
 
-        {/* Fade overlay — keeps left (text) area clean */}
+        {/* Fade overlay. Keeps left (text) area clean */}
         <rect x="0" y="0" width="1000" height="560" fill="url(#oc-fade)" />
       </svg>
 

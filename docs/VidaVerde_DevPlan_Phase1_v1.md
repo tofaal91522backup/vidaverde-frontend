@@ -1,4 +1,4 @@
-# Vida Verde — Development Plan Phase 1.0
+# Vida Verde. Development Plan Phase 1.0
 
 ## Overview
 
@@ -10,10 +10,10 @@
 
 ## Project Setup
 
-- **Framework**: Next.js 15+ App Router — `src/app/` for thin page wrappers, `src/features/` for all business logic
+- **Framework**: Next.js 15+ App Router. `src/app/` for thin page wrappers, `src/features/` for all business logic
 - **Stack**: Tailwind CSS v4 + shadcn/ui + TanStack Query v5 + TanStack Form v1 + Zod + Axios
-- **Conventions**: Follow CLAUDE.md exactly — kebab-case files, PascalCase components, `useFetchData` / `useMutationHandler` hooks, never call Axios directly
-- **Base layout**: Default project layout is already in place — extend it, don't replace it
+- **Conventions**: Follow CLAUDE.md exactly. Kebab-case files, PascalCase components, `useFetchData` / `useMutationHandler` hooks, never call Axios directly
+- **Base layout**: Default project layout is already in place. Extend it, don't replace it
 
 ---
 
@@ -23,7 +23,7 @@
 | :---- | :---- |
 | ✅ | Done |
 | 🔄 | Partial / needs fix |
-| ❌ | Missing — needs to be built |
+| ❌ | Missing. Needs to be built |
 
 ---
 
@@ -35,7 +35,7 @@
 | :---- | :---- | :---- |
 | Sticky navbar | ✅ | |
 | Vida Verde logo → homepage | ✅ | |
-| Nav: Online Classes | 🔄 | URL is `/courses` — rename to `/online-classes` |
+| Nav: Online Classes | 🔄 | URL is `/courses`. Rename to `/online-classes` |
 | Nav: Study in Quito | ✅ | |
 | Nav: Study in Quito sub-items (Quito Immersion, Travelling Classroom, Puerto López, Homestay) | ❌ | Currently no dropdown sub-nav |
 | Nav: Travel Spanish | ❌ | Missing nav item and page |
@@ -85,13 +85,13 @@
 
 | Section | Status | Notes |
 | :---- | :---- | :---- |
-| A — Hero: real photo bg, primary CTA "Start for $12", secondary CTA "Explore All Programs", trust bar below CTAs | ✅ | `HeroSection` |
-| B — Why Vida Verde? (4 differentiator cards) | ✅ | `WhyVidaVerde` |
-| C — Course Selector (4 cards: Online Classes, Study in Quito, Travel Spanish, Free Guide → `#lead-capture`) | 🔄 | `ProgramsSection` exists; verify Travel Spanish card present and Free Guide links to `#lead-capture` |
-| D — Social Proof (3-5 outcome-specific testimonials with photo + flag, TripAdvisor badge, stats block) | 🔄 | `TestimonialSection` exists; TripAdvisor badge and stats block need verification |
-| E — Meet the Teachers (photo, name, style, "Book with [Name]" CTA → `/online-classes/book?teacher=[name]`) | 🔄 | `TeachersSection` exists; verify CTA destination |
-| F — About Block ("Teaching Since 1999", AECEE badge, "Our Story →" → `/our-school`) | ✅ | `LearnAboutSchoolSection` |
-| G — Lead Capture (first name + email, GDPR checkbox, privacy link, success message) | ✅ | `LeadCaptureSection` with `id="lead-capture"` anchor, GDPR checkbox confirmed |
+| A. Hero: real photo bg, primary CTA "Start for $12", secondary CTA "Explore All Programs", trust bar below CTAs | ✅ | `HeroSection` |
+| B. Why Vida Verde? (4 differentiator cards) | ✅ | `WhyVidaVerde` |
+| C. Course Selector (4 cards: Online Classes, Study in Quito, Travel Spanish, Free Guide → `#lead-capture`) | 🔄 | `ProgramsSection` exists; verify Travel Spanish card present and Free Guide links to `#lead-capture` |
+| D. Social Proof (3-5 outcome-specific testimonials with photo + flag, TripAdvisor badge, stats block) | 🔄 | `TestimonialSection` exists; TripAdvisor badge and stats block need verification |
+| E. Meet the Teachers (photo, name, style, "Book with [Name]" CTA → `/online-classes/book?teacher=[name]`) | 🔄 | `TeachersSection` exists; verify CTA destination |
+| F. About Block ("Teaching Since 1999", AECEE badge, "Our Story →" → `/our-school`) | ✅ | `LearnAboutSchoolSection` |
+| G. Lead Capture (first name + email, GDPR checkbox, privacy link, success message) | ✅ | `LeadCaptureSection` with `id="lead-capture"` anchor, GDPR checkbox confirmed |
 
 ### 2.2 Online Classes (`/online-classes`)
 
@@ -101,12 +101,12 @@
 
 | Section | Status | Notes |
 | :---- | :---- | :---- |
-| A — Hero (headline, trust bar, primary CTA "Book Assessment & First Lesson") | ✅ | `OnlineClassesHero` |
-| B — How It Works (4-step flow with icons) | ✅ | `HowItWorksSection` |
-| C — Pricing (Assessment $12, 10-class, 20-class, Single; currency note USD) | ✅ | `PricingSection` |
-| D — Choose Your Teacher (cards with photo, bio, availability, "Book with [Name]" CTA) | ✅ | `OnlineTeachersSection` |
-| E — FAQ Accordion (6-8 questions) | ✅ | `OnlineClassesFAQ` |
-| F — Bottom CTA ("Ready to Start? Your First Lesson Is Just $12.") | ✅ | `OnlineClassesBottomCTA` |
+| A. Hero (headline, trust bar, primary CTA "Book Assessment & First Lesson") | ✅ | `OnlineClassesHero` |
+| B. How It Works (4-step flow with icons) | ✅ | `HowItWorksSection` |
+| C. Pricing (Assessment $12, 10-class, 20-class, Single; currency note USD) | ✅ | `PricingSection` |
+| D. Choose Your Teacher (cards with photo, bio, availability, "Book with [Name]" CTA) | ✅ | `OnlineTeachersSection` |
+| E. FAQ Accordion (6-8 questions) | ✅ | `OnlineClassesFAQ` |
+| F. Bottom CTA ("Ready to Start? Your First Lesson Is Just $12.") | ✅ | `OnlineClassesBottomCTA` |
 
 ### 2.3 Teacher Profile Pages (`/online-classes/teachers/[name]`)
 
@@ -122,14 +122,14 @@
 | Name, university/qualification, years experience, languages spoken | ❌ | |
 | First-person teaching bio (3-5 sentences) | ❌ | |
 | Specialisations list | ❌ | |
-| Availability status ("Accepting new students — next available: [date]") | ❌ | |
+| Availability status ("Accepting new students. Next available: [date]") | ❌ | |
 | 2-3 student testimonials specific to this teacher | ❌ | |
 | CTA: "Book Your First Lesson with [Name]" → `/online-classes/book?teacher=[name]` | ❌ | |
 | Secondary CTA: "Back to all teachers →" | ❌ | |
 
 ### 2.4 Booking Flow (`/book`)
 
-> **Note**: Spec defines URL as `/online-classes/book`. Currently at `/book`. Keep `/book` as the canonical URL or add redirect — confirm with team.
+> **Note**: Spec defines URL as `/online-classes/book`. Currently at `/book`. Keep `/book` as the canonical URL or add redirect. Confirm with team.
 
 **Route**: `src/app/(marketing)/book/page.tsx` → `src/features/marketing/pages/book/index.tsx`
 
@@ -151,10 +151,10 @@
 
 | Section | Status | Notes |
 | :---- | :---- | :---- |
-| A — Hero (headline, "Explore Programmes ↓" scroll, "Contact Us to Plan Your Stay") | ✅ | |
-| B — Programme cards (Quito Immersion, Travelling Classroom, Puerto López, Jungle) | 🔄 | `programs.data.ts` has quito-immersion, travelling-classroom, puerto-lopez only; Jungle missing (confirm active status with Vida Verde before adding) |
-| C — Homestay Preview (2-3 sentences, photo, "Learn About Homestay →" CTA) | ✅ | |
-| D — Enquiry CTA (WhatsApp + "Send a Message" → `/contact`) | ✅ | |
+| A. Hero (headline, "Explore Programmes ↓" scroll, "Contact Us to Plan Your Stay") | ✅ | |
+| B. Programme cards (Quito Immersion, Travelling Classroom, Puerto López, Jungle) | 🔄 | `programs.data.ts` has quito-immersion, travelling-classroom, puerto-lopez only; Jungle missing (confirm active status with Vida Verde before adding) |
+| C. Homestay Preview (2-3 sentences, photo, "Learn About Homestay →" CTA) | ✅ | |
+| D. Enquiry CTA (WhatsApp + "Send a Message" → `/contact`) | ✅ | |
 
 ### 2.6 Programme Detail Pages (`/study-in-quito/[slug]`)
 
@@ -200,8 +200,8 @@
 | Offering description (short-stay classes, in-person or online, homestay option, travel advisory) | ❌ | |
 | Travel advisory mention (Ecuador routes, safety, local recommendations) | ❌ | Confirm scope with Vida Verde |
 | TripAdvisor rating + 2-3 review excerpts from travellers | ❌ | Vida Verde to supply TripAdvisor profile URL |
-| Pricing note (no fixed table — custom quote) | ❌ | |
-| Primary CTA: "Plan My Travel Spanish — WhatsApp Us" | ❌ | |
+| Pricing note (no fixed table. Custom quote) | ❌ | |
+| Primary CTA: "Plan My Travel Spanish. WhatsApp Us" | ❌ | |
 | Secondary CTA: "Send Us a Message →" → `/contact` | ❌ | |
 
 ### 2.9 Our School (`/our-school`)
@@ -215,7 +215,7 @@
 | Photo of Rosa/team | ✅ | |
 | AECEE Certification sub-section (what it is, logo, link to AECEE site) | ✅ | |
 | La Floresta context paragraph | ✅ | |
-| Teacher bios (full — all teachers with photo, credentials, experience, philosophy) | ✅ | |
+| Teacher bios (full. All teachers with photo, credentials, experience, philosophy) | ✅ | |
 | School gallery (6-12 photos) | ✅ | |
 | CTA ("Ready to Start?" → `/online-classes`) | 🔄 | Verify CTA links to `/online-classes` not `/courses` |
 
@@ -232,7 +232,7 @@
 | Post: author name | ❌ | Not displayed; add to `BlogPost` type and `posts.data.ts` |
 | Post: social share buttons (WhatsApp, Facebook, Email) | ❌ | Not implemented |
 | Post: related posts at bottom | ✅ | |
-| Post: lead capture widget (first name + email form — same as homepage Section G) | ❌ | Current has an inline "Book My First Lesson" CTA link; spec requires actual email capture form |
+| Post: lead capture widget (first name + email form. Same as homepage Section G) | ❌ | Current has an inline "Book My First Lesson" CTA link; spec requires actual email capture form |
 
 ### 2.11 Contact (`/contact`)
 
@@ -280,7 +280,7 @@
 | Item | Status | Notes |
 | :---- | :---- | :---- |
 | Summary cards (key metrics: bookings, sessions, revenue, active students) | ❌ | Stub text only |
-| Sidebar items: Dashboard, Bookings, Sessions, Teachers, Packages, Blog, Calendar | ❌ | **Current sidebar is wrong** — has "User Management" and "Student Management" with sub-items; needs full replacement per spec |
+| Sidebar items: Dashboard, Bookings, Sessions, Teachers, Packages, Blog, Calendar | ❌ | **Current sidebar is wrong**. Has "User Management" and "Student Management" with sub-items; needs full replacement per spec |
 
 > **Action**: Rewrite `admin-sidebar-nav-items.ts` with correct items: Dashboard, Bookings, Sessions, Teachers, Packages, Blog, Calendar.
 
@@ -378,7 +378,7 @@
 | Upcoming session widget | ❌ | Stub only |
 | Package progress bar (classes remaining / used) | ❌ | |
 | Recent invoices section | ❌ | |
-| Sidebar items: Dashboard, My Packages, My Invoices, My Calendar | ❌ | **Current sidebar is wrong** — has "Student Management" and "Profile & Settings"; needs replacement per spec |
+| Sidebar items: Dashboard, My Packages, My Invoices, My Calendar | ❌ | **Current sidebar is wrong**. Has "Student Management" and "Profile & Settings"; needs replacement per spec |
 
 > **Action**: Rewrite `student-sidebar-nav-items.ts` with correct items: Dashboard, My Packages, My Invoices, My Calendar.
 
@@ -462,7 +462,7 @@
 | Meta titles + descriptions per page | ❌ | |
 | Canonical tags | ❌ | |
 | Structured data (LocalBusiness, EducationalOrganization, Course, FAQPage) | ❌ | |
-| Alt text on all images | 🔄 | Partially done — some images have `alt=""` |
+| Alt text on all images | 🔄 | Partially done. Some images have `alt=""` |
 | sitemap.xml | ❌ | |
 | robots.txt | ❌ | |
 
@@ -474,7 +474,7 @@ The following features are already in the codebase but fall outside the Phase 1 
 
 | Feature | Location | Notes |
 | :---- | :---- | :---- |
-| **Activities page** (`/activities`) | `src/features/marketing/pages/activities/` | Full page with tabbed activity cards and weekly schedule table. Not in Phase 1 spec — appears to be a future page or additional immersion content. |
+| **Activities page** (`/activities`) | `src/features/marketing/pages/activities/` | Full page with tabbed activity cards and weekly schedule table. Not in Phase 1 spec. Appears to be a future page or additional immersion content. |
 | **Homepage: VideoPreviewSection** | `home/components/VideoPreviewSection` | Extra section before the Trust Bar. Not in spec's A-G homepage layout. |
 | **Homepage: SchoolIntroVideoSection** | `components/SchoolIntroVideoSection` | Extra section in homepage flow. |
 | **Homepage: PopularProgramsSection** | `components/PopularProgramsSection` | Extra section. |

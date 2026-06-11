@@ -62,7 +62,7 @@ export function PackageForm({
             {(p) => (
               <Input
                 {...p.inputProps}
-                placeholder="e.g. Starter Pack — 5 Classes"
+                placeholder="e.g. Starter Pack. 5 Classes"
               />
             )}
           </FormFieldWrapper>

@@ -103,11 +103,11 @@ const trustItems = [
   { icon: "★", label: "Est. 1999", sub: "25+ years of teaching" },
   { icon: "♡", label: "4,700+ Students", sub: "From over 50 countries" },
   {
-    icon: "◎",
+    icon: "A1",
     label: "All Levels Welcome",
     sub: "A1 beginners to C1 advanced",
   },
-  { icon: "◑", label: "Classes via Google Meet", sub: "Join from anywhere" },
+  { icon: "G", label: "Classes via Google Meet", sub: "Join from anywhere" },
 ];
 
 export function HeroSection() {
@@ -165,7 +165,7 @@ export function HeroSection() {
 
       <Container className="relative z-10 flex-1 flex items-center">
         <div className="grid lg:grid-cols-[1fr_auto] items-center gap-10 w-full py-20 max-[900px]:py-16 max-[640px]:py-14 max-[900px]:grid-cols-1">
-          {/* Left — main content */}
+          {/* Left. Main content */}
           <div className="flex flex-col gap-6 max-w-145 text-white max-[640px]:gap-5 max-[640px]:max-w-full">
             {/* Headline */}
             <h1 className="text-[clamp(38px,4vw,58px)] font-semibold tracking-[-0.03em] leading-[1.12] m-0 animate-[hero-rise_0.5s_0.1s_ease_both]">
@@ -195,7 +195,7 @@ export function HeroSection() {
             </div>
           </div>
 
-          {/* Right — trust bar card */}
+          {/* Right. Trust bar card */}
           <div className="flex flex-col gap-1 min-w-72 rounded-2xl border border-white/14 bg-white/10 px-8 py-7 backdrop-blur-md shadow-[0_8px_32px_-8px_rgba(0,0,0,0.4)] animate-[hero-rise_0.6s_0.5s_ease_both] max-[900px]:hidden">
             {trustItems.map((item) => (
               <div

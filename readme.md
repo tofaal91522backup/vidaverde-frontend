@@ -9,7 +9,7 @@ A production-ready **Next.js 15+ App Router** starter with a **feature-based mod
 | Layer | Library |
 |-------|---------|
 | Framework | Next.js 15+ (App Router) |
-| Language | TypeScript — path alias `@/` → `src/` |
+| Language | TypeScript. Path alias `@/` → `src/` |
 | Styling | Tailwind CSS v4 + shadcn/ui (Radix UI) |
 | Data Fetching | TanStack React Query v5 |
 | Forms | TanStack Form v1 + Zod |
@@ -97,7 +97,7 @@ Image name and container name are set in `docker-compose.yml` under `image:` and
 
 ```
 src/
-├── app/                        # Thin route wrappers only — no logic here
+├── app/                        # Thin route wrappers only. No logic here
 │   ├── (auth)/                 # Unauthenticated routes (signin, forgot-password)
 │   ├── (marketing)/            # Public routes
 │   └── (protected)/            # Authenticated routes (dashboard)
@@ -118,7 +118,7 @@ src/
 ├── components/
 │   ├── layout/                 # footer/, navbar/, sidebar/
 │   ├── shared/                 # DataTable, Pagination, DeleteMutation, AsyncStateWrapper, form-related/
-│   └── ui/                     # shadcn/ui — DO NOT MODIFY
+│   └── ui/                     # shadcn/ui. DO NOT MODIFY
 │
 ├── hooks/                      # use-fetch-data, use-mutation-handler, use-zod-tanstack-form, use-search, use-debounced-callback
 ├── lib/http/                   # api-client, api-server, public-api-client, request, make-endpoint
@@ -163,16 +163,16 @@ export default () => <XIndex />;
 | `apiServer` | `lib/http/api-server.ts` | Server-side authenticated (RSC, Server Actions) |
 | `publicApiClient` | `lib/http/public-api-client.ts` | Unauthenticated requests |
 
-- **Never call Axios directly** — always use `request.get / post / put / patch / delete / postFormData`
+- **Never call Axios directly**. Always use `request.get / post / put / patch / delete / postFormData`
 - `apiClient` auto-attaches `Authorization: Bearer <token>` from session
 - `apiClient` auto-calls `destroySession()` on 401 response
-- Build query strings with `makeEndpoint(baseUrl, paramsObj)` — skips `null` / `undefined` / `""` automatically
+- Build query strings with `makeEndpoint(baseUrl, paramsObj)`. Skips `null` / `undefined` / `""` automatically
 
 ---
 
 ## Data Fetching
 
-Always use `useFetchData` — never call `useQuery` directly:
+Always use `useFetchData`. Never call `useQuery` directly:
 
 ```ts
 // queries/use-blog-list.ts
@@ -196,7 +196,7 @@ export function useBlogList(params: BlogListParams) {
 
 ## Mutations
 
-Always use `useMutationHandler` — never call `useMutation` directly:
+Always use `useMutationHandler`. Never call `useMutation` directly:
 
 ```ts
 // queries/use-create-blog.ts
@@ -232,14 +232,14 @@ components/
 <Pagination page={page} total={data?.count} onPageChange={setPage} />
 ```
 
-- `total` is the raw item count — `Pagination` divides by 10 internally
+- `total` is the raw item count. `Pagination` divides by 10 internally
 - Search/filter state lives as `useState` inside the table component, passed into the query params
 
 ---
 
 ## Form Pattern
 
-### Pattern A — TanStack Form + Zod (all mutation forms)
+### Pattern A. TanStack Form + Zod (all mutation forms)
 
 ```tsx
 // schemas/create-blog.schema.ts
@@ -267,7 +267,7 @@ const { form, submitErrors } = useZodTanstackForm({
 
 - Use `p.onChangeValue(val)` for non-native inputs (Select, Checkbox, etc.)
 
-### Pattern B — Server Actions + `useActionState` (auth pages only)
+### Pattern B. Server Actions + `useActionState` (auth pages only)
 
 Used only for signin, forgot-password, reset-password. The server action:
 1. Validates with `validateForm(Schema, formData)`
@@ -280,11 +280,11 @@ Used only for signin, forgot-password, reset-password. The server action:
 ## Adding a New Page (checklist)
 
 1. Create `src/features/[domain]/pages/[page]/` with subfolders: `components/`, `queries/`, `schemas/`
-2. `queries/use-[resource].ts` — export `QUERY_KEY` constant + `useFetchData` hook
-3. `components/[resource]-column.tsx` — export `ColumnDef<T>[]`
-4. `components/[resource]-table.tsx` — manage `page`/`search` state, render `<DataTable>` + `<Pagination>`
-5. `index.tsx` — page entry point
-6. `app/(protected)/dashboard/.../page.tsx` — single-line wrapper
+2. `queries/use-[resource].ts`. Export `QUERY_KEY` constant + `useFetchData` hook
+3. `components/[resource]-column.tsx`. Export `ColumnDef<T>[]`
+4. `components/[resource]-table.tsx`. Manage `page`/`search` state, render `<DataTable>` + `<Pagination>`
+5. `index.tsx`. Page entry point
+6. `app/(protected)/dashboard/.../page.tsx`. Single-line wrapper
 7. Add nav item to `[role]-sidebar-nav-items.ts`
 
 ---

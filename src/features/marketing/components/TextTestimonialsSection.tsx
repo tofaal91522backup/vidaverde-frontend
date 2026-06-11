@@ -45,7 +45,7 @@ export function TextTestimonialsSection() {
         </div>
       </Container>
 
-      {/* Marquee — full bleed, outside Container */}
+      {/* Marquee. Full bleed, outside Container */}
       <div
         className="relative overflow-hidden before:absolute before:inset-y-0 before:left-0 before:z-10 before:w-20 before:bg-linear-to-r before:from-vv-bg before:to-transparent after:absolute after:inset-y-0 after:right-0 after:z-10 after:w-20 after:bg-linear-to-l after:from-vv-bg after:to-transparent"
         aria-label="Student testimonials"

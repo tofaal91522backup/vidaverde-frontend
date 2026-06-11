@@ -83,7 +83,7 @@ export default function TravelSpanishRoute() {
               <p className="text-vv-ink-2 text-[clamp(16px,1.3vw,19px)] leading-relaxed m-0 max-w-[56ch] text-pretty">
                 A few classes before or during your trip can transform your
                 experience. Our teachers specialise in practical, conversational
-                Spanish — the kind that gets you off the tourist trail.
+                Spanish. The kind that gets you off the tourist trail.
               </p>
               <div className="flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 mt-1">
                 <Link
@@ -92,7 +92,7 @@ export default function TravelSpanishRoute() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] leading-none py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px"
                 >
-                  Plan My Travel Spanish — WhatsApp Us
+                  Plan My Travel Spanish. WhatsApp Us
                 </Link>
                 <Link
                   href="/contact"
@@ -142,7 +142,7 @@ export default function TravelSpanishRoute() {
               <p className="text-[16px] leading-[1.75] text-vv-ink-2 m-0">
                 If you&apos;d like advice on your itinerary, local
                 recommendations, or help navigating Ecuador as a traveller, our
-                team is happy to help. We&apos;ve been in Quito for 25 years —
+                team is happy to help. We&apos;ve been in Quito for 25 years.
                 we know the country well.
               </p>
             </div>
@@ -153,7 +153,7 @@ export default function TravelSpanishRoute() {
                 {"// Pricing"}
               </div>
               <p className="text-[15px] leading-[1.7] text-vv-ink-2 m-0">
-                There&apos;s no fixed price for travel Spanish — it depends on
+                There&apos;s no fixed price for travel Spanish. It depends on
                 how many classes you want, whether you&apos;d like online or
                 in-person, and whether you&apos;re adding a homestay. Contact us
                 and we&apos;ll put together a custom quote.
@@ -165,7 +165,7 @@ export default function TravelSpanishRoute() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[14px] font-semibold tracking-[-0.005em] leading-none py-3 px-5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px text-center"
                 >
-                  Plan My Travel Spanish — WhatsApp Us
+                  Plan My Travel Spanish. WhatsApp Us
                 </Link>
                 <Link
                   href="/contact"

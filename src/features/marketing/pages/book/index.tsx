@@ -23,7 +23,7 @@ const teachers = [
     name: "Fernando Báez Guzmán",
     firstName: "Fernando",
     image: "/images/teachers/4.jpg",
-    availability: "Limited — Tue & Thu",
+    availability: "Limited. Tue & Thu",
   },
   {
     name: "Rosa Laura García Caiza",
@@ -52,24 +52,24 @@ const packages = [
     id: "pack-10",
     label: "10-Class Package",
     price: "$[X]",
-    description: "10 × 60-min private lessons. Valid for 3 months.",
+    description: "10 x 60-min private lessons. Valid for 3 months.",
   },
   {
     id: "pack-20",
     label: "20-Class Package",
     price: "$254.64",
     description:
-      "20 × 60-min private lessons. Best-value package for serious learners. Valid for 6 months.",
+      "20 x 60-min private lessons. Best-value package for serious learners. Valid for 6 months.",
     badge: "★ Best value",
   },
 ];
 
 const levels = [
-  "Complete beginner — I know very little Spanish",
-  "Beginner — I know some basics",
-  "Intermediate — I can hold simple conversations",
-  "Upper intermediate — I'm fairly comfortable but want to improve",
-  "Advanced — I want to polish and perfect",
+  "Complete beginner. I know very little Spanish",
+  "Beginner. I know some basics",
+  "Intermediate. I can hold simple conversations",
+  "Upper intermediate. I'm fairly comfortable but want to improve",
+  "Advanced. I want to polish and perfect",
 ];
 
 const STEPS = [
@@ -150,7 +150,7 @@ export default function BookRoute() {
             is confirmed for{" "}
             <strong className="text-vv-ink">{selectedDate}</strong> at{" "}
             <strong className="text-vv-ink">{selectedTime}</strong> in your
-            timezone. Check your inbox — we&apos;ve sent everything you need.
+            timezone. Check your inbox. We&apos;ve sent everything you need.
           </p>
           <div className="mt-8 rounded-xl border border-vv-line bg-vv-bg-warm p-6 text-left max-w-md mx-auto">
             <h3 className="font-semibold text-vv-ink mb-3">Booking Summary</h3>
@@ -215,7 +215,7 @@ export default function BookRoute() {
           </div>
         </div>
 
-        {/* Step 0 — Teacher */}
+        {/* Step 0. Teacher */}
         {step === 0 && (
           <div>
             <h2 className="text-[20px] font-semibold mb-1 text-vv-ink">
@@ -281,7 +281,7 @@ export default function BookRoute() {
                     Match me with a teacher
                   </div>
                   <div className="text-[12px] text-vv-ink-2">
-                    Tell us your level and goals — we&apos;ll pick the best fit
+                    Tell us your level and goals. We&apos;ll pick the best fit
                     for you.
                   </div>
                 </div>
@@ -290,7 +290,7 @@ export default function BookRoute() {
           </div>
         )}
 
-        {/* Step 1 — Package */}
+        {/* Step 1. Package */}
         {step === 1 && (
           <div>
             <h2 className="text-[20px] font-semibold mb-6 text-vv-ink">
@@ -329,7 +329,7 @@ export default function BookRoute() {
           </div>
         )}
 
-        {/* Step 2 — Date & Time */}
+        {/* Step 2. Date & Time */}
         {step === 2 && (
           <div>
             <h2 className="text-[20px] font-semibold mb-1 text-vv-ink">
@@ -377,7 +377,7 @@ export default function BookRoute() {
           </div>
         )}
 
-        {/* Step 3 — Details */}
+        {/* Step 3. Details */}
         {step === 3 && (
           <div>
             <h2 className="text-[20px] font-semibold mb-6 text-vv-ink">
@@ -448,7 +448,7 @@ export default function BookRoute() {
           </div>
         )}
 
-        {/* Step 4 — Payment */}
+        {/* Step 4. Payment */}
         {step === 4 && (
           <div>
             <h2 className="text-[20px] font-semibold mb-2 text-vv-ink">
@@ -558,7 +558,7 @@ export default function BookRoute() {
               onClick={handleConfirm}
               className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] leading-none py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px"
             >
-              Confirm &amp; Pay — {selectedPackage?.price}
+              Confirm &amp; Pay. {selectedPackage?.price}
             </button>
           )}
         </div>

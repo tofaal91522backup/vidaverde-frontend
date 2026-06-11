@@ -38,7 +38,7 @@ const TestimonialSection = () => {
     <section className="bg-vv-bg-warm border-t border-vv-line" data-screen-label="06 Testimonials">
       <Container>
 
-        {/* Header row — title left, rating right */}
+        {/* Header row. Title left, rating right */}
         <div className="grid lg:grid-cols-[1fr_auto] items-end gap-10 mb-12 max-[760px]:grid-cols-1">
 
           {/* Left */}
@@ -55,7 +55,7 @@ const TestimonialSection = () => {
             </p>
           </div>
 
-          {/* Right — rating block */}
+          {/* Right. Rating block */}
           <div className="flex items-center gap-5 shrink-0">
             <div className="text-center">
               <div className="text-[52px] font-bold text-vv-ink tracking-[-0.04em] leading-none">

@@ -88,7 +88,7 @@ export function PackageCard({ pkg }: { pkg: MyPackage }) {
               daysLeft === 0 && "text-muted-foreground",
             )}
           >
-            {daysLeft > 0 ? `${daysLeft} days` : "—"}
+            {daysLeft > 0 ? `${daysLeft} days` : "N/A"}
           </p>
         </div>
       </div>

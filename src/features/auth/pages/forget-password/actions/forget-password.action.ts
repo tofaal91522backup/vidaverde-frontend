@@ -27,7 +27,6 @@ export const ForgotPasswordAction = async (
       payload,
       { withCredentials: true }
     );
-    console.log(res.data, "---------");
     return {
       success: true,
       success_text: res.data.detail,

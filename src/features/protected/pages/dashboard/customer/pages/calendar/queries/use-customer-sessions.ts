@@ -17,7 +17,7 @@ export type CustomerSession = {
 type CalendarParams = { startDate: string; endDate: string };
 
 // ─── DEMO DATA ────────────────────────────────────────────────────────────────
-// timeUtc is stored as HH:MM UTC — the calendar converts to browser local time.
+// timeUtc is stored as HH:MM UTC. The calendar converts to browser local time.
 const MOCK_CUSTOMER_SESSIONS: CustomerSession[] = [
   { id: "cs1",  teacher: { id: "t1", name: "María González" },   date: "2026-06-10", timeUtc: "15:00", duration: 60, status: "completed", meetingLink: "https://meet.google.com/abc-defg-hij", package: "Starter Pack" },
   { id: "cs2",  teacher: { id: "t1", name: "María González" },   date: "2026-06-15", timeUtc: "15:00", duration: 60, status: "upcoming",  meetingLink: "https://meet.google.com/bcd-efgh-ijk", package: "Regular Pack" },
@@ -31,7 +31,7 @@ const MOCK_CUSTOMER_SESSIONS: CustomerSession[] = [
 // ─────────────────────────────────────────────────────────────────────────────
 
 export function useCustomerSessions(params: CalendarParams) {
-  // ✅ REAL API — uncomment this and remove the demo block below:
+  // ✅ REAL API. Uncomment this and remove the demo block below:
   // return useFetchData<CustomerSession[]>({
   //   url: makeEndpoint("/api/customer/sessions/", params),
   //   querykey: [CUSTOMER_SESSIONS_QUERY_KEY, params],
