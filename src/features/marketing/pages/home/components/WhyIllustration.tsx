@@ -19,7 +19,7 @@ function WhyIllustration() {
           width={520}
           height={520}
           alt=""
-          className="absolute -left-16 -bottom-8 h-[7.5rem] w-[10.5rem] object-contain opacity-35 xl:-left-24 xl:-bottom-12 xl:h-36 xl:w-[13rem]"
+          className="absolute -left-24 -bottom-14 h-[7.5rem] w-[10.5rem] -rotate-[9deg] object-contain opacity-[0.22] xl:-left-36 xl:-bottom-20 xl:h-36 xl:w-[13rem]"
           unoptimized
         />
         <Image
@@ -27,7 +27,7 @@ function WhyIllustration() {
           width={520}
           height={520}
           alt=""
-          className="absolute -right-[4.5rem] -top-5 h-24 w-[8.5rem] object-contain opacity-45 xl:-right-28 xl:-top-8 xl:h-[7.5rem] xl:w-[10.5rem]"
+          className="absolute -right-[6.5rem] -top-10 h-24 w-[8.5rem] rotate-[8deg] object-contain opacity-[0.28] xl:-right-40 xl:-top-16 xl:h-[7.5rem] xl:w-[10.5rem]"
           unoptimized
         />
         <Image
@@ -35,7 +35,7 @@ function WhyIllustration() {
           width={520}
           height={520}
           alt=""
-          className="absolute -left-[9.5rem] -top-20 h-48 w-72 rotate-[16deg] object-contain opacity-35 xl:-left-[13rem] xl:-top-28 xl:h-[14.5rem] xl:w-[21.5rem]"
+          className="absolute -left-[12rem] -top-28 h-48 w-72 rotate-[24deg] object-contain opacity-[0.22] xl:-left-[16rem] xl:-top-36 xl:h-[14.5rem] xl:w-[21.5rem]"
           unoptimized
         />
 

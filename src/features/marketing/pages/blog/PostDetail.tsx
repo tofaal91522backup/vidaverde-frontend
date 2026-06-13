@@ -14,7 +14,7 @@ export function PostDetail({ post }: { post: BlogPost }) {
         className="bg-vv-bg-warm border-b border-vv-line"
         data-screen-label="01 Post Hero"
       >
-        <Container className="max-w-220">
+        <Container>
           <div className="font-code text-vv-muted text-[12px] tracking-[0.06em] mb-6">
             Home <span className="mx-1 text-vv-line-2">/</span>{" "}
             <Link href="/blog" className="hover:text-vv-ink">
@@ -51,19 +51,21 @@ export function PostDetail({ post }: { post: BlogPost }) {
         data-screen-label="02 Post Body"
       >
         <Container className="max-w-220">
-          <div className="relative aspect-video mb-10 overflow-hidden rounded-[22px] border border-vv-line">
-            <Image
-              src={post.image}
-              alt={post.title}
-              fill
-              sizes="(max-width: 820px) 100vw, 820px"
-              className="object-cover"
-              unoptimized
-            />
-          </div>
-          <div className="flex flex-col gap-5">
+          <div className="text-[16px] leading-[1.75] text-vv-ink-2">
+            <figure className="float-right mb-6 ml-8 w-[44%] max-w-[27rem] overflow-hidden rounded-[22px] border border-vv-line bg-vv-bg-warm max-[760px]:float-none max-[760px]:mb-8 max-[760px]:ml-0 max-[760px]:w-full max-[760px]:max-w-none">
+              <div className="relative aspect-[4/3]">
+                <Image
+                  src={post.image}
+                  alt={post.title}
+                  fill
+                  sizes="(max-width: 760px) 100vw, 44vw"
+                  className="object-cover"
+                  unoptimized
+                />
+              </div>
+            </figure>
             {post.body.map((para, i) => (
-              <p key={i} className="text-[16px] leading-[1.75] text-vv-ink-2">
+              <p key={i} className="mb-5 last:mb-0">
                 {para}
               </p>
             ))}
