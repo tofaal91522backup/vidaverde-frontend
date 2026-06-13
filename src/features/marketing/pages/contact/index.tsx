@@ -58,7 +58,7 @@ export default function ContactRoute() {
                 viewBox="0 0 306 230"
                 xmlns="http://www.w3.org/2000/svg"
                 aria-hidden="true"
-                className="w-120"
+                className="w-150 "
               >
                 {/* Card 1. WhatsApp */}
                 <rect

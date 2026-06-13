@@ -20,8 +20,10 @@ export type HowItWorksStep = {
 export type OnlineTeacher = {
   name: string;
   firstName: string;
+  slug: string;
   image: string;
   bio: string;
+  profileBio: string;
   credentials: string;
   experience: string;
   specialisations: string[];
@@ -125,8 +127,11 @@ export const onlineTeachers: OnlineTeacher[] = [
   {
     name: "Ximena Argüello",
     firstName: "Ximena",
+    slug: "ximena",
     image: "/images/teachers/2.jpg",
     bio: "Students say class hours with Ximena pass by in a flash. She has been teaching Spanish since 2011 and is fluent in English, which makes her especially effective with beginners.",
+    profileBio:
+      "I grew up in Quito speaking Spanish, and I've spent years helping people from all over the world find their voice in it. I love the moment a student realises they've just said something complicated without stopping to think. That's fluency starting to happen. My classes tend to be warm, encouraging, and practical. I focus on real communication from day one, because I believe confidence comes from doing, not just studying. I'm particularly good with complete beginners and students who've tried other methods and found them frustrating.",
     credentials: "Universidad Central del Ecuador. Linguistics",
     experience: "13+ years teaching",
     specialisations: ["Beginner-friendly", "Conversational Spanish", "DELE Preparation"],
@@ -136,8 +141,11 @@ export const onlineTeachers: OnlineTeacher[] = [
   {
     name: "Lucía Rivadeneira",
     firstName: "Lucía",
+    slug: "lucia",
     image: "/images/teachers/3.jpg",
     bio: "Lucía is a language nerd who loves to teach the nuts and bolts of Spanish. She excels at helping students understand grammar intuitively and speaks at a clear, easy-to-follow pace.",
+    profileBio:
+      "Teaching Spanish is something I came to naturally. I've always loved language, and I love even more the way learning a new one changes how people see the world. My lessons are calm, patient, and structured, with plenty of space for questions and real conversation. I work with students at all levels, but I have a particular soft spot for beginners. There's something special about watching someone go from zero to their first full sentence in Spanish. My students often tell me that my lessons feel less like a class and more like a good conversation, which is exactly what I'm aiming for.",
     credentials: "PUCE Quito. Modern Languages",
     experience: "10+ years teaching",
     specialisations: ["Grammar Focus", "Intermediate to Advanced", "Business Spanish"],
@@ -147,8 +155,11 @@ export const onlineTeachers: OnlineTeacher[] = [
   {
     name: "Fernando Báez Guzmán",
     firstName: "Fernando",
+    slug: "fernando",
     image: "/images/teachers/4.jpg",
     bio: "Fernando is our Academic Director and master teacher. He brings structure, warmth, and deep expertise to every lesson. Students consistently rate him as the most effective teacher they've had.",
+    profileBio:
+      "I've been teaching Spanish for over 20 years, and I still find it one of the most rewarding things I do. For me, the best lessons happen when a student stops thinking about grammar and starts just talking. That's the moment I know we're making real progress. I work well with students who want structure and also with those who prefer a more conversational approach. Whatever your goals, travel, work, or just the pleasure of speaking another language, I'll design a programme around you.",
     credentials: "Universidad de Cuenca. Spanish Literature",
     experience: "20+ years teaching",
     specialisations: ["All Levels", "Academic Spanish", "Advanced Conversation"],
@@ -158,8 +169,11 @@ export const onlineTeachers: OnlineTeacher[] = [
   {
     name: "Rosa Laura García Caiza",
     firstName: "Laura",
+    slug: "laura",
     image: "/images/teachers/5.jpg",
     bio: "Laura has taught Spanish since 1991. She has a passion for sharing Ecuadorian culture with her students and considers herself not just a teacher but an ambassador of her culture and her language.",
+    profileBio:
+      "I've been teaching Spanish since 1991, and in that time I've worked with students from many different countries, each one with a completely different reason for wanting to learn. That's what keeps teaching interesting: every student is a new challenge and a new story. My approach is direct and practical. I believe in learning by doing, and my lessons are built around real conversations, real situations, and real feedback. I don't believe in making learners feel embarrassed about mistakes. Mistakes are how we learn.",
     credentials: "Universidad Central del Ecuador. Education",
     experience: "33+ years teaching",
     specialisations: ["Culture & Language", "Beginners", "Travel Spanish"],

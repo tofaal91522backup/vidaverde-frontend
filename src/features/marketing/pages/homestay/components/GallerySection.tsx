@@ -18,7 +18,7 @@ export function GallerySection({ images }: GallerySectionProps) {
         <Image
           key={image.src}
           className={cn(
-            "w-full rounded-2xl object-cover border border-vv-line",
+            "w-full rounded-2xl object-cover border border-vv-line shadow-[0_18px_45px_rgba(7,14,10,0.08)]",
             image.className === "a"
               ? "col-span-2 aspect-video max-[640px]:col-span-1"
               : "aspect-4/3",
@@ -27,6 +27,7 @@ export function GallerySection({ images }: GallerySectionProps) {
           alt={image.alt}
           width={image.className === "a" ? 1200 : 900}
           height={700}
+          unoptimized
         />
       ))}
     </div>

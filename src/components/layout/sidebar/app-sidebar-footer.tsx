@@ -75,12 +75,12 @@ export function AppSidebarFooter({
             </DropdownMenuLabel>
             <DropdownMenuSeparator className="bg-sidebar-border" />
 
-            <DropdownMenuItem asChild>
+            {/* <DropdownMenuItem asChild>
               <Link href="/profile" className="cursor-pointer gap-2">
                 <UserRound className="size-4" />
                 My Profile
               </Link>
-            </DropdownMenuItem>
+            </DropdownMenuItem> */}
             <DropdownMenuItem asChild>
               <Link href="/forget-password" className="cursor-pointer gap-2">
                 <KeyRound className="size-4" />

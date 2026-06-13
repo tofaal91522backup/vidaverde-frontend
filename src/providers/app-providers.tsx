@@ -15,9 +15,9 @@ export default function AppProviders({
         enableSystem
         disableTransitionOnChange
       > */}
-        {/* <LanguageProvider> */}
-        <QueryProvider>{children}</QueryProvider>
-        {/* </LanguageProvider> */}
+        <LanguageProvider>
+          <QueryProvider>{children}</QueryProvider>
+        </LanguageProvider>
       {/* </ThemeProvider> */}
     </>
   );

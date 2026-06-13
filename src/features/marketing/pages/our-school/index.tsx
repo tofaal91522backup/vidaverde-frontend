@@ -56,30 +56,36 @@ const teachers = [
   },
 ];
 
-const galleryImages = [
+const schoolGallery = [
   {
-    src: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=800&q=80",
-    alt: "Spanish classroom in Quito",
+    src: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=900&q=80",
+    alt: "Spanish class in session",
+    label: "Classroom",
   },
   {
-    src: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800&q=80",
-    alt: "Students in a language class",
+    src: "/images/programmes/3.jpg",
+    alt: "Sunny patio and garden space",
+    label: "Garden patio",
   },
   {
-    src: "https://images.unsplash.com/photo-1509062522246-3755977927d7?w=800&q=80",
-    alt: "School garden patio",
+    src: "https://images.unsplash.com/photo-1577896851231-70ef18881754?w=900&q=80",
+    alt: "Teacher helping students in class",
+    label: "Teachers in session",
   },
   {
-    src: "https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=800&q=80",
-    alt: "One-on-one Spanish lesson",
+    src: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=900&q=80",
+    alt: "Students learning together around a table",
+    label: "Small group study",
   },
   {
-    src: "https://images.unsplash.com/photo-1571260899304-425eee4c7efc?w=800&q=80",
-    alt: "La Floresta neighbourhood, Quito",
+    src: "https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=900&q=80",
+    alt: "Welcoming school exterior",
+    label: "School exterior",
   },
   {
-    src: "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=800&q=80",
-    alt: "Students learning together",
+    src: "https://images.unsplash.com/photo-1571260899304-425eee4c7efc?w=900&q=80",
+    alt: "La Floresta street scene in Quito",
+    label: "La Floresta",
   },
 ];
 
@@ -95,7 +101,7 @@ export default function OurSchoolRoute() {
           <div className="font-code text-vv-muted text-[12px] tracking-[0.06em] mb-6">
             Home <span className="mx-1 text-vv-line-2">/</span> Our School
           </div>
-          <div className="grid lg:grid-cols-[1fr_auto] items-center gap-10 max-[900px]:grid-cols-1">
+          <div className="grid lg:grid-cols-[1fr_auto] gap-10 max-[900px]:grid-cols-1">
             <div>
               <h1 className="text-[clamp(36px,5vw,68px)] font-semibold tracking-[-0.03em] leading-none m-0 mb-5">
                 A Family School.
@@ -131,7 +137,7 @@ export default function OurSchoolRoute() {
                 viewBox="0 0 292 252"
                 xmlns="http://www.w3.org/2000/svg"
                 aria-hidden="true"
-                className="w-110"
+                className="w-140"
               >
                 {/* Dashed halo behind card */}
                 <circle
@@ -624,6 +630,58 @@ export default function OurSchoolRoute() {
                 <ChevronRight className="h-4 w-4 shrink-0 translate-y-0.5" />
               </Link>
             </div>
+          </div>
+        </Container>
+      </section>
+
+      {/* School Gallery */}
+      <section
+        className="border-t border-vv-line bg-vv-bg-warm py-16"
+        data-screen-label="06 School Gallery"
+        id="gallery"
+      >
+        <Container>
+          <div className="flex items-end justify-between gap-8 mb-12 max-[760px]:flex-col max-[760px]:items-start">
+            <div className="flex flex-col gap-3.5">
+              <span className="font-code text-vv-muted text-[11px] font-medium tracking-[0.14em] uppercase">
+                {"// School Gallery"}
+              </span>
+              <h2 className="text-[clamp(28px,3vw,44px)] font-semibold tracking-[-0.02em] leading-[1.08] m-0 text-balance">
+                Life at Vida Verde
+              </h2>
+            </div>
+            <p className="text-vv-ink-2 text-[clamp(15px,1.1vw,17px)] leading-relaxed max-w-[48ch] text-pretty m-0">
+              A preview of the spaces and neighbourhood that shape the Vida
+              Verde experience. Final school photos will be supplied by Vida
+              Verde.
+            </p>
+          </div>
+
+          <div className="grid gap-4 md:grid-cols-3">
+            {schoolGallery.map((image, index) => (
+              <figure
+                key={image.label}
+                className={[
+                  "group relative overflow-hidden rounded-[22px] border border-vv-line bg-vv-bg",
+                  index === 0 || index === 5 ? "md:col-span-2" : "",
+                ].join(" ")}
+              >
+                <div className="relative aspect-[4/3] h-full min-h-72">
+                  <Image
+                    src={image.src}
+                    alt={image.alt}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-cover transition duration-300 group-hover:scale-[1.03]"
+                    unoptimized
+                  />
+                  <div className="absolute inset-0 bg-linear-to-t from-vv-ink/55 via-transparent to-transparent opacity-80" />
+                </div>
+                <figcaption className="absolute bottom-4 left-4 rounded-full bg-vv-bg/90 px-3 py-1 text-[12px] font-semibold text-vv-ink shadow-sm">
+                  {image.label}
+                </figcaption>
+              </figure>
+            ))}
           </div>
         </Container>
       </section>

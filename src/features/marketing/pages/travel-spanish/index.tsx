@@ -186,16 +186,48 @@ export default function TravelSpanishRoute() {
         data-screen-label="03 Reviews"
       >
         <Container>
-          <div className="flex flex-col gap-3 mb-12">
-            <span className="font-code text-vv-muted text-[11px] font-medium tracking-[0.14em] uppercase">
-              {"// TripAdvisor"}
-            </span>
-            <h2 className="text-[clamp(28px,3vw,44px)] font-semibold tracking-[-0.02em] leading-[1.08] m-0 text-balance">
-              What Travellers Say About Us
-            </h2>
-            <p className="text-[13px] text-vv-muted italic">
-              TripAdvisor profile URL and badge to be supplied by Vida Verde.
-            </p>
+          <div className="mb-12 flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+            <div className="flex max-w-[64ch] flex-col gap-3">
+              <span className="font-code text-vv-muted text-[11px] font-medium tracking-[0.14em] uppercase">
+                {"// TripAdvisor"}
+              </span>
+              <h2 className="text-[clamp(28px,3vw,44px)] font-semibold tracking-[-0.02em] leading-[1.08] m-0 text-balance">
+                What Travellers Say About Us
+              </h2>
+              <p className="text-[13px] text-vv-muted italic">
+                TripAdvisor profile URL and badge to be supplied by Vida Verde.
+              </p>
+            </div>
+
+            <div
+              className="w-full rounded-[22px] border border-vv-line bg-vv-bg px-6 py-5 shadow-sm lg:mt-1 lg:max-w-[19.5rem]"
+              aria-label="TripAdvisor rating badge"
+            >
+              <div className="flex items-center justify-between gap-4">
+                <div>
+                  <div className="text-[12px] font-semibold uppercase tracking-[0.14em] text-vv-muted">
+                    TripAdvisor
+                  </div>
+                  <div className="mt-1 text-[24px] font-semibold leading-none tracking-[-0.02em] text-vv-ink">
+                    Excellent
+                  </div>
+                </div>
+                <div className="grid h-[3.25rem] w-[3.25rem] place-items-center rounded-full bg-[#00aa6c]/12 text-[#00aa6c]">
+                  <Star className="h-6 w-6 fill-[#00aa6c] text-[#00aa6c]" />
+                </div>
+              </div>
+              <div className="mt-4 flex gap-1" aria-label="5 out of 5 rating">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <span
+                    key={i}
+                    className="h-3.5 w-3.5 rounded-full bg-[#00aa6c]"
+                  />
+                ))}
+              </div>
+              <div className="mt-3 text-[12px] leading-relaxed text-vv-ink-2">
+                Trusted by travellers learning Spanish for real Ecuador trips.
+              </div>
+            </div>
           </div>
 
           <div className="grid gap-5 md:grid-cols-3">

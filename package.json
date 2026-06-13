@@ -8,6 +8,7 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "dotenv -e .env -- next start",
+    "export:pdf": "node scripts/export-pdf.js",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "typecheck:watch": "tsc --noEmit --watch"

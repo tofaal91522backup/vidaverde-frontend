@@ -1,182 +1,134 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import {
   createContext,
-  useCallback,
   useContext,
   useEffect,
   useMemo,
   useState,
+  type ReactNode,
 } from "react";
 
-export const languages = [
-  { code: "en", label: "English" },
-  { code: "es", label: "Spanish" },
-] as const;
+export type LanguageCode = "en" | "es";
 
-export type LanguageCode = (typeof languages)[number]["code"];
+const translations = {
+  en: {
+    "brand.subtitle": "Centro de Español",
+    "nav.onlineClasses": "Online Classes",
+    "nav.studyInQuito": "Study in Quito",
+    "nav.travelSpanish": "Travel Spanish",
+    "nav.ourSchool": "Our School",
+    "nav.blog": "Blog",
+    "nav.contact": "Contact",
+    "nav.overview": "Overview",
+    "nav.bookLesson": "Book a Lesson",
+    "nav.teachers": "Teachers",
+    "nav.quitoImmersion": "Quito Immersion Program",
+    "nav.travellingClassroom": "Travelling Classroom",
+    "nav.puertoLopez": "Puerto López",
+    "nav.junglePrograms": "Jungle Programs",
+    "nav.primary": "Primary navigation",
+    "nav.openMenu": "Open menu",
+    "cta.bookFirstLesson": "Book Your First Lesson",
+    "language.label": "Language",
+    "footer.quickLinks": "Quick Links",
+    "footer.study": "Study",
+    "footer.school": "School",
+    "footer.homestay": "Homestay",
+    "footer.blog": "Blog",
+    "footer.privacyPolicy": "Privacy Policy",
+    "footer.terms": "Terms",
+    "footer.findUs": "Find Us",
+    "footer.getInTouch": "Get in Touch",
+    "footer.location": "La Floresta, Quito, Ecuador",
+    "footer.whatsapp": "WhatsApp Us",
+    "footer.description":
+      "Teaching Spanish since 1999. AECEE-certified. La Floresta, Quito.",
+    "footer.member":
+      "Proud member of the Association of Spanish Language Schools (AECEE)",
+    "footer.rights": "© 2026 Vida Verde Centro de Español. All rights reserved.",
+  },
+  es: {
+    "brand.subtitle": "Centro de Español",
+    "nav.onlineClasses": "Clases en línea",
+    "nav.studyInQuito": "Estudia en Quito",
+    "nav.travelSpanish": "Español para viajeros",
+    "nav.ourSchool": "Nuestra escuela",
+    "nav.blog": "Blog",
+    "nav.contact": "Contacto",
+    "nav.overview": "Resumen",
+    "nav.bookLesson": "Reservar una clase",
+    "nav.teachers": "Profesores",
+    "nav.quitoImmersion": "Programa de inmersión en Quito",
+    "nav.travellingClassroom": "Aula viajera",
+    "nav.puertoLopez": "Puerto López",
+    "nav.junglePrograms": "Programas en la selva",
+    "nav.primary": "Navegación principal",
+    "nav.openMenu": "Abrir menú",
+    "cta.bookFirstLesson": "Reserva tu primera clase",
+    "language.label": "Idioma",
+    "footer.quickLinks": "Enlaces rápidos",
+    "footer.study": "Estudiar",
+    "footer.school": "Escuela",
+    "footer.homestay": "Hospedaje familiar",
+    "footer.blog": "Blog",
+    "footer.privacyPolicy": "Política de privacidad",
+    "footer.terms": "Términos",
+    "footer.findUs": "Encuéntranos",
+    "footer.getInTouch": "Contáctanos",
+    "footer.location": "La Floresta, Quito, Ecuador",
+    "footer.whatsapp": "Escríbenos por WhatsApp",
+    "footer.description":
+      "Enseñamos español desde 1999. Certificados por AECEE. La Floresta, Quito.",
+    "footer.member":
+      "Miembro orgulloso de la Asociación de Escuelas de Español (AECEE)",
+    "footer.rights":
+      "© 2026 Vida Verde Centro de Español. Todos los derechos reservados.",
+  },
+} as const;
+
+export type TranslationKey = keyof (typeof translations)["en"];
 
 type LanguageContextValue = {
   language: LanguageCode;
   setLanguage: (language: LanguageCode) => void;
+  t: (key: TranslationKey) => string;
 };
-
-const STORAGE_KEY = "vida-verde-language";
-const GOOGLE_SCRIPT_ID = "google-translate-script";
-const GOOGLE_CONTAINER_ID = "google_translate_element";
 
 const LanguageContext = createContext<LanguageContextValue | null>(null);
 
-declare global {
-  interface Window {
-    google?: {
-      translate?: {
-        TranslateElement?: new (
-          options: {
-            pageLanguage: string;
-            includedLanguages: string;
-            autoDisplay: boolean;
-          },
-          elementId: string,
-        ) => void;
-      };
-    };
-    googleTranslateElementInit?: () => void;
-  }
-}
+const LANGUAGE_STORAGE_KEY = "vida-verde-language";
 
-function isLanguageCode(value: string | null): value is LanguageCode {
-  return languages.some((language) => language.code === value);
-}
-
-function setTranslateCookie(language: LanguageCode) {
-  const cookieValue = `/en/${language}`;
-  document.cookie = `googtrans=${cookieValue}; path=/`;
-  document.cookie = `googtrans=${cookieValue}; path=/; domain=${window.location.hostname}`;
-}
-
-function applyGoogleLanguage(language: LanguageCode) {
-  setTranslateCookie(language);
-  document.documentElement.lang = language;
-  suppressGoogleTranslateChrome();
-
-  const select = document.querySelector<HTMLSelectElement>(".goog-te-combo");
-  if (!select) {
-    return false;
-  }
-
-  select.value = language;
-  select.dispatchEvent(new Event("change"));
-  window.setTimeout(suppressGoogleTranslateChrome, 50);
-  window.setTimeout(suppressGoogleTranslateChrome, 300);
-  return true;
-}
-
-function suppressGoogleTranslateChrome() {
-  document.documentElement.style.top = "0px";
-  document.body.style.top = "0px";
-  document.body.style.marginTop = "0px";
-
-  document
-    .querySelectorAll<HTMLElement>(
-      [
-        ".goog-te-banner-frame",
-        ".goog-te-balloon-frame",
-        ".VIpgJd-ZVi9od-ORHb-OEVmcd",
-        "body > .skiptranslate",
-        "iframe.skiptranslate",
-      ].join(","),
-    )
-    .forEach((element) => {
-      element.style.display = "none";
-      element.style.visibility = "hidden";
-      element.style.height = "0";
-      element.style.width = "0";
-    });
-}
-
-export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname();
+export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguageState] = useState<LanguageCode>("en");
 
   useEffect(() => {
-    const storedLanguage = window.localStorage.getItem(STORAGE_KEY);
-    if (isLanguageCode(storedLanguage)) {
-      setLanguageState(storedLanguage);
-      document.documentElement.lang = storedLanguage;
+    const savedLanguage = window.localStorage.getItem(LANGUAGE_STORAGE_KEY);
+
+    if (savedLanguage === "en" || savedLanguage === "es") {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setLanguageState(savedLanguage);
+      document.documentElement.lang = savedLanguage;
     }
   }, []);
 
-  useEffect(() => {
-    window.googleTranslateElementInit = () => {
-      if (!window.google?.translate?.TranslateElement) return;
-
-      new window.google.translate.TranslateElement(
-        {
-          pageLanguage: "en",
-          includedLanguages: languages.map((item) => item.code).join(","),
-          autoDisplay: false,
-        },
-        GOOGLE_CONTAINER_ID,
-      );
-      suppressGoogleTranslateChrome();
-    };
-
-    if (!document.getElementById(GOOGLE_SCRIPT_ID)) {
-      const script = document.createElement("script");
-      script.id = GOOGLE_SCRIPT_ID;
-      script.src =
-        "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
-      script.async = true;
-      document.body.appendChild(script);
-    } else {
-      window.googleTranslateElementInit();
-    }
-
-    const observer = new MutationObserver(suppressGoogleTranslateChrome);
-    observer.observe(document.documentElement, {
-      childList: true,
-      subtree: true,
-    });
-
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    // Apply immediately. Don't wait for the first interval tick
-    applyGoogleLanguage(language);
-
-    // Keep retrying in case the GT widget wasn't ready yet
-    let attempts = 0;
-    const timer = window.setInterval(() => {
-      attempts += 1;
-      const applied = applyGoogleLanguage(language);
-      if (applied || attempts > 40) {
-        window.clearInterval(timer);
-      }
-    }, 200);
-
-    return () => window.clearInterval(timer);
-  }, [language, pathname]);
-
-  const setLanguage = useCallback((nextLanguage: LanguageCode) => {
+  const setLanguage = (nextLanguage: LanguageCode) => {
     setLanguageState(nextLanguage);
-    window.localStorage.setItem(STORAGE_KEY, nextLanguage);
-    applyGoogleLanguage(nextLanguage);
-  }, []);
+    window.localStorage.setItem(LANGUAGE_STORAGE_KEY, nextLanguage);
+    document.documentElement.lang = nextLanguage;
+  };
 
   const value = useMemo(
     () => ({
       language,
       setLanguage,
+      t: (key: TranslationKey) => translations[language][key],
     }),
-    [language, setLanguage],
+    [language]
   );
 
   return (
     <LanguageContext.Provider value={value}>
-      <div id={GOOGLE_CONTAINER_ID} className="hidden" aria-hidden="true" />
       {children}
     </LanguageContext.Provider>
   );
@@ -184,8 +136,10 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 
 export function useLanguage() {
   const context = useContext(LanguageContext);
+
   if (!context) {
     throw new Error("useLanguage must be used within LanguageProvider");
   }
+
   return context;
 }

@@ -97,7 +97,7 @@ function OnlineTeacherCard({
             <ChevronRight className="h-4 w-4 shrink-0 translate-y-0.5" />
           </Link>
           <Link
-            href={`/teachers/${teacher.firstName.toLowerCase()}`}
+            href={`/online-classes/teachers/${teacher.slug}`}
             className="shrink-0 inline-flex items-center gap-1.5 text-[13px] font-medium text-vv-ink-2 underline underline-offset-2 hover:text-vv-ink transition-colors duration-150 whitespace-nowrap"
           >
             View full profile{" "}

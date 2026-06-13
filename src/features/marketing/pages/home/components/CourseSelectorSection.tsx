@@ -159,136 +159,8 @@ function AirplaneIllustration({ className }: { className?: string }) {
       height={158}
       alt=""
       aria-hidden="true"
-      className={className}
+      className={`${className ?? ""} opacity-50`}
     />
-  );
-
-  return (
-    <svg
-      viewBox="0 0 120 90"
-      fill="none"
-      aria-hidden="true"
-      className={className}
-    >
-      {/* Dotted flight path arc */}
-      <path
-        d="M8,80 Q60,62 112,32"
-        stroke="currentColor"
-        strokeWidth="1"
-        strokeDasharray="3 5"
-        strokeLinecap="round"
-        strokeOpacity="0.3"
-      />
-
-      {/* Cloud 1. Upper left */}
-      <path
-        d="M6,30 Q6,24 12,23 Q15,18 22,20 Q28,19 30,24 Q35,24 35,29 Q35,33 30,33 L11,33 Q6,33 6,30 Z"
-        stroke="currentColor"
-        strokeWidth="1"
-        strokeLinejoin="round"
-        fill="currentColor"
-        fillOpacity="0.05"
-      />
-      {/* Cloud 2. Upper right */}
-      <path
-        d="M82,25 Q82,19 88,18 Q91,14 97,15 Q103,14 105,19 Q110,19 110,24 Q110,28 105,28 L87,28 Q82,28 82,25 Z"
-        stroke="currentColor"
-        strokeWidth="1"
-        strokeLinejoin="round"
-        fill="currentColor"
-        fillOpacity="0.05"
-      />
-      {/* Cloud 3. Small, centre */}
-      <path
-        d="M42,36 Q42,32 46,31 Q48,28 53,29 Q57,28 58,32 Q61,32 61,35 Q61,38 58,38 L45,38 Q42,38 42,36 Z"
-        stroke="currentColor"
-        strokeWidth="1"
-        strokeLinejoin="round"
-        fill="currentColor"
-        fillOpacity="0.04"
-      />
-
-      {/* Fuselage body */}
-      <path
-        d="M22,48 C22,43 26,40 34,40 L83,40 C94,40 108,42 110,48 C108,54 94,56 83,56 L34,56 C26,56 22,53 22,48 Z"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinejoin="round"
-        fill="currentColor"
-        fillOpacity="0.07"
-      />
-
-      {/* Vertical tail fin */}
-      <path
-        d="M26,40 L22,23 Q27,20 33,23 L34,36 L34,40 Z"
-        stroke="currentColor"
-        strokeWidth="1.4"
-        strokeLinejoin="round"
-        fill="currentColor"
-        fillOpacity="0.06"
-      />
-      {/* Horizontal tail stabilizer */}
-      <path
-        d="M26,55 L18,64 L22,66 L30,57"
-        stroke="currentColor"
-        strokeWidth="1.3"
-        strokeLinejoin="round"
-        fill="currentColor"
-        fillOpacity="0.06"
-      />
-
-      {/* Main wing */}
-      <path
-        d="M58,55 L52,77 L66,77 L74,55 Z"
-        stroke="currentColor"
-        strokeWidth="1.4"
-        strokeLinejoin="round"
-        fill="currentColor"
-        fillOpacity="0.07"
-      />
-
-      {/* Oval windows */}
-      <ellipse
-        cx="54"
-        cy="44"
-        rx="4"
-        ry="2.8"
-        stroke="currentColor"
-        strokeWidth="1.1"
-        fill="currentColor"
-        fillOpacity="0.08"
-      />
-      <ellipse
-        cx="65"
-        cy="43"
-        rx="4"
-        ry="2.8"
-        stroke="currentColor"
-        strokeWidth="1.1"
-        fill="currentColor"
-        fillOpacity="0.08"
-      />
-      <ellipse
-        cx="76"
-        cy="43"
-        rx="4"
-        ry="2.8"
-        stroke="currentColor"
-        strokeWidth="1.1"
-        fill="currentColor"
-        fillOpacity="0.08"
-      />
-      <ellipse
-        cx="87"
-        cy="42"
-        rx="3.5"
-        ry="2.5"
-        stroke="currentColor"
-        strokeWidth="1.1"
-        fill="currentColor"
-        fillOpacity="0.08"
-      />
-    </svg>
   );
 }
 
@@ -298,7 +170,7 @@ function BookIllustration({ className }: { className?: string }) {
       viewBox="0 0 120 90"
       fill="none"
       aria-hidden="true"
-      className={className}
+      className={`${className ?? ""} opacity-50`}
     >
       {/* left page */}
       <path

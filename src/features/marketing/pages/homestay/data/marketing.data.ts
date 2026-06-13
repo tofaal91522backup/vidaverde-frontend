@@ -1,4 +1,9 @@
-import type { FaqItem, HomestayPillar, IncludedItem, PricingTier } from "@/features/marketing/types";
+import type {
+  FaqItem,
+  HomestayPillar,
+  IncludedItem,
+  PricingTier,
+} from "@/features/marketing/types";
 
 export const homestayMosaic = [
   {
@@ -15,11 +20,11 @@ export const homestayMosaic = [
     alt: "Home kitchen at mealtime",
   },
   {
-    src: "https://images.unsplash.com/photo-1523480717984-24cba35ed521?w=900&q=80",
-    alt: "Quito neighborhood street",
+    src: "/images/programmes/1.jpg",
+    alt: "Quito neighborhood view with students",
   },
   {
-    src: "https://images.unsplash.com/photo-1543362906-acfc16c67564?w=900&q=80",
+    src: "https://images.unsplash.com/photo-1551218808-94e220e084d2?w=900&q=80",
     alt: "Family dinner table",
   },
 ];
@@ -27,88 +32,78 @@ export const homestayMosaic = [
 export const homestayPillars: HomestayPillar[] = [
   {
     number: "01",
-    title: "Immersion.",
+    title: "Live in a real home",
     description:
-      "Authentic immersion increases exposure to native Spanish and helps students learn everyday expressions and vocabulary in context.",
+      "Live with a real Ecuadorian family during your studies, not in a hotel, not in a hostel, but in a home.",
   },
   {
     number: "02",
-    title: "Become an adopted child.",
+    title: "Practise around the clock",
     description:
-      "Vida Verde has found caring families who treat students as their own children, share meals and free time, and often include them in weekend plans.",
+      "Share meals, conversations, and daily life with your host family, so Spanish practice continues beyond the classroom.",
   },
   {
     number: "03",
-    title: "Adjust to life in Quito.",
+    title: "Settle into Quito",
     description:
-      "Host families help students feel at home, show them the neighborhood, help them navigate the city, and share practical local insight.",
+      "Your host family can help with everyday local context, including nearby routes and the rhythm of the neighbourhood.",
   },
   {
     number: "04",
-    title: "Experience authentic culture.",
+    title: "Learn culture from the inside",
     description:
-      "Living with a host family is a window into Ecuadorian life: food, family roles, holidays, traditions, and the details of daily home life.",
+      "Many students say their most valuable Spanish practice happens at the breakfast table, not only in class.",
   },
 ];
 
 export const includedItems: IncludedItem[] = [
   {
-    icon: "★",
+    icon: "01",
     title: "Private bedroom",
-    description: "A private bedroom with towels and sheets included.",
+    description: "Your own room in a local family home.",
   },
   {
-    icon: "☼",
-    title: "Morning and evening meals",
-    description: "Daily meals with your host family are part of the homestay.",
+    icon: "02",
+    title: "Breakfast and dinner",
+    description: "Breakfast and dinner with your host family.",
   },
   {
-    icon: "▦",
-    title: "Laundry and cleaning",
-    description: "In-home laundry service and weekly cleaning are included.",
+    icon: "03",
+    title: "WiFi access",
+    description: "Stay connected while you study and travel.",
   },
   {
-    icon: "⌖",
-    title: "Airport transportation",
-    description: "Airport transportation can be arranged for $40 each trip.",
+    icon: "04",
+    title: "Laundry facilities",
+    description: "Laundry support is available in the home.",
   },
   {
-    icon: "✦",
-    title: "High speed Wi-Fi",
-    description: "High speed Wi-Fi access is included in the homestay.",
+    icon: "05",
+    title: "Local transport guidance",
+    description: "Help understanding nearby routes and everyday travel.",
   },
   {
-    icon: "♡",
-    title: "Approved family",
-    description: "Families are approved by Vida Verde staff.",
-  },
-  {
-    icon: "⚐",
-    title: "Safe La Floresta location",
+    icon: "06",
+    title: "24/7 team support",
     description:
-      "Host homes are within about 10 minutes walking distance from Vida Verde.",
-  },
-  {
-    icon: "↬",
-    title: "Friendly staff support",
-    description:
-      "Vida Verde staff help with student needs throughout the program.",
+      "The Vida Verde team is available if anything needs to be resolved.",
   },
 ];
 
 export const pricingTiers: PricingTier[] = [
   {
-    title: "Homestay extra night",
+    title: "Homestay",
     price: "$26",
     period: "/ night",
-    description: "Add homestay nights to any Vida Verde program.",
+    description:
+      "Book homestay as a standalone stay or add it to any Vida Verde immersion programme.",
     features: [
       "Private bedroom",
-      "Morning and evening meals",
-      "High speed Wi-Fi",
-      "Laundry and weekly cleaning",
+      "Breakfast and dinner",
+      "WiFi access",
+      "Laundry facilities",
     ],
-    cta: "Book this",
+    cta: "Add Homestay to Your Programme",
   },
   {
     title: "Classes + Homestay",
@@ -119,24 +114,24 @@ export const pricingTiers: PricingTier[] = [
       "20 hours of one-on-one class",
       "7 nights of homestay",
       "Private bedroom",
-      "Meals and Wi-Fi",
+      "Meals and WiFi",
     ],
     featured: true,
-    cta: "Book classes + homestay",
+    cta: "Add Homestay to Your Programme",
   },
   {
     title: "Quito Immersion",
     price: "$582",
     period: "/ week",
     description:
-      "Spanish classes, cultural classes, and 7 nights of homestay.",
+      "Spanish classes, cultural activities, and 7 nights of homestay.",
     features: [
       "20 hours Spanish class",
       "10 hours cultural classes",
       "7 nights homestay",
       "Entrances and transport for activities",
     ],
-    cta: "Book immersion",
+    cta: "Included in Quito Immersion",
   },
 ];
 
@@ -144,25 +139,26 @@ export const faqs: FaqItem[] = [
   {
     question: "What is included in a homestay?",
     answer:
-      "A private bedroom, morning and evening meals, high speed Wi-Fi, in-home laundry service, shared or private bathroom, weekly cleaning, towels and sheets, and a safe La Floresta location.",
+      "A private bedroom, breakfast and dinner, WiFi access, laundry facilities, local transport guidance, and support from the Vida Verde team.",
   },
   {
     question: "Why choose a homestay?",
     answer:
-      "Vida Verde believes authentic immersion is one of the most effective ways to learn a language. Staying with a family gives extra Spanish practice in everyday context.",
+      "The best Spanish classroom is not always a classroom. Living with a family gives you daily language practice in real context, from meals to everyday conversations.",
   },
   {
     question: "Where are host families located?",
     answer:
-      "Homes are in the safe La Floresta neighborhood of Quito, within about 10 minutes walking distance from Vida Verde.",
+      "Host families live in safe, well-connected Quito neighbourhoods selected by Vida Verde.",
   },
   {
     question: "Are families approved by the school?",
-    answer: "Yes. Host families are approved by Vida Verde staff.",
+    answer:
+      "Yes. Every Vida Verde host family is personally vetted by our team.",
   },
   {
-    question: "Can airport transportation be arranged?",
+    question: "Can I combine homestay with classes?",
     answer:
-      "Yes. Airport transportation is listed at $40 each trip, with arrival times limited to support the best experience for students and host families.",
+      "Yes. Homestay can be booked as a standalone option or as part of any Vida Verde immersion programme.",
   },
 ];

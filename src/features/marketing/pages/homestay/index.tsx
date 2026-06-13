@@ -16,70 +16,118 @@ import {
 } from "@/components/ui/accordion";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, ShieldCheck, UsersRound } from "lucide-react";
 
 export default function HomestayRoute() {
   return (
     <>
       {/* Hero */}
       <section
-        className="bg-vv-bg-warm border-b border-vv-line"
+        className="relative overflow-hidden bg-vv-bg-warm border-b border-vv-line"
         data-screen-label="01 Homestay Hero"
       >
+        <div
+          className="pointer-events-none absolute -right-24 top-16 h-72 w-72 rounded-full border border-vv-accent/25"
+          aria-hidden="true"
+        />
+        <div
+          className="pointer-events-none absolute bottom-20 left-8 hidden h-24 w-24 rounded-full bg-vv-accent/10 lg:block"
+          aria-hidden="true"
+        />
         <Container>
-          <div className="font-code text-vv-muted text-[12px] tracking-[0.06em] mb-6">
-            Home <span className="mx-1 text-vv-line-2">/</span> Homestay
+          <div className="relative z-10 grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-end lg:gap-14">
+            <div>
+              <div className="font-code text-vv-muted text-[12px] tracking-[0.06em] mb-6">
+                Home <span className="mx-1 text-vv-line-2">/</span> Homestay
+              </div>
+              <h1 className="text-[clamp(40px,5.2vw,76px)] font-semibold tracking-[-0.035em] leading-[0.96] m-0 mb-5 text-balance">
+                Live Like a Local. Learn Faster.
+              </h1>
+              <p className="text-vv-ink-2 text-[clamp(18px,1.45vw,21px)] leading-normal max-w-[54ch] text-pretty m-0">
+                The best Spanish classroom isn&apos;t a classroom at all. It&apos;s
+                a family dinner table in Quito.
+              </p>
+              <div className="mt-7 flex flex-wrap gap-3">
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center justify-center gap-2.5 border border-vv-ink rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] leading-none py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-ink text-vv-bg hover:bg-vv-accent-deep hover:border-vv-accent-deep hover:-translate-y-px"
+                >
+                  Add Homestay to Your Programme{" "}
+                  <ChevronRight className="h-4 w-4 shrink-0 translate-y-0.5" />
+                </Link>
+                <Link
+                  href="/study-in-quito/quito-immersion"
+                  className="inline-flex items-center justify-center gap-2.5 border border-vv-line-2 rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] leading-none py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-bg text-vv-ink hover:bg-vv-ink hover:border-vv-ink hover:text-vv-bg"
+                >
+                  Included in Quito Immersion
+                </Link>
+              </div>
+            </div>
+            <div className="rounded-[28px] border border-vv-line bg-vv-bg p-5 shadow-[0_22px_70px_rgba(7,14,10,0.08)]">
+              <div className="grid gap-3 sm:grid-cols-3">
+                {[
+                  ["From", "$26", "per night"],
+                  ["Meals", "2", "per day"],
+                  ["Support", "24/7", "Vida Verde team"],
+                ].map(([label, value, note]) => (
+                  <div
+                    key={label}
+                    className="rounded-[18px] border border-vv-line bg-vv-bg-warm p-4"
+                  >
+                    <div className="font-code text-[10px] font-medium uppercase tracking-[0.14em] text-vv-muted">
+                      {label}
+                    </div>
+                    <div className="mt-2 text-[28px] font-semibold leading-none tracking-[-0.03em] text-vv-ink">
+                      {value}
+                    </div>
+                    <div className="mt-1 text-[12px] leading-snug text-vv-ink-2">
+                      {note}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
-          <h1 className="text-[clamp(36px,5vw,68px)] font-semibold tracking-[-0.03em] leading-none m-0 mb-5">
-            Homestay with
-            <br />
-            an Ecuadorian <em>familia.</em>
-          </h1>
-          <p className="text-vv-ink-2 text-[clamp(17px,1.4vw,20px)] leading-normal max-w-[52ch] text-pretty m-0">
-            At Vida Verde, living at a homestay in Quito with a local family is
-            one of the most powerful ways to make your Ecuadorian experience
-            unforgettable.
-          </p>
           <GallerySection images={homestayMosaic} />
         </Container>
       </section>
 
-      {/* Pillars */}
+      {/* What is a homestay */}
       <section
         className="border-t border-vv-line"
-        data-screen-label="02 Why Homestay"
+        data-screen-label="02 What Is a Homestay"
       >
         <Container>
           <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16 items-start">
             <div>
               <span className="font-code text-vv-muted text-[11px] font-medium tracking-[0.14em] uppercase">
-                {"// Why a homestay"}
+                {"// What is a homestay?"}
               </span>
               <div className="h-4" />
               <h2 className="text-[clamp(28px,3vw,44px)] font-semibold tracking-[-0.02em] leading-[1.08] m-0 text-balance">
-                Total immersion,
-                <br />
-                actually.
+                What Is a Homestay?
               </h2>
-              <p className="text-vv-ink-2 text-[17px] leading-normal mt-4.5 max-w-[36ch] m-0">
-                Four reasons our students extend their stay by an average of 3
-                weeks.
+              <p className="text-vv-ink-2 text-[17px] leading-normal mt-4.5 max-w-[39ch] m-0">
+                A Vida Verde homestay means living with a real Ecuadorian
+                family during your studies, not in a hotel, not in a hostel,
+                but in a home.
               </p>
             </div>
-            <div className="flex flex-col gap-6">
+            <div className="grid gap-4 sm:grid-cols-2">
               {homestayPillars.map((pillar) => (
-                <div key={pillar.number} className="flex gap-5 items-start">
-                  <div className="text-[clamp(28px,3vw,40px)] font-bold tracking-[-0.04em] leading-none text-vv-accent-deep/20 shrink-0 font-code w-10">
+                <div
+                  key={pillar.number}
+                  className="rounded-[22px] border border-vv-line bg-vv-bg p-6"
+                >
+                  <div className="text-[clamp(28px,3vw,40px)] font-bold tracking-[-0.04em] leading-none text-vv-accent-deep/20 font-code">
                     {pillar.number}
                   </div>
-                  <div>
-                    <h3 className="text-[18px] font-semibold tracking-[-0.01em] leading-tight text-vv-ink m-0 mb-1.5">
-                      {pillar.title}
-                    </h3>
-                    <p className="text-vv-ink-2 text-[15px] leading-[1.6] m-0">
-                      {pillar.description}
-                    </p>
-                  </div>
+                  <h3 className="mt-4 text-[18px] font-semibold tracking-[-0.01em] leading-tight text-vv-ink mb-1.5">
+                    {pillar.title}
+                  </h3>
+                  <p className="text-vv-ink-2 text-[15px] leading-[1.6] m-0">
+                    {pillar.description}
+                  </p>
                 </div>
               ))}
             </div>
@@ -98,26 +146,29 @@ export default function HomestayRoute() {
           </span>
           <div className="h-4.5" />
           <h2 className="text-[clamp(28px,3vw,44px)] font-semibold tracking-[-0.02em] leading-[1.08] m-0 text-balance">
-            Everything you need.
-            <br />
-            Nothing extra to figure out.
+            What&apos;s Included
           </h2>
           <div className="h-12" />
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {includedItems.map((item) => (
               <article
                 key={item.title}
-                className="flex flex-col gap-3 rounded-2xl border border-vv-line bg-vv-bg p-6"
+                className="flex gap-4 rounded-[20px] border border-vv-line bg-vv-bg p-5"
               >
-                <div className="text-[28px] leading-none" aria-hidden="true">
+                <div
+                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-vv-accent/70 font-code text-[12px] font-semibold text-vv-accent-deep"
+                  aria-hidden="true"
+                >
                   {item.icon}
                 </div>
-                <h4 className="text-[16px] font-semibold tracking-[-0.01em] text-vv-ink m-0">
-                  {item.title}
-                </h4>
-                <p className="text-[14px] leading-[1.6] text-vv-ink-2 m-0">
-                  {item.description}
-                </p>
+                <div>
+                  <h4 className="text-[16px] font-semibold tracking-[-0.01em] text-vv-ink m-0">
+                    {item.title}
+                  </h4>
+                  <p className="mt-1 text-[14px] leading-[1.6] text-vv-ink-2 m-0">
+                    {item.description}
+                  </p>
+                </div>
               </article>
             ))}
           </div>
@@ -132,8 +183,8 @@ export default function HomestayRoute() {
         <Container>
           <SectionHeader
             eyebrow="// Pricing"
-            title="Simple weekly rates."
-            lede="Add a homestay to any course. Discounts kick in past 4 weeks."
+            title="Pricing"
+            lede="From $26 / night. Homestay can be booked as a standalone option or as part of any Vida Verde immersion programme."
           />
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {pricingTiers.map((tier) => (
@@ -211,7 +262,11 @@ export default function HomestayRoute() {
                   ))}
                 </ul>
                 <Link
-                  href="/#book"
+                  href={
+                    tier.title === "Quito Immersion"
+                      ? "/study-in-quito/quito-immersion"
+                      : "/contact"
+                  }
                   className={cn(
                     "inline-flex items-center justify-center gap-2.5 border rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] leading-none py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap",
                     tier.featured
@@ -228,10 +283,81 @@ export default function HomestayRoute() {
         </Container>
       </section>
 
+      {/* Safety */}
+      <section
+        className="border-t border-vv-line bg-vv-bg-warm"
+        data-screen-label="05 Safety"
+      >
+        <Container>
+          <div className="grid gap-8 rounded-[22px] border border-vv-line bg-vv-bg p-7 md:grid-cols-[auto_1fr] md:items-start md:p-9">
+            <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-vv-accent text-vv-accent-deep">
+              <ShieldCheck className="h-7 w-7" aria-hidden="true" />
+            </div>
+            <div>
+              <span className="font-code text-vv-muted text-[11px] font-medium tracking-[0.14em] uppercase">
+                {"// Safety"}
+              </span>
+              <h2 className="mt-3 text-[clamp(26px,2.7vw,40px)] font-semibold tracking-[-0.02em] leading-[1.08] text-vv-ink">
+                Your Safety Is Our Priority
+              </h2>
+              <p className="mt-4 max-w-[70ch] text-[15px] leading-[1.7] text-vv-ink-2">
+                Every Vida Verde host family is personally vetted by our team.
+                All homestay families live in safe, well-connected Quito
+                neighbourhoods. We provide 24/7 contact support throughout your
+                stay, and our team is always available if anything needs to be
+                resolved.
+              </p>
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      {/* Host families */}
+      <section
+        className="border-t border-vv-line"
+        data-screen-label="06 Host Families"
+      >
+        <Container>
+          <div className="grid gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+            <div>
+              <span className="font-code text-vv-muted text-[11px] font-medium tracking-[0.14em] uppercase">
+                {"// Host Families"}
+              </span>
+              <h2 className="mt-4 text-[clamp(28px,3vw,44px)] font-semibold tracking-[-0.02em] leading-[1.08] text-vv-ink">
+                Meet Some of Our Host Families
+              </h2>
+              <p className="mt-4 text-[15px] leading-[1.7] text-vv-ink-2">
+                Real host family profiles will be added here once Vida Verde has
+                family photos and consent. Each profile can include first names,
+                neighbourhood, and a short introduction.
+              </p>
+            </div>
+            <div className="grid gap-4 sm:grid-cols-3">
+              {["Family photo", "Neighbourhood", "About us"].map((item) => (
+                <div
+                  key={item}
+                  className="rounded-[22px] border border-dashed border-vv-line-2 bg-vv-bg-warm p-5"
+                >
+                  <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-vv-accent/60 text-vv-accent-deep">
+                    <UsersRound className="h-6 w-6" aria-hidden="true" />
+                  </div>
+                  <h3 className="mt-5 text-[16px] font-semibold tracking-[-0.01em] text-vv-ink">
+                    {item}
+                  </h3>
+                  <p className="mt-2 text-[13px] leading-[1.55] text-vv-ink-2">
+                    Vida Verde to supply with host family consent.
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </Container>
+      </section>
+
       {/* FAQ */}
       <section
         className="border-t border-vv-line bg-vv-bg-warm"
-        data-screen-label="05 FAQ"
+        data-screen-label="07 FAQ"
       >
         <Container className="max-w-220">
           <span className="font-code text-vv-muted text-[11px] font-medium tracking-[0.14em] uppercase">

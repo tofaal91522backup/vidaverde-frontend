@@ -2,8 +2,8 @@
 
 import { Container } from "@/components/shared/Container";
 import { Globe2, GraduationCap, Target, UserCheck } from "lucide-react";
-import Image from "next/image";
 import { featureBlocks } from "../data/marketing.data";
+import WhyIllustration from "./WhyIllustration";
 
 const whyIcons = [GraduationCap, UserCheck, Target, Globe2];
 
@@ -21,41 +21,23 @@ const WhyVidaVerde = () => {
         <div className="relative grid items-center gap-12 py-8 lg:grid-cols-[0.9fr_1.1fr] lg:gap-18 lg:py-12">
           <div className="pointer-events-none absolute -left-10 top-1/2 h-96 w-96 -translate-y-1/2 rounded-full bg-vv-accent/18 blur-3xl" />
           <div className="relative">
-            <div className="relative flex min-h-100 items-center justify-center overflow-hidden rounded-[22px] border border-vv-line bg-white p-8 md:min-h-125 lg:min-h-145">
-              <Image
-                src="/images/logo-white-bg.jpg"
-                alt="Vida Verde Spanish School logo"
-                fill
-                sizes="(max-width: 1024px) 100vw, 36vw"
-                className="object-contain p-8"
-                unoptimized
-              />
-              <div className="pointer-events-none absolute inset-0 bg-linear-to-br from-vv-accent/10 via-transparent to-vv-bg-warm/40" />
-              <div
-                className="absolute -bottom-1 -left-1 h-14 w-14 bg-vv-accent text-vv-accent-deep"
-                aria-hidden="true"
-              >
-                <div className="absolute left-1/2 top-3 h-8 w-3 -translate-x-1/2 bg-vv-accent-deep/80" />
-                <div className="absolute left-3 top-1/2 h-3 w-8 -translate-y-1/2 bg-vv-accent-deep/80" />
-              </div>
-            </div>
+            <WhyIllustration />
           </div>
 
           <div className="relative flex flex-col justify-center gap-9">
             <div className="max-w-2xl">
-              <span className="font-code text-[11px] font-medium uppercase tracking-[0.16em] text-vv-accent-deep">
-                {"// Why Choose Us?"}
-              </span>
+             
               <h2 className="mt-4 text-balance text-[clamp(34px,4.6vw,64px)] font-semibold leading-[1.02] tracking-[-0.035em] text-vv-ink">
                 Why{" "}
                 <span className="rounded-sm bg-vv-accent px-2 text-vv-accent-deep">
                   Vida Verde
                 </span>
               </h2>
-              <p className="mt-6 max-w-[66ch] text-[16px] leading-relaxed text-vv-ink-2">
-                Vida Verde is a real Spanish school with trained teachers,
-                structured lessons, and AECEE-certified standards. Human,
-                accountable learning, not a generic marketplace.
+              <h3 className="mt-5 max-w-[18ch] text-[clamp(22px,2vw,30px)] font-semibold leading-[1.12] tracking-[-0.025em] text-vv-ink">
+                More than an app. More than a freelance teacher.
+              </h3>
+              <p className="mt-4 max-w-[58ch] text-[16px] leading-relaxed text-vv-ink-2">
+                Here’s what makes learning with Vida Verde different.
               </p>
             </div>
 

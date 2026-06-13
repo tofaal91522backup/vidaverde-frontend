@@ -339,52 +339,115 @@ export default function StudyInQuitoRoute() {
       </section>
 
       {/* Homestay Preview */}
-      {/* <section
-        className="border-t border-vv-line bg-vv-bg-warm"
+      <section
+        className="border-t border-vv-line bg-vv-bg"
         data-screen-label="03 Homestay Preview"
       >
         <Container>
-          <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
-            <div className="relative aspect-4/3 overflow-hidden rounded-[22px] border border-vv-line">
-              <Image
-                src="https://images.unsplash.com/photo-1511895426328-dc8714191300?w=1000&q=80"
-                alt="Ecuadorian host family at home"
-                fill
-                sizes="(max-width: 1024px) 100vw, 50vw"
-                className="object-cover"
-                unoptimized
-              />
-            </div>
-            <div className="flex flex-col gap-5">
-              <span className="font-code text-vv-muted text-[11px] font-medium tracking-[0.14em] uppercase">
-                {"// Homestay"}
-              </span>
-              <h2 className="text-[clamp(28px,3vw,44px)] font-semibold tracking-[-0.02em] leading-[1.08] m-0 text-balance">
-                Live Like a Local. Learn Faster.
-              </h2>
-              <p className="text-[15px] leading-[1.7] text-vv-ink-2 m-0">
-                The best Spanish classroom isn&apos;t a classroom at all. It&apos;s a
-                family dinner table in Quito. Our homestay programme places you
-                with a vetted Ecuadorian family, so the immersion never stops
-                when the lesson does.
-              </p>
-              <p className="text-[15px] leading-[1.7] text-vv-ink-2 m-0">
-                Meals, conversation, local insight, and a warm home base.
-                all from{" "}
-                <strong className="text-vv-ink font-semibold">$26/night</strong>.
-                Included in the Quito Immersion Program or bookable as an add-on
-                to any programme.
-              </p>
-              <Link
-                href="/homestay"
-                className="w-fit inline-flex items-center justify-center gap-2.5 border border-vv-ink rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] leading-none py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-ink text-vv-bg hover:bg-vv-accent-deep hover:border-vv-accent-deep hover:-translate-y-px"
-              >
-                Find out about Homestay →
-              </Link>
+          <div className="relative overflow-hidden rounded-[30px] border border-vv-line bg-vv-bg-warm">
+            <div
+              className="pointer-events-none absolute -left-20 -top-24 h-64 w-64 rounded-full border border-vv-accent/30"
+              aria-hidden="true"
+            />
+            <div
+              className="pointer-events-none absolute bottom-10 left-[42%] hidden h-28 w-28 rounded-full bg-vv-accent/10 lg:block"
+              aria-hidden="true"
+            />
+            <div className="grid lg:grid-cols-[1.02fr_0.98fr]">
+              <div className="relative z-10 flex flex-col justify-center gap-5 p-7 sm:p-9 lg:p-11">
+                <span className="font-code text-vv-muted text-[11px] font-medium tracking-[0.14em] uppercase">
+                  {"// Homestay"}
+                </span>
+                <div className="max-w-[58ch]">
+                  <h2 className="text-[clamp(30px,3.4vw,48px)] font-semibold tracking-[-0.025em] leading-[1.04] m-0 text-balance">
+                    Live Like a Local. Learn Faster.
+                  </h2>
+                  <p className="mt-4 text-[16px] leading-[1.75] text-vv-ink-2 m-0">
+                    The best Spanish classroom isn&apos;t a classroom at all.
+                    It&apos;s a family dinner table in Quito. Our homestay
+                    programme places you with a vetted Ecuadorian family, so
+                    the immersion never stops when the lesson does.
+                  </p>
+                </div>
+
+                <div className="grid gap-3 sm:grid-cols-3">
+                  {[
+                    ["01", "Vetted Ecuadorian families"],
+                    ["02", "Meals and daily conversation"],
+                    ["03", "Warm home base in Quito"],
+                  ].map(([number, label]) => (
+                    <div
+                      key={number}
+                      className="rounded-[18px] border border-vv-line bg-vv-bg/80 p-4"
+                    >
+                      <div className="font-code text-[10px] font-medium uppercase tracking-[0.14em] text-vv-muted">
+                        {number}
+                      </div>
+                      <div className="mt-2 text-[14px] font-semibold leading-snug tracking-[-0.01em] text-vv-ink">
+                        {label}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <p className="max-w-[62ch] text-[15px] leading-[1.7] text-vv-ink-2 m-0">
+                  Meals, conversation, local insight, and a warm home base, all
+                  from{" "}
+                  <strong className="text-vv-ink font-semibold">
+                    $26/night
+                  </strong>
+                  . Included in the Quito Immersion Program or bookable as an
+                  add-on to any programme.
+                </p>
+
+                <div className="flex flex-wrap items-center gap-3 pt-1">
+                  <Link
+                    href="/homestay"
+                    className="inline-flex items-center justify-center gap-2.5 border border-vv-ink rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] leading-none py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-ink text-vv-bg hover:bg-vv-accent-deep hover:border-vv-accent-deep hover:-translate-y-px"
+                  >
+                    Find out about Homestay{" "}
+                    <ChevronRight className="h-4 w-4 shrink-0 translate-y-0.5" />
+                  </Link>
+                  <div className="rounded-full border border-vv-line bg-vv-bg px-4 py-3 text-[13px] font-medium text-vv-ink-2">
+                    From{" "}
+                    <span className="text-[18px] font-semibold tracking-[-0.02em] text-vv-ink">
+                      $26
+                    </span>{" "}
+                    / night
+                  </div>
+                </div>
+              </div>
+
+              <div className="relative min-h-[24rem] overflow-hidden border-t border-vv-line bg-vv-ink lg:min-h-[34rem] lg:border-l lg:border-t-0">
+                <Image
+                  src="/images/programmes/1.jpg"
+                  alt="Vida Verde homestay and immersion experience in Quito"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 46vw"
+                  className="object-cover"
+                  unoptimized
+                />
+                <div
+                  className="absolute inset-0 bg-linear-to-t from-vv-ink/58 via-vv-ink/10 to-transparent"
+                  aria-hidden="true"
+                />
+                <div className="absolute bottom-5 left-5 right-5 rounded-[20px] border border-white/20 bg-vv-bg/92 p-5 shadow-[0_18px_45px_rgba(7,14,10,0.16)] backdrop-blur-sm sm:left-6 sm:right-auto sm:w-[20rem]">
+                  <div className="font-code text-[10px] font-medium uppercase tracking-[0.14em] text-vv-muted">
+                    Quito immersion
+                  </div>
+                  <p className="mt-2 text-[15px] font-semibold leading-snug tracking-[-0.01em] text-vv-ink m-0">
+                    Spanish practice continues at breakfast, dinner, and the
+                    small everyday moments between classes.
+                  </p>
+                </div>
+                <div className="absolute right-5 top-5 rounded-full border border-white/25 bg-vv-accent px-4 py-2 text-[13px] font-semibold text-vv-accent-deep shadow-[0_14px_30px_rgba(7,14,10,0.12)]">
+                  Local family stay
+                </div>
+              </div>
             </div>
           </div>
         </Container>
-      </section> */}
+      </section>
 
       {/* Enquiry CTA */}
       <section
