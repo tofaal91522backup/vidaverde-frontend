@@ -359,7 +359,7 @@ export default function HomestayRoute() {
         className="border-t border-vv-line bg-vv-bg-warm"
         data-screen-label="07 FAQ"
       >
-        <Container className="max-w-220">
+        <Container >
           <span className="font-code text-vv-muted text-[11px] font-medium tracking-[0.14em] uppercase">
             {"// Common questions"}
           </span>
