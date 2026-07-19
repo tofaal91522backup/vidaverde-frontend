@@ -10,7 +10,7 @@ export const trustBadges = [
 
 export const heroStats: Stat[] = [
   { value: "356", label: "Courses", target: 356 },
-  { value: "4,781", label: "Students", target: 4781 },
+  { value: "4,700+", label: "Students", target: 4700 },
   { value: "41", label: "Lections", target: 41 },
   { value: "120", label: "Events", target: 120 },
 ];

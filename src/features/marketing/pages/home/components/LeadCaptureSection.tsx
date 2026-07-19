@@ -39,8 +39,6 @@ export function LeadCaptureSection() {
             <div className="h-4" />
             <h2 className="text-[clamp(28px,3vw,44px)] font-semibold tracking-[-0.02em] leading-[1.08] m-0 text-balance">
               Not Sure Where to Start?
-              <br />
-              Get Your Free Spanish Guide.
             </h2>
             <p className="text-vv-ink-2 text-[clamp(15px,1.2vw,17px)] leading-normal mt-4 max-w-[52ch] m-0">
               Download{" "}

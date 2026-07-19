@@ -16,15 +16,30 @@ import Link from "next/link";
 
 const quickLinks: {
   headingKey: TranslationKey;
-  items: { labelKey: TranslationKey; href: string }[];
+  items: { labelKey: TranslationKey; href: string; sub?: boolean }[];
 }[] = [
   {
     headingKey: "footer.study",
     items: [
       { labelKey: "nav.onlineClasses", href: "/online-classes" },
       { labelKey: "nav.studyInQuito", href: "/study-in-quito" },
+      {
+        labelKey: "nav.quitoImmersion",
+        href: "/study-in-quito/quito-immersion",
+        sub: true,
+      },
+      {
+        labelKey: "nav.travellingClassroom",
+        href: "/study-in-quito/travelling-classroom",
+        sub: true,
+      },
+      {
+        labelKey: "nav.puertoLopez",
+        href: "/study-in-quito/puerto-lopez",
+        sub: true,
+      },
+      { labelKey: "footer.homestay", href: "/homestay", sub: true },
       { labelKey: "nav.travelSpanish", href: "/travel-spanish" },
-      { labelKey: "footer.homestay", href: "/homestay" },
     ],
   },
   {
@@ -136,7 +151,7 @@ export default function Footer() {
                   </div>
                   <ul className="flex flex-col gap-2 list-none p-0 m-0">
                     {group.items.map((link) => (
-                      <li key={link.href}>
+                      <li key={link.href} className={link.sub ? "pl-3" : ""}>
                         <Link
                           href={link.href}
                           className="text-[14px] text-vv-ink-2 transition hover:text-vv-ink"

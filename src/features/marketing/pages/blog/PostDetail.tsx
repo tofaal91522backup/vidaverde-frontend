@@ -1,4 +1,5 @@
 import { Container } from "@/components/shared/Container";
+import { LeadCaptureSection } from "@/features/marketing/pages/home/components/LeadCaptureSection";
 import type { BlogPost } from "./data/posts.data";
 import { blogPosts } from "./data/posts.data";
 import Image from "next/image";
@@ -90,6 +91,9 @@ export function PostDetail({ post }: { post: BlogPost }) {
           </div>
         </Container>
       </section>
+
+      {/* Lead capture */}
+      <LeadCaptureSection />
 
       {/* Related posts */}
       {related.length > 0 && (

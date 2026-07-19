@@ -469,10 +469,11 @@ export default function OurSchoolRoute() {
                 AECEE Certification
               </h2>
               <p className="text-[15px] leading-[1.7] text-vv-ink-2">
-                Vida Verde is a certified member of the AECEE. The Association
-                of Centres of Spanish as a Foreign Language. AECEE certification
-                is awarded only to schools that meet rigorous standards of
-                teaching quality, curriculum structure, and student experience.
+                Vida Verde is a certified member of the AECEE. The Asociación
+                Ecuatoriana de Centros de Enseñanza de Español, Ecuador&apos;s
+                association of Spanish language centers. AECEE certification is
+                awarded only to schools that meet rigorous standards of teaching
+                quality, curriculum structure, and student experience.
               </p>
               <p className="text-[15px] leading-[1.7] text-vv-ink-2">
                 For students, it means a guarantee: when you study with an
@@ -480,7 +481,7 @@ export default function OurSchoolRoute() {
                 the methods are sound, and the experience is accountable.
               </p>
               <a
-                href="https://www.aecee.es"
+                href="https://ecuadorspanishschools-aecee.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2.5 border border-vv-line-2 rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] leading-none py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-transparent text-vv-ink hover:bg-vv-ink hover:border-vv-ink hover:text-vv-bg w-fit"

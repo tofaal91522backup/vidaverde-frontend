@@ -45,7 +45,7 @@ const translations = {
     "footer.description":
       "Teaching Spanish since 1999. AECEE-certified. La Floresta, Quito.",
     "footer.member":
-      "Proud member of the Association of Spanish Language Schools (AECEE)",
+      "Proud member of the Ecuadorian Association of Spanish Language Centers (AECEE)",
     "footer.rights": "© 2026 Vida Verde Centro de Español. All rights reserved.",
   },
   es: {
@@ -81,7 +81,7 @@ const translations = {
     "footer.description":
       "Enseñamos español desde 1999. Certificados por AECEE. La Floresta, Quito.",
     "footer.member":
-      "Miembro orgulloso de la Asociación de Escuelas de Español (AECEE)",
+      "Miembro orgulloso de la Asociación Ecuatoriana de Centros de Enseñanza de Español (AECEE)",
     "footer.rights":
       "© 2026 Vida Verde Centro de Español. Todos los derechos reservados.",
   },

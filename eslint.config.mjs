@@ -21,6 +21,8 @@ const eslintConfig = defineConfig([
       "@typescript-eslint/no-explicit-any": "off",
       "@typescript-eslint/no-unused-vars": "off",
       "react-hooks/rules-of-hooks": "off",
+      "import/no-anonymous-default-export": "off",
+      "react/display-name": "off",
     },
   },
 ]);
