@@ -1,10 +1,9 @@
 import { Container } from "@/components/shared/Container";
-import { LeadCaptureSection } from "@/features/marketing/pages/home/components/LeadCaptureSection";
-import type { BlogPost } from "./data/posts.data";
-import { blogPosts } from "./data/posts.data";
+import { ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronRight } from "lucide-react";
+import type { BlogPost } from "./data/posts.data";
+import { blogPosts } from "./data/posts.data";
 
 export function PostDetail({ post }: { post: BlogPost }) {
   const related = blogPosts.filter((p) => p.slug !== post.slug).slice(0, 2);
@@ -51,7 +50,7 @@ export function PostDetail({ post }: { post: BlogPost }) {
         className="border-t border-vv-line py-12"
         data-screen-label="02 Post Body"
       >
-        <Container className="max-w-220">
+        <Container className="">
           <div className="text-[16px] leading-[1.75] text-vv-ink-2">
             <figure className="float-right mb-6 ml-8 w-[44%] max-w-[27rem] overflow-hidden rounded-[22px] border border-vv-line bg-vv-bg-warm max-[760px]:float-none max-[760px]:mb-8 max-[760px]:ml-0 max-[760px]:w-full max-[760px]:max-w-none">
               <div className="relative aspect-[4/3]">
@@ -92,8 +91,7 @@ export function PostDetail({ post }: { post: BlogPost }) {
         </Container>
       </section>
 
-      {/* Lead capture */}
-      <LeadCaptureSection />
+     
 
       {/* Related posts */}
       {related.length > 0 && (
@@ -101,7 +99,7 @@ export function PostDetail({ post }: { post: BlogPost }) {
           className="border-t border-vv-line bg-vv-bg-warm py-12"
           data-screen-label="03 Related"
         >
-          <Container className="max-w-220">
+          <Container >
             <h2 className="text-[22px] font-semibold tracking-[-0.02em] leading-[1.08] m-0 mb-6">
               Related Posts
             </h2>
@@ -148,7 +146,7 @@ export function PostDetail({ post }: { post: BlogPost }) {
               </Link>
             </div>
           </Container>
-        </section>
+        </section> 
       )}
     </>
   );

@@ -1,4 +1,5 @@
 import { Container } from "@/components/shared/Container";
+import { NewsletterSignup } from "./components/NewsletterSignup";
 import { blogPosts, categories } from "./data/posts.data";
 import Image from "next/image";
 import Link from "next/link";
@@ -94,6 +95,8 @@ export default function BlogRoute() {
           </div>
         </Container>
       </section>
+
+      <NewsletterSignup />
     </>
   );
 }
