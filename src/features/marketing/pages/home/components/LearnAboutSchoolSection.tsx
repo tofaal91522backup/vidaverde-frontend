@@ -1,9 +1,12 @@
 import { Container } from "@/components/shared/Container";
+import { Link } from "@/i18n/navigation";
 import { ChevronRight } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
-import Link from "next/link";
 
 export function LearnAboutSchoolSection() {
+  const t = useTranslations("Home.aboutSchool");
+
   return (
     <section
       className="border-t border-vv-line bg-vv-bg-warm"
@@ -24,26 +27,19 @@ export function LearnAboutSchoolSection() {
 
           <div className="flex flex-col gap-5">
             <span className="font-code text-vv-muted text-[11px] font-medium tracking-[0.14em] uppercase">
-              {"// About Vida Verde"}
+              {t("eyebrow")}
             </span>
             <h2 className="text-[clamp(28px,3vw,44px)] font-semibold tracking-[-0.02em] leading-[1.08] m-0 text-balance">
-              Teaching Spanish Since 1999
+              {t("title")}
             </h2>
             <p className="text-vv-ink-2 text-[clamp(16px,1.2vw,18px)] leading-relaxed max-w-[62ch] text-pretty m-0">
-              Vida Verde was founded in 1999 by Rosa, a Spanish teacher with a
-              simple belief: the best way to learn a language is through a real
-              human connection.
+              {t("paragraph1")}
             </p>
             <p className="text-vv-ink-2 text-[clamp(16px,1.2vw,18px)] leading-relaxed max-w-[62ch] text-pretty m-0">
-              From our home in La Floresta. One of Quito&apos;s most vibrant
-              and welcoming neighbourhoods. We&apos;ve grown to serve over
-              4,700 students from every corner of the world. Online and in
-              person. Beginners and advanced speakers. Travellers and
-              professionals.
+              {t("paragraph2")}
             </p>
             <p className="text-vv-ink-2 text-[clamp(16px,1.2vw,18px)] leading-relaxed max-w-[62ch] text-pretty m-0">
-              We&apos;re proud to hold AECEE certification, a quality standard
-              recognised across the Spanish-speaking world.
+              {t("paragraph3")}
             </p>
 
             <div className="flex items-center gap-3 mt-1">
@@ -53,7 +49,7 @@ export function LearnAboutSchoolSection() {
                 </span>
               </div>
               <span className="text-[13px] text-vv-ink-2">
-                AECEE-certified Spanish school
+                {t("certifiedLabel")}
               </span>
             </div>
 
@@ -61,7 +57,7 @@ export function LearnAboutSchoolSection() {
               href="/our-school"
               className="inline-flex w-fit items-center gap-2.5 border border-vv-ink rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] leading-none py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-ink text-vv-bg hover:bg-vv-accent-deep hover:border-vv-accent-deep hover:-translate-y-px"
             >
-              Our Story
+              {t("cta")}
               <ChevronRight aria-hidden="true" className="h-4 w-4 shrink-0" />
             </Link>
           </div>

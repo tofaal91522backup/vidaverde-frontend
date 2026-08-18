@@ -1,4 +1,5 @@
 import { Container } from "@/components/shared/Container";
+import { useTranslations } from "next-intl";
 import { TestimonialCarousel } from "./TestimonialCarousel";
 import { CountUpStat } from "./CountUpStat";
 import { socialStats } from "../data/marketing.data";
@@ -14,6 +15,8 @@ function Stars({ color = "text-amber-400" }: { color?: string }) {
 }
 
 function TripAdvisorBadge() {
+  const t = useTranslations("Home.testimonials");
+
   return (
     <a
       href="https://www.tripadvisor.com/Attraction_Review-g294308-d12405709-Reviews-Vida_Verde-Quito_Pichincha_Province.html"
@@ -27,13 +30,15 @@ function TripAdvisorBadge() {
       </div>
       <div>
         <Stars color="text-[#34E0A1]" />
-        <p className="text-[12px] text-vv-ink-2 mt-0.5 m-0">Rated Excellent · TripAdvisor</p>
+        <p className="text-[12px] text-vv-ink-2 mt-0.5 m-0">{t("tripAdvisorRated")}</p>
       </div>
     </a>
   );
 }
 
 const TestimonialSection = () => {
+  const t = useTranslations("Home.testimonials");
+
   return (
     <section className="bg-vv-bg-warm border-t border-vv-line" data-screen-label="06 Testimonials">
       <Container>
@@ -44,14 +49,13 @@ const TestimonialSection = () => {
           {/* Left */}
           <div className="flex flex-col gap-4">
             <span className="font-code text-vv-muted text-[11px] font-medium tracking-[0.14em] uppercase">
-              {"// What students say"}
+              {t("eyebrow")}
             </span>
             <h2 className="text-[clamp(30px,3.5vw,50px)] font-semibold tracking-[-0.02em] leading-[1.06] m-0 text-balance text-vv-ink">
-              Real Students. Real Results.
+              {t("title")}
             </h2>
             <p className="text-vv-ink-2 text-[clamp(16px,1.2vw,18px)] leading-normal max-w-[48ch] text-pretty m-0">
-              Over 4,700 students from around the world have learned Spanish
-              with Vida Verde. Here&apos;s what some of them say.
+              {t("lede")}
             </p>
           </div>
 
@@ -62,7 +66,7 @@ const TestimonialSection = () => {
                 5.0
               </div>
               <Stars />
-              <p className="text-vv-muted text-[11px] font-code mt-1.5 m-0">200+ reviews</p>
+              <p className="text-vv-muted text-[11px] font-code mt-1.5 m-0">{t("reviewsCount")}</p>
             </div>
             <div className="w-px h-14 bg-vv-line shrink-0" aria-hidden="true" />
             <TripAdvisorBadge />
@@ -72,14 +76,14 @@ const TestimonialSection = () => {
         {/* Stats inline row */}
         <div className="flex flex-wrap justify-evenly items-center gap-y-4 mb-10 border-t border-b border-vv-line py-6">
           {socialStats.map((stat, i) => (
-            <div key={stat.label} className="flex items-center justify-between gap-5">
+            <div key={stat.messageKey} className="flex items-center justify-between gap-5">
               <div>
                 <CountUpStat
                   value={stat.value}
                   className="text-[clamp(24px,2.5vw,34px)] font-bold tracking-[-0.03em] leading-none text-vv-accent-deep block"
                 />
                 <span className="font-code text-[10px] uppercase tracking-widest text-vv-muted mt-0.5 block">
-                  {stat.label}
+                  {t(`stats.${stat.messageKey}`)}
                 </span>
               </div>
               {i < socialStats.length - 1 && (

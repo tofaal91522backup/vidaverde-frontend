@@ -1,0 +1,217 @@
+{
+  "Brand": {
+    "subtitle": "Centro de Español"
+  },
+  "Nav": {
+    "onlineClasses": "Online Classes",
+    "studyInQuito": "Study in Quito",
+    "travelSpanish": "Travel Spanish",
+    "ourSchool": "Our School",
+    "blog": "Blog",
+    "contact": "Contact",
+    "overview": "Overview",
+    "bookLesson": "Book a Lesson",
+    "teachers": "Teachers",
+    "quitoImmersion": "Quito Immersion Program",
+    "travellingClassroom": "Travelling Classroom",
+    "puertoLopez": "Puerto López",
+    "junglePrograms": "Jungle Programs",
+    "primary": "Primary navigation",
+    "openMenu": "Open menu"
+  },
+  "Cta": {
+    "bookFirstLesson": "Book Your First Lesson"
+  },
+  "Language": {
+    "label": "Language"
+  },
+  "Footer": {
+    "quickLinks": "Quick Links",
+    "study": "Study",
+    "school": "School",
+    "homestay": "Homestay",
+    "blog": "Blog",
+    "privacyPolicy": "Privacy Policy",
+    "terms": "Terms",
+    "findUs": "Find Us",
+    "getInTouch": "Get in Touch",
+    "location": "La Floresta, Quito, Ecuador",
+    "whatsapp": "WhatsApp Us",
+    "description": "Teaching Spanish since 1999. AECEE-certified. La Floresta, Quito.",
+    "member": "Proud member of the Ecuadorian Association of Spanish Language Centers (AECEE)",
+    "rights": "© 2026 Vida Verde Centro de Español. All rights reserved."
+  },
+  "Home": {
+    "hero": {
+      "typewriterMain": "Learn Spanish Online",
+      "typewriterAlt": "One-on-One",
+      "headlineSuffix": "With a Real Teacher",
+      "subheadline": "Expert Ecuadorian teachers, personalised lessons, flexible scheduling. Join from anywhere in the world.",
+      "bookButtonLine1": "Book Your First Lesson",
+      "bookButtonLine2": "From $12",
+      "exploreProgramsCta": "Explore all programs",
+      "startingLevel": "Starting level",
+      "noExperience": "No experience needed",
+      "trust": {
+        "aecee": { "label": "AECEE Certified", "sub": "Accredited Spanish school" },
+        "est": { "label": "Est. 1999", "sub": "25+ years of teaching" },
+        "students": { "label": "4,700+ Students", "sub": "From over 50 countries" },
+        "levels": { "label": "All Levels Welcome", "sub": "A1 beginners to C1 advanced" },
+        "google": { "label": "Classes via Google Meet", "sub": "Join from anywhere" }
+      }
+    },
+    "why": {
+      "eyebrow": "// Why Vida Verde",
+      "titlePrefix": "Why",
+      "titleAccent": "Vida Verde",
+      "subtitle": "More than an app. More than a freelance teacher.",
+      "lede": "Here's what makes learning with Vida Verde different.",
+      "features": {
+        "school": {
+          "eyebrow": "School",
+          "title": "A Real School, Not a Platform",
+          "description": "Vida Verde has been teaching Spanish since 1999. AECEE-certified, structured, and accountable. Not a marketplace of strangers."
+        },
+        "teachers": {
+          "eyebrow": "Teachers",
+          "title": "Expert Native Teachers",
+          "description": "Every teacher is a university-trained Ecuadorian native speaker with years of classroom experience. Not a hobbyist. Not a part-timer."
+        },
+        "learning": {
+          "eyebrow": "Learning",
+          "title": "Personalised to You",
+          "description": "No fixed syllabus. Your teacher adapts every lesson to your level, goals, and pace. Whether you're a complete beginner or polishing your fluency."
+        },
+        "flexibility": {
+          "eyebrow": "Flexibility",
+          "title": "Learn Anywhere",
+          "description": "Classes via Google Meet. Real conversation, real feedback, real progress. From your living room, office, or café."
+        }
+      }
+    },
+    "programs": {
+      "eyebrow": "// Programs",
+      "title": "Find Your Perfect Spanish Program",
+      "lede": "Whether you're at home or heading to Ecuador. We have a programme for you.",
+      "online": {
+        "label": "Online Classes",
+        "description": "One-on-one lessons with a native teacher via Google Meet. Flexible scheduling, all levels. Start today.",
+        "price": "From $12",
+        "priceSub": "Book Your First Lesson",
+        "cta": "Get Started",
+        "badge": "Most Popular"
+      },
+      "quito": {
+        "label": "Study in Quito",
+        "description": "Full immersion in Ecuador: daily classes, homestay with an Ecuadorian family, and cultural activities.",
+        "price": "From $140 / week",
+        "priceSub": "Explore Programs",
+        "cta": "Explore Programs"
+      },
+      "travel": {
+        "label": "Travel Spanish",
+        "description": "Travelling to Ecuador? Learn the Spanish you'll actually use before or during your trip.",
+        "price": "Custom quote",
+        "priceSub": "Contact us to plan",
+        "cta": "Plan My Trip"
+      },
+      "guide": {
+        "label": "Free Spanish Guide",
+        "description": "Not sure where to start? Download our free guide and take your first steps. No commitment needed.",
+        "price": "Free",
+        "priceSub": "No commitment needed",
+        "cta": "Download Free"
+      }
+    },
+    "testimonials": {
+      "eyebrow": "// What students say",
+      "title": "Real Students. Real Results.",
+      "lede": "Over 4,700 students from around the world have learned Spanish with Vida Verde. Here's what some of them say.",
+      "reviewsCount": "200+ reviews",
+      "tripAdvisorRated": "Rated Excellent · TripAdvisor",
+      "stats": {
+        "students": "Students Taught",
+        "courses": "Courses Delivered",
+        "years": "Years of Teaching",
+        "certified": "Certified"
+      }
+    },
+    "teachers": {
+      "eyebrow": "// Meet the Teachers",
+      "title": "Your Teacher Is Waiting",
+      "lede": "Choose your teacher and book your first lesson today. All our teachers are Ecuadorian native speakers with university-level training.",
+      "teacherLabel": "Teacher",
+      "acceptingStudents": "Accepting new students",
+      "limitedAvailability": "Limited availability",
+      "bookWith": "Book with {name}",
+      "viewAll": "Meet all our teachers",
+      "credentials": {
+        "ximena": "Universidad Central del Ecuador. Linguistics",
+        "lucia": "PUCE Quito. Modern Languages",
+        "fernando": "Universidad de Cuenca. Spanish Literature",
+        "laura": "Universidad Central del Ecuador. Education"
+      },
+      "descriptions": {
+        "ximena": "Students say class hours with Ximena pass by in a flash. She has been teaching Spanish since 2011 and is fluent in English, making her especially effective with beginners.",
+        "lucia": "Lucía is a language nerd who loves to teach the nuts and bolts of Spanish. She excels at helping students understand grammar intuitively and speaks at a clear, easy-to-follow pace.",
+        "fernando": "Fernando is our Academic Director and master teacher. He brings structure, warmth, and deep expertise to every lesson. Students consistently rate him as the most effective teacher they have had.",
+        "laura": "Laura has taught Spanish since 1991. She has a passion for sharing Ecuadorian culture with her students and considers herself not just a teacher but an ambassador of her culture and her language."
+      },
+      "specialisations": {
+        "beginnerFriendly": "Beginner-friendly",
+        "conversational": "Conversational Spanish",
+        "dele": "DELE Preparation",
+        "grammar": "Grammar Focus",
+        "intermediateAdvanced": "Intermediate to Advanced",
+        "business": "Business Spanish",
+        "allLevels": "All Levels",
+        "academic": "Academic Spanish",
+        "advancedConversation": "Advanced Conversation",
+        "culture": "Culture & Language",
+        "beginners": "Beginners",
+        "travel": "Travel Spanish"
+      },
+      "availability": {
+        "ximena": "Mon – Fri mornings & afternoons",
+        "lucia": "Mon – Fri afternoons",
+        "fernando": "Limited. Tue & Thu",
+        "laura": "Mon, Wed & Fri"
+      }
+    },
+    "aboutSchool": {
+      "eyebrow": "// About Vida Verde",
+      "title": "Teaching Spanish Since 1999",
+      "paragraph1": "Vida Verde was founded in 1999 by Rosa, a Spanish teacher with a simple belief: the best way to learn a language is through a real human connection.",
+      "paragraph2": "From our home in La Floresta. One of Quito's most vibrant and welcoming neighbourhoods. We've grown to serve over 4,700 students from every corner of the world. Online and in person. Beginners and advanced speakers. Travellers and professionals.",
+      "paragraph3": "We're proud to hold AECEE certification, a quality standard recognised across the Spanish-speaking world.",
+      "certifiedLabel": "AECEE-certified Spanish school",
+      "cta": "Our Story"
+    },
+    "leadCapture": {
+      "eyebrow": "// Free Resource",
+      "title": "Not Sure Where to Start?",
+      "descriptionPrefix": "Download",
+      "guideTitle": "\"Survival Spanish for Ecuador: 50 Essential Phrases for Travellers and Learners\"",
+      "descriptionSuffix": "Free, instant, no commitment.",
+      "bullets": {
+        "phrases": "50 essential phrases for travellers",
+        "pronunciation": "Pronunciation guide included",
+        "designedBy": "Designed by Vida Verde teachers",
+        "instant": "Instant download, no wait"
+      },
+      "successTitle": "Check your inbox!",
+      "successMessage": "Your free guide is on its way. While you wait, why not book your first lesson for just $12?",
+      "successCta": "Book My First Lesson",
+      "formTitle": "Get the Free Guide",
+      "formSubtitle": "No spam. One-click unsubscribe anytime.",
+      "firstNameLabel": "First Name",
+      "firstNamePlaceholder": "Maria",
+      "emailLabel": "Email Address",
+      "emailPlaceholder": "maria@example.com",
+      "consentPrefix": "I agree to receive emails from Vida Verde.",
+      "consentPrivacyLink": "Privacy Policy",
+      "sending": "Sending…",
+      "submit": "Download Free Guide"
+    }
+  }
+}

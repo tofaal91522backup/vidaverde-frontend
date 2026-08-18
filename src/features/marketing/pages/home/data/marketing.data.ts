@@ -15,48 +15,38 @@ export const heroStats: Stat[] = [
   { value: "120", label: "Events", target: 120 },
 ];
 
-export const featureBlocks: FeatureBlock[] = [
+export const featureBlocks: (Omit<FeatureBlock, "eyebrow" | "title" | "description"> & {
+  messageKey: "school" | "teachers" | "learning" | "flexibility";
+})[] = [
   {
     number: "01",
-    eyebrow: "School",
-    title: "A Real School, Not a Platform",
-    description:
-      "Vida Verde has been teaching Spanish since 1999. AECEE-certified, structured, and accountable. Not a marketplace of strangers.",
+    messageKey: "school",
     span: "span-6",
   },
   {
     number: "02",
-    eyebrow: "Teachers",
-    title: "Expert Native Teachers",
-    description:
-      "Every teacher is a university-trained Ecuadorian native speaker with years of classroom experience. Not a hobbyist. Not a part-timer.",
+    messageKey: "teachers",
     span: "span-6",
     tone: "dark",
   },
   {
     number: "03",
-    eyebrow: "Learning",
-    title: "Personalised to You",
-    description:
-      "No fixed syllabus. Your teacher adapts every lesson to your level, goals, and pace. Whether you're a complete beginner or polishing your fluency.",
+    messageKey: "learning",
     span: "span-4",
     tone: "accent",
   },
   {
     number: "04",
-    eyebrow: "Flexibility",
-    title: "Learn Anywhere",
-    description:
-      "Classes via Google Meet. Real conversation, real feedback, real progress. From your living room, office, or café.",
+    messageKey: "flexibility",
     span: "span-8",
   },
 ];
 
-export const socialStats = [
-  { value: "4,700+", label: "Students Taught" },
-  { value: "356", label: "Courses Delivered" },
-  { value: "25+", label: "Years of Teaching" },
-  { value: "AECEE", label: "Certified" },
+export const socialStats: { value: string; messageKey: "students" | "courses" | "years" | "certified" }[] = [
+  { value: "4,700+", messageKey: "students" },
+  { value: "356", messageKey: "courses" },
+  { value: "25+", messageKey: "years" },
+  { value: "AECEE", messageKey: "certified" },
 ];
 
 export const courseFilters: { label: string; value: CourseCategory }[] = [

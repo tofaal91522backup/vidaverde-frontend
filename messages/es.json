@@ -1,0 +1,217 @@
+{
+  "Brand": {
+    "subtitle": "Centro de Español"
+  },
+  "Nav": {
+    "onlineClasses": "Clases en línea",
+    "studyInQuito": "Estudia en Quito",
+    "travelSpanish": "Español para viajeros",
+    "ourSchool": "Nuestra escuela",
+    "blog": "Blog",
+    "contact": "Contacto",
+    "overview": "Resumen",
+    "bookLesson": "Reservar una clase",
+    "teachers": "Profesores",
+    "quitoImmersion": "Programa de inmersión en Quito",
+    "travellingClassroom": "Aula viajera",
+    "puertoLopez": "Puerto López",
+    "junglePrograms": "Programas en la selva",
+    "primary": "Navegación principal",
+    "openMenu": "Abrir menú"
+  },
+  "Cta": {
+    "bookFirstLesson": "Reserva tu primera clase"
+  },
+  "Language": {
+    "label": "Idioma"
+  },
+  "Footer": {
+    "quickLinks": "Enlaces rápidos",
+    "study": "Estudiar",
+    "school": "Escuela",
+    "homestay": "Hospedaje familiar",
+    "blog": "Blog",
+    "privacyPolicy": "Política de privacidad",
+    "terms": "Términos",
+    "findUs": "Encuéntranos",
+    "getInTouch": "Contáctanos",
+    "location": "La Floresta, Quito, Ecuador",
+    "whatsapp": "Escríbenos por WhatsApp",
+    "description": "Enseñamos español desde 1999. Certificados por AECEE. La Floresta, Quito.",
+    "member": "Miembro orgulloso de la Asociación Ecuatoriana de Centros de Enseñanza de Español (AECEE)",
+    "rights": "© 2026 Vida Verde Centro de Español. Todos los derechos reservados."
+  },
+  "Home": {
+    "hero": {
+      "typewriterMain": "Aprende Español Online",
+      "typewriterAlt": "Clases Individuales",
+      "headlineSuffix": "Con un Profesor de Verdad",
+      "subheadline": "Profesores ecuatorianos expertos, clases personalizadas, horarios flexibles. Únete desde cualquier parte del mundo.",
+      "bookButtonLine1": "Reserva tu primera clase",
+      "bookButtonLine2": "Desde $12",
+      "exploreProgramsCta": "Explora todos los programas",
+      "startingLevel": "Nivel inicial",
+      "noExperience": "No se necesita experiencia",
+      "trust": {
+        "aecee": { "label": "Certificados por AECEE", "sub": "Escuela de español acreditada" },
+        "est": { "label": "Desde 1999", "sub": "Más de 25 años enseñando" },
+        "students": { "label": "Más de 4.700 estudiantes", "sub": "De más de 50 países" },
+        "levels": { "label": "Todos los niveles bienvenidos", "sub": "De A1 principiante a C1 avanzado" },
+        "google": { "label": "Clases por Google Meet", "sub": "Únete desde cualquier lugar" }
+      }
+    },
+    "why": {
+      "eyebrow": "// Por qué Vida Verde",
+      "titlePrefix": "Por qué",
+      "titleAccent": "Vida Verde",
+      "subtitle": "Más que una app. Más que un profesor freelance.",
+      "lede": "Esto es lo que hace diferente aprender con Vida Verde.",
+      "features": {
+        "school": {
+          "eyebrow": "Escuela",
+          "title": "Una escuela de verdad, no una plataforma",
+          "description": "Vida Verde enseña español desde 1999. Certificados por AECEE, estructurados y responsables. No un mercado de desconocidos."
+        },
+        "teachers": {
+          "eyebrow": "Profesores",
+          "title": "Profesores nativos expertos",
+          "description": "Cada profesor es un hablante nativo ecuatoriano con formación universitaria y años de experiencia en el aula. No es un aficionado ni alguien a tiempo parcial."
+        },
+        "learning": {
+          "eyebrow": "Aprendizaje",
+          "title": "Personalizado para ti",
+          "description": "Sin programa fijo. Tu profesor adapta cada clase a tu nivel, tus objetivos y tu ritmo. Ya seas principiante absoluto o quieras perfeccionar tu fluidez."
+        },
+        "flexibility": {
+          "eyebrow": "Flexibilidad",
+          "title": "Aprende desde cualquier lugar",
+          "description": "Clases por Google Meet. Conversación real, retroalimentación real, progreso real. Desde tu sala, tu oficina o un café."
+        }
+      }
+    },
+    "programs": {
+      "eyebrow": "// Programas",
+      "title": "Encuentra tu programa de español ideal",
+      "lede": "Ya sea desde casa o viajando a Ecuador. Tenemos un programa para ti.",
+      "online": {
+        "label": "Clases en línea",
+        "description": "Clases individuales con un profesor nativo por Google Meet. Horarios flexibles, todos los niveles. Empieza hoy.",
+        "price": "Desde $12",
+        "priceSub": "Reserva tu primera clase",
+        "cta": "Empezar",
+        "badge": "Más popular"
+      },
+      "quito": {
+        "label": "Estudia en Quito",
+        "description": "Inmersión total en Ecuador: clases diarias, hospedaje con una familia ecuatoriana y actividades culturales.",
+        "price": "Desde $140 / semana",
+        "priceSub": "Explora los programas",
+        "cta": "Explora los programas"
+      },
+      "travel": {
+        "label": "Español para viajeros",
+        "description": "¿Viajas a Ecuador? Aprende el español que realmente usarás antes o durante tu viaje.",
+        "price": "Presupuesto a medida",
+        "priceSub": "Contáctanos para planificar",
+        "cta": "Planificar mi viaje"
+      },
+      "guide": {
+        "label": "Guía gratuita de español",
+        "description": "¿No sabes por dónde empezar? Descarga nuestra guía gratuita y da tus primeros pasos. Sin compromiso.",
+        "price": "Gratis",
+        "priceSub": "Sin compromiso",
+        "cta": "Descargar gratis"
+      }
+    },
+    "testimonials": {
+      "eyebrow": "// Lo que dicen los estudiantes",
+      "title": "Estudiantes reales. Resultados reales.",
+      "lede": "Más de 4.700 estudiantes de todo el mundo han aprendido español con Vida Verde. Esto es lo que dicen algunos de ellos.",
+      "reviewsCount": "Más de 200 reseñas",
+      "tripAdvisorRated": "Calificación excelente · TripAdvisor",
+      "stats": {
+        "students": "Estudiantes formados",
+        "courses": "Cursos impartidos",
+        "years": "Años de enseñanza",
+        "certified": "Certificados"
+      }
+    },
+    "teachers": {
+      "eyebrow": "// Conoce a los profesores",
+      "title": "Tu profesor te está esperando",
+      "lede": "Elige a tu profesor y reserva tu primera clase hoy mismo. Todos nuestros profesores son hablantes nativos ecuatorianos con formación universitaria.",
+      "teacherLabel": "Profesor",
+      "acceptingStudents": "Acepta nuevos estudiantes",
+      "limitedAvailability": "Disponibilidad limitada",
+      "bookWith": "Reservar con {name}",
+      "viewAll": "Conoce a todos los profesores",
+      "credentials": {
+        "ximena": "Universidad Central del Ecuador. Lingüística",
+        "lucia": "PUCE Quito. Lenguas Modernas",
+        "fernando": "Universidad de Cuenca. Literatura Española",
+        "laura": "Universidad Central del Ecuador. Educación"
+      },
+      "descriptions": {
+        "ximena": "Los estudiantes dicen que las horas de clase con Ximena pasan volando. Enseña español desde 2011 y habla inglés con fluidez, lo que la hace especialmente efectiva con principiantes.",
+        "lucia": "Lucía es una apasionada de los idiomas a quien le encanta enseñar los detalles del español. Es excelente ayudando a los estudiantes a entender la gramática de forma intuitiva y habla a un ritmo claro y fácil de seguir.",
+        "fernando": "Fernando es nuestro Director Académico y profesor experto. Aporta estructura, calidez y gran experiencia a cada clase. Los estudiantes lo califican constantemente como el profesor más efectivo que han tenido.",
+        "laura": "Laura enseña español desde 1991. Le apasiona compartir la cultura ecuatoriana con sus estudiantes y se considera no solo una profesora, sino una embajadora de su cultura y su idioma."
+      },
+      "specialisations": {
+        "beginnerFriendly": "Ideal para principiantes",
+        "conversational": "Español conversacional",
+        "dele": "Preparación DELE",
+        "grammar": "Enfoque gramatical",
+        "intermediateAdvanced": "Intermedio a avanzado",
+        "business": "Español de negocios",
+        "allLevels": "Todos los niveles",
+        "academic": "Español académico",
+        "advancedConversation": "Conversación avanzada",
+        "culture": "Cultura e idioma",
+        "beginners": "Principiantes",
+        "travel": "Español para viajeros"
+      },
+      "availability": {
+        "ximena": "Lun – Vie mañanas y tardes",
+        "lucia": "Lun – Vie tardes",
+        "fernando": "Limitado. Mar y Jue",
+        "laura": "Lun, Mié y Vie"
+      }
+    },
+    "aboutSchool": {
+      "eyebrow": "// Sobre Vida Verde",
+      "title": "Enseñando español desde 1999",
+      "paragraph1": "Vida Verde fue fundada en 1999 por Rosa, una profesora de español con una creencia simple: la mejor forma de aprender un idioma es a través de una conexión humana real.",
+      "paragraph2": "Desde nuestra casa en La Floresta, uno de los barrios más vibrantes y acogedores de Quito, hemos crecido para atender a más de 4.700 estudiantes de todos los rincones del mundo. En línea y presencial. Principiantes y hablantes avanzados. Viajeros y profesionales.",
+      "paragraph3": "Estamos orgullosos de contar con la certificación AECEE, un estándar de calidad reconocido en todo el mundo hispanohablante.",
+      "certifiedLabel": "Escuela de español certificada por AECEE",
+      "cta": "Nuestra historia"
+    },
+    "leadCapture": {
+      "eyebrow": "// Recurso gratuito",
+      "title": "¿No sabes por dónde empezar?",
+      "descriptionPrefix": "Descarga",
+      "guideTitle": "\"Español de supervivencia para Ecuador: 50 frases esenciales para viajeros y estudiantes\"",
+      "descriptionSuffix": "Gratis, al instante, sin compromiso.",
+      "bullets": {
+        "phrases": "50 frases esenciales para viajeros",
+        "pronunciation": "Guía de pronunciación incluida",
+        "designedBy": "Diseñada por los profesores de Vida Verde",
+        "instant": "Descarga instantánea, sin espera"
+      },
+      "successTitle": "¡Revisa tu correo!",
+      "successMessage": "Tu guía gratuita está en camino. Mientras esperas, ¿por qué no reservas tu primera clase por solo $12?",
+      "successCta": "Reservar mi primera clase",
+      "formTitle": "Obtén la guía gratuita",
+      "formSubtitle": "Sin spam. Cancela la suscripción en un clic cuando quieras.",
+      "firstNameLabel": "Nombre",
+      "firstNamePlaceholder": "María",
+      "emailLabel": "Correo electrónico",
+      "emailPlaceholder": "maria@ejemplo.com",
+      "consentPrefix": "Acepto recibir correos de Vida Verde.",
+      "consentPrivacyLink": "Política de privacidad",
+      "sending": "Enviando…",
+      "submit": "Descargar guía gratuita"
+    }
+  }
+}

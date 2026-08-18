@@ -11,29 +11,32 @@ import {
 import { LangToggle } from "@/components/shared/lang-toggle";
 import { BrandMark } from "@/features/marketing/components/BrandMark";
 import { navItems } from "@/features/marketing/data/marketing.data";
-import { useLanguage, type TranslationKey } from "@/providers/language-provider";
+import { Link, usePathname } from "@/i18n/navigation";
 import { ChevronDown, Menu } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+
+type NavMessageKey = Parameters<ReturnType<typeof useTranslations<"Nav">>>[0];
 
 export default function Navbar() {
   const pathname = usePathname();
-  const { t } = useLanguage();
+  const t = useTranslations("Nav");
+  const tCta = useTranslations("Cta");
+  const tLanguage = useTranslations("Language");
 
-  const navLabelByHref: Record<string, TranslationKey> = {
-    "/online-classes": "nav.onlineClasses",
-    "/study-in-quito": "nav.studyInQuito",
-    "/travel-spanish": "nav.travelSpanish",
-    "/our-school": "nav.ourSchool",
-    "/blog": "nav.blog",
-    "/contact": "nav.contact",
-    "/online-classes#teachers": "nav.teachers",
-    "/online-classes/book": "nav.bookLesson",
-    "/study-in-quito/quito-immersion": "nav.quitoImmersion",
-    "/study-in-quito/travelling-classroom": "nav.travellingClassroom",
-    "/study-in-quito/puerto-lopez": "nav.puertoLopez",
-    "/study-in-quito/jungle-programme": "nav.junglePrograms",
+  const navLabelByHref: Record<string, NavMessageKey> = {
+    "/online-classes": "onlineClasses",
+    "/study-in-quito": "studyInQuito",
+    "/travel-spanish": "travelSpanish",
+    "/our-school": "ourSchool",
+    "/blog": "blog",
+    "/contact": "contact",
+    "/online-classes#teachers": "teachers",
+    "/online-classes/book": "bookLesson",
+    "/study-in-quito/quito-immersion": "quitoImmersion",
+    "/study-in-quito/travelling-classroom": "travellingClassroom",
+    "/study-in-quito/puerto-lopez": "puertoLopez",
+    "/study-in-quito/jungle-programme": "junglePrograms",
   };
 
   const getHrefPath = (href: string) => href.split("#")[0];
@@ -47,8 +50,10 @@ export default function Navbar() {
     return pathname === hrefPath || pathname.startsWith(`${hrefPath}/`);
   };
 
-  const getItemLabel = (href: string, fallback: string) =>
-    t(navLabelByHref[href] ?? (fallback as TranslationKey));
+  const getItemLabel = (href: string, fallback: string) => {
+    const key = navLabelByHref[href];
+    return key ? t(key) : fallback;
+  };
 
   const isItemActive = (item: (typeof navItems)[number]) =>
     isHrefActive(item.href) ||
@@ -79,7 +84,7 @@ export default function Navbar() {
         {/* Desktop nav */}
         <nav
           className="flex items-center gap-1 max-[1100px]:hidden"
-          aria-label={t("nav.primary")}
+          aria-label={t("primary")}
         >
           {navItems.map((item) => {
             const isActive = isItemActive(item);
@@ -150,7 +155,7 @@ export default function Navbar() {
             href="/online-classes/book"
             className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[13px] font-semibold tracking-[-0.005em] py-2.25 px-3.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px"
           >
-            {t("cta.bookFirstLesson")}
+            {tCta("bookFirstLesson")}
           </Link>
         </div>
 
@@ -160,7 +165,7 @@ export default function Navbar() {
             <button
               className="hidden max-[1100px]:inline-flex items-center justify-center bg-vv-bg-warm border border-vv-line rounded-[10px] h-10 w-10"
               type="button"
-              aria-label={t("nav.openMenu")}
+              aria-label={t("openMenu")}
             >
               <Menu aria-hidden="true" />
             </button>
@@ -222,12 +227,12 @@ export default function Navbar() {
                     href="/online-classes/book"
                     className="flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi"
                   >
-                    {t("cta.bookFirstLesson")}
+                    {tCta("bookFirstLesson")}
                   </Link>
                 </SheetClose>
                 <div className="flex items-center gap-2">
                   <span className="text-[12px] text-vv-muted font-medium">
-                    {t("language.label")}
+                    {tLanguage("label")}
                   </span>
                   <LangToggle />
                 </div>

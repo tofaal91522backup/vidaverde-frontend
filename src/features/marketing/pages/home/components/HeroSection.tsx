@@ -2,23 +2,33 @@
 
 import { Container } from "@/components/shared/Container";
 import { MarketingButton } from "@/features/marketing/components/MarketingButton";
-import Link from "next/link";
+import { Link } from "@/i18n/navigation";
 import { ChevronRight } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
-import { Button } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
+import { useEffect, useMemo, useRef, useState } from "react";
 
-const TYPEWRITER_WORDS = [
-  { text: "Learn Spanish Online", accent: true },
-  { text: "One-on-One", accent: true },
-];
+function useTypewriterWords() {
+  const t = useTranslations("Home.hero");
+  const main = t("typewriterMain");
+  const alt = t("typewriterAlt");
+
+  return useMemo(
+    () => [
+      { text: main, accent: true },
+      { text: alt, accent: true },
+    ],
+    [main, alt]
+  );
+}
 
 function TypewriterCycle() {
+  const words = useTypewriterWords();
   const [wordIdx, setWordIdx] = useState(0);
   const [displayed, setDisplayed] = useState("");
   const [phase, setPhase] = useState<"typing" | "pause" | "deleting">("typing");
 
   useEffect(() => {
-    const word = TYPEWRITER_WORDS[wordIdx].text;
+    const word = words[wordIdx].text;
     let timer: ReturnType<typeof setTimeout>;
 
     if (phase === "typing") {
@@ -37,7 +47,7 @@ function TypewriterCycle() {
         timer = setTimeout(() => setDisplayed(displayed.slice(0, -1)), 65);
       } else {
         timer = setTimeout(() => {
-          setWordIdx((i) => (i + 1) % TYPEWRITER_WORDS.length);
+          setWordIdx((i) => (i + 1) % words.length);
           setPhase("typing");
         }, 0);
       }
@@ -46,7 +56,7 @@ function TypewriterCycle() {
     return () => clearTimeout(timer);
   }, [displayed, phase, wordIdx]);
 
-  const isAccent = TYPEWRITER_WORDS[wordIdx].accent;
+  const isAccent = words[wordIdx].accent;
 
   return (
     <span className={isAccent ? "text-vv-accent" : "text-white"}>
@@ -57,6 +67,8 @@ function TypewriterCycle() {
 }
 
 export function AnimatedBookButton() {
+  const t = useTranslations("Home.hero");
+
   return (
     <>
       <style>{`
@@ -77,19 +89,19 @@ export function AnimatedBookButton() {
               className="flex items-center justify-center"
               style={{ height: "1.25em" }}
             >
-              Book Your First Lesson
+              {t("bookButtonLine1")}
             </span>
             <span
               className="flex items-center justify-center"
               style={{ height: "1.25em" }}
             >
-              From $12
+              {t("bookButtonLine2")}
             </span>
             <span
               className="flex items-center justify-center"
               style={{ height: "1.25em" }}
             >
-              Book Your First Lesson
+              {t("bookButtonLine1")}
             </span>
           </span>
         </span>
@@ -98,19 +110,17 @@ export function AnimatedBookButton() {
   );
 }
 
-const trustItems = [
-  { icon: "✓", label: "AECEE Certified", sub: "Accredited Spanish school" },
-  { icon: "★", label: "Est. 1999", sub: "25+ years of teaching" },
-  { icon: "♡", label: "4,700+ Students", sub: "From over 50 countries" },
-  {
-    icon: "A1",
-    label: "All Levels Welcome",
-    sub: "A1 beginners to C1 advanced",
-  },
-  { icon: "G", label: "Classes via Google Meet", sub: "Join from anywhere" },
-];
+const trustItemKeys = ["aecee", "est", "students", "levels", "google"] as const;
+const trustIcons: Record<(typeof trustItemKeys)[number], string> = {
+  aecee: "✓",
+  est: "★",
+  students: "♡",
+  levels: "A1",
+  google: "G",
+};
 
 export function HeroSection() {
+  const t = useTranslations("Home.hero");
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -154,10 +164,10 @@ export function HeroSection() {
           </div>
           <div>
             <div className="font-code text-[11px] text-white/80 uppercase tracking-widest">
-              Starting level
+              {t("startingLevel")}
             </div>
             <div className="text-[15px] font-semibold text-white">
-              No experience needed
+              {t("noExperience")}
             </div>
           </div>
         </div>
@@ -172,13 +182,12 @@ export function HeroSection() {
               <span className="block min-h-[1.2em]">
                 <TypewriterCycle />
               </span>
-              <span className="block text-white/90">With a Real Teacher</span>
+              <span className="block text-white/90">{t("headlineSuffix")}</span>
             </h1>
 
             {/* Subheadline */}
             <p className="text-white/72 text-[clamp(17px,1.3vw,18px)] leading-relaxed m-0 max-w-[50ch] text-pretty animate-[hero-rise_0.55s_0.3s_ease_both]">
-              Expert Ecuadorian teachers, personalised lessons, flexible
-              scheduling. Join from anywhere in the world.
+              {t("subheadline")}
             </p>
 
             {/* CTAs */}
@@ -189,7 +198,7 @@ export function HeroSection() {
                 tone="ghost"
                 className="border-white/40 text-white hover:bg-white hover:border-white hover:text-vv-ink justify-center sm:w-auto"
               >
-                Explore all programs{" "}
+                {t("exploreProgramsCta")}{" "}
                 <ChevronRight className="h-4 w-4 shrink-0 translate-y-0.5 translate-y-0.5" />
               </MarketingButton>
             </div>
@@ -197,23 +206,23 @@ export function HeroSection() {
 
           {/* Right. Trust bar card */}
           <div className="flex flex-col gap-1 min-w-72 rounded-2xl border border-white/14 bg-white/10 px-8 py-7 backdrop-blur-md shadow-[0_8px_32px_-8px_rgba(0,0,0,0.4)] animate-[hero-rise_0.6s_0.5s_ease_both] max-[900px]:hidden">
-            {trustItems.map((item) => (
+            {trustItemKeys.map((key) => (
               <div
-                key={item.label}
+                key={key}
                 className="flex items-start gap-4 py-3.5 border-b border-white/10 last:border-0"
               >
                 <span
                   className="text-vv-accent text-[17px] leading-none shrink-0 mt-0.5"
                   aria-hidden="true"
                 >
-                  {item.icon}
+                  {trustIcons[key]}
                 </span>
                 <div>
                   <div className="text-white text-[14px] font-semibold leading-tight">
-                    {item.label}
+                    {t(`trust.${key}.label`)}
                   </div>
                   <div className="text-white/55 text-[12px] mt-0.5">
-                    {item.sub}
+                    {t(`trust.${key}.sub`)}
                   </div>
                 </div>
               </div>

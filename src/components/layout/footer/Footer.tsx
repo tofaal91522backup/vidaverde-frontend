@@ -2,7 +2,7 @@
 
 import { Container } from "@/components/shared/Container";
 import { LangToggle } from "@/components/shared/lang-toggle";
-import { useLanguage, type TranslationKey } from "@/providers/language-provider";
+import { Link } from "@/i18n/navigation";
 import {
   Facebook,
   Instagram,
@@ -11,45 +11,56 @@ import {
   MapPin,
   MessageCircle,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
-import Link from "next/link";
+
+type NavKey = Parameters<ReturnType<typeof useTranslations<"Nav">>>[0];
+type FooterKey = Parameters<ReturnType<typeof useTranslations<"Footer">>>[0];
 
 const quickLinks: {
-  headingKey: TranslationKey;
-  items: { labelKey: TranslationKey; href: string; sub?: boolean }[];
+  headingKey: FooterKey;
+  items: {
+    labelKey: NavKey | FooterKey;
+    namespace: "Nav" | "Footer";
+    href: string;
+    sub?: boolean;
+  }[];
 }[] = [
   {
-    headingKey: "footer.study",
+    headingKey: "study",
     items: [
-      { labelKey: "nav.onlineClasses", href: "/online-classes" },
-      { labelKey: "nav.studyInQuito", href: "/study-in-quito" },
+      { labelKey: "onlineClasses", namespace: "Nav", href: "/online-classes" },
+      { labelKey: "studyInQuito", namespace: "Nav", href: "/study-in-quito" },
       {
-        labelKey: "nav.quitoImmersion",
+        labelKey: "quitoImmersion",
+        namespace: "Nav",
         href: "/study-in-quito/quito-immersion",
         sub: true,
       },
       {
-        labelKey: "nav.travellingClassroom",
+        labelKey: "travellingClassroom",
+        namespace: "Nav",
         href: "/study-in-quito/travelling-classroom",
         sub: true,
       },
       {
-        labelKey: "nav.puertoLopez",
+        labelKey: "puertoLopez",
+        namespace: "Nav",
         href: "/study-in-quito/puerto-lopez",
         sub: true,
       },
-      { labelKey: "footer.homestay", href: "/homestay", sub: true },
-      { labelKey: "nav.travelSpanish", href: "/travel-spanish" },
+      { labelKey: "homestay", namespace: "Footer", href: "/homestay", sub: true },
+      { labelKey: "travelSpanish", namespace: "Nav", href: "/travel-spanish" },
     ],
   },
   {
-    headingKey: "footer.school",
+    headingKey: "school",
     items: [
-      { labelKey: "nav.ourSchool", href: "/our-school" },
-      { labelKey: "footer.blog", href: "/blog" },
-      { labelKey: "nav.contact", href: "/contact" },
-      { labelKey: "footer.privacyPolicy", href: "/privacy" },
-      { labelKey: "footer.terms", href: "/terms" },
+      { labelKey: "ourSchool", namespace: "Nav", href: "/our-school" },
+      { labelKey: "blog", namespace: "Footer", href: "/blog" },
+      { labelKey: "contact", namespace: "Nav", href: "/contact" },
+      { labelKey: "privacyPolicy", namespace: "Footer", href: "/privacy" },
+      { labelKey: "terms", namespace: "Footer", href: "/terms" },
     ],
   },
 ];
@@ -68,7 +79,14 @@ const socialLinks = [
 ];
 
 export default function Footer() {
-  const { t } = useLanguage();
+  const t = useTranslations("Footer");
+  const tNav = useTranslations("Nav");
+  const tLanguage = useTranslations("Language");
+
+  const getLinkLabel = (link: (typeof quickLinks)[number]["items"][number]) =>
+    link.namespace === "Nav"
+      ? tNav(link.labelKey as NavKey)
+      : t(link.labelKey as FooterKey);
 
   return (
     <footer
@@ -93,7 +111,7 @@ export default function Footer() {
             </Link>
 
             <p className="text-[13px] leading-[1.7] text-vv-ink-2 m-0 max-w-[38ch]">
-              {t("footer.description")}
+              {t("description")}
             </p>
 
             <div className="flex items-start gap-2.5">
@@ -102,7 +120,7 @@ export default function Footer() {
                 className="h-4 w-4 mt-0.5 shrink-0 text-vv-accent"
               />
               <p className="text-[13px] leading-[1.6] text-vv-ink-2 m-0">
-                {t("footer.member")}
+                {t("member")}
               </p>
             </div>
 
@@ -134,14 +152,14 @@ export default function Footer() {
               className="inline-flex w-fit items-center gap-2.5 border border-[#25d366] rounded-full cursor-pointer text-[14px] font-semibold tracking-[-0.005em] py-2.5 px-5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-[#25d366] text-white hover:bg-[#1dbf59] hover:-translate-y-px"
             >
               <MessageCircle aria-hidden="true" className="h-4 w-4" />
-              {t("footer.whatsapp")}
+              {t("whatsapp")}
             </a>
           </div>
 
           {/* Column 2. Quick Links */}
           <div>
               <h4 className="text-[11px] font-semibold uppercase tracking-[0.12em] text-vv-ink m-0 mb-5">
-              {t("footer.quickLinks")}
+              {t("quickLinks")}
             </h4>
             <div className="grid grid-cols-2 gap-6">
               {quickLinks.map((group) => (
@@ -156,7 +174,7 @@ export default function Footer() {
                           href={link.href}
                           className="text-[14px] text-vv-ink-2 transition hover:text-vv-ink"
                         >
-                          {t(link.labelKey)}
+                          {getLinkLabel(link)}
                         </Link>
                       </li>
                     ))}
@@ -170,20 +188,20 @@ export default function Footer() {
           <div className="flex flex-col gap-6">
             <div>
               <h4 className="text-[11px] font-semibold uppercase tracking-[0.12em] text-vv-ink m-0 mb-4">
-                {t("footer.findUs")}
+                {t("findUs")}
               </h4>
               <div className="flex items-start gap-2.5 text-[13px] text-vv-ink-2">
                 <MapPin
                   aria-hidden="true"
                   className="h-4 w-4 mt-0.5 shrink-0 text-vv-accent"
                 />
-                <span>{t("footer.location")}</span>
+                <span>{t("location")}</span>
               </div>
             </div>
 
             <div>
               <h4 className="text-[11px] font-semibold uppercase tracking-[0.12em] text-vv-ink m-0 mb-4">
-                {t("footer.getInTouch")}
+                {t("getInTouch")}
               </h4>
               <div className="flex flex-col gap-3">
                 <div className="flex items-center gap-2.5 text-[13px] text-vv-ink-2">
@@ -204,7 +222,7 @@ export default function Footer() {
                     rel="noopener noreferrer"
                     className="hover:text-vv-ink transition"
                   >
-                    {t("footer.whatsapp")}
+                    {t("whatsapp")}
                   </a>
                 </div>
               </div>
@@ -215,11 +233,11 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="mt-12 border-t border-vv-line pt-6 flex flex-wrap items-center justify-between gap-4">
           <p className="font-code text-[12px] text-vv-muted tracking-[0.04em] m-0">
-            © 2026 Vida Verde Centro de Español. All rights reserved.
+            {t("rights")}
           </p>
           <div className="flex items-center gap-2">
             <span className="text-[12px] font-medium text-vv-muted">
-              {t("language.label")}
+              {tLanguage("label")}
             </span>
             <LangToggle />
           </div>

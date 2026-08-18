@@ -1,6 +1,11 @@
 import AppProviders from "@/providers/app-providers";
+import { routing } from "@/i18n/routing";
 import type { Metadata } from "next";
 import Script from "next/script";
+import { hasLocale, type Locale } from "next-intl";
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages, setRequestLocale } from "next-intl/server";
+import { notFound } from "next/navigation";
 import {
   Geist,
   Geist_Mono,
@@ -8,7 +13,7 @@ import {
   Newsreader,
   Plus_Jakarta_Sans,
 } from "next/font/google";
-import "./globals.css";
+import "../globals.css";
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID ?? "";
 
@@ -44,13 +49,28 @@ export const metadata: Metadata = {
     "One-on-one Spanish immersion, homestays, and cultural activities in Quito, Ecuador.",
 };
 
-export default function RootLayout({
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
+
+export default async function RootLayout({
   children,
+  params,
 }: Readonly<{
   children: React.ReactNode;
+  params: Promise<{ locale: string }>;
 }>) {
+  const { locale } = await params;
+
+  if (!hasLocale(routing.locales, locale)) {
+    notFound();
+  }
+
+  setRequestLocale(locale as Locale);
+  const messages = await getMessages();
+
   return (
-    <html lang="en" suppressHydrationWarning suppressContentEditableWarning>
+    <html lang={locale} suppressHydrationWarning suppressContentEditableWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${plusJakarta.variable} ${newsreader.variable} ${jetBrainsMono.variable} antialiased`}
       >
@@ -65,9 +85,9 @@ export default function RootLayout({
             </Script>
           </>
         )}
-        <AppProviders>
-          {children}
-        </AppProviders>
+        <NextIntlClientProvider messages={messages}>
+          <AppProviders>{children}</AppProviders>
+        </NextIntlClientProvider>
       </body>
     </html>
   );
