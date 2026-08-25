@@ -146,7 +146,6 @@ export function OnlineClassesHero() {
         </div>
         <div className="mt-8 flex flex-wrap gap-4 text-[14px] text-vv-ink-2">
           {[
-            "AECEE Certified",
             "Est. 1999",
             "4,700+ Students",
             "All Levels Welcome",

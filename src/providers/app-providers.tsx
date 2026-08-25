@@ -1,3 +1,4 @@
+import { LanguageProvider } from "./language-provider";
 import QueryProvider from "./query-provider";
 import { ThemeProvider } from "./theme-provider";
 
@@ -14,7 +15,9 @@ export default function AppProviders({
         enableSystem
         disableTransitionOnChange
       > */}
-        <QueryProvider>{children}</QueryProvider>
+        <LanguageProvider>
+          <QueryProvider>{children}</QueryProvider>
+        </LanguageProvider>
       {/* </ThemeProvider> */}
     </>
   );

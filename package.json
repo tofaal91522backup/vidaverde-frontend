@@ -5,7 +5,7 @@
   "author": "md-tofaal-ahmed",
   "github": "www.github.com/md-tofaal-ahmed",
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "dotenv -e .env next dev --turbopack",
     "build": "next build --turbopack",
     "start": "dotenv -e .env -- next start",
     "export:pdf": "node scripts/export-pdf.js",

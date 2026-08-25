@@ -1,7 +1,6 @@
 import type { Course, CourseCategory, FeatureBlock, Stat, Testimonial } from "@/features/marketing/types";
 
 export const trustBadges = [
-  "AECEE Certified",
   "Est. 1999",
   "4,700+ Students",
   "All Levels Welcome",
@@ -15,38 +14,47 @@ export const heroStats: Stat[] = [
   { value: "120", label: "Events", target: 120 },
 ];
 
-export const featureBlocks: (Omit<FeatureBlock, "eyebrow" | "title" | "description"> & {
-  messageKey: "school" | "teachers" | "learning" | "flexibility";
-})[] = [
+export const featureBlocks: FeatureBlock[] = [
   {
     number: "01",
-    messageKey: "school",
+    eyebrow: "School",
+    title: "A Real School, Not a Platform",
+    description:
+      "Our teachers have been helping students learn Spanish since 1999 — certified, structured, and accountable. Not a marketplace of strangers.",
     span: "span-6",
   },
   {
     number: "02",
-    messageKey: "teachers",
+    eyebrow: "Teachers",
+    title: "Expert Native Teachers",
+    description:
+      "Every teacher is a university-trained Ecuadorian native speaker with years of classroom experience. Not a hobbyist. Not a part-timer.",
     span: "span-6",
     tone: "dark",
   },
   {
     number: "03",
-    messageKey: "learning",
+    eyebrow: "Learning",
+    title: "Personalised to You",
+    description:
+      "No fixed syllabus. Your teacher adapts every lesson to your level, goals, and pace. Whether you're a complete beginner or polishing your fluency.",
     span: "span-4",
     tone: "accent",
   },
   {
     number: "04",
-    messageKey: "flexibility",
+    eyebrow: "Flexibility",
+    title: "Learn Anywhere",
+    description:
+      "Classes via Google Meet. Real conversation, real feedback, real progress. From your living room, office, or café.",
     span: "span-8",
   },
 ];
 
-export const socialStats: { value: string; messageKey: "students" | "courses" | "years" | "certified" }[] = [
-  { value: "4,700+", messageKey: "students" },
-  { value: "356", messageKey: "courses" },
-  { value: "25+", messageKey: "years" },
-  { value: "AECEE", messageKey: "certified" },
+export const socialStats = [
+  { value: "4,700+", label: "Students Taught" },
+  { value: "356", label: "Courses Delivered" },
+  { value: "25+", label: "Years of Teaching" },
 ];
 
 export const courseFilters: { label: string; value: CourseCategory }[] = [
@@ -129,7 +137,7 @@ export const testimonials: Testimonial[] = [
   },
   {
     quote:
-      "All of my teachers were great, always well-prepared, quickly adapting to my needs and putting a lot of passion into their work. Back home, I now take online classes at Vida Verde via Skype.",
+      "All of my teachers were great, always well-prepared, quickly adapting to my needs and putting a lot of passion into their work. Back home, I now take online classes at Vida Verde via Google Meet.",
     initials: "S",
     name: "Silke",
     meta: "Germany 🇩🇪 · Solo · 3 weeks in Quito + Amazon · Feb 2019",

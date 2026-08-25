@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { Link } from "@/i18n/navigation";
+import Link from "next/link";
 import type { ReactNode } from "react";
 
 type Tone = "primary" | "dark" | "ghost";

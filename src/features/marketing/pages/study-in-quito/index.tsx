@@ -252,9 +252,10 @@ export default function StudyInQuitoRoute() {
             Live It in Ecuador.
           </h1>
           <p className="text-vv-ink-2 text-[clamp(17px,1.4vw,20px)] leading-normal max-w-[52ch] text-pretty m-0">
-            From a week in Quito to a journey along the Pacific coast, Vida
-            Verde&apos;s immersion programmes combine expert teaching with real
-            Ecuadorian life.
+            From a week of classes and culture in Quito to a journey across
+            Ecuador — Vida Verde&apos;s immersion programmes weave expert
+            teaching, guided activities, and life with a local Ecuadorian
+            family into a single, unforgettable experience.
           </p>
           <div className="flex flex-wrap gap-3 mt-6">
             <a
@@ -360,13 +361,13 @@ export default function StudyInQuitoRoute() {
                 </span>
                 <div className="max-w-[58ch]">
                   <h2 className="text-[clamp(30px,3.4vw,48px)] font-semibold tracking-[-0.025em] leading-[1.04] m-0 text-balance">
-                    Live Like a Local. Learn Faster.
+                    The best Spanish classroom isn&apos;t a classroom at all
+                    — it&apos;s a family dinner table in Quito.
                   </h2>
                   <p className="mt-4 text-[16px] leading-[1.75] text-vv-ink-2 m-0">
-                    The best Spanish classroom isn&apos;t a classroom at all.
-                    It&apos;s a family dinner table in Quito. Our homestay
-                    programme places you with a vetted Ecuadorian family, so
-                    the immersion never stops when the lesson does.
+                    Our homestay programme places you with a vetted
+                    Ecuadorian family, so the immersion never stops when the
+                    lesson does.
                   </p>
                 </div>
 

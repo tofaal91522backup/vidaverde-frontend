@@ -74,9 +74,9 @@ export const programs: Program[] = [
     title: "Travelling Classroom",
     detailTitle: "The Travelling Classroom",
     detailSubheadline:
-      "Learn Spanish while you explore Ecuador. Morning classes with your teacher, afternoon adventures. From the Andes to the Amazon.",
+      "Learn Spanish while you explore Ecuador. Morning classes with your teacher, afternoon adventures. From the Andes to the Amazon to the Pacific coast.",
     tagline:
-      "Learn Spanish while you explore Ecuador. Morning classes with your teacher, afternoon adventures. From the Andes to the Amazon.",
+      "Learn Spanish while you explore Ecuador. Morning classes with your teacher, afternoon adventures. From the Andes to the Amazon to the Pacific coast.",
     description:
       "The Travelling Classroom takes your Spanish lessons out of Quito and across Ecuador. Morning classes wherever you are, afternoons exploring. The Amazon, the Pacific coast, or a custom route. Ideal for travellers who want to learn Spanish and see Ecuador at the same time.",
     priceFrom: "$740",
@@ -152,41 +152,6 @@ export const programs: Program[] = [
       name: "Marco Ribeiro",
       meta: "Brazil 🇧🇷 · Puerto López, 2 weeks",
     },
-    active: true,
-  },
-  {
-    slug: "jungle-programme",
-    title: "Jungle Programme",
-    detailTitle: "The Jungle Programme",
-    detailSubheadline:
-      "Deep immersion in the Ecuadorian Amazon. Classes surrounded by one of the world's most biodiverse ecosystems.",
-    tagline:
-      "Deep immersion in the Ecuadorian Amazon. Classes at GAIA or Yarina Lodge, surrounded by one of the world's most biodiverse ecosystems.",
-    description:
-      "The most immersive Vida Verde experience. Spanish classes at an Amazon lodge. GAIA or Yarina. Surrounded by rainforest, wildlife, and a world away from daily life. Ideal for travellers who want to combine serious language study with an extraordinary natural experience.",
-    priceFrom: "$[X]",
-    pricePeriod: " / person",
-    heroImage: "https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?w=1400&q=80",
-    included: [
-      "One-on-one Spanish classes at the lodge every morning",
-      "Full-board accommodation at GAIA or Yarina Lodge",
-      "Guided jungle excursions and wildlife walks",
-      "Transport from Quito to the lodge",
-      "24/7 support from the Vida Verde team",
-    ],
-    scheduleDescription:
-      "Mornings are for Spanish. Afternoons take you deep into the Amazon. Guided walks, canoe trips, wildlife spotting, and evenings under the rainforest canopy.",
-    schedule: [
-      { day: "Day 1", activity: "Travel Quito → Amazon lodge", type: "Travel" },
-      { day: "Day 2–6", activity: "Morning Spanish classes at the lodge", type: "Class" },
-      { day: "Day 2–6", activity: "Afternoon jungle excursions", type: "Adventure" },
-      { day: "Day 7", activity: "Return to Quito", type: "Travel" },
-    ],
-    pricingNote: "All prices in USD per person. To be confirmed. Contact us for current rates.",
-    pricingFooter: "Lodge accommodation and meals are included. Contact us for availability and pricing.",
-    pricing: [
-      { duration: "1 week", price: "$[X]", note: "Classes + lodge. Confirm with Vida Verde" },
-    ],
     active: true,
   },
 ];

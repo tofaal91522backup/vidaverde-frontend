@@ -2,15 +2,12 @@
 
 import { Container } from "@/components/shared/Container";
 import { Globe2, GraduationCap, Target, UserCheck } from "lucide-react";
-import { useTranslations } from "next-intl";
 import { featureBlocks } from "../data/marketing.data";
 import WhyIllustration from "./WhyIllustration";
 
 const whyIcons = [GraduationCap, UserCheck, Target, Globe2];
 
 const WhyVidaVerde = () => {
-  const t = useTranslations("Home.why");
-
   return (
     <section
       className="relative overflow-hidden bg-vv-bg-warm border-t border-vv-line"
@@ -29,18 +26,18 @@ const WhyVidaVerde = () => {
 
           <div className="relative flex flex-col justify-center gap-9">
             <div className="max-w-2xl">
-
+             
               <h2 className="mt-4 text-balance text-[clamp(34px,4.6vw,64px)] font-semibold leading-[1.02] tracking-[-0.035em] text-vv-ink">
-                {t("titlePrefix")}{" "}
+                Why{" "}
                 <span className="rounded-sm bg-vv-accent px-2 text-vv-accent-deep">
-                  {t("titleAccent")}
+                  Vida Verde
                 </span>
               </h2>
               <h3 className="mt-5 max-w-[18ch] text-[clamp(22px,2vw,30px)] font-semibold leading-[1.12] tracking-[-0.025em] text-vv-ink">
-                {t("subtitle")}
+                More than an app. More than a freelance teacher.
               </h3>
               <p className="mt-4 max-w-[58ch] text-[16px] leading-relaxed text-vv-ink-2">
-                {t("lede")}
+                Here’s what makes learning with Vida Verde different.
               </p>
             </div>
 
@@ -59,14 +56,14 @@ const WhyVidaVerde = () => {
                         </span>
                         <span className="text-[10px] text-vv-line-2">/</span>
                         <span className="font-code text-[10px] uppercase tracking-widest text-vv-muted">
-                          {t(`features.${feature.messageKey}.eyebrow`)}
+                          {feature.eyebrow}
                         </span>
                       </div>
                       <h3 className="m-0 text-[15px] font-semibold leading-snug tracking-[-0.01em] text-vv-ink">
-                        {t(`features.${feature.messageKey}.title`)}
+                        {feature.title}
                       </h3>
                       <p className="m-0 mt-1 text-[13px] leading-relaxed text-vv-ink-2">
-                        {t(`features.${feature.messageKey}.description`)}
+                        {feature.description}
                       </p>
                     </div>
                   </div>

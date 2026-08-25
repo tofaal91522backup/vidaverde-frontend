@@ -1,7 +1,6 @@
 import { Container } from "@/components/shared/Container";
 import { ChevronRight } from "lucide-react";
 import { MarketingButton } from "@/features/marketing/components/MarketingButton";
-import { useTranslations } from "next-intl";
 import { SectionHeader } from "./SectionHeader";
 import Image from "next/image";
 
@@ -296,26 +295,46 @@ function BookIllustration({ className }: { className?: string }) {
 
 const programs = [
   {
-    messageKey: "online" as const,
+    label: "Online Classes",
+    description:
+      "One-on-one lessons with a native teacher via Google Meet. Flexible scheduling, all levels. Start today.",
+    price: "From $12",
+    priceSub: "Book Your First Lesson",
+    cta: "Get Started",
     href: "/online-classes",
     Illustration: LaptopIllustration,
-    hasBadge: true,
+    badge: "Most Popular",
     tone: "accent" as const,
   },
   {
-    messageKey: "quito" as const,
+    label: "Study in Quito",
+    description:
+      "Full immersion in Ecuador: daily classes, homestay with an Ecuadorian family, and cultural activities.",
+    price: "From $140 / week",
+    priceSub: "Includes homestay & activities",
+    cta: "Explore Programs",
     href: "/study-in-quito",
     Illustration: MountainsIllustration,
     tone: "dark" as const,
   },
   {
-    messageKey: "travel" as const,
+    label: "Travel Spanish",
+    description:
+      "Travelling to Ecuador? Learn the Spanish you'll actually use before or during your trip.",
+    price: "Custom quote",
+    priceSub: "Contact us to plan",
+    cta: "Plan My Trip",
     href: "/travel-spanish",
     Illustration: AirplaneIllustration,
     tone: "default" as const,
   },
   {
-    messageKey: "guide" as const,
+    label: "Free Spanish Guide",
+    description:
+      "Not sure where to start? Download our free guide and take your first steps. No commitment needed.",
+    price: "Free",
+    priceSub: "Instant download, no wait",
+    cta: "Download Free",
     href: "#lead-capture",
     Illustration: BookIllustration,
     tone: "default" as const,
@@ -323,8 +342,6 @@ const programs = [
 ];
 
 export function CourseSelectorSection() {
-  const t = useTranslations("Home.programs");
-
   return (
     <section
       className="bg-vv-bg border-t border-vv-line"
@@ -332,9 +349,9 @@ export function CourseSelectorSection() {
     >
       <Container>
         <SectionHeader
-          eyebrow={t("eyebrow")}
-          title={t("title")}
-          lede={t("lede")}
+          eyebrow="// Programs"
+          title="Find Your Perfect Spanish Program"
+          lede="Whether you're at home or heading to Ecuador. We have a programme for you."
         />
         <div className="grid gap-5 md:grid-cols-2">
           {programs.map((prog) => {
@@ -344,7 +361,7 @@ export function CourseSelectorSection() {
 
             return (
               <article
-                key={prog.messageKey}
+                key={prog.label}
                 className={[
                   "group flex flex-col rounded-[22px] border overflow-hidden transition duration-200",
                   isAccent
@@ -368,7 +385,7 @@ export function CourseSelectorSection() {
                   <Illustration
                     className={`h-24 w-auto max-w-45${isAccent || isDark ? " opacity-75" : ""}`}
                   />
-                  {prog.hasBadge && (
+                  {prog.badge && (
                     <span
                       className={[
                         "absolute top-5 right-5 rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-wider font-code",
@@ -377,7 +394,7 @@ export function CourseSelectorSection() {
                           : "bg-vv-ink/10 text-vv-ink",
                       ].join(" ")}
                     >
-                      {t(`${prog.messageKey}.badge`)}
+                      {prog.badge}
                     </span>
                   )}
                 </div>
@@ -395,7 +412,7 @@ export function CourseSelectorSection() {
                             : "text-vv-ink",
                       ].join(" ")}
                     >
-                      {t(`${prog.messageKey}.label`)}
+                      {prog.label}
                     </h3>
                     <p
                       className={[
@@ -407,7 +424,7 @@ export function CourseSelectorSection() {
                             : "text-vv-ink-2",
                       ].join(" ")}
                     >
-                      {t(`${prog.messageKey}.description`)}
+                      {prog.description}
                     </p>
                   </div>
 
@@ -424,7 +441,7 @@ export function CourseSelectorSection() {
                               : "text-vv-ink",
                         ].join(" ")}
                       >
-                        {t(`${prog.messageKey}.price`)}
+                        {prog.price}
                       </div>
                       <div
                         className={[
@@ -436,14 +453,14 @@ export function CourseSelectorSection() {
                               : "text-vv-muted",
                         ].join(" ")}
                       >
-                        {t(`${prog.messageKey}.priceSub`)}
+                        {prog.priceSub}
                       </div>
                     </div>
                     <MarketingButton
                       href={prog.href}
                       tone={isAccent ? "dark" : isDark ? "primary" : "ghost"}
                     >
-                      {t(`${prog.messageKey}.cta`)}{" "}
+                      {prog.cta}{" "}
                       <ChevronRight className="h-4 w-4 shrink-0 translate-y-0.5" />
                     </MarketingButton>
                   </div>

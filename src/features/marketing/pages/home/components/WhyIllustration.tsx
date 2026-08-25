@@ -73,10 +73,10 @@ function WhyIllustration() {
         {/* Bottom */}
         <div className="absolute -bottom-5 left-1/2 -translate-x-1/2 bg-vv-accent rounded-2xl px-4 py-3 shadow-sm text-center min-w-20.5">
           <div className="font-code text-[13px] font-bold text-vv-accent-deep tracking-wider">
-            AECEE
+            25+
           </div>
           <div className="font-code text-[9px] text-vv-accent-deep/65 uppercase tracking-widest mt-1">
-            Certified
+            Years
           </div>
         </div>
 

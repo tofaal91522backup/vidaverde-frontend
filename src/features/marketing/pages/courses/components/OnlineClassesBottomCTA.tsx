@@ -17,8 +17,8 @@ export function OnlineClassesBottomCTA() {
           Ready to Start?
         </h2>
         <p className="text-vv-bg/70 text-[clamp(17px,1.4vw,20px)] leading-normal mt-3 max-w-[52ch] mx-auto m-0">
-          Book your Assessment &amp; First Lesson today. Meet your teacher, find
-          your level, and leave with a plan. Just $12.
+          Your first lesson is just $12. Meet your teacher, find your level,
+          and leave with a plan — no commitment required.
         </p>
         <div className="mt-8 flex justify-center">
           <Link

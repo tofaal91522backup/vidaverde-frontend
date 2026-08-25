@@ -24,7 +24,6 @@ export const navItems: NavItem[] = [
         href: "/study-in-quito/travelling-classroom",
       },
       { label: "Puerto López", href: "/study-in-quito/puerto-lopez" },
-      { label: "Jungle Programs", href: "/study-in-quito/jungle-programme" },
     ],
   },
   { label: "Travel Spanish", href: "/travel-spanish" },

@@ -2,33 +2,23 @@
 
 import { Container } from "@/components/shared/Container";
 import { MarketingButton } from "@/features/marketing/components/MarketingButton";
-import { Link } from "@/i18n/navigation";
+import Link from "next/link";
 import { ChevronRight } from "lucide-react";
-import { useTranslations } from "next-intl";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { Button } from "@/components/ui/button";
 
-function useTypewriterWords() {
-  const t = useTranslations("Home.hero");
-  const main = t("typewriterMain");
-  const alt = t("typewriterAlt");
-
-  return useMemo(
-    () => [
-      { text: main, accent: true },
-      { text: alt, accent: true },
-    ],
-    [main, alt]
-  );
-}
+const TYPEWRITER_WORDS = [
+  { text: "Learn Spanish Online", accent: true },
+  { text: "One-on-One", accent: true },
+];
 
 function TypewriterCycle() {
-  const words = useTypewriterWords();
   const [wordIdx, setWordIdx] = useState(0);
   const [displayed, setDisplayed] = useState("");
   const [phase, setPhase] = useState<"typing" | "pause" | "deleting">("typing");
 
   useEffect(() => {
-    const word = words[wordIdx].text;
+    const word = TYPEWRITER_WORDS[wordIdx].text;
     let timer: ReturnType<typeof setTimeout>;
 
     if (phase === "typing") {
@@ -47,7 +37,7 @@ function TypewriterCycle() {
         timer = setTimeout(() => setDisplayed(displayed.slice(0, -1)), 65);
       } else {
         timer = setTimeout(() => {
-          setWordIdx((i) => (i + 1) % words.length);
+          setWordIdx((i) => (i + 1) % TYPEWRITER_WORDS.length);
           setPhase("typing");
         }, 0);
       }
@@ -56,7 +46,7 @@ function TypewriterCycle() {
     return () => clearTimeout(timer);
   }, [displayed, phase, wordIdx]);
 
-  const isAccent = words[wordIdx].accent;
+  const isAccent = TYPEWRITER_WORDS[wordIdx].accent;
 
   return (
     <span className={isAccent ? "text-vv-accent" : "text-white"}>
@@ -67,8 +57,6 @@ function TypewriterCycle() {
 }
 
 export function AnimatedBookButton() {
-  const t = useTranslations("Home.hero");
-
   return (
     <>
       <style>{`
@@ -89,19 +77,19 @@ export function AnimatedBookButton() {
               className="flex items-center justify-center"
               style={{ height: "1.25em" }}
             >
-              {t("bookButtonLine1")}
+              Book Your First Lesson
             </span>
             <span
               className="flex items-center justify-center"
               style={{ height: "1.25em" }}
             >
-              {t("bookButtonLine2")}
+              From $12
             </span>
             <span
               className="flex items-center justify-center"
               style={{ height: "1.25em" }}
             >
-              {t("bookButtonLine1")}
+              Book Your First Lesson
             </span>
           </span>
         </span>
@@ -110,17 +98,18 @@ export function AnimatedBookButton() {
   );
 }
 
-const trustItemKeys = ["aecee", "est", "students", "levels", "google"] as const;
-const trustIcons: Record<(typeof trustItemKeys)[number], string> = {
-  aecee: "✓",
-  est: "★",
-  students: "♡",
-  levels: "A1",
-  google: "G",
-};
+const trustItems = [
+  { icon: "★", label: "Est. 1999", sub: "25+ years of teaching" },
+  { icon: "♡", label: "4,700+ Students", sub: "From over 50 countries" },
+  {
+    icon: "A1",
+    label: "All Levels Welcome",
+    sub: "A1 beginners to C1 advanced",
+  },
+  { icon: "G", label: "Classes via Google Meet", sub: "Join from anywhere" },
+];
 
 export function HeroSection() {
-  const t = useTranslations("Home.hero");
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -156,21 +145,6 @@ export function HeroSection() {
           className="absolute inset-0 bg-linear-to-r from-vv-bg-deep/92 via-vv-bg-deep/55 to-vv-bg-deep/18 max-[900px]:from-vv-bg-deep/88 max-[900px]:to-vv-bg-deep/60"
           aria-hidden="true"
         />
-
-        {/* A1 floating card */}
-        <div className="absolute top-10 right-10 flex items-center gap-3.5 rounded-2xl border border-white/20 bg-black/25 px-5 py-4 text-white backdrop-blur-md shadow-[0_8px_28px_-6px_rgba(0,0,0,0.6)] animate-[hero-rise_0.7s_0.5s_ease_both] max-[900px]:hidden">
-          <div className="grid h-11 w-11 shrink-0 place-items-center rounded-[10px] bg-vv-accent text-vv-accent-deep text-[16px] font-bold">
-            A1
-          </div>
-          <div>
-            <div className="font-code text-[11px] text-white/80 uppercase tracking-widest">
-              {t("startingLevel")}
-            </div>
-            <div className="text-[15px] font-semibold text-white">
-              {t("noExperience")}
-            </div>
-          </div>
-        </div>
       </div>
 
       <Container className="relative z-10 flex-1 flex items-center">
@@ -182,12 +156,13 @@ export function HeroSection() {
               <span className="block min-h-[1.2em]">
                 <TypewriterCycle />
               </span>
-              <span className="block text-white/90">{t("headlineSuffix")}</span>
+              <span className="block text-white/65 font-normal">With a Real Teacher</span>
             </h1>
 
             {/* Subheadline */}
             <p className="text-white/72 text-[clamp(17px,1.3vw,18px)] leading-relaxed m-0 max-w-[50ch] text-pretty animate-[hero-rise_0.55s_0.3s_ease_both]">
-              {t("subheadline")}
+              Expert Ecuadorian teachers, personalised lessons, flexible
+              scheduling. Join from anywhere in the world.
             </p>
 
             {/* CTAs */}
@@ -198,7 +173,7 @@ export function HeroSection() {
                 tone="ghost"
                 className="border-white/40 text-white hover:bg-white hover:border-white hover:text-vv-ink justify-center sm:w-auto"
               >
-                {t("exploreProgramsCta")}{" "}
+                Explore all programs{" "}
                 <ChevronRight className="h-4 w-4 shrink-0 translate-y-0.5 translate-y-0.5" />
               </MarketingButton>
             </div>
@@ -206,23 +181,23 @@ export function HeroSection() {
 
           {/* Right. Trust bar card */}
           <div className="flex flex-col gap-1 min-w-72 rounded-2xl border border-white/14 bg-white/10 px-8 py-7 backdrop-blur-md shadow-[0_8px_32px_-8px_rgba(0,0,0,0.4)] animate-[hero-rise_0.6s_0.5s_ease_both] max-[900px]:hidden">
-            {trustItemKeys.map((key) => (
+            {trustItems.map((item) => (
               <div
-                key={key}
+                key={item.label}
                 className="flex items-start gap-4 py-3.5 border-b border-white/10 last:border-0"
               >
                 <span
                   className="text-vv-accent text-[17px] leading-none shrink-0 mt-0.5"
                   aria-hidden="true"
                 >
-                  {trustIcons[key]}
+                  {item.icon}
                 </span>
                 <div>
                   <div className="text-white text-[14px] font-semibold leading-tight">
-                    {t(`trust.${key}.label`)}
+                    {item.label}
                   </div>
                   <div className="text-white/55 text-[12px] mt-0.5">
-                    {t(`trust.${key}.sub`)}
+                    {item.sub}
                   </div>
                 </div>
               </div>

@@ -104,9 +104,9 @@ export default function OurSchoolRoute() {
           <div className="grid lg:grid-cols-[1fr_auto] gap-10 max-[900px]:grid-cols-1">
             <div>
               <h1 className="text-[clamp(36px,5vw,68px)] font-semibold tracking-[-0.03em] leading-none m-0 mb-5">
-                A Family School.
+                25 Years. 4,700 Students.
                 <br />
-                25 Years of Spanish.
+                Lasting Connections.
               </h1>
               <p className="text-vv-ink-2 text-[clamp(17px,1.4vw,20px)] leading-normal max-w-[52ch] text-pretty m-0">
                 We started with one teacher, a love of language, and a home in
@@ -254,7 +254,7 @@ export default function OurSchoolRoute() {
                   Quito, Ecuador
                 </text>
 
-                {/* AECEE badge */}
+                {/* Trust badge */}
                 <rect
                   x="56"
                   y="181"
@@ -272,7 +272,7 @@ export default function OurSchoolRoute() {
                   fontWeight="700"
                   fill="#1f3d1a"
                 >
-                  AECEE ✓
+                  25+ Yrs ✓
                 </text>
 
                 {/* Stat badge 1. 25+ Years */}
@@ -423,91 +423,11 @@ export default function OurSchoolRoute() {
               <h2 className="text-[clamp(28px,3vw,44px)] font-semibold tracking-[-0.02em] leading-[1.08] m-0 text-balance">
                 Our Story
               </h2>
-              <p className="text-vv-muted text-[13px] border-l-2 border-vv-line pl-4 m-0">
-                Rosa&apos;s founding story in her own words, to be supplied by
-                Vida Verde. Suggested prompts: Why did you start Vida Verde in
-                1999? What does La Floresta mean to you? What moment are you
-                most proud of?
-              </p>
               <p className="text-vv-ink-2 text-[clamp(16px,1.2vw,18px)] leading-relaxed max-w-[62ch] text-pretty m-0">
-                I started Vida Verde in 1999 with a simple belief: that learning
-                a language is most powerful when it happens inside a culture,
-                not just a classroom. La Floresta, our neighbourhood in Quito,
-                has always felt like the perfect place for that. Bohemian,
-                walkable, full of life.
+                Rosa&apos;s founding story, in her own words, is on its way.
+                Check back soon to hear what inspired her to start Vida Verde
+                in 1999.
               </p>
-              <p className="text-vv-ink-2 text-[clamp(16px,1.2vw,18px)] leading-relaxed max-w-[62ch] text-pretty m-0">
-                Over 25 years, I have watched students arrive not knowing a word
-                of Spanish and leave able to laugh with their host family,
-                navigate the markets, and connect with Ecuador in a way that
-                stays with them long after they return home.
-              </p>
-              <p className="text-vv-ink-2 text-[clamp(16px,1.2vw,18px)] leading-relaxed max-w-[62ch] text-pretty m-0">
-                Vida Verde has always been a family school. Our teachers are not
-                just qualified. They genuinely care. Every student who comes
-                through our doors, online or in person, becomes part of our
-                community.
-              </p>
-            </div>
-          </div>
-        </Container>
-      </section>
-
-      {/* AECEE Certification */}
-      <section
-        className="border-t border-vv-line py-16"
-        data-screen-label="03 AECEE"
-        id="certification"
-      >
-        <Container>
-          <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
-            <div className="flex flex-col gap-5">
-              <span className="font-code text-vv-muted text-[11px] font-medium tracking-[0.14em] uppercase">
-                {"// Certification"}
-              </span>
-              <h2 className="text-[clamp(28px,3vw,44px)] font-semibold tracking-[-0.02em] leading-[1.08] m-0 text-balance">
-                AECEE Certification
-              </h2>
-              <p className="text-[15px] leading-[1.7] text-vv-ink-2">
-                Vida Verde is a certified member of the AECEE. The Asociación
-                Ecuatoriana de Centros de Enseñanza de Español, Ecuador&apos;s
-                association of Spanish language centers. AECEE certification is
-                awarded only to schools that meet rigorous standards of teaching
-                quality, curriculum structure, and student experience.
-              </p>
-              <p className="text-[15px] leading-[1.7] text-vv-ink-2">
-                For students, it means a guarantee: when you study with an
-                AECEE-certified school, you know the teaching is professional,
-                the methods are sound, and the experience is accountable.
-              </p>
-              <a
-                href="https://ecuadorspanishschools-aecee.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2.5 border border-vv-line-2 rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] leading-none py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-transparent text-vv-ink hover:bg-vv-ink hover:border-vv-ink hover:text-vv-bg w-fit"
-              >
-                Learn more about AECEE{" "}
-                <ChevronRight className="h-4 w-4 shrink-0 translate-y-0.5" />
-              </a>
-            </div>
-            <div className="rounded-[22px] border border-vv-line bg-vv-bg-warm p-8">
-              <div className="grid grid-cols-2 gap-6">
-                {[
-                  { num: "25+", label: "Years teaching" },
-                  { num: "4,700+", label: "Students taught" },
-                  { num: "AECEE", label: "Certified school" },
-                  { num: "100%", label: "Native speakers" },
-                ].map((stat) => (
-                  <div key={stat.label} className="flex flex-col gap-1">
-                    <div className="text-[32px] font-bold tracking-tight text-vv-ink">
-                      {stat.num}
-                    </div>
-                    <div className="text-[13px] text-vv-ink-2">
-                      {stat.label}
-                    </div>
-                  </div>
-                ))}
-              </div>
             </div>
           </div>
         </Container>
@@ -539,8 +459,9 @@ export default function OurSchoolRoute() {
                 La Floresta, Quito
               </h2>
               <p className="text-[15px] leading-[1.7] text-vv-ink-2">
-                La Floresta is one of Quito&apos;s most beloved neighbourhoods.
-                bohemian, walkable, and full of life. It&apos;s home to
+                La Floresta is one of Quito&apos;s most beloved
+                neighbourhoods — bohemian, walkable, and full of life.
+                It&apos;s home to
                 independent cafés, art galleries, local markets, and some of the
                 best food in the city.
               </p>
