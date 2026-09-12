@@ -13,27 +13,32 @@
 | | |
 |---|---|
 | **Active plan** | [docs/plan/ROUND2_INDEX.md](docs/plan/ROUND2_INDEX.md) |
-| **Section** | Round 2 → Auth (3 of 7 steps done) |
-| **Next step** | **Auth Step 3** — verify email page ([ROUND2_AUTH_INTEGRATION.md](docs/plan/ROUND2_AUTH_INTEGRATION.md)) |
+| **Section** | Round 2 → Auth (4 of 7 steps done) |
+| **Next step** | **Auth Step 4** — resend verification ([ROUND2_AUTH_INTEGRATION.md](docs/plan/ROUND2_AUTH_INTEGRATION.md)) |
 | **Backend commit** | `63c01f5` (see `.claude/api-sync.json`) |
 | **Last updated** | 2026-09-12 — Claude |
 
 ### What was just done
-**Auth Step 1 and Step 2 — registration is now wired end to end.** The form
-collects the fields the backend documents, posts to `/student/registration/`, and
-either creates a session or routes to email verification depending on what the
-backend returns. The deprecated `username` field is gone from the type.
+**Auth Step 3 — email verification.** The confirmation call moved from the client
+into a `"use server"` action so it can create a session, and confirming an address
+now signs the user in and sends them to the portal instead of back to the sign-in
+form.
 
 ### What the next session does
-Open `docs/plan/ROUND2_AUTH_INTEGRATION.md` and do **Step 3** (verify email page).
-**One step per turn, nothing more.** Wait for the user to say "next" before the
-step after.
+Open `docs/plan/ROUND2_AUTH_INTEGRATION.md` and do **Step 4** (resend
+verification). **One step per turn, nothing more.** Wait for the user to say
+"next" before the step after.
 
 ### Carried into the next step
-Step 3 is a structural change, not a tweak. `confirm-email/index.tsx` currently
-posts from the client, but verify-email returns a full login payload and a session
-cookie can only be set server-side — so that call has to move into a
-`"use server"` action before the page can log the user in.
+`confirm-email`'s error state links to `/auth/verify-email` with a "Send me a new
+link" button, but that page has no resend form on it yet. Step 4 builds it. The
+address arrives as an `?email=` query param from registration, so prefill from
+there and fall back to an input when it is absent.
+
+Note when building it: the resend endpoint deliberately returns the same 200 and
+the same message whether or not the address exists, so that it cannot be used to
+discover which emails are registered. The UI must never say "that email is not
+registered".
 
 Nothing is half-finished. Working tree clean.
 

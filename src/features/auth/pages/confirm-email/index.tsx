@@ -8,68 +8,63 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-
-import unAuthorizedApiClient from "@/lib/http/public-api-client";
+import { VerifyEmailAction } from "@/features/auth/pages/confirm-email/actions/verify-email.action";
 import { CheckCircle2, Loader2, XCircle } from "lucide-react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-type Status = "idle" | "loading" | "success" | "error";
+type Status = "loading" | "success" | "error";
+
+const REDIRECT_AFTER_SECONDS = 3;
 
 export default function ConfirmEmailPage({ token }: { token: string }) {
   const router = useRouter();
 
-  // Token thaka na-thaka prothom render-eই jana — tai eta effect-e set kora hoy
+  // Token thaka na-thaka prothom render-ei jana — tai eta effect-e set kora hoy
   // na, initial state theke-i ashe (na hole ek ta extra render howa lagto ar
   // ek polok "Confirming your email…" dekhato)
   const [status, setStatus] = useState<Status>(token ? "loading" : "error");
   const [message, setMessage] = useState<string>(
     token ? "Confirming your email..." : "No confirmation token provided",
   );
-  const [countdown, setCountdown] = useState<number>(5);
+  const [redirectTo, setRedirectTo] = useState<string>("/dashboard/student");
+  const [countdown, setCountdown] = useState<number>(REDIRECT_AFTER_SECONDS);
 
   useEffect(() => {
     if (!token) return;
 
-    const decodedToken = decodeURIComponent(token);
+    let cancelled = false;
 
     (async () => {
-      try {
-        const res = await unAuthorizedApiClient.post(
-          "/rest-auth/registration/account-confirm-email/",
-          { key: decodedToken },
-        );
+      // Server action — client theke dakle session cookie set kora jeto na.
+      const result = await VerifyEmailAction(decodeURIComponent(token));
+      if (cancelled) return;
 
-        setStatus("success");
-        setMessage(
-          res?.data?.detail ||
-            "Your email has been successfully confirmed. You can now sign in.",
-        );
-      } catch (err: any) {
-        setStatus("error");
-        const errorMsg =
-          err?.response?.data?.detail ||
-          err?.response?.data?.message ||
-          err?.response?.data?.non_field_errors?.[0] ||
-          "Email confirmation failed. The link may be invalid or expired.";
-        setMessage(errorMsg);
-      }
+      setStatus(result.success ? "success" : "error");
+      setMessage(result.message);
+      if (result.redirectTo) setRedirectTo(result.redirectTo);
     })();
+
+    return () => {
+      cancelled = true;
+    };
   }, [token]);
 
   useEffect(() => {
-    if (status === "success" && countdown > 0) {
-      const timer = setTimeout(() => {
-        setCountdown(countdown - 1);
-      }, 1000);
+    if (status !== "success") return;
 
-      return () => clearTimeout(timer);
+    if (countdown === 0) {
+      // Action already session baniye diyeche, tai eta protected route-e jabe.
+      // `refresh()` na dile layout-er purono (logged-out) session cache thakto.
+      router.refresh();
+      router.push(redirectTo);
+      return;
     }
 
-    if (status === "success" && countdown === 0) {
-      router.push("/auth/signin");
-    }
-  }, [status, countdown, router]);
+    const timer = setTimeout(() => setCountdown((n) => n - 1), 1000);
+    return () => clearTimeout(timer);
+  }, [status, countdown, redirectTo, router]);
 
   const isLoading = status === "loading";
   const isSuccess = status === "success";
@@ -99,15 +94,23 @@ export default function ConfirmEmailPage({ token }: { token: string }) {
 
         {isSuccess && (
           <>
+            {/* Verify success mane backend token-o diyeche — user ekhon logged
+                in. Tai "abar sign in koro" na bole shoja portal-e pathacchi. */}
             <p className="rounded-lg border border-vv-line bg-vv-bg-warm px-3 py-2 text-sm text-vv-muted">
-              Redirecting to sign in in{" "}
+              You&apos;re signed in. Taking you to your dashboard in{" "}
               <span className="font-semibold text-vv-accent-deep">
                 {countdown}
               </span>{" "}
               seconds.
             </p>
-            <Button onClick={() => router.push("/auth/signin")} className="w-full">
-              Go to Sign In Now
+            <Button
+              onClick={() => {
+                router.refresh();
+                router.push(redirectTo);
+              }}
+              className="w-full"
+            >
+              Go to my dashboard
             </Button>
           </>
         )}
@@ -122,8 +125,13 @@ export default function ConfirmEmailPage({ token }: { token: string }) {
                 <li>The link is invalid or corrupted</li>
               </ul>
             </div>
-            <Button onClick={() => router.push("/")} className="w-full">
-              Go to Home
+            {/* Key single-use — tai fail korle notun link chawa-i ekmatro pothe.
+                Resend form-ta Step 4-e oi page-e boshbe. */}
+            <Button asChild className="w-full">
+              <Link href="/auth/verify-email">Send me a new link</Link>
+            </Button>
+            <Button asChild variant="outline" className="w-full">
+              <Link href="/auth/signin">Back to sign in</Link>
             </Button>
           </>
         )}

@@ -200,3 +200,17 @@ export type resetPasswordProps = {
     token: string;
   };
 };
+
+/**
+ * `VerifyEmailAction` er return.
+ *
+ * Action-ta success hole **session baniye** fire ashe, tai page-er kaj shudhu
+ * `redirectTo` e pathano — user tokhon already logged in.
+ */
+export type VerifyEmailState = {
+  success: boolean;
+  /** Success hole kothay pathabo. */
+  redirectTo?: string;
+  /** Backend-er nijer message — success ba error duitatei. */
+  message: string;
+};

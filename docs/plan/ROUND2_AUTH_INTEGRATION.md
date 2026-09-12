@@ -6,8 +6,8 @@
 - **Source of truth:** [docs/bruno/student/registration/](../bruno/student/registration/) · [docs/bruno/authentication/](../bruno/authentication/)
 - **Index:** [ROUND2_INDEX.md](ROUND2_INDEX.md)
 - **Started:** 2026-09-12
-- **Current step:** **Step 3** — verify email page (confirm-email rewrite)
-- **Status:** in progress (3/7 done)
+- **Current step:** **Step 4** — resend verification
+- **Status:** in progress (4/7 done)
 
 ---
 
@@ -168,6 +168,19 @@ hobe bole server action-e shorate hobe — eta structural change, chhoto na.
 
 **Done jokhon:** verify link click korle logged-in obosthay dashboard-e pouchay.
 
+> **✅ Shesh — ja jana gelo:**
+> - Route ta `/auth/email/confirm/[token]` — bru doc-e AccountAdapter ja bole
+>   (`{{frontend_url}}/auth/email/confirm/<key>`) tar shathe **already mile jay**.
+>   Backend-e kichu bodlate hobe na.
+> - Success-er por `router.refresh()` dakte hoy `push()` er age. Action notun
+>   session cookie boshay, kintu layout-er RSC cache-e purono (logged-out)
+>   session thake — refresh na dile protected route khali dekhabe.
+> - Error state-e "Send me a new link" button `/auth/verify-email` e pathay.
+>   Key single-use, tai fail korle notun link-i ekmatro poth. Oi page-e asol
+>   resend form Step 4-e boshbe.
+> - `success-e /auth/signin` er purono countdown baad — user tokhon **already
+>   logged in**, take login page-e pathanor kono mane nai.
+
 ---
 
 ### Step 4 — Resend verification
@@ -222,7 +235,7 @@ alada kore test kora lagbe (`INTEGRATION_TEST.md`-e ek ta phase add hobe).
 | 0 — Types | ✅ done | 2026-09-12 | `auth.types.ts` — `AuthSuccessResponse` (login/verify ek-i payload), `StudentRegistrationPayload`, `RegistrationPendingResponse`, union + `isAuthSuccess()` narrowing helper, `VerifyEmailResponse`, `ResendVerificationResponse`. `RegistrationType.errors` notun field-e bodlano. `SpanishLevel` `domain.type.ts` theke reuse. |
 | 1 — Register schema + action | ✅ done | 2026-09-12 | `registration.schema.ts` (username bad, 6 notun field, min 8), `registration.action.ts` (path `/student/registration/`, duita response branch, khali value strip), notun `src/constants/spanish-levels.ts` |
 | 2 — Register form UI | ✅ done | 2026-09-12 | `registration.form.tsx` — `username` input bad, `first_name`/`last_name`/`country`/`phone_number`/level select add, hidden timezone (ref diye), branch-based redirect. `RegistrationType.errors.username` **muche fela hoyeche**. |
-| 3 — Verify email | ⬜ baki | — | — |
+| 3 — Verify email | ✅ done | 2026-09-12 | Notun `confirm-email/actions/verify-email.action.ts` (server action, session banay), `confirm-email/index.tsx` rewrite — client axios bad, success-e shoja dashboard, error-e "Send me a new link". `VerifyEmailState` type add. |
 | 4 — Resend | ⬜ baki | — | — |
 | 5 — Token refresh | ⬜ baki | — | — |
 | 6 — `/rest-auth/user/` shidhanto | ⬜ baki | — | — |
