@@ -6,8 +6,8 @@
 - **Source of truth:** [docs/bruno/student/registration/](../bruno/student/registration/) · [docs/bruno/authentication/](../bruno/authentication/)
 - **Index:** [ROUND2_INDEX.md](ROUND2_INDEX.md)
 - **Started:** 2026-09-12
-- **Current step:** **Step 1** — registration schema + server action
-- **Status:** in progress (1/7 done)
+- **Current step:** **Step 2** — registration form UI
+- **Status:** in progress (2/7 done)
 
 ---
 
@@ -108,6 +108,21 @@ puro flow diyeche:
 
 **Done jokhon:** typecheck clean; form ekhono purono field dekhabe (Step 2-e thik hobe).
 
+> **✅ Shesh — ja jana gelo:**
+> - **Khali string backend-e pathano jabe na.** Khali `<input>` theke FormData
+>   `""` pathay, ar `timezone: ""` ba `current_spanish_level: ""` dile backend
+>   **400** dey. Tai `omitEmpty()` diye pathanor age chhente fela hoy.
+> - **Password min 6 chilo, backend chay 8** — schema-te thik kora holo. Kintu
+>   Django-r baki validator (email-er shathe mil, common password, shudhu number)
+>   shudhu server-e dhora pore, tai `password1` error map kora achhe.
+> - `SPANISH_LEVEL_OPTIONS` `marketing/schemas/checkout.schema.ts` e chilo. Auth
+>   theke marketing-e import kora mane duita domain jodiye fela — tai
+>   **`src/constants/spanish-levels.ts`** e shorano holo, checkout oikhan theke
+>   re-export kore.
+> - ⚠️ **`RegistrationType.errors.username` ekhono ache.** Action theke gese,
+>   kintu `registration.form.tsx` ekhono dhore ache. **Step 2-e muchte hobe** —
+>   ager step-e ami "Step 1-e muchbo" likhechilam, oita vul chilo; form Step 2-er kaj.
+
 ---
 
 ### Step 2 — Registration form UI
@@ -194,7 +209,7 @@ alada kore test kora lagbe (`INTEGRATION_TEST.md`-e ek ta phase add hobe).
 | Step | Obostha | Tarikh | Ki korechi |
 |---|---|---|---|
 | 0 — Types | ✅ done | 2026-09-12 | `auth.types.ts` — `AuthSuccessResponse` (login/verify ek-i payload), `StudentRegistrationPayload`, `RegistrationPendingResponse`, union + `isAuthSuccess()` narrowing helper, `VerifyEmailResponse`, `ResendVerificationResponse`. `RegistrationType.errors` notun field-e bodlano. `SpanishLevel` `domain.type.ts` theke reuse. |
-| 1 — Register schema + action | ⬜ baki | — | — |
+| 1 — Register schema + action | ✅ done | 2026-09-12 | `registration.schema.ts` (username bad, 6 notun field, min 8), `registration.action.ts` (path `/student/registration/`, duita response branch, khali value strip), notun `src/constants/spanish-levels.ts` |
 | 2 — Register form UI | ⬜ baki | — | — |
 | 3 — Verify email | ⬜ baki | — | — |
 | 4 — Resend | ⬜ baki | — | — |

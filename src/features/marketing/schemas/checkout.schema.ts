@@ -1,19 +1,7 @@
 import { z } from "zod";
 
 /** Backend-er `spanish_level` enum — docs/bruno/public/checkout.bru */
-export const SPANISH_LEVEL_OPTIONS = [
-  { value: "none", label: "Complete beginner. I know very little Spanish" },
-  { value: "beginner", label: "Beginner. I know some basics" },
-  {
-    value: "intermediate",
-    label: "Intermediate. I can hold simple conversations",
-  },
-  {
-    value: "upper_intermediate",
-    label: "Upper intermediate. I'm fairly comfortable but want to improve",
-  },
-  { value: "advanced", label: "Advanced. I want to polish and perfect" },
-] as const;
+export { SPANISH_LEVEL_OPTIONS } from "@/constants/spanish-levels";
 
 /**
  * Booking step 4-er student details.

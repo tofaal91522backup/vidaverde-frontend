@@ -1,16 +1,48 @@
+import { SPANISH_LEVEL_VALUES } from "@/constants/spanish-levels";
 import { z } from "zod";
 
+/**
+ * `POST /student/registration/` er body.
+ *
+ * docs/bruno/student/registration/register.bru
+ *
+ * ⚠️ **`username` nai.** Age eta pathano hoto, kintu notun spec-e oi field-i
+ * nei — `first_name` (required) ar `last_name` eseche.
+ *
+ * Optional field gula `""` allow kore, karon khali `<input>` theke FormData
+ * `""` pathay. Backend-e `""` pathano **jabe na** — `timezone: ""` ba
+ * `current_spanish_level: ""` dile 400. Tai action-e pathanor age khali value
+ * gula chhente fela hoy.
+ */
 export const RegistrationSchema = z
   .object({
-    username: z.string().min(2, "please enter your name"),
     email: z
       .string()
-      .email("please enter a valid email")
-      .min(1, "please enter a valid email"),
-    password1: z.string().min(6, "Password must be at least 6 characters"),
-    password2: z.string().min(6, "Please confirm your password"),
+      .min(1, "please enter a valid email")
+      .email("please enter a valid email"),
+
+    // Backend minimum 8, ar Django AUTH_PASSWORD_VALIDATORS-o chalay (email-er
+    // shathe mil, common password, shudhu number — shob reject hobe). Oi gulo
+    // shudhu server-e dhora porbe, tai error map-e `password1` dhorte hobe.
+    password1: z.string().min(8, "Password must be at least 8 characters"),
+    password2: z.string().min(1, "Please confirm your password"),
+
+    first_name: z.string().min(1, "please enter your first name"),
+    last_name: z.string().optional(),
+    country: z.string().optional(),
+    phone_number: z.string().optional(),
+
+    // IANA naam. Form-e hidden field hisebe browser-er zone boshbe (Step 2).
+    // Na pathale backend school-er zone dhore ney.
+    timezone: z.string().optional(),
+
+    current_spanish_level: z
+      .union([z.enum(SPANISH_LEVEL_VALUES), z.literal("")])
+      .optional(),
   })
   .refine((data) => data.password1 === data.password2, {
     path: ["password2"],
     message: "Passwords do not match",
   });
+
+export type RegistrationValues = z.infer<typeof RegistrationSchema>;

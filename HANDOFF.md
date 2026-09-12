@@ -13,25 +13,27 @@
 | | |
 |---|---|
 | **Active plan** | [docs/plan/ROUND2_INDEX.md](docs/plan/ROUND2_INDEX.md) |
-| **Section** | Round 2 → Auth (1 of 7 steps done) |
-| **Next step** | **Auth Step 1** — registration schema + server action ([ROUND2_AUTH_INTEGRATION.md](docs/plan/ROUND2_AUTH_INTEGRATION.md)) |
+| **Section** | Round 2 → Auth (2 of 7 steps done) |
+| **Next step** | **Auth Step 2** — registration form UI ([ROUND2_AUTH_INTEGRATION.md](docs/plan/ROUND2_AUTH_INTEGRATION.md)) |
 | **Backend commit** | `63c01f5` (see `.claude/api-sync.json`) |
 | **Last updated** | 2026-09-12 — Claude |
 
 ### What was just done
-**Auth Step 0 — types.** `src/features/auth/types/auth.types.ts` now models the
-registration and email-verification payloads. Type-only; no UI or action touched.
+**Auth Step 1 — registration schema + server action.** Registration now posts to
+`/student/registration/` with the real field set, creates a session when the
+backend returns tokens, and routes to email verification when it does not.
+`SPANISH_LEVEL_OPTIONS` moved to `src/constants/spanish-levels.ts`.
 
 ### What the next session does
-Open `docs/plan/ROUND2_AUTH_INTEGRATION.md` and do **Step 1** (registration schema
-+ server action). **One step per turn, nothing more.** Wait for the user to say
-"next" before the step after.
+Open `docs/plan/ROUND2_AUTH_INTEGRATION.md` and do **Step 2** (registration form
+UI). **One step per turn, nothing more.** Wait for the user to say "next" before
+the step after.
 
 ### Carried into the next step
-`RegistrationType.errors.username` is still present and marked `@deprecated`.
-The new spec has no `username`, but removing it breaks typecheck in
-`registration.action.ts` and `registration.form.tsx`, which are Step 1 and Step 2
-work. **Step 1 must delete that field.**
+`registration.form.tsx` still renders a `username` input and reads
+`state.errors.username`, so `RegistrationType.errors.username` survives as
+`@deprecated`. The form is the only thing holding it. **Step 2 must replace that
+input with first_name/last_name and then delete the field from the type.**
 
 ---
 
