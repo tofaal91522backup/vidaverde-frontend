@@ -6,8 +6,8 @@
 - **Source of truth:** [docs/bruno/student/registration/](../bruno/student/registration/) · [docs/bruno/authentication/](../bruno/authentication/)
 - **Index:** [ROUND2_INDEX.md](ROUND2_INDEX.md)
 - **Started:** 2026-09-12
-- **Current step:** **Step 5** — token refresh
-- **Status:** in progress (5/7 done)
+- **Current step:** **Step 6** — `/rest-auth/user/` shidhanto (shesh step)
+- **Status:** in progress (6/7 done)
 
 ---
 
@@ -222,6 +222,25 @@ alada kore test kora lagbe (`INTEGRATION_TEST.md`-e ek ta phase add hobe).
 
 **Done jokhon:** access expire hole chup-chap refresh hoy, user logout hoy na.
 
+> **✅ Shesh — ja jana gelo (ei step-e shobcheye boro abishkar):**
+> - 🔴 **`api-client.ts` e duita 401 interceptor chilo.** Prothom ta 401 dekhlei
+>   `destroySession()` dito; tar pore-r ta refresh korar cheshta korto. Axios
+>   register-er order-e chole, tai **prothom ta age-i session muche dito ar
+>   refresh-er code-e kokhono pouchato na** — mane access token expire howa
+>   mane-i logout. Refresh-er puro block-ta **dead code** chilo.
+>   `api-server.ts` e oi interceptor **comment kora** chilo — keu ek bar
+>   dhorechilo, kintu shudhu server-side-e thik korechilo.
+> - **Amar plan-e `/rest-auth/token/refresh/` e jete bola chilo — oita vul.**
+>   Bru doc nijei bole: *"Pick one and stay with it; `/get-access-token/` is the
+>   one the rest of this collection uses."* Tai purono path-i rakha holo.
+> - Response-e **shudhu `access`** ashe, refresh token rotate hoy na — tai purono
+>   refresh token rekhe deya hoy.
+> - **Single-flight shudhu client-e.** Page load-e 4-5 ta query ek shathe jay;
+>   expire thakle shob 401 khay ar guard chara protyek-ta alada refresh korto.
+>   Browser-e module state per-tab bole eta nirapod. **Server-e kora jabe na** —
+>   oikhane module state shob request-e share hoy, ek user-er promise onno
+>   user-er kache chole jeto.
+
 ---
 
 ### Step 6 — `/rest-auth/user/` — shidhanto
@@ -248,7 +267,7 @@ alada kore test kora lagbe (`INTEGRATION_TEST.md`-e ek ta phase add hobe).
 | 2 — Register form UI | ✅ done | 2026-09-12 | `registration.form.tsx` — `username` input bad, `first_name`/`last_name`/`country`/`phone_number`/level select add, hidden timezone (ref diye), branch-based redirect. `RegistrationType.errors.username` **muche fela hoyeche**. |
 | 3 — Verify email | ✅ done | 2026-09-12 | Notun `confirm-email/actions/verify-email.action.ts` (server action, session banay), `confirm-email/index.tsx` rewrite — client axios bad, success-e shoja dashboard, error-e "Send me a new link". `VerifyEmailState` type add. |
 | 4 — Resend | ✅ done | 2026-09-12 | Notun `verify-email/queries/use-resend-verification.ts` + `components/resend-verification-form.tsx` (30s cooldown), `verify-email/index.tsx` + route-e `?email=` prefill |
-| 5 — Token refresh | ⬜ baki | — | — |
+| 5 — Token refresh | ✅ done | 2026-09-12 | `api-client.ts` rewrite — **duplicate 401 interceptor mucha** (eta-i refresh block korchilo), single-flight guard, `_retry` loop guard. `api-server.ts` e dead code mucha + keno single-flight nai ta documented. `INTEGRATION_TEST.md` e Phase J add. |
 | 6 — `/rest-auth/user/` shidhanto | ⬜ baki | — | — |
 
 ---

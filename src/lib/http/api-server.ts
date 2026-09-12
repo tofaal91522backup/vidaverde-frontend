@@ -17,16 +17,18 @@ apiServer.interceptors.request.use(async (config) => {
   return config;
 });
 
-// 401 then logout
-// apiServer.interceptors.response.use(
-//   (response) => response,
-//   async (error) => {
-//     if (error.response?.status === 401) {
-//       await destroySession();
-//     }
-//     return Promise.reject(error);
-//   },
-// );
+/**
+ * 401 -> ek bar refresh kore retry, na parle logout.
+ *
+ * ⚠️ Ekhane **ekta-i** response interceptor thakte hobe. Ager version-e ek ta
+ * "401 hole shoja destroySession()" interceptor ei tar age register kora chilo
+ * (ekhon mucha) — axios order-e chole, tai oi ta age-i session muche dito ar
+ * niche-r refresh code-e kokhono pouchato na.
+ *
+ * `api-client.ts` er moto **single-flight guard ekhane rakha hoy nai** ar
+ * rakha-o jabe na: server-e module-level state shob request-er moddhe share
+ * hoy, mane ek user-er refresh promise onno user-er kache chole jeto.
+ */
 apiServer.interceptors.response.use(
   (response) => response,
   async (error) => {

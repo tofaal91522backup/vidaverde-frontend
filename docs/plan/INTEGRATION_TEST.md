@@ -195,3 +195,25 @@ Ki holo:   Class ta list-e nai
 Ki howa uchit: D-te book kora class ta thaka uchit
 Network:   GET /administrator/sessions/?filter=upcoming&p=1 → 200, results: []
 ```
+
+---
+
+## Phase J — Session refresh (token expire)
+
+> Round 2 Auth Step 5-e joda holo. Ager code-e access token expire mane-i logout
+> chilo — refresh-er code thaklen-o cholto na.
+>
+> Backend-er access token lifetime jana dorkar (SimpleJWT `ACCESS_TOKEN_LIFETIME`).
+> Chhoto kore (jemon 1 min) set korte parle test onek shohoj — backend dev-ke bolo.
+
+| # | Ki korba | Ki dekhbe | ✅ |
+|---|---|---|---|
+| J1 | Student hisebe login koro, dashboard khulo | Shob data ashe | ☐ |
+| J2 | Access token expire porjonto opekkha koro (ba backend-e lifetime kombou), tarpor **Invoices** page-e jao | **Logout hobe na.** Data ashe. Network tab-e ekta 401 → ekta `/get-access-token/` → oi request-er retry dekhbe | ☐ |
+| J3 | Expire obosthay dashboard **reload** koro (ek shathe 4-5 ta query jay) | Network-e **ekta-i** `/get-access-token/` call — proti query-r jonno alada na (single-flight kaj korche) | ☐ |
+| J4 | Refresh token-o expire kore dao (ba cookie-r `refreshToken` noshto koro), tarpor kono page-e jao | Ebar logout hobe, `/`-e ferot pathabe. **Infinite loop ba bar bar reload hobe na** | ☐ |
+| J5 | Admin diye J2 abar koro | Ek-i rokom — admin-o logout hoy na | ☐ |
+
+**Keno eta alada phase:** ei change-ta app-er **proti ta logged-in request**-er upor
+diye jay. Vul thakle hoy shobai logout hobe, na hoy refresh loop-e porbe — duitai
+onno kono test-e dhora porbe na.

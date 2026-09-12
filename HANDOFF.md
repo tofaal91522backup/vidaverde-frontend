@@ -13,32 +13,32 @@
 | | |
 |---|---|
 | **Active plan** | [docs/plan/ROUND2_INDEX.md](docs/plan/ROUND2_INDEX.md) |
-| **Section** | Round 2 → Auth (5 of 7 steps done) |
-| **Next step** | **Auth Step 5** — token refresh ([ROUND2_AUTH_INTEGRATION.md](docs/plan/ROUND2_AUTH_INTEGRATION.md)) |
+| **Section** | Round 2 → Auth (6 of 7 steps done) |
+| **Next step** | **Auth Step 6** — decide on `/rest-auth/user/`, last step of the section ([ROUND2_AUTH_INTEGRATION.md](docs/plan/ROUND2_AUTH_INTEGRATION.md)) |
 | **Backend commit** | `63c01f5` (see `.claude/api-sync.json`) |
 | **Last updated** | 2026-09-12 — Claude |
 
 ### What was just done
-**Auth Step 4 — resend verification.** The verify-email page now has a working
-resend form with a 30-second cooldown, prefilled from the `?email=` query param
-that registration passes along.
+**Auth Step 5 — token refresh.** `api-client.ts` had two 401 response
+interceptors, and the first one destroyed the session before the second could
+refresh, so token expiry meant logout and the refresh code never ran. Removed it,
+added a single-flight guard so a page load's concurrent 401s trigger one refresh
+rather than one each, and documented in `api-server.ts` why the same guard must
+not be added there.
 
-Registration is now complete end to end: register, verify, resend, and sign in.
+`docs/plan/INTEGRATION_TEST.md` gained Phase J to cover this by hand.
 
 ### What the next session does
-Open `docs/plan/ROUND2_AUTH_INTEGRATION.md` and do **Step 5** (token refresh).
-**One step per turn, nothing more.** Wait for the user to say "next" before the
-step after.
+Open `docs/plan/ROUND2_AUTH_INTEGRATION.md` and do **Step 6** — decide whether to
+wire `/rest-auth/user/` or skip it, and record the reasoning in the plan. That is
+the last step of the Auth section; after it, move to
+`docs/plan/ROUND2_PUBLIC_INTEGRATION.md`.
 
-### Carried into the next step
-Step 5 is the riskiest step in this plan. It changes `session.ts` and the
-`apiClient` 401 interceptor, which every signed-in request in the app goes
-through — a mistake there logs everyone out or, worse, loops. Two things to get
-right: the refresh call must bypass the interceptor that triggered it, and it
-must retry at most once before destroying the session.
-
-Worth adding a phase to `docs/plan/INTEGRATION_TEST.md` for it, since nothing
-else in the manual test plan covers token expiry.
+### Needs manual testing before it ships
+Step 5 changes a path every signed-in request goes through, and no automated test
+covers it. Phase J in `INTEGRATION_TEST.md` is the check. Testing it is much
+easier with a short `ACCESS_TOKEN_LIFETIME` on the backend — worth asking the
+backend developer to drop it temporarily.
 
 Nothing is half-finished. Working tree clean.
 
