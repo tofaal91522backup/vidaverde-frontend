@@ -7,8 +7,8 @@
 - **Source of truth:** [docs/bruno/student/](../bruno/student/)
 - **Index:** [ROUND2_INDEX.md](ROUND2_INDEX.md)
 - **Started:** 2026-09-12
-- **Current step:** **Step 2** — reschedule teacher list restrict (shesh step)
-- **Status:** in progress (2/3 done)
+- **Current step:** ✅ **Shob step (0–2) shesh**
+- **Status:** complete
 
 ---
 
@@ -148,6 +148,22 @@ backend endpoint lagbe na.
 
 **Done jokhon:** reschedule-e-o invalid teacher select kora jay na.
 
+> **✅ Shesh — verify-er uttor + ja jana gelo:**
+> - ❓ **Khola proshno 1-er uttor: `StudentSession` e catalogue package id NAI.**
+>   Shudhu `student_package` (student-er kena copy-r uuid) ar `package_title`.
+>   Bru-r example response dekhe confirm kora. Backend-ke kichu add korte bola
+>   lage ni — `useMyPackages()` theke `student_package` mile catalogue id ber kora
+>   jay, thik jemon `book-class/index.tsx` kore.
+> - Package list ekhono loading thakle ba package na pele hook disabled thake ar
+>   teacher dropdown khali ashe. Tokhon-o **somoy bodlano jay** — `teacherId`
+>   default session-er teacher, ar teacher na bodlale payload-e `teacher` jay-i na.
+> - ⚠️ Ekhankar teacher-er jodi oi window-e slot na thake, backend take list
+>   theke bad dey — tai dropdown-e nijer teacher-o na dekhate pare. `teacherId`
+>   tokhon-o take dhore rakhe, tai kichu bhange na.
+> - **Purono `use-public-teachers.ts` ar `use-teacher-slots.ts` delete kora holo.**
+>   Ar kothao import chilo na. Rekhe dile porer dev abar "shob teacher" dekhano
+>   hook duita peye bhul jaygay use korto — ei step-e ja thik korlam thik seta-i.
+
 ---
 
 ## Progress Log
@@ -156,7 +172,7 @@ backend endpoint lagbe na.
 |---|---|---|---|
 | 0 — `usePackageTeachers` hook | ✅ done | 2026-09-12 | Notun `student/queries/use-package-teachers.ts` — marketing-er `PackageTeachersResponse` type-only import, authenticated `request` (public hook-er moto `client: "public"` na) |
 | 1 — Book a class restrict | ✅ done | 2026-09-12 | `step-teacher.tsx` `usePackageTeachers`-e, date control ekhane uthe eseche, `restricted` note; `step-slot.tsx` ar fetch kore na (`days` prop); `step-package.tsx` duita id dey; `index.tsx` catalogue id resolve kore |
-| 2 — Reschedule restrict | ⬜ baki | — | — |
+| 2 — Reschedule restrict | ✅ done | 2026-09-12 | `session-actions.tsx` — `usePackageTeachers`-e, catalogue id `useMyPackages()` theke resolve, slot ei response theke. Purono `use-public-teachers.ts` + `use-teacher-slots.ts` **delete** (dead) |
 
 ---
 

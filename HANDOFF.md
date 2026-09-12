@@ -13,39 +13,44 @@
 | | |
 |---|---|
 | **Active plan** | [docs/plan/ROUND2_INDEX.md](docs/plan/ROUND2_INDEX.md) |
-| **Section** | Round 2 → Student (14 of 18 steps overall) |
-| **Next step** | **Student Step 2** — restrict the reschedule teacher list, last step of the section ([ROUND2_STUDENT_INTEGRATION.md](docs/plan/ROUND2_STUDENT_INTEGRATION.md)) |
+| **Section** | Round 2 → Student ✅ complete (15 of 18 steps overall) |
+| **Next step** | **Admin Step 0** — package `teachers` type + schema, last section ([ROUND2_ADMIN_INTEGRATION.md](docs/plan/ROUND2_ADMIN_INTEGRATION.md)) |
 | **Backend commit** | `63c01f5` (see `.claude/api-sync.json`) |
 | **Last updated** | 2026-09-12 — Claude |
 
 ### What was just done
-**Student Step 1 — book-class teacher list.** The picker now offers only the
-teachers a package allows, and the slot step stopped fetching because the
-teachers response already carries each one's days.
+**Student Step 2 — reschedule teacher list. The Student section is complete.**
+Rescheduling now offers only the teachers the package allows.
+
+The open question is answered: `StudentSession` does **not** carry the catalogue
+package id, only `student_package` and `package_title`. No backend change was
+needed — the id resolves from `/student/packages/`, the same way book-class does
+it.
+
+Also deleted `student/queries/use-public-teachers.ts` and `use-teacher-slots.ts`.
+Nothing imported them any more, and leaving hooks around that list every teacher
+invites the next person to reintroduce exactly the bug this section fixed.
 
 ### What the next session does
-Open `docs/plan/ROUND2_STUDENT_INTEGRATION.md` and do **Step 2** (reschedule
-teacher list) in `calendar/components/session-actions.tsx`, the last place still
-calling `usePublicTeachers` and `useTeacherSlots`. **One step per turn, nothing
+Start the last section: open `docs/plan/ROUND2_ADMIN_INTEGRATION.md` and do
+**Step 0** (package `teachers` type and schema). **One step per turn, nothing
 more.** Wait for the user to say "next" before the step after.
 
-### Carried into the next step
-**Verify this before writing anything:** `StudentSession` may not carry the
-catalogue package UUID, only `package_title`. If it does not, resolve it from
-`/student/packages/` the way `book-class/index.tsx` now does, or ask the backend
-developer to add the id. Do not guess.
+### Why Admin matters more than its size suggests
+Every seeded package is unrestricted, so **none of the restriction work in the
+Public or Student sections can be tested until a package can be limited** — and
+Admin Step 1 builds the only UI that can do that. Three steps, but they unblock
+testing for the other two sections.
 
 ### Needs manual testing before it ships
 - **Booking flow (Public Steps 2-4)** — the largest UI change in Round 2 and
   entirely untested. Walk it from both entry points, including a package with no
   availability in the next 7 days and widening the window.
-- **Student book-class (Step 1)** — check both entry points: from the sidebar,
-  and the "Book a class" shortcut on My Packages, which passes `?package=`.
+- **Student book-class and reschedule (Steps 1-2)** — check book-class from both
+  the sidebar and the My Packages "Book a class" shortcut, which passes
+  `?package=`.
 - **Auth section** — all of it. Most urgent: `INTEGRATION_TEST.md` Phase J (token
   refresh), and confirming whether `EMAIL_VERIFICATION_REQUIRED` is on or off.
-- **Restricted packages do not exist yet.** Every seeded package is unrestricted,
-  so none of the restriction work can be exercised until a package is limited
-  from the admin UI — which is Admin Step 1, still unbuilt.
 
 Nothing is half-finished. Working tree clean.
 

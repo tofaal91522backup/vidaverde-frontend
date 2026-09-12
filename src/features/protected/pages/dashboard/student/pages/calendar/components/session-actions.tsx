@@ -5,8 +5,8 @@ import { ReusableSelect } from "@/components/shared/form-related/reusable-select
 import { SubmitButton } from "@/components/shared/form-related/submit-button";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { usePublicTeachers } from "@/features/protected/pages/dashboard/student/queries/use-public-teachers";
-import { useTeacherSlots } from "@/features/protected/pages/dashboard/student/queries/use-teacher-slots";
+import { useMyPackages } from "@/features/protected/pages/dashboard/student/pages/my-packages/queries/use-my-packages";
+import { usePackageTeachers } from "@/features/protected/pages/dashboard/student/queries/use-package-teachers";
 import type { StudentSession } from "@/features/protected/pages/dashboard/student/types/student.types";
 import {
   formatLocalDate,
@@ -128,14 +128,27 @@ export function ReschedulePanel({
   const [teacherId, setTeacherId] = useState(session.teacher);
   const [selectedSlot, setSelectedSlot] = useState<string | null>(null);
 
-  const { data: teachers } = usePublicTeachers();
+  /**
+   * `StudentSession` e catalogue package-er id **nai** — shudhu
+   * `student_package` (student-er kena copy) ar `package_title`. Bru-r example
+   * response dekhe confirm kora. Tai catalogue id ta `/student/packages/` theke
+   * mile ber korte hoy, jemon `book-class/index.tsx` kore.
+   *
+   * Na pele (list ekhono loading, ba package ta list-e nai) hook disabled thake
+   * ar teacher dropdown khali ashe — tokhon student teacher na bodle shudhu
+   * somoy bodlate parbe, ja ekhon-o thik kaj kore.
+   */
+  const { data: myPackages } = useMyPackages();
+  const cataloguePackageId =
+    myPackages?.results?.find((pkg) => pkg.id === session.student_package)
+      ?.package ?? null;
 
   const {
-    data: slotData,
+    data: packageTeacherData,
     isLoading,
     isError,
-  } = useTeacherSlots({
-    teacherId,
+  } = usePackageTeachers({
+    packageId: cataloguePackageId,
     date: fromDate,
     tz: timezone || undefined,
     days: 7,
@@ -143,7 +156,12 @@ export function ReschedulePanel({
 
   const reschedule = useRescheduleSession({ onSuccess: onDone });
 
-  const days = (slotData?.days ?? []).filter((day) => day.slots.length > 0);
+  const teachers = packageTeacherData?.teachers ?? [];
+  // Slot ar alada kore ana hoy na — proti teacher-er `days` ei response-ei ache.
+  const activeTeacher = teachers.find((teacher) => teacher.id === teacherId);
+  const days = (activeTeacher?.days ?? []).filter(
+    (day) => day.slots.length > 0,
+  );
 
   return (
     <div className="space-y-4 py-2 text-sm">
@@ -174,12 +192,21 @@ export function ReschedulePanel({
           />
         </div>
 
+        {/*
+          Shudhu ei package-e allowed teacher. Age `usePublicTeachers()` diye
+          **shob** teacher dekhato — restricted package-e onno keu bachle
+          reschedule-ta backend-e 400 kheto ar karon dekhato na.
+
+          Jar ei window-e slot nai, backend take bad diye dey — tai ekhankar
+          teacher-o list theke uthe jete pare. Tokhon-o `teacherId` take
+          dhore rakhe, ar teacher na bodlale payload-e `teacher` jay-i na.
+        */}
         <ReusableSelect
           id="reschedule-teacher"
           label="Teacher"
           placeholder={session.teacher_name}
           value={teacherId}
-          options={(teachers ?? []).map((teacher) => ({
+          options={teachers.map((teacher) => ({
             value: teacher.id,
             label: teacher.name,
           }))}
@@ -228,9 +255,9 @@ export function ReschedulePanel({
         )}
       </AsyncStateWrapper>
 
-      {slotData?.timezone && (
+      {packageTeacherData?.timezone && (
         <p className="text-xs text-muted-foreground">
-          Times shown in {slotData.timezone}
+          Times shown in {packageTeacherData.timezone}
         </p>
       )}
 
