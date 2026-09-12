@@ -13,34 +13,31 @@
 | | |
 |---|---|
 | **Active plan** | [docs/plan/ROUND2_INDEX.md](docs/plan/ROUND2_INDEX.md) |
-| **Section** | Round 2 → Public (10 of 18 steps overall) |
-| **Next step** | **Public Step 3** — teacher-first entry ([ROUND2_PUBLIC_INTEGRATION.md](docs/plan/ROUND2_PUBLIC_INTEGRATION.md)) |
+| **Section** | Round 2 → Public (11 of 18 steps overall) |
+| **Next step** | **Public Step 4** — teacher_count on pricing cards + checkout restriction error, last step of the section ([ROUND2_PUBLIC_INTEGRATION.md](docs/plan/ROUND2_PUBLIC_INTEGRATION.md)) |
 | **Backend commit** | `63c01f5` (see `.claude/api-sync.json`) |
 | **Last updated** | 2026-09-12 — Claude |
 
 ### What was just done
-**Public Step 2 — booking flow reordered.** Five steps became four: package,
-then teacher and time on one screen, then details, then payment. `SlotPicker` no
-longer fetches anything — the package-teachers response already carries each
-teacher's days — and the date/window controls moved up to the page, because they
-change which teachers appear, not just which times.
+**Public Step 3 — teacher-first entry.** Teacher profiles now list the packages
+that can be bought with that teacher, and every "Book with X" call to action
+routes through it.
+
+This also repaired a regression Step 2 introduced: four CTAs still pointed at
+`/book?teacher=<id>`, which after the reorder dropped the visitor on the package
+screen with their chosen teacher nowhere in sight.
 
 ### What the next session does
-Open `docs/plan/ROUND2_PUBLIC_INTEGRATION.md` and do **Step 3** (teacher-first
-entry). **One step per turn, nothing more.** Wait for the user to say "next"
-before the step after.
-
-### Carried into the next step
-Step 3 sends visitors to `/book?package=<id>&teacher=<id>` from teacher cards and
-profile pages. The booking page already reads both params, so check that path
-works rather than adding new handling. Note that a `?teacher=` who has no slots
-in the default 7-day window will not be in the list, and the selection will
-silently come back empty — worth deciding whether that needs a message.
+Open `docs/plan/ROUND2_PUBLIC_INTEGRATION.md` and do **Step 4** — `teacher_count`
+on the pricing cards and a readable error when checkout rejects a teacher who is
+not allowed on the package. That is the last step of the Public section; after it,
+move to `docs/plan/ROUND2_STUDENT_INTEGRATION.md`.
 
 ### Needs manual testing before it ships
-- **Booking flow (Step 2)** — the largest UI change in Round 2 and completely
-  untested. Walk the whole flow end to end, including a package with no
-  availability in the next 7 days, and widening the window to 14 and 21.
+- **Booking flow (Steps 2-3)** — the largest UI change in Round 2 and entirely
+  untested. Walk it end to end from both entry points: package-first from the
+  pricing section, and teacher-first from a teacher card. Include a package with
+  no availability in the next 7 days, and widening the window to 14 and 21.
 - **Auth section** — all of it. Most urgent: `INTEGRATION_TEST.md` Phase J (token
   refresh), and confirming whether `EMAIL_VERIFICATION_REQUIRED` is on or off.
 

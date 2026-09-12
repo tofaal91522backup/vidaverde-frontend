@@ -112,7 +112,11 @@ function OnlineTeacherCard({ teacher }: { teacher: PublicTeacher }) {
         </div>
         <div className="flex items-center gap-3">
           <Link
-            href={`/online-classes/book?teacher=${encodeURIComponent(teacher.id)}`}
+            // Booking ekhon package-first. Shoja /book e pathale visitor package
+            // screen-e porto ar tar bachai kora teacher kothao dekhato na.
+            // Profile-er #packages e oi teacher-er shathe kena jay emon
+            // package gula dekhay, tarpor duita param niye booking-e jay.
+            href={`/online-classes/teachers/${encodeURIComponent(teacher.id)}#packages`}
             className="flex-1 inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[13px] font-semibold tracking-[-0.005em] leading-none py-2.25 px-3.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px text-center"
           >
             Book with {teacherFirstName}

@@ -12,6 +12,7 @@ import {
   Video,
 } from "lucide-react";
 import Link from "next/link";
+import TeacherPackages from "./components/TeacherPackages";
 import { usePublicTeacher } from "../queries/use-public-teachers";
 
 function firstName(name: string) {
@@ -120,7 +121,7 @@ export default function TeacherProfilePage({ id }: { id: string }) {
 
               <div className="mt-8">
                 <Link
-                  href={`/online-classes/book?teacher=${encodeURIComponent(teacher.id)}`}
+                  href="#packages"
                   className="inline-flex items-center justify-center gap-2.5 rounded-full border border-vv-accent bg-vv-accent px-5.5 py-3.5 text-[15px] font-semibold tracking-[-0.005em] text-vv-accent-deep transition hover:-translate-y-px hover:bg-vv-accent-hi"
                 >
                   Book Your First Lesson with {teacherFirstName}
@@ -207,6 +208,11 @@ export default function TeacherProfilePage({ id }: { id: string }) {
         </Container>
       </section>
 
+      <TeacherPackages
+        teacherId={teacher.id}
+        teacherFirstName={teacherFirstName}
+      />
+
       <section
         className="bg-vv-bg-warm py-16"
         data-screen-label="Teacher Profile CTA"
@@ -220,7 +226,7 @@ export default function TeacherProfilePage({ id }: { id: string }) {
           </h2>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <Link
-              href={`/online-classes/book?teacher=${encodeURIComponent(teacher.id)}`}
+              href="#packages"
               className="inline-flex items-center justify-center gap-2.5 rounded-full border border-vv-accent bg-vv-accent px-5.5 py-3.5 text-[15px] font-semibold tracking-[-0.005em] text-vv-accent-deep transition hover:-translate-y-px hover:bg-vv-accent-hi"
             >
               Book Your First Lesson

@@ -7,8 +7,8 @@
 - **Source of truth:** [docs/bruno/public/](../bruno/public/)
 - **Index:** [ROUND2_INDEX.md](ROUND2_INDEX.md)
 - **Started:** 2026-09-12
-- **Current step:** **Step 3** — teacher-first entry
-- **Status:** in progress (3/5 done)
+- **Current step:** **Step 4** — `teacher_count` + checkout restriction error (shesh step)
+- **Status:** in progress (4/5 done)
 
 ---
 
@@ -201,6 +201,21 @@ ek-i moto kaj kore.
 
 **Done jokhon:** teacher card/profile theke booking-e jawa jay, teacher already select thake.
 
+> **✅ Shesh — ja jana gelo:**
+> - 🔴 **Shob "Book with X" CTA bhanga hoye giyechilo Step 2-er por.** 4 ta jaygay
+>   (2 ta teacher card + profile-er 2 ta CTA) `/online-classes/book?teacher=<id>`
+>   e pathato. Flow package-first howar por oita package screen-e felto ar
+>   **bachai kora teacher kothao dekhato na** — visitor bhabto click kaj kore nai.
+>   Ekhon shob gula `teachers/:id#packages` e jay.
+> - Tai Step 3 shudhu "notun feature" na — Step 2-er **regression fix**-o.
+> - `next_available` proti card-e na diye ekbar section-er upore bola hoy, karon
+>   availability package-bhede bodlay na (backend-o `teacher` block-e ekbar dey).
+> - `null` hole-o card **disable kora hoy na** — package tokhon-o kena jay, shudhu
+>   "no open times in the next N days, but you can still buy" bola hoy.
+> - "Exclusive" badge `restricted_to_listed_teachers` dhore, `teacher_count` dhore na.
+> - 404 (inactive teacher) hole section-ta chup-chap lukiye jay — profile page
+>   nijei tar age error dekhay, duibar bola hoto.
+
 ---
 
 ### Step 4 — `teacher_count` + checkout restriction error
@@ -223,7 +238,7 @@ ek-i moto kaj kore.
 | 0 — Types | ✅ done | 2026-09-12 | `public-api.types.ts` — `teacher_count` on `PublicPackage`, notun `PublicSlotRef`/`PublicPackageTeacher`/`PackageTeachersResponse`/`PublicTeacherPackage`/`TeacherPackagesResponse` |
 | 1 — `usePackageTeachers` | ✅ done | 2026-09-12 | Notun `book/queries/use-package-teachers.ts` — `useFetchData` + `client: "public"`, `days` default `PUBLIC_SLOT_DAYS` (7), `enabled` packageId thakle |
 | 2 — Flow reorder | ✅ done | 2026-09-12 | `book/index.tsx` — 5 step → 4 step (package → teacher+time → details → payment), `usePublicTeachers` bad, window control (date + 7/14/21 din), `teacher_count` badge, `restricted` note. `SlotPicker.tsx` ar fetch kore na, `days` prop ney. |
-| 3 — Teacher-first entry | ⬜ baki | — | — |
+| 3 — Teacher-first entry | ✅ done | 2026-09-12 | Notun `book/queries/use-teacher-packages.ts` + `teacher-profile/components/TeacherPackages.tsx` (`#packages` section, Exclusive badge, next_available). Teacher card ar profile-er 4 ta CTA `/book?teacher=` theke `teachers/:id#packages` e. |
 | 4 — `teacher_count` + error | ⬜ baki | — | — |
 
 ---
