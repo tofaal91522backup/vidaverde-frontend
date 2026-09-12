@@ -6,8 +6,8 @@
 - **Source of truth:** [docs/bruno/student/registration/](../bruno/student/registration/) · [docs/bruno/authentication/](../bruno/authentication/)
 - **Index:** [ROUND2_INDEX.md](ROUND2_INDEX.md)
 - **Started:** 2026-09-12
-- **Current step:** **Step 6** — `/rest-auth/user/` shidhanto (shesh step)
-- **Status:** in progress (6/7 done)
+- **Current step:** ✅ **Shob step (0–6) shesh**
+- **Status:** complete
 
 ---
 
@@ -256,6 +256,27 @@ alada kore test kora lagbe (`INTEGRATION_TEST.md`-e ek ta phase add hobe).
 
 **Done jokhon:** shidhanto ei file-e lekha.
 
+> **✅ Shesh — shidhanto: SKIP, wire kora hoy nai.**
+>
+> Backend-er nijer doc-i eta bole:
+> - `GET /rest-auth/user/` → *"For anything role-aware prefer the payload from
+>   **login**, or `GET /student/me/`… This is kept because dj-rest-auth routes it
+>   and some clients expect it."*
+> - `PATCH /rest-auth/user/` → *"Changing the name here **does not rename the
+>   student in the admin dashboard**, so prefer `/student/me/`."*
+>
+> Mane eta wire korle ek ta **dwitiyo naam** toiri hoto ja admin dashboard-e
+> dekhato na — chup-chap drift. `/student/me/` already integrated ar beshi dey.
+> Ei endpoint tokhon-i lagbe jodi `first_name`/`last_name` alada kore edit korar
+> dorkar hoy, kintu student profile-e `name` ek-ta-i field.
+>
+> **Ei step-e ek ta bug dhora porlo:** `sign-in.action.ts` session-e
+> `name: data.user.username` boshato, kintu backend-e **`username` asole email**
+> (`"username": "master@vidaverde.test"`). Tai login korle sidebar-e naam-er
+> jaygay-o email dekhato. Asol naam `profile.name` e — login response-e eta
+> 2026-09-05 e joda hoyeche, amra dhori ni. Thik kore deya holo, ar login
+> response-ta `AuthSuccessResponse` diye type kora holo (Step 0-e eta note kora chilo).
+
 ---
 
 ## Progress Log
@@ -268,7 +289,7 @@ alada kore test kora lagbe (`INTEGRATION_TEST.md`-e ek ta phase add hobe).
 | 3 — Verify email | ✅ done | 2026-09-12 | Notun `confirm-email/actions/verify-email.action.ts` (server action, session banay), `confirm-email/index.tsx` rewrite — client axios bad, success-e shoja dashboard, error-e "Send me a new link". `VerifyEmailState` type add. |
 | 4 — Resend | ✅ done | 2026-09-12 | Notun `verify-email/queries/use-resend-verification.ts` + `components/resend-verification-form.tsx` (30s cooldown), `verify-email/index.tsx` + route-e `?email=` prefill |
 | 5 — Token refresh | ✅ done | 2026-09-12 | `api-client.ts` rewrite — **duplicate 401 interceptor mucha** (eta-i refresh block korchilo), single-flight guard, `_retry` loop guard. `api-server.ts` e dead code mucha + keno single-flight nai ta documented. `INTEGRATION_TEST.md` e Phase J add. |
-| 6 — `/rest-auth/user/` shidhanto | ⬜ baki | — | — |
+| 6 — `/rest-auth/user/` shidhanto | ✅ done | 2026-09-12 | **Skip kora holo** (karon niche). Ei step-e sign-in-er ekta bug dhora porlo — `sign-in.action.ts` e session `name` thik kora + `AuthSuccessResponse` diye type kora. |
 
 ---
 

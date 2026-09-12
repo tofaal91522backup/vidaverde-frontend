@@ -13,32 +13,37 @@
 | | |
 |---|---|
 | **Active plan** | [docs/plan/ROUND2_INDEX.md](docs/plan/ROUND2_INDEX.md) |
-| **Section** | Round 2 → Auth (6 of 7 steps done) |
-| **Next step** | **Auth Step 6** — decide on `/rest-auth/user/`, last step of the section ([ROUND2_AUTH_INTEGRATION.md](docs/plan/ROUND2_AUTH_INTEGRATION.md)) |
+| **Section** | Round 2 → Auth ✅ complete (7 of 18 steps overall) |
+| **Next step** | **Public Step 0** — types ([ROUND2_PUBLIC_INTEGRATION.md](docs/plan/ROUND2_PUBLIC_INTEGRATION.md)) |
 | **Backend commit** | `63c01f5` (see `.claude/api-sync.json`) |
 | **Last updated** | 2026-09-12 — Claude |
 
 ### What was just done
-**Auth Step 5 — token refresh.** `api-client.ts` had two 401 response
-interceptors, and the first one destroyed the session before the second could
-refresh, so token expiry meant logout and the refresh code never ran. Removed it,
-added a single-flight guard so a page load's concurrent 401s trigger one refresh
-rather than one each, and documented in `api-server.ts` why the same guard must
-not be added there.
+**Auth Step 6 — decided to skip `/rest-auth/user/`, and the Auth section is now
+complete.** The backend's own docs point elsewhere for anything role-aware, and
+editing a name there does not rename the student in the admin dashboard, so
+wiring it would create a second name that silently drifts. `/student/me/` already
+covers this and is integrated.
 
-`docs/plan/INTEGRATION_TEST.md` gained Phase J to cover this by hand.
+That review turned up a real bug: sign-in stored `user.username` as the session
+name, but the backend uses the email as the username, so the sidebar showed an
+email where the name belongs. It now reads `profile.name`, which login started
+returning on 2026-09-05.
 
 ### What the next session does
-Open `docs/plan/ROUND2_AUTH_INTEGRATION.md` and do **Step 6** — decide whether to
-wire `/rest-auth/user/` or skip it, and record the reasoning in the plan. That is
-the last step of the Auth section; after it, move to
-`docs/plan/ROUND2_PUBLIC_INTEGRATION.md`.
+Start the Public section: open `docs/plan/ROUND2_PUBLIC_INTEGRATION.md` and do
+**Step 0** (types). **One step per turn, nothing more.** Wait for the user to say
+"next" before the step after.
 
 ### Needs manual testing before it ships
-Step 5 changes a path every signed-in request goes through, and no automated test
-covers it. Phase J in `INTEGRATION_TEST.md` is the check. Testing it is much
-easier with a short `ACCESS_TOKEN_LIFETIME` on the backend — worth asking the
-backend developer to drop it temporarily.
+Nothing in the Auth section has been tested against a live backend. Two parts
+need it most:
+- **Token refresh (Step 5)** — `INTEGRATION_TEST.md` Phase J. Easier with a short
+  `ACCESS_TOKEN_LIFETIME`; worth asking the backend developer for one.
+- **Registration and verification (Steps 1-4)** — which branch runs depends on
+  the backend's `EMAIL_VERIFICATION_REQUIRED`, and nobody has confirmed which way
+  it is set. Both branches are implemented, but only one of them can be exercised
+  until that is known.
 
 Nothing is half-finished. Working tree clean.
 

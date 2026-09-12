@@ -6,7 +6,10 @@ import { LoginSchema } from "../schemas/sign-in.schema";
 import { env } from "@/lib/env";
 import { CreateSession } from "@/features/auth/utils/session";
 import HandleError from "@/utils/error-handle";
-import { LoginType } from "@/features/auth/types/auth.types";
+import type {
+  AuthSuccessResponse,
+  LoginType,
+} from "@/features/auth/types/auth.types";
 
 export const SignInAction = async (
   previousState: LoginType,
@@ -20,7 +23,7 @@ export const SignInAction = async (
 
   try {
     const base = env.BACKEND_URL;
-    const { data } = await axios.post(
+    const { data } = await axios.post<AuthSuccessResponse>(
       `${base}/rest-auth/login/`,
       {
         email: formData.get("email"),
@@ -37,7 +40,16 @@ export const SignInAction = async (
     await CreateSession({
       user: {
         id: String(data?.user?.pk),
-        name: data?.user?.username ?? "",
+        // `username` asole email (backend email-ke username hisebe rakhe), tai
+        // oita `name` e boshale sidebar-e naam-er jaygay email dekhato. Asol
+        // naam `profile.name` e — login response-e eta 2026-09-05 e joda hoyeche.
+        name:
+          data?.profile?.name ||
+          [data?.user?.first_name, data?.user?.last_name]
+            .filter(Boolean)
+            .join(" ") ||
+          data?.user?.username ||
+          "",
         email: data?.user?.email ?? "",
         role: data?.role,
         // `/administrator/admins/` is master-only. Keep only the documented
