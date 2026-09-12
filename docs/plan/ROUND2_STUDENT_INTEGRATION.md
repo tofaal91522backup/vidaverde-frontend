@@ -6,9 +6,9 @@
 
 - **Source of truth:** [docs/bruno/student/](../bruno/student/)
 - **Index:** [ROUND2_INDEX.md](ROUND2_INDEX.md)
-- **Started:** —
-- **Current step:** **Step 0** (shuru hoy nai)
-- **Status:** planned
+- **Started:** 2026-09-12
+- **Current step:** **Step 1** — book-class teacher list restrict
+- **Status:** in progress (1/3 done)
 
 ---
 
@@ -90,6 +90,19 @@ backend endpoint lagbe na.
 
 **Done jokhon:** hook ache, typecheck clean.
 
+> **✅ Shesh — ja jana gelo:**
+> - **Type duplicate kori nai, marketing theke import korechi.** Eta feature-er
+>   nijer shape na — backend-er contract. Duita copy rakhle backend field add
+>   korle ek ta chup-chap purono theke jeto. **Type-only import**, tai marketing-er
+>   kono runtime code student bundle-e ashe na. (Auth-e `SPANISH_LEVEL_OPTIONS`
+>   shorate hoyechilo karon oita runtime **value** chilo — ekhane shudhu type.)
+> - `client: "public"` **deya hoy nai**, ichchha kore — student portal-e user
+>   logged-in, ar pasher `use-teacher-slots.ts` ek-i public endpoint normal
+>   authenticated `request` diye dake. Ek folder-e duita alada niyom rakha hoto.
+> - Param-e sposhto likha ache `packageId` mane **catalogue** package
+>   (`StudentPackage.package`), `StudentPackage.id` na — ei duita golale khali
+>   list ashto ar keu dhorte parto na.
+
 ---
 
 ### Step 1 — Book a class: teacher list restrict koro
@@ -126,7 +139,7 @@ backend endpoint lagbe na.
 
 | Step | Obostha | Tarikh | Ki korechi |
 |---|---|---|---|
-| 0 — `usePackageTeachers` hook | ⬜ baki | — | — |
+| 0 — `usePackageTeachers` hook | ✅ done | 2026-09-12 | Notun `student/queries/use-package-teachers.ts` — marketing-er `PackageTeachersResponse` type-only import, authenticated `request` (public hook-er moto `client: "public"` na) |
 | 1 — Book a class restrict | ⬜ baki | — | — |
 | 2 — Reschedule restrict | ⬜ baki | — | — |
 

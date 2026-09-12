@@ -13,36 +13,38 @@
 | | |
 |---|---|
 | **Active plan** | [docs/plan/ROUND2_INDEX.md](docs/plan/ROUND2_INDEX.md) |
-| **Section** | Round 2 → Public ✅ complete (12 of 18 steps overall) |
-| **Next step** | **Student Step 0** — `usePackageTeachers` in the student folder ([ROUND2_STUDENT_INTEGRATION.md](docs/plan/ROUND2_STUDENT_INTEGRATION.md)) |
+| **Section** | Round 2 → Student (13 of 18 steps overall) |
+| **Next step** | **Student Step 1** — restrict the book-class teacher list ([ROUND2_STUDENT_INTEGRATION.md](docs/plan/ROUND2_STUDENT_INTEGRATION.md)) |
 | **Backend commit** | `63c01f5` (see `.claude/api-sync.json`) |
 | **Last updated** | 2026-09-12 — Claude |
 
 ### What was just done
-**Public Step 4 — pricing cards and checkout recovery. The Public section is
-complete.** Pricing cards show `teacher_count`, and a failed checkout now offers
-one click back to the teacher-and-time step instead of two presses of Back.
+**Student Step 0 — `usePackageTeachers` for the portal.** New file at
+`src/features/protected/pages/dashboard/student/queries/use-package-teachers.ts`.
+Nothing renders it yet; Step 1 does.
 
 ### What the next session does
-Start the Student section: open `docs/plan/ROUND2_STUDENT_INTEGRATION.md` and do
-**Step 0**. **One step per turn, nothing more.** Wait for the user to say "next"
-before the step after.
-
-The Public work it depends on is done, so Step 0 is mostly a thin wrapper over
-the hook and types that already exist.
+Open `docs/plan/ROUND2_STUDENT_INTEGRATION.md` and do **Step 1** (book-class
+teacher list). **One step per turn, nothing more.** Wait for the user to say
+"next" before the step after.
 
 ### Carried into the next step
-Student Step 2 has an unknown in it: `StudentSession` may not carry the catalogue
-package UUID, only `package_title`. Verify that first. If the id is absent, it
-has to be resolved from `/student/packages/`, or the backend asked to add it.
+- Pass `StudentPackage.package` (the catalogue UUID), **not** `StudentPackage.id`.
+  Confusing the two returns an empty list with no error.
+- The response already carries each teacher's slots, so `step-slot.tsx` can stop
+  calling `useTeacherSlots` — the same call it saved on the public side.
+- Step 2 still has an unknown: `StudentSession` may not carry the catalogue
+  package UUID, only `package_title`. Verify before starting it.
 
 ### Needs manual testing before it ships
 - **Booking flow (Public Steps 2-4)** — the largest UI change in Round 2 and
-  entirely untested. Walk it from both entry points: package-first from the
-  pricing section, teacher-first from a teacher card. Include a package with no
-  availability in the next 7 days, and widening the window to 14 and 21.
+  entirely untested. Walk it from both entry points, including a package with no
+  availability in the next 7 days and widening the window.
 - **Auth section** — all of it. Most urgent: `INTEGRATION_TEST.md` Phase J (token
   refresh), and confirming whether `EMAIL_VERIFICATION_REQUIRED` is on or off.
+- **Restricted packages do not exist yet.** Every seeded package is unrestricted,
+  so none of the restriction work can be exercised until a package is limited
+  from the admin UI — which is Admin Step 1, still unbuilt.
 
 Nothing is half-finished. Working tree clean.
 
