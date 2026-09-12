@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
+import { TeacherPicker } from "./teacher-picker";
 import {
   useZodTanstackForm,
   type AnyMutationLike,
@@ -247,6 +248,21 @@ export function PackageForm({
                   {field.state.value ? "Yes" : "No"}
                 </Label>
               </div>
+            </div>
+          )}
+        </form.Field>
+
+        {/*
+          PATCH-e backend ei list ta **replace** kore, merge kore na — tai form
+          shobshomoy puro list pathay, ja `form.Field` niজei kore.
+        */}
+        <form.Field name="teachers">
+          {(field) => (
+            <div className="sm:col-span-2">
+              <TeacherPicker
+                value={field.state.value ?? []}
+                onChange={field.handleChange}
+              />
             </div>
           )}
         </form.Field>

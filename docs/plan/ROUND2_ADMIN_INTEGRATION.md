@@ -7,8 +7,8 @@
 - **Source of truth:** [docs/bruno/administrator/](../bruno/administrator/)
 - **Index:** [ROUND2_INDEX.md](ROUND2_INDEX.md)
 - **Started:** 2026-09-12
-- **Current step:** **Step 1** — package form-e teacher picker
-- **Status:** in progress (1/3 done)
+- **Current step:** **Step 2** — table-e restriction column (shesh step)
+- **Status:** in progress (2/3 done)
 
 ---
 
@@ -115,6 +115,22 @@ ache, UI-te pouchay na.
 
 **Done jokhon:** create + edit duitatei teacher assign kora jay, save hoy.
 
+> **✅ Shesh — ja jana gelo:**
+> - ❓ **Khola proshno 1-er uttor: multi-select component nai.** `components/ui/`
+>   e shudhu `checkbox.tsx` ar `popover.tsx` — `command`/`combobox` nai. Teacher
+>   hate gona koyekjon, tai checkbox list-i kora holo, notun shadcn component ana
+>   hoy nai.
+> - **Helper text duita obostha alada kore bole.** Khali hole: *"Every teacher can
+>   be booked with this package"*. Select thakle: *"Limited to N teachers. Untick
+>   them all to allow everyone again."* — "0 selected" dhoroner lekha thakle admin
+>   ulta bujhto.
+> - `active: true` — deactivated teacher assign korar mane nai.
+> - PATCH-e backend list ta **replace** kore (merge na), tai form shobshomoy puro
+>   list pathay — `form.Field` niজei ta kore, alada kichu korte hoy nai.
+> - `to-list.ts` er comment-e lekha chilo shape "nishchit na". Backend source
+>   theke ager ei session-e confirm kora hoyechilo, tai comment-ta update kore
+>   asol karon likhe deya holo (duijon dui style-e likheche).
+
 ---
 
 ### Step 2 — Table-e restriction dekhao
@@ -134,7 +150,7 @@ ache, UI-te pouchay na.
 | Step | Obostha | Tarikh | Ki korechi |
 |---|---|---|---|
 | 0 — Type + schema | ✅ done | 2026-09-12 | `admin.types.ts` e `teachers` + `teacher_names`, `package.schema.ts` e `teachers` (default `[]`), `package-form.tsx` + `edit-package-page.tsx` er defaultValues |
-| 1 — Form picker | ⬜ baki | — | — |
+| 1 — Form picker | ✅ done | 2026-09-12 | Notun `packages/components/teacher-picker.tsx` (checkbox list, `active: true`, sposhto helper text), `package-form.tsx` e `teachers` field. `to-list.ts` er comment backend source diye update |
 | 2 — Table column | ⬜ baki | — | — |
 
 ---

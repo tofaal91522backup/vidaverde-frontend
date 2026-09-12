@@ -1,13 +1,15 @@
 import type { ListResponse } from "@/types/api-response.type";
 
 /**
- * Kichu admin list endpoint-er shape bru file-e dekhano nai — POST bare object
- * dey ar doc bole "not paginated", kintu GET list-er example nai.
- * (teachers, packages, testimonials, admins)
+ * Admin list endpoint gula duita alada shape dey, ar bru file-e kono ta-i
+ * dekhano nai.
  *
- * Backend bare array dilo naki `{ success, results }` dilo — dui khetrei kaj
- * kore, tai ekhane normalize kora hoy. Asol shape confirm hole ei helper
- * shoriye direct kora jabe.
+ * **Backend source dekhe confirm kora (2026-09-12):**
+ * - `teachers`, `admins` — hate lekha `APIView`, dey `{ success, results }`
+ * - `packages`, `blogs`, `testimonials` — DRF `ListCreateAPIView`, dey **bare array**
+ *
+ * Eta kono design decision na, duijon dui style-e likheche. Duitai dhorar jonno
+ * ei helper — backend ek rokom na kora porjonto eta rakhte hobe.
  */
 export function toList<T>(
   data: ListResponse<T> | T[] | undefined | null,

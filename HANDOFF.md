@@ -13,44 +13,44 @@
 | | |
 |---|---|
 | **Active plan** | [docs/plan/ROUND2_INDEX.md](docs/plan/ROUND2_INDEX.md) |
-| **Section** | Round 2 → Admin (16 of 18 steps overall) |
-| **Next step** | **Admin Step 1** — teacher picker in the package form ([ROUND2_ADMIN_INTEGRATION.md](docs/plan/ROUND2_ADMIN_INTEGRATION.md)) |
+| **Section** | Round 2 → Admin (17 of 18 steps overall) |
+| **Next step** | **Admin Step 2** — restriction column on the packages table. Last step of Round 2 ([ROUND2_ADMIN_INTEGRATION.md](docs/plan/ROUND2_ADMIN_INTEGRATION.md)) |
 | **Backend commit** | `63c01f5` (see `.claude/api-sync.json`) |
 | **Last updated** | 2026-09-12 — Claude |
 
 ### What was just done
-**Admin Step 0 — package `teachers` type and schema.** `AdminPackage` gains
-`teachers` and read-only `teacher_names`; `PackageSchema` gains `teachers`
-defaulting to `[]`, which means unrestricted. No form field yet — Step 1 builds it.
+**Admin Step 1 — the teacher picker.** Packages can now be limited to specific
+teachers from the admin UI, in both create and edit.
+
+No multi-select component exists in this project (`components/ui/` has checkbox
+and popover, no command/combobox), and there are only a handful of teachers, so
+it is a checkbox list rather than a new dependency.
+
+**This unblocks testing for the Public and Student sections.** A package can
+finally be restricted, so the restriction work in both can be exercised.
 
 ### What the next session does
-Open `docs/plan/ROUND2_ADMIN_INTEGRATION.md` and do **Step 1** (the teacher
-picker). **One step per turn, nothing more.** Wait for the user to say "next"
-before the step after.
+Open `docs/plan/ROUND2_ADMIN_INTEGRATION.md` and do **Step 2** (restriction
+column on the packages table). That is the last step of Round 2. **One step per
+turn, nothing more.**
 
 ### Carried into the next step
-- Check `src/components/ui/` for a multi-select before adding one. There are only
-  a handful of teachers, so a checkbox list is likely enough; ask before pulling
-  a new shadcn component in.
-- The helper text has to be explicit that **leaving it empty allows every
-  teacher**. An admin reading "no teachers selected" as "nobody can teach this"
-  would have the feature exactly backwards.
-- On PATCH the backend replaces the teacher list rather than merging, so the form
-  must always send the full list.
-
-### Why this step unblocks the rest
-Every seeded package is unrestricted, so the restriction work in the Public and
-Student sections **cannot be tested at all** until this picker can limit one.
+Read `teacher_names`, not `teachers` — the table wants names, and the backend
+echoes them back read-only. Empty means "All teachers", never "none".
 
 ### Needs manual testing before it ships
-- **Booking flow (Public Steps 2-4)** — the largest UI change in Round 2 and
-  entirely untested. Walk it from both entry points, including a package with no
-  availability in the next 7 days and widening the window.
-- **Student book-class and reschedule (Steps 1-2)** — check book-class from both
-  the sidebar and the My Packages "Book a class" shortcut, which passes
-  `?package=`.
-- **Auth section** — all of it. Most urgent: `INTEGRATION_TEST.md` Phase J (token
-  refresh), and confirming whether `EMAIL_VERIFICATION_REQUIRED` is on or off.
+Nothing in Round 2 has been run in a browser. Suggested order, since each
+unblocks the next:
+1. **Admin** — restrict a package to one or two teachers and save. Everything
+   below depends on a restricted package existing.
+2. **Public booking** — the largest UI change in Round 2. Walk it from both entry
+   points (pricing card, teacher card), including a package with no availability
+   in the next 7 days and widening the window to 14 and 21.
+3. **Student** — book-class from the sidebar and from the My Packages "Book a
+   class" shortcut (which passes `?package=`), plus reschedule. Confirm a
+   restricted package offers only its own teachers.
+4. **Auth** — `INTEGRATION_TEST.md` Phase J (token refresh) first, and confirm
+   whether the backend's `EMAIL_VERIFICATION_REQUIRED` is on or off.
 
 Nothing is half-finished. Working tree clean.
 
