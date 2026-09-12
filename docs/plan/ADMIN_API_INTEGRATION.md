@@ -268,11 +268,11 @@ session-e shudhu `data.role` rakhe, `profile` rakhe na.
 | 10. Testimonials | ✅ Done | 2026-09-12 | Notun screen — list + create/edit, hide vs delete alada |
 | 11. Contact messages | ✅ Done | 2026-09-12 | Notun screen — read dialog, handled toggle, internal note |
 | 12. Leads | ✅ Done | 2026-09-12 | Notun screen — read-only list + filter + CSV export |
-| 13. Email outbox | ⬜ Not started | — | — |
-| 14. Admins (master) | ⬜ Not started | — | — |
-| 15. Final pass | ⬜ Not started | — | — |
+| 13. Email outbox | ✅ Done | 2026-09-12 | Notun read-only screen — status filter, failed row-e asol karon |
+| 14. Admins (master) | ✅ Done | 2026-09-12 | Ei session-er baire kora; verify kora holo — layout-level master gate, `password_txt` kothao render/log hoy na |
+| 15. Final pass | ✅ Done | 2026-09-12 | 25 ta endpoint verify, mock nai, 13 ta screen-e loading+error, build 49/49 |
 
-**Next:** Step 13 — Email outbox → `/administrator/emails/` (notun screen)
+**Next:** — (shob step shesh)
 
 ### Detailed log
 
@@ -768,3 +768,69 @@ verify kora dorkar** — hook-e comment kora ache. Bookings-er moto amber warnin
 karon ekhane ignore kore kina sheta-i jana nai.
 
 **Verify:** `typecheck` clean · `eslint` admin + route clean
+
+---
+
+#### Step 13 — Email outbox · 2026-09-12 · ✅
+
+**Notun file:** `emails/queries/use-emails.ts` · `components/emails-column.tsx` ·
+`emails-table.tsx` · `index.tsx` · route `/dashboard/admin/emails`
+
+**Modified:** `sidebar/admin-sidebar-nav-items.ts` — "Email Outbox" item
+
+**Read-only** — row gula cron (`send_due_emails`, proti 5 minute) drain kore.
+
+**`error` column truncate kora hoy NA.** Onno column-e lomba text truncate kori, kintu
+failed email-er **karon ta-i ei screen-er mul kaj** — kete dile admin ke DB-te jete hoto.
+
+**`template_key` porar moto label-e** — `session_reminder` → "Class reminder",
+`booking_credentials` → "Account credentials" ityadi. Kacha key admin-er kache mane-i
+hoto na.
+
+**`cancelled` status-er mane query-te comment kora** — jar jonno email chhilo sheta ar
+nai (reschedule howa class-er purono reminder, unsubscribe kora lead-er baki nurture).
+Na likhle "cancelled" dekhe admin bhabto kichu bhul hoyeche.
+
+---
+
+#### Step 14 — Admins (master only) · ✅ (ei session-er baire kora)
+
+Ei step-er kaj **onno kothao kora hoyeche** — ami shudhu verify korlam. Table-e
+`Not started` chhilo bole ekhane log kora holo.
+
+**Step 0-er blocker ta thik hoye geche:** `Session.user.adminRole` add kora hoyeche ar
+login action-e `profile.role` theke set hoy — shathe ekta guard ("never trust an
+arbitrary profile role"), shudhu `master`/`manager` grohon kore.
+
+**Master gate layout-e, page-e na** — `app/(protected)/dashboard/admin/admins/layout.tsx`
+e `adminRole !== "master"` hole redirect. Eta list + create + edit **tinta URL-i**
+dhake, direct navigation shoho. Page-e gate dile `/admins/create` e shoja gele fake
+hoye jeto.
+
+**`password_txt` kothao render ba log hoy na** — query file-e duibar comment kora
+("do not write it to the console"). Backend clear-text password ferot dey, tai eta
+important.
+
+---
+
+#### Step 15 — Final pass · 2026-09-12 · ✅
+
+| Check | Result |
+|---|---|
+| `grep MOCK_ \| enabled: false \| initialData \| /api/` | ✅ admin-e kichu nai |
+| Endpoint coverage | ✅ **25 ta** path wired (17 ta planned endpoint + detail/sub-route) |
+| Loading + error state | ✅ 13 ta screen-er protita te |
+| `npm run typecheck` | ✅ clean |
+| `eslint` admin + routes | ✅ **0 error** |
+| `npm run build` | ✅ 49/49 |
+
+**Ekta purono eslint error ache kintu ei kaj-er na:**
+`src/features/auth/pages/confirm-email/index.tsx` — `set-state-in-effect`.
+Shesh commit `ff323d3` (2026-06-11, "update auth pages"), admin integration shuru-r age.
+
+**Ekhono onishchit (asol API cholle verify kora dorkar):**
+1. `teachers` / `packages` / `testimonials` / `admins` list-er shape — bare array naki
+   `{ success, results }`. Ekhon `toList()` duitai handle kore.
+2. `GET /administrator/students/:id/` er response shape — bru te dekhano nai; type-e
+   shob key optional, UI `student ?? profile` duitai try kore.
+3. `GET /administrator/leads/export/` kon filter mane — doc bole na.

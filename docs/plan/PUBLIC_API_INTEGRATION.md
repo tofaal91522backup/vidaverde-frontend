@@ -6,8 +6,8 @@
 
 - **Source of truth:** [docs/bruno/public/](../bruno/public/)
 - **Started:** 2026-09-12
-- **Current step:** **Step 0 — public data foundation**
-- **Status:** not started
+- **Current step:** ✅ **Shob step (0–11) shesh** — public marketing site puro real API-te
+- **Status:** complete
 
 ---
 
@@ -54,9 +54,8 @@
 - `blogs` returns a paginated object (`count`, `results`, etc.); only published
   posts are public. Detail has `body` plus `related_posts`.
 - `slots`, checkout, contact, lead, and unsubscribe use `{ success, ... }`.
-- `contact/subjects/` and `blogs/categories/` are documented as helper routes,
-  but their response examples are absent from the Bruno files. Their real
-  response shapes must be checked before finalising their types.
+- `contact/subjects/` and `blogs/categories/` return `{ success, subjects/categories:
+  [{ value, label }] }` (live-verified 2026-09-12).
 - Translated reads accept `lang=en|es`: packages, blogs, testimonials and
   teacher bios. Spanish falls back to English.
 
@@ -234,8 +233,8 @@
    a chosen teacher UUID.
 3. **Payment is not Stripe yet.** Phase 1 intentionally uses a dummy gateway;
    no card data should be handled by this frontend.
-4. **Subject/category helper response shapes need one real API check.** The
-   routes are documented but their JSON examples are not.
+4. **Subject/category helpers verified.** Both routes return `value`/`label`
+   option arrays; the types are in place for their later UI steps.
 5. **No API exists for most editorial pages.** Their current static data is not
    a mock to remove: activities, homestay, programme copy, legal content and
    school-history sections remain content-managed in the frontend for now.
@@ -246,15 +245,255 @@
 
 | Step | Status | Date | What changed |
 |---|---|---|---|
-| 0. Public foundation | ⏳ Next | — | Types, public request path, language/timezone helpers, helper-route verification |
-| 1. Packages | ⬜ Not started | — | — |
-| 2. Teachers | ⬜ Not started | — | — |
-| 3. Testimonials | ⬜ Not started | — | — |
-| 4. Lead capture | ⬜ Not started | — | — |
-| 5. Contact | ⬜ Not started | — | — |
-| 6. Blog list | ⬜ Not started | — | — |
-| 7. Blog detail | ⬜ Not started | — | — |
-| 8. Availability | ⬜ Not started | — | — |
-| 9. Checkout | ⬜ Not started | — | — |
-| 10. Unsubscribe | ⬜ Not started | — | — |
-| 11. Final pass | ⬜ Not started | — | — |
+| 0. Public foundation | ✅ Done | 2026-09-12 | Public request path, exhaustive API types, shared language/timezone helpers; subjects/categories response shapes live-verified |
+| 1. Packages | ✅ Done | 2026-09-12 | Live package query, API sort order, dynamic pricing cards/images/fallbacks, and UUID preselection in booking |
+| 2. Teachers | ✅ Done | 2026-09-12 | Live teacher list/detail on home, Online Classes, booking and profile; UUID profile links; match-me option removed because checkout requires a teacher UUID |
+| 3. Testimonials | ✅ Done | 2026-09-12 | Live testimonial carousel with rating, programme/country, photo fallback, and accessible duplicated marquee items |
+| 4. Lead capture | ✅ Done | 2026-09-12 | Shared validated lead form/mutation wired to homepage guide and blog newsletter with source, GDPR consent, pending/error and API-response success states |
+| 5. Contact | ✅ Done | 2026-09-12 | API-provided subject labels, `ContactSchema` + `useSendContactMessage`, real pending/error/success states, programme prefill |
+| 6. Blog list | ✅ Done | 2026-09-12 | Live blog list + API category pills, pagination, loading/error/empty; static `posts.data` list-e ar use hoy na |
+| 7. Blog detail | ✅ Done | 2026-09-12 | Server-side fetch + real 404, sanitized rich HTML body, API SEO/related posts; static blog data delete |
+| 8. Availability | ✅ Done | 2026-09-12 | Fake time list shoriye asol slot API; `start_utc` rakha hoy, teacher/date bodlale slot clear |
+| 9. Checkout | ✅ Done | 2026-09-12 | Real checkout call, fake card form deleted, backend booking data-te confirmation, backend error message surfaced |
+| 10. Unsubscribe | ✅ Done | 2026-09-12 | Notun `/unsubscribe/[token]` route, server-side idempotent call, invalid-token state, noindex |
+| 11. Final pass | ✅ Done | 2026-09-12 | Dead static data delete, 13 ta endpoint verify, state audit; blog-detail language limitation documented |
+
+---
+
+## Detailed log
+
+### Step 5 — Contact · 2026-09-12 · ✅
+
+**Log ta pore likha holo.** Kaj-ta age hoye giyechilo kintu ei table-e `Not started`
+theke giyechilo — keu plan porle abar Step 5 dhorto.
+
+**Files:** `queries/use-contact.ts` · `schemas/contact.schema.ts` ·
+`pages/contact/components/contact-form.tsx` · `pages/contact/index.tsx`
+
+Subject label gula `GET /public/contact/subjects/` theke ashe (hardcode kora na),
+`POST /public/contact/` e `name`/`email`/`subject`/`message` + optional `programme` jay,
+ar mutation-e `showSuccessToast`/`showErrorToast` off kore form-er nijer state-e
+message dekhano hoy.
+
+### Step 6 — Blog listing · 2026-09-12 · ✅
+
+**New:** `pages/blog/queries/use-public-blogs.ts` (list + categories) ·
+`pages/blog/components/BlogGrid.tsx`
+
+**Modified:** `pages/blog/index.tsx` — static import shoriye `<BlogGrid />`
+
+**Field mapping:** `post.category` → `category_label` · `post.readingTime` →
+`reading_time` (min read) · `post.date` → `published_at` · `post.image` → `thumbnail`.
+
+**Category pill ekhon API theke.** Age `posts.data.ts`-er hardcoded `categories` array
+chhilo ar pill gula **`<span>`** — click kora jeto na, shudhu dekhte button-er moto chhilo.
+Ekhon `GET /public/blogs/categories/` theke value+label, asol `<button>` with
+`aria-pressed`, ar category bodlale page 1-e fire jay.
+
+**⚠️ `page_size` 10-i rakhte holo.** Shared `<Pagination>` component
+`Math.ceil(total / 10)` **hardcode** kore. 9 rakhle (3-column grid-e dekhte bhalo hoto)
+page count kom dekhato ar **shesh page gula te jawa-i jeto na** — chupchap post harato.
+Query file-e comment kore rakha hoyeche.
+
+**Draft post niye kichu korte hoy ni** — public list API nijei shudhu published dey.
+
+**`posts.data.ts` delete kori nai** — blog **detail** (Step 7) ar
+`app/(marketing)/blog/[slug]/page.tsx` ekhono oita use kore. Step 7-e ek shathe jabe.
+
+### Step 7 — Blog detail · 2026-09-12 · ✅
+
+**New:** `queries/get-public-blog-detail.ts` · `utils/sanitize-blog-html.ts` ·
+`vv-prose` styles in `app/globals.css`
+
+**Modified:** `PostDetail.tsx` · `app/(marketing)/blog/[slug]/page.tsx`
+
+**Deleted:** `pages/blog/data/posts.data.ts` — ar kono file eta use kore na
+(Step 6-e list, ekhane detail — duitai API-te)
+
+**Notun dependency: `sanitize-html` 2.17.7** (+ `@types/sanitize-html`).
+Backend `body` **rich HTML** dey ar sheta `dangerouslySetInnerHTML` diye boshate hoy.
+Plan-er niyom chhilo sanitization policy chhara render na kora. Hand-roll kora
+nirapod na, project-e kono sanitizer chhilo-o na — tai library.
+
+**Policy `sanitize-blog-html.ts` e, allowlist-based:**
+- Tag: `p`, heading, list, `blockquote`, `a`, `img`, `figure`, `code`/`pre`, table
+- Attribute khub kom; **`class` bad** (editor-er class amader token-er shathe milto na)
+- Scheme shudhu `http`/`https`/`mailto` — `javascript:` ba `data:` href atke jay
+- `<a>` e `target="_blank"` + **`rel="noopener noreferrer"`** (na dile
+  reverse-tabnabbing er jayga thakto)
+- `nonTextTags` e `script`/`style` — bad deওয়া tag-er **bhitorer text-o** jay na
+
+**Sanitize server-e hoy** — blog detail ekta server component, tai kacha HTML
+browser porjonto pouchay-i na.
+
+**`generateStaticParams` shoriye dilam.** Oita `posts.data.ts` theke slug list banato —
+ekhon slug CMS-e, build-time-e jana jay na. Route ekhon `ƒ Dynamic`, mane **notun post
+publish korle rebuild chhara-i dekha jabe**.
+
+**404 ta asol.** `getPublicBlogDetail()` shudhu **API 404** hole `null` dey; onno error
+(server down, network) **throw kore** — na hole "backend down" ke "post nai" bole
+dekhato, ar Google oi URL de-index kore dito.
+
+**SEO:** `meta_title`/`meta_description` backend dile sheta, na hole documented
+`title | Vida Verde Blog` + `excerpt` fallback.
+
+**Related posts:** API-r `related_posts` (3 tar cap), thumbnail khali hole warm block.
+
+**`vv-prose` CSS add korte holo** — sanitized HTML-er tag gula kono class pay na
+(policy-te `class` bad), tai `globals.css`-e heading/list/quote/code/table-er style.
+
+**Verify:** `typecheck` clean · `eslint` marketing clean · `npm run build` 49/49,
+`/blog/[slug]` ekhon `ƒ Dynamic`
+
+### Step 8 — Availability · 2026-09-12 · ✅
+
+**New:** `pages/book/queries/use-public-teacher-slots.ts` ·
+`pages/book/components/SlotPicker.tsx`
+
+**Modified:** `pages/book/index.tsx`
+
+**Fake time list gelo.** Age step 3-e hardcoded `["9:00 AM", "10:00 AM", ...]` chhilo —
+teacher ke, kobe, ki kore free, kichhur shathe kono somporko chhilo na. Visitor emon
+time-e "book" korte parto jokhon teacher-er kono availability-i nai. Ekhon
+`GET /public/teachers/:id/slots/` — backend weekly rule theke hisheb kore, booked class,
+time-off ar 12 ghontar lead time bad diye.
+
+**State bodlano holo:** `selectedTime: string` (label) → `selectedSlot: PublicTeacherSlot`.
+Label ta dekhanor jonno, kintu **`start_utc` ta-i asol** — Step 9-e checkout-e hubohu
+`start_datetime` hisebe jabe. Label theke time banale backend re-validate-e fail korto.
+
+**Stale selection clear kora hoy** — teacher ba date bodlale `selectedSlot` null hoy
+(`changeTeacher` / `changeDate`). Na korle onno teacher-er slot niye porer step-e chole
+jeto, ar checkout-e giye 400 khato.
+
+**Timezone visitor-er nijer** — `getPublicTimeZone()` (Step 0-e banano) theke, ar `tz`
+param hisebe jay. Purono copy-te lekha chhilo "Ecuador is GMT−5" — ekhon backend-er
+ferot deওয়া `timezone` + `duration_minutes` dekhano hoy.
+
+**`todayInput()` local date theke** — `toISOString()` UTC dey, tate date input-er `min`
+ek din agiye jete parto ar aj-ker slot lukiye jeto.
+
+**State handle kora:** loading · error · "no free times in the 7 days" (later date/onno
+teacher-er suggestion shoho) · teacher select na kora obostha (`enabled: false`).
+
+**Refetch shudhu teacher/date/tz bodlale** — query key-e oi tinta-i.
+
+**Verify:** `typecheck` clean · `eslint` marketing clean · `npm run build` 49/49
+
+### Step 9 — Checkout · 2026-09-12 · ✅
+
+**New:** `schemas/checkout.schema.ts` · `queries/use-checkout.ts`
+
+**Modified:** `pages/book/index.tsx`
+
+**Fake card form delete kora holo.** Age Card Number / Expiry / CVC input chhilo ar
+"Secure payment via Stripe" lekha chhilo — kintu oi data **kothao jeto na**, kono
+gateway-o chhilo na. Sheta rekhe deওয়া mane visitor-ke card number likhte bola, ja
+kono kaje lagto na ar amader **PCI scope-e** dhukiye dito. Backend Phase 1-e dummy
+gateway chalay ar shudhu `payment_method` token ney — tai `DUMMY_PAYMENT_METHOD`
+pathano hoy, ar UI te sposhto lekha: "No card details are collected on this page."
+
+**Booking ekhon sotti hoy.** Age `handleConfirm` shudhu `setConfirmed(true)` korto —
+visitor "You're booked!" dekhto kintu **backend-e kichu-i jeto na**. Ekhon
+`POST /public/bookings/checkout/`.
+
+**Field gula API enum-e bodlano:** free-text `level` ("Complete beginner. I know very
+little Spanish") → `spanish_level` enum (`none`/`beginner`/...). Purono string pathale
+backend 400 dito. `firstName`/`lastName` → `first_name`/`last_name`, ar `phone_number`,
+`country`, `timezone` add.
+
+**`last_name` ekhon optional** — age `required` chhilo ar `canAdvance`-eo lagto, kintu
+backend-e optional. Ek naam-er lok ke atkano hoto.
+
+**Confirmation puro backend data theke** — `message`, `teacher`, `package_title`,
+`start_local`, `timezone`, `duration_minutes`, `invoice_number`, `amount_paid` +
+`currency`, `classes_remaining`. Ar "Add to Calendar" er dead `href="#"` er jaygay
+asol `meet_link`.
+
+**`account_created` true hole-i** "check your email for your password" note dekhay —
+purono student-ke oi kotha bola bhul hoto.
+
+**Error false-confirm kore na.** `showErrorToast` off, error form-er nichei dekhano hoy
+backend-er nijer message diye (slot chole geche / lead time / first-lesson limit /
+declined card). `checkout.isPending` e button disable — duplicate submit bondho.
+
+**`start_utc` hubohu jay** `start_datetime` hisebe (Step 8-e store kora), kono convert
+chhara.
+
+**Verify:** `typecheck` clean · `eslint` marketing clean · `npm run build` 49/49
+
+### Step 10 — Unsubscribe · 2026-09-12 · ✅
+
+**New:** `pages/unsubscribe/queries/get-public-unsubscribe.ts` ·
+`pages/unsubscribe/index.tsx` · route `app/(marketing)/unsubscribe/[token]/page.tsx`
+
+**Server component, hook na.** Email-er footer theke click kore ashe, tai JS chhara-o
+kaj kora uchit ar loading flash thaka uchit na. Endpoint idempotent, tai proti request-e
+call kora nirapod.
+
+**Error duibhagey bhaga holo — eta-i main kaj:**
+- **404/400** → "This unsubscribe link is not valid any more" (token-er dosh)
+- **onno kichu** (server down, network) → "We could not process this request right now.
+  Please try the link again shortly."
+
+Shob error-ke "invalid link" bole dile emon user ke bola hoto je **token thik chhilo,
+shudhu server down chhilo** — tara bhabto unsubscribe kaj korchhe na ar spam report korto.
+Legal dik theke-o eta jhuki.
+
+**Ei page-e ichchhe kore kono lead/newsletter form nai** — je matro unsubscribe korlo
+take abar subscribe korte bola oshovyo. `(marketing)` layout-er footer check kore
+dekhechi, ওkhane-o kono form nai.
+
+**`robots: noindex, nofollow`** — email link, search result-e ashar kono karon nai
+(ar token URL index hoye jaওয়া-o thik na).
+
+**Success copy-te sposhto kore bola** je marketing email bondho hocche, kintu booking/class
+email ashte thakbe — na hole user bhabto class-er reminder-o bondho hoye gelo.
+
+**Verify:** `typecheck` clean · `eslint` marketing clean · `npm run build` 49/49,
+`/unsubscribe/[token]` → `ƒ Dynamic`
+
+### Step 11 — Final public pass · 2026-09-12 · ✅
+
+**Deleted (API-te replace hoye giyechilo, ar kothao use hocchilo na):**
+`pages/courses/data/online-classes.data.ts` theke `pricingPackages` + `PricingPackage`
+ar `onlineTeachers` + `OnlineTeacher`. `howItWorksSteps` ar `onlineClassesFaqs` rekhe
+deওয়া holo — oigular kono endpoint nai.
+
+**Static content ja ichchhe kore rakha holo** (kono backend endpoint nai): activities,
+homestay, study-in-quito programme copy, privacy/terms, home-er `socialStats`, FAQ,
+how-it-works.
+
+**13 ta public endpoint-i wired:**
+`/public/packages/` · `/public/teachers/` · `/public/teachers/:id/` ·
+`/public/teachers/:id/slots/` · `/public/testimonials/` · `/public/blogs/` ·
+`/public/blogs/categories/` · `/public/blogs/:slug/` · `/public/contact/` ·
+`/public/contact/subjects/` · `/public/leads/` ·
+`/public/leads/unsubscribe/:token/` · `/public/bookings/checkout/`
+
+**State audit** — data-driven 11 ta component-er protita te loading ar error state ache;
+list wala gula te empty state-o (teachers, packages, testimonials, blogs, slots).
+Teacher profile detail-e `isError || !teacher` → sposhto "not found" panel.
+
+**Verify:** `typecheck` clean · `eslint` marketing/lib/route-e **0 error**
+(purono `CountUpStat` warning ta ei kaj-er na) · `npm run build` 49/49
+
+---
+
+## ⚠️ Known limitation — blog detail shob shomoy English
+
+`/blog/[slug]` ekta **server component** (SEO-r jonno, Step 7). Kintu visitor-er bhasha
+`LanguageProvider`-e — ekta **client-side context** ja localStorage pore. Server sheta
+porte pare na, tai blog detail `DEFAULT_PUBLIC_LANGUAGE` (`en`) diye fetch kore.
+
+Mane: **site Spanish-e rakhleo blog post ta English-e dekhabe** (baki shob page thik
+kore Spanish dey).
+
+Thik korar poth (product siddhanto dorkar):
+1. `/es/blog/...` er moto **locale-based routing** — SEO-r jonno shobcheye bhalo, kintu
+   puro site-er routing bodlate hobe
+2. `?lang=es` **search param** — chhoto kaj, kintu link share korle bhasha hariye jete pare
+3. Detail-ta **client-side** kore deওয়া — bhasha thik hobe kintu server-rendered SEO
+   metadata hariye jabe
+
+Ekhon-ker obostha ichchhe kore neওয়া trade-off: **SEO > detail page-er bhasha**.

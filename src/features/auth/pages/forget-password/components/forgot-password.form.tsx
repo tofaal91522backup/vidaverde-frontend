@@ -62,7 +62,7 @@ const ForgotPasswordForm = () => {
           )}
 
           <Link
-            href="/signin"
+            href="/auth/signin"
             className="text-center text-sm font-medium text-vv-accent-deep hover:text-vv-ink"
           >
             Back to sign in

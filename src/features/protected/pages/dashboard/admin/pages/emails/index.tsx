@@ -5,7 +5,7 @@ export default function EmailsIndex() {
   return (
     <DashboardPageLayout
       title="Email Outbox"
-      subtitle="Queued and delivered emails. Failed messages are retried automatically up to three times."
+      subtitle="What is queued, what went out, and what failed. Read-only — the mailer sends these automatically."
     >
       <EmailsTable />
     </DashboardPageLayout>

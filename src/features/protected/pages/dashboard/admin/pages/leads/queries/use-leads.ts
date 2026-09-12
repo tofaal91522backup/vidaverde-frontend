@@ -42,24 +42,22 @@ export function useLeads(params: LeadListParams = {}) {
 }
 
 /**
- * GET /administrator/leads/export/ — ek-i list CSV hisebe.
+ * GET /administrator/leads/export/ — CSV download.
  *
- * ⚠️ Doc shudhu bole "downloads the same list as CSV" — **kon filter gula mane
- * sheta bola nai** (bookings export-e teacher/search ignore kore). Ekhane list-er
- * filter gula pathano hoy, kintu asol API cholle verify kora dorkar.
+ * ⚠️ **Ei export kono filter-i mane na — shob shomoy PURO lead list dey.**
+ * Backend source-e verify kora (`administrator/views/funnel.py` →
+ * `LeadExportView`): query param porei na, shoja `Lead.objects.iterator()`
+ * chalay. Bookings export at least `payment_status`/`from`/`to` mane, eta kichu-i na.
  *
- * docs/bruno/administrator/bookings export.bru (leads-er ta ekhane ullekh kora)
+ * Tai ekhane ichchhe kore **kono param pathano hoy na** — pathale mone hoto
+ * filter kaj korche. UI te admin ke sposhto bola hoy je puro list namche.
+ *
+ * CSV column: Captured · First name · Email · Source · Subscribed · Converted
  */
 export function useExportLeads() {
-  return useMutationHandler<Blob, Omit<LeadListParams, "page">>({
-    mutationFn: async (params) => {
-      const blob = await request.getBlob(
-        makeEndpoint("/administrator/leads/export/", {
-          subscribed: params.subscribed || undefined,
-          converted: params.converted || undefined,
-          search: params.search || undefined,
-        }),
-      );
+  return useMutationHandler<Blob, void>({
+    mutationFn: async () => {
+      const blob = await request.getBlob("/administrator/leads/export/");
       saveBlob(blob, `vidaverde-leads-${dateStamp()}.csv`);
       return blob;
     },

@@ -72,7 +72,8 @@ export default function AppSidebarItems({
 
           return (
             <Collapsible
-              key={item.title}
+              // `url` ta-i asol identity — duita item-er title ek hote pare
+              key={item.url ?? item.title}
               defaultOpen={item.defaultOpen ?? groupHasActive}
             >
               <SidebarMenuItem>
@@ -90,7 +91,7 @@ export default function AppSidebarItems({
                       const SubIcon = sub.icon;
 
                       return (
-                        <SidebarMenuSubItem key={sub.title}>
+                        <SidebarMenuSubItem key={sub.url}>
                           <SidebarMenuSubButton
                             asChild
                             isActive={isActive(pathname, sub.url)}
@@ -113,7 +114,7 @@ export default function AppSidebarItems({
         // SINGLE
         const Icon = item.icon;
         return (
-          <SidebarMenuItem key={item.title}>
+          <SidebarMenuItem key={item.url}>
             <SidebarMenuButton asChild isActive={isActive(pathname, item.url)}>
               <Link href={item.url}>
                 <Icon className="mr-2 h-4 w-4" />

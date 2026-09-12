@@ -1,9 +1,6 @@
 import { Container } from "@/components/shared/Container";
+import { BlogGrid } from "./components/BlogGrid";
 import { NewsletterSignup } from "./components/NewsletterSignup";
-import { blogPosts, categories } from "./data/posts.data";
-import Image from "next/image";
-import Link from "next/link";
-import { ChevronRight } from "lucide-react";
 
 export default function BlogRoute() {
   return (
@@ -31,68 +28,7 @@ export default function BlogRoute() {
         data-screen-label="02 Blog Grid"
       >
         <Container>
-          <div className="mb-8 flex flex-wrap gap-2">
-            {["All", ...categories].map((cat) => (
-              <span
-                key={cat}
-                className="rounded-full border border-vv-line bg-vv-bg-warm px-3 py-1 text-[12px] font-medium text-vv-ink-2 cursor-pointer hover:border-vv-ink transition"
-              >
-                {cat}
-              </span>
-            ))}
-          </div>
-
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {blogPosts.map((post, i) => (
-              <article
-                key={post.slug}
-                className={`group flex flex-col overflow-hidden rounded-[22px] border border-vv-line bg-vv-bg transition hover:-translate-y-0.5 hover:border-vv-accent ${i === 0 ? "sm:col-span-2 lg:col-span-1" : ""}`}
-              >
-                <div className="relative aspect-video overflow-hidden bg-vv-bg-warm">
-                  <Image
-                    src={post.image}
-                    alt={post.title}
-                    fill
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    className="object-cover transition duration-300 group-hover:scale-[1.03]"
-                    unoptimized
-                  />
-                </div>
-                <div className="flex flex-col gap-3 p-6 flex-1">
-                  <div className="flex items-center gap-3">
-                    <span className="rounded-full bg-vv-accent/20 px-2.5 py-0.5 text-[11px] font-semibold text-vv-accent-deep">
-                      {post.category}
-                    </span>
-                    <span className="text-[11px] text-vv-ink-2">
-                      {post.readingTime}
-                    </span>
-                  </div>
-                  <h2 className="text-[18px] font-semibold leading-tight tracking-[-0.01em] text-vv-ink">
-                    {post.title}
-                  </h2>
-                  <p className="text-[13px] leading-[1.6] text-vv-ink-2 flex-1">
-                    {post.excerpt}
-                  </p>
-                  <div className="flex items-center justify-between mt-2">
-                    <span className="text-[12px] text-vv-ink-2">
-                      {new Date(post.date).toLocaleDateString("en-GB", {
-                        day: "numeric",
-                        month: "long",
-                        year: "numeric",
-                      })}
-                    </span>
-                    <Link
-                      href={`/blog/${post.slug}`}
-                      className="inline-flex items-center gap-1.5 text-[13px] font-medium text-vv-ink hover:text-vv-accent-deep transition"
-                    >
-                      Read more{" "}
-                      <ChevronRight className="h-4 w-4 shrink-0 translate-y-0.5" />
-                    </Link>
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
+          <BlogGrid />
         </Container>
       </section>
 

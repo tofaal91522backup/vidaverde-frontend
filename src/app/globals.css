@@ -387,3 +387,105 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
 .animate-scroll-marquee {
   animation: scroll-marquee var(--marquee-duration, 50s) var(--marquee-direction, forwards) linear infinite;
 }
+
+/* Blog body — backend-er sanitized rich HTML (sanitize-blog-html.ts dekho).
+   Tag gula amader class pay na, tai ekhanei style deওয়া hoy. */
+.vv-prose > :last-child {
+  margin-bottom: 0;
+}
+
+.vv-prose p,
+.vv-prose ul,
+.vv-prose ol,
+.vv-prose blockquote,
+.vv-prose pre,
+.vv-prose figure,
+.vv-prose table {
+  margin-bottom: 1.25rem;
+}
+
+.vv-prose h2,
+.vv-prose h3,
+.vv-prose h4 {
+  color: var(--color-vv-ink, inherit);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.vv-prose h2 { font-size: 1.5rem; }
+.vv-prose h3 { font-size: 1.25rem; }
+.vv-prose h4 { font-size: 1.0625rem; }
+
+.vv-prose strong,
+.vv-prose b {
+  color: var(--color-vv-ink, inherit);
+  font-weight: 600;
+}
+
+.vv-prose a {
+  color: var(--color-vv-accent-deep, inherit);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.vv-prose ul,
+.vv-prose ol {
+  padding-left: 1.5rem;
+}
+
+.vv-prose ul { list-style: disc; }
+.vv-prose ol { list-style: decimal; }
+.vv-prose li { margin-bottom: 0.375rem; }
+
+.vv-prose blockquote {
+  border-left: 3px solid var(--color-vv-accent, currentColor);
+  padding-left: 1rem;
+  font-style: italic;
+}
+
+.vv-prose img {
+  border-radius: 1rem;
+  max-width: 100%;
+  height: auto;
+}
+
+.vv-prose code {
+  background: var(--color-vv-bg-warm, rgb(0 0 0 / 0.05));
+  border-radius: 0.25rem;
+  padding: 0.125rem 0.3rem;
+  font-size: 0.9em;
+}
+
+.vv-prose pre {
+  background: var(--color-vv-bg-warm, rgb(0 0 0 / 0.05));
+  border-radius: 0.75rem;
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+.vv-prose pre code {
+  background: none;
+  padding: 0;
+}
+
+.vv-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+}
+
+.vv-prose th,
+.vv-prose td {
+  border: 1px solid var(--color-vv-line, currentColor);
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+}
+
+.vv-prose hr {
+  border: 0;
+  border-top: 1px solid var(--color-vv-line, currentColor);
+  margin: 2rem 0;
+}

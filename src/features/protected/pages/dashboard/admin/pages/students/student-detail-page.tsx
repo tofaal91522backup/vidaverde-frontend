@@ -25,8 +25,8 @@ function Row({ label, value }: { label: string; value: string }) {
 export default function StudentDetailPage({ id }: { id: string }) {
   const { data, isLoading, isError } = useStudentDetails(id);
 
-  // ⚠️ Response shape bru te dekhano nai — `student` ba `profile`, jeta ashe
-  const student = data?.student ?? data?.profile;
+  // Shape backend source theke confirm kora: { success, student, packages, sessions }
+  const student = data?.student;
   const packages = data?.packages ?? [];
   const sessions = data?.sessions ?? [];
 

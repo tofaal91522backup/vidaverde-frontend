@@ -26,7 +26,7 @@ const ResetPasswordForm = ({ uid, token }: { uid: string; token: string }) => {
   useEffect(() => {
     if (state.success === true) {
       toast.success("Password reset successfully");
-      router.push("/signin");
+      router.push("/auth/signin");
     }
   }, [state, router]);
 

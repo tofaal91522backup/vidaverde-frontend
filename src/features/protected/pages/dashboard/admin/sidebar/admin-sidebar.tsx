@@ -24,7 +24,7 @@ export function AdminSidebar({ session }: { session: any }) {
       : AdminSidebarNavItems;
 
   return (
-    <Sidebar collapsible="icon" variant="inset">
+    <Sidebar collapsible="icon" variant="sidebar">
       <SidebarHeader>
         <AppSidebarHeader
           headerInfo={{

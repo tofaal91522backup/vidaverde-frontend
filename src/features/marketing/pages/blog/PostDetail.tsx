@@ -1,12 +1,29 @@
 import { Container } from "@/components/shared/Container";
+import { DEFAULT_PUBLIC_LANGUAGE } from "@/features/marketing/constants/public-api";
+import type { PublicBlogDetail } from "@/features/marketing/types/public-api.types";
 import { ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import type { BlogPost } from "./data/posts.data";
-import { blogPosts } from "./data/posts.data";
+import { sanitizeBlogHtml } from "./utils/sanitize-blog-html";
 
-export function PostDetail({ post }: { post: BlogPost }) {
-  const related = blogPosts.filter((p) => p.slug !== post.slug).slice(0, 2);
+function formatPublishedAt(value: string, lang: string) {
+  if (!value) return "";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "";
+
+  return date.toLocaleDateString(lang === "es" ? "es-ES" : "en-GB", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+}
+
+export function PostDetail({ post }: { post: PublicBlogDetail }) {
+  const lang = post.lang ?? DEFAULT_PUBLIC_LANGUAGE;
+  // Server component — sanitize ekhanei hoy, browser kacha HTML pay na
+  const body = sanitizeBlogHtml(post.body);
+  // Backend already 3 tar beshi dey na, tobu UI-r dik theke cap
+  const related = (post.related_posts ?? []).slice(0, 3);
 
   return (
     <>
@@ -20,21 +37,17 @@ export function PostDetail({ post }: { post: BlogPost }) {
             <Link href="/blog" className="hover:text-vv-ink">
               Blog
             </Link>{" "}
-            <span className="mx-1 text-vv-line-2">/</span> {post.category}
+            <span className="mx-1 text-vv-line-2">/</span> {post.category_label}
           </div>
           <div className="mt-4 flex items-center gap-3">
             <span className="rounded-full bg-vv-accent/20 px-2.5 py-0.5 text-[11px] font-semibold text-vv-accent-deep">
-              {post.category}
+              {post.category_label}
             </span>
             <span className="text-[12px] text-vv-ink-2">
-              {post.readingTime}
+              {post.reading_time} min read
             </span>
             <span className="text-[12px] text-vv-ink-2">
-              {new Date(post.date).toLocaleDateString("en-GB", {
-                day: "numeric",
-                month: "long",
-                year: "numeric",
-              })}
+              {formatPublishedAt(post.published_at, lang)}
             </span>
           </div>
           <h1 className="text-[clamp(36px,5vw,68px)] font-semibold tracking-[-0.03em] leading-none m-0 mt-4 mb-5">
@@ -50,25 +63,29 @@ export function PostDetail({ post }: { post: BlogPost }) {
         className="border-t border-vv-line py-12"
         data-screen-label="02 Post Body"
       >
-        <Container className="">
+        <Container>
           <div className="text-[16px] leading-[1.75] text-vv-ink-2">
-            <figure className="float-right mb-6 ml-8 w-[44%] max-w-[27rem] overflow-hidden rounded-[22px] border border-vv-line bg-vv-bg-warm max-[760px]:float-none max-[760px]:mb-8 max-[760px]:ml-0 max-[760px]:w-full max-[760px]:max-w-none">
-              <div className="relative aspect-[4/3]">
-                <Image
-                  src={post.image}
-                  alt={post.title}
-                  fill
-                  sizes="(max-width: 760px) 100vw, 44vw"
-                  className="object-cover"
-                  unoptimized
-                />
-              </div>
-            </figure>
-            {post.body.map((para, i) => (
-              <p key={i} className="mb-5 last:mb-0">
-                {para}
-              </p>
-            ))}
+            {/* Thumbnail optional — khali hole figure-i dekhano hoy na */}
+            {post.thumbnail && (
+              <figure className="float-right mb-6 ml-8 w-[44%] max-w-[27rem] overflow-hidden rounded-[22px] border border-vv-line bg-vv-bg-warm max-[760px]:float-none max-[760px]:mb-8 max-[760px]:ml-0 max-[760px]:w-full max-[760px]:max-w-none">
+                <div className="relative aspect-[4/3]">
+                  <Image
+                    src={post.thumbnail}
+                    alt={post.title}
+                    fill
+                    sizes="(max-width: 760px) 100vw, 44vw"
+                    className="object-cover"
+                    unoptimized
+                  />
+                </div>
+              </figure>
+            )}
+
+            <div
+              className="vv-prose"
+              // `body` upore sanitizeBlogHtml() diye allowlist-e chhenke newa
+              dangerouslySetInnerHTML={{ __html: body }}
+            />
           </div>
 
           {/* Lead capture inline */}
@@ -91,43 +108,42 @@ export function PostDetail({ post }: { post: BlogPost }) {
         </Container>
       </section>
 
-     
-
-      {/* Related posts */}
       {related.length > 0 && (
         <section
           className="border-t border-vv-line bg-vv-bg-warm py-12"
           data-screen-label="03 Related"
         >
-          <Container >
+          <Container>
             <h2 className="text-[22px] font-semibold tracking-[-0.02em] leading-[1.08] m-0 mb-6">
               Related Posts
             </h2>
-            <div className="grid gap-5 sm:grid-cols-2">
-              {related.map((p) => (
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {related.map((item) => (
                 <article
-                  key={p.slug}
+                  key={item.id}
                   className="group flex flex-col overflow-hidden rounded-[22px] border border-vv-line bg-vv-bg transition hover:border-vv-accent"
                 >
                   <div className="relative aspect-video overflow-hidden bg-vv-bg-warm">
-                    <Image
-                      src={p.image}
-                      alt={p.title}
-                      fill
-                      sizes="(max-width: 820px) 50vw, 400px"
-                      className="object-cover"
-                      unoptimized
-                    />
+                    {item.thumbnail && (
+                      <Image
+                        src={item.thumbnail}
+                        alt={item.title}
+                        fill
+                        sizes="(max-width: 820px) 50vw, 400px"
+                        className="object-cover"
+                        unoptimized
+                      />
+                    )}
                   </div>
                   <div className="flex flex-col gap-2 p-5 flex-1">
                     <span className="text-[11px] font-semibold text-vv-accent-deep">
-                      {p.category}
+                      {item.category_label}
                     </span>
                     <h3 className="text-[16px] font-semibold text-vv-ink flex-1">
-                      {p.title}
+                      {item.title}
                     </h3>
                     <Link
-                      href={`/blog/${p.slug}`}
+                      href={`/blog/${item.slug}`}
                       className="inline-flex items-center gap-1.5 text-[13px] font-medium text-vv-ink hover:text-vv-accent-deep"
                     >
                       Read more{" "}
@@ -146,7 +162,7 @@ export function PostDetail({ post }: { post: BlogPost }) {
               </Link>
             </div>
           </Container>
-        </section> 
+        </section>
       )}
     </>
   );

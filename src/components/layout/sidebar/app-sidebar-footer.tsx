@@ -82,7 +82,7 @@ export function AppSidebarFooter({
               </Link>
             </DropdownMenuItem> */}
             <DropdownMenuItem asChild>
-              <Link href="/forget-password" className="cursor-pointer gap-2">
+              <Link href="/auth/forget-password" className="cursor-pointer gap-2">
                 <KeyRound className="size-4" />
                 Change Password
               </Link>

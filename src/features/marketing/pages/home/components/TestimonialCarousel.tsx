@@ -1,66 +1,122 @@
 "use client";
 
+import { usePublicTestimonials } from "@/features/marketing/pages/home/queries/use-public-testimonials";
+import type { PublicTestimonial } from "@/features/marketing/types/public-api.types";
 import { cn } from "@/lib/utils";
-import { useEffect, useRef, useState } from "react";
-import { testimonials } from "../data/marketing.data";
+import { useLanguage } from "@/providers/language-provider";
+
+function initials(name: string) {
+  return name
+    .trim()
+    .split(/\s+/)
+    .map((part) => part[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
+}
+
+function Rating({ rating }: { rating: number }) {
+  return (
+    <div className="flex gap-0.5" aria-label={`${rating} out of 5 stars`}>
+      {Array.from({ length: 5 }).map((_, index) => (
+        <span
+          key={index}
+          aria-hidden="true"
+          className={index < rating ? "text-amber-400" : "text-vv-line-2"}
+        >
+          ★
+        </span>
+      ))}
+    </div>
+  );
+}
 
 export function TestimonialCarousel() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const scrollerRef = useRef<HTMLUListElement>(null);
-  const [ready, setReady] = useState(false);
+  const { language } = useLanguage();
+  const { data, isLoading, isError } = usePublicTestimonials({ lang: language });
+  const testimonials = data ?? [];
+  const marqueeTestimonials = [...testimonials, ...testimonials];
 
-  useEffect(() => {
-    const container = containerRef.current;
-    const scroller = scrollerRef.current;
-    if (!container || !scroller) return;
+  if (isLoading) {
+    return <p className="text-vv-ink-2" role="status">Loading testimonials…</p>;
+  }
 
-    Array.from(scroller.children).forEach((item) => {
-      scroller.appendChild(item.cloneNode(true));
-    });
+  if (isError) {
+    return (
+      <p className="text-red-600" role="alert">
+        Testimonials are unavailable right now. Please try again shortly.
+      </p>
+    );
+  }
 
-    container.style.setProperty("--marquee-duration", "55s");
-    container.style.setProperty("--marquee-direction", "forwards");
-    setReady(true);
-  }, []);
+  if (testimonials.length === 0) {
+    return <p className="text-vv-ink-2">No testimonials are currently available.</p>;
+  }
 
   return (
     <div
-      ref={containerRef}
       className="overflow-hidden mask-[linear-gradient(to_right,transparent,white_8%,white_92%,transparent)]"
       aria-label="Student testimonials"
     >
       <ul
-        ref={scrollerRef}
         className={cn(
-          "flex w-max min-w-full shrink-0 flex-nowrap gap-6 py-1",
-          ready && "animate-scroll-marquee",
+          "flex w-max min-w-full shrink-0 flex-nowrap gap-6 py-1 animate-scroll-marquee",
           "hover:paused",
         )}
       >
-        {testimonials.map((testimonial) => (
-          <li key={testimonial.name} className="w-95 max-[640px]:w-75 shrink-0">
-            <article className="flex h-full flex-col gap-4 rounded-[22px] border border-vv-line bg-vv-bg p-7 max-[640px]:p-5">
-              <blockquote className="flex-1 text-[16px] tracking-[-0.01em] leading-relaxed m-0 text-pretty text-vv-ink">
-                {testimonial.quote}
-              </blockquote>
-
-              <div className="flex items-center gap-3 border-t border-vv-line pt-4">
-                <div className="grid h-10 w-10 place-items-center rounded-full bg-vv-accent text-vv-accent-deep text-[14px] font-bold shrink-0">
-                  {testimonial.initials}
-                </div>
-                <div>
-                  <div className="text-[14px] font-semibold text-vv-ink">
-                    {testimonial.name}
-                  </div>
-                  <div className="text-vv-muted text-[11px] mt-0.5">
-                    {testimonial.meta}
-                  </div>
-                </div>
-              </div>
-            </article>
-          </li>
+        {marqueeTestimonials.map((testimonial, index) => (
+          <TestimonialCard
+            key={`${testimonial.id}-${index}`}
+            testimonial={testimonial}
+            aria-hidden={index >= testimonials.length}
+          />
         ))}
       </ul>
     </div>
+  );
+}
+
+function TestimonialCard({
+  testimonial,
+  "aria-hidden": ariaHidden,
+}: {
+  testimonial: PublicTestimonial;
+  "aria-hidden"?: boolean;
+}) {
+  return (
+    <li
+      className="w-95 max-[640px]:w-75 shrink-0"
+      aria-hidden={ariaHidden || undefined}
+    >
+      <article className="flex h-full flex-col gap-4 rounded-[22px] border border-vv-line bg-vv-bg p-7 max-[640px]:p-5">
+        <Rating rating={testimonial.rating} />
+        <blockquote className="flex-1 text-[16px] tracking-[-0.01em] leading-relaxed m-0 text-pretty text-vv-ink">
+          “{testimonial.outcome}”
+        </blockquote>
+
+        <div className="flex items-center gap-3 border-t border-vv-line pt-4">
+          <div className="grid h-10 w-10 shrink-0 place-items-center overflow-hidden rounded-full bg-vv-accent text-[14px] font-bold text-vv-accent-deep">
+            {testimonial.photo_url ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={testimonial.photo_url}
+                alt=""
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              initials(testimonial.student_name)
+            )}
+          </div>
+          <div>
+            <div className="text-[14px] font-semibold text-vv-ink">
+              {testimonial.student_name}
+            </div>
+            <div className="text-vv-muted text-[11px] mt-0.5">
+              {testimonial.country} · {testimonial.programme}
+            </div>
+          </div>
+        </div>
+      </article>
+    </li>
   );
 }

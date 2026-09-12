@@ -19,16 +19,17 @@ type Status = "idle" | "loading" | "success" | "error";
 export default function ConfirmEmailPage({ token }: { token: string }) {
   const router = useRouter();
 
-  const [status, setStatus] = useState<Status>("loading");
-  const [message, setMessage] = useState<string>("Confirming your email...");
+  // Token thaka na-thaka prothom render-eই jana — tai eta effect-e set kora hoy
+  // na, initial state theke-i ashe (na hole ek ta extra render howa lagto ar
+  // ek polok "Confirming your email…" dekhato)
+  const [status, setStatus] = useState<Status>(token ? "loading" : "error");
+  const [message, setMessage] = useState<string>(
+    token ? "Confirming your email..." : "No confirmation token provided",
+  );
   const [countdown, setCountdown] = useState<number>(5);
 
   useEffect(() => {
-    if (!token) {
-      setStatus("error");
-      setMessage("No confirmation token provided");
-      return;
-    }
+    if (!token) return;
 
     const decodedToken = decodeURIComponent(token);
 
@@ -66,7 +67,7 @@ export default function ConfirmEmailPage({ token }: { token: string }) {
     }
 
     if (status === "success" && countdown === 0) {
-      router.push("/signin");
+      router.push("/auth/signin");
     }
   }, [status, countdown, router]);
 
@@ -105,7 +106,7 @@ export default function ConfirmEmailPage({ token }: { token: string }) {
               </span>{" "}
               seconds.
             </p>
-            <Button onClick={() => router.push("/signin")} className="w-full">
+            <Button onClick={() => router.push("/auth/signin")} className="w-full">
               Go to Sign In Now
             </Button>
           </>

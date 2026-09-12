@@ -20,7 +20,7 @@ export default function RegistrationForm() {
   useEffect(() => {
     if (state.success === true) {
       toast.success(state.success_text || "Registration successful");
-      router.push("/verify-email");
+      router.push("/auth/verify-email");
     }
   }, [state, router]);
 
@@ -89,7 +89,7 @@ export default function RegistrationForm() {
       <p className="text-center text-sm text-muted-foreground">
         Already have an account?{" "}
         <Link
-          href="/signin"
+          href="/auth/signin"
           className="font-medium text-vv-accent-deep hover:text-vv-ink"
         >
           Sign in

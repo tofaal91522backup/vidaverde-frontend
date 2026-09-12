@@ -1,72 +1,21 @@
+"use client";
+
 import { Container } from "@/components/shared/Container";
-import { ChevronRight } from "lucide-react";
-import Image from "next/image";
+import { usePublicTeachers } from "@/features/marketing/pages/courses/queries/use-public-teachers";
+import type { PublicTeacher } from "@/features/marketing/types/public-api.types";
+import { useLanguage } from "@/providers/language-provider";
+import { ChevronRight, UserRound } from "lucide-react";
 import Link from "next/link";
 
-const teachers = [
-  {
-    name: "Ximena Argüello",
-    firstName: "Ximena",
-    image: "/images/teachers/2.jpg",
-    description:
-      "Students say class hours with Ximena pass by in a flash. She has been teaching Spanish since 2011 and is fluent in English, making her especially effective with beginners.",
-    credentials: "Universidad Central del Ecuador. Linguistics",
-    experience: "13+ years teaching",
-    specialisations: [
-      "Beginner-friendly",
-      "Conversational Spanish",
-      "DELE Preparation",
-    ],
-    availability: "Mon – Fri mornings & afternoons",
-    accepting: true,
-  },
-  {
-    name: "Lucía Rivadeneira",
-    firstName: "Lucía",
-    image: "/images/teachers/3.jpg",
-    description:
-      "Lucía is a language nerd who loves to teach the nuts and bolts of Spanish. She excels at helping students understand grammar intuitively and speaks at a clear, easy-to-follow pace.",
-    credentials: "PUCE Quito. Modern Languages",
-    experience: "10+ years teaching",
-    specialisations: [
-      "Grammar Focus",
-      "Intermediate to Advanced",
-      "Business Spanish",
-    ],
-    availability: "Mon – Fri afternoons",
-    accepting: true,
-  },
-  {
-    name: "Fernando Báez Guzmán",
-    firstName: "Fernando",
-    image: "/images/teachers/4.jpg",
-    description:
-      "Fernando is our Academic Director and master teacher. He brings structure, warmth, and deep expertise to every lesson. Students consistently rate him as the most effective teacher they have had.",
-    credentials: "Universidad de Cuenca. Spanish Literature",
-    experience: "20+ years teaching",
-    specialisations: [
-      "All Levels",
-      "Academic Spanish",
-      "Advanced Conversation",
-    ],
-    availability: "Limited. Tue & Thu",
-    accepting: true,
-  },
-  {
-    name: "Rosa Laura García Caiza",
-    firstName: "Laura",
-    image: "/images/teachers/5.jpg",
-    description:
-      "Laura has taught Spanish since 1991. She has a passion for sharing Ecuadorian culture with her students and considers herself not just a teacher but an ambassador of her culture and her language.",
-    credentials: "Universidad Central del Ecuador. Education",
-    experience: "33+ years teaching",
-    specialisations: ["Culture & Language", "Beginners", "Travel Spanish"],
-    availability: "Mon, Wed & Fri",
-    accepting: true,
-  },
-];
+function firstName(name: string) {
+  return name.trim().split(/\s+/)[0] || name;
+}
 
 export function TeachersSection() {
+  const { language } = useLanguage();
+  const { data, isLoading, isError } = usePublicTeachers({ lang: language });
+  const teachers = data ?? [];
+
   return (
     <section className="border-t border-vv-line bg-vv-bg">
       <Container>
@@ -84,15 +33,27 @@ export function TeachersSection() {
           </p>
         </div>
 
-        <div className="grid gap-6 lg:grid-cols-2">
-          {teachers.map((teacher) => (
-            <TeacherCard key={teacher.name} teacher={teacher} />
-          ))}
-        </div>
+        {isLoading && <p className="text-vv-ink-2">Loading teachers…</p>}
+        {isError && (
+          <p className="text-red-600" role="alert">
+            Teachers are unavailable right now. Please try again shortly.
+          </p>
+        )}
+        {!isLoading && !isError && teachers.length === 0 && (
+          <p className="text-vv-ink-2">No teachers are currently available.</p>
+        )}
+
+        {teachers.length > 0 && (
+          <div className="grid gap-6 lg:grid-cols-2">
+            {teachers.map((teacher) => (
+              <TeacherCard key={teacher.id} teacher={teacher} />
+            ))}
+          </div>
+        )}
 
         <div className="flex justify-center mt-10">
           <Link
-            href="/teachers"
+            href="/online-classes#teachers"
             className="inline-flex items-center gap-2.5 border border-vv-line rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] leading-none py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap hover:border-vv-ink hover:-translate-y-px"
           >
             Meet all our teachers
@@ -104,18 +65,22 @@ export function TeachersSection() {
   );
 }
 
-function TeacherCard({ teacher }: { teacher: (typeof teachers)[number] }) {
+function TeacherCard({ teacher }: { teacher: PublicTeacher }) {
+  const teacherFirstName = firstName(teacher.name);
+
   return (
     <article className="group grid overflow-hidden rounded-[22px] border border-vv-line bg-vv-bg transition duration-200 hover:-translate-y-0.5 hover:border-vv-accent md:grid-cols-[220px_1fr]">
-      <div className="relative aspect-4/3 overflow-hidden bg-vv-bg-warm md:aspect-auto md:min-h-70">
-        <Image
-          src={teacher.image}
-          alt={teacher.name}
-          fill
-          sizes="(max-width: 768px) 100vw, 220px"
-          className="object-cover transition duration-300 group-hover:scale-[1.03]"
-          unoptimized
-        />
+      <div className="relative flex aspect-4/3 items-center justify-center overflow-hidden bg-vv-bg-warm md:aspect-auto md:min-h-70">
+        {teacher.profile_img_url ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={teacher.profile_img_url}
+            alt={teacher.name}
+            className="h-full w-full object-cover transition duration-300 group-hover:scale-[1.03]"
+          />
+        ) : (
+          <UserRound aria-hidden="true" className="h-14 w-14 text-vv-muted" />
+        )}
       </div>
 
       <div className="flex min-h-70 flex-col gap-3 p-6 md:p-7">
@@ -126,45 +91,51 @@ function TeacherCard({ teacher }: { teacher: (typeof teachers)[number] }) {
           <h3 className="text-[22px] font-semibold leading-[1.1] tracking-[-0.02em] text-vv-ink m-0">
             {teacher.name}
           </h3>
-          <div className="mt-1 text-[12px] text-vv-ink-2">
-            {teacher.credentials} · {teacher.experience}
-          </div>
+          <div className="mt-1 text-[12px] text-vv-ink-2">{teacher.institute}</div>
         </div>
 
         <p className="flex-1 text-[14px] leading-[1.6] text-vv-ink-2 m-0">
           {teacher.description}
         </p>
 
-        <div className="flex flex-wrap gap-1.5">
-          {teacher.specialisations.map((s) => (
-            <span
-              key={s}
-              className="rounded-full border border-vv-line bg-vv-bg-warm px-2.5 py-0.5 text-[11px] font-medium text-vv-ink-2"
-            >
-              {s}
-            </span>
-          ))}
-        </div>
+        {teacher.tags.length > 0 && (
+          <div className="flex flex-wrap gap-1.5">
+            {teacher.tags.map((tag) => (
+              <span
+                key={tag}
+                className="rounded-full border border-vv-line bg-vv-bg-warm px-2.5 py-0.5 text-[11px] font-medium text-vv-ink-2"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
 
         <div className="flex items-center gap-1.5 py-2 border-t border-vv-line">
           <span
-            className={`h-2 w-2 rounded-full ${teacher.accepting ? "bg-green-500" : "bg-amber-400"}`}
+            className={`h-2 w-2 rounded-full ${teacher.accepting_students ? "bg-green-500" : "bg-amber-400"}`}
           />
           <span className="text-[12px] text-vv-ink-2">
-            {teacher.accepting
-              ? "Accepting new students"
-              : "Limited availability"}{" "}
-            · {teacher.availability}
+            {teacher.availability_label}
           </span>
         </div>
 
-        <Link
-          href={`/online-classes/book?teacher=${teacher.firstName.toLowerCase()}`}
-          className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[13px] font-semibold tracking-[-0.005em] leading-none py-2.25 px-3.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px text-center"
-        >
-          Book with {teacher.firstName}{" "}
-          <ChevronRight className="h-4 w-4 shrink-0 translate-y-0.5" />
-        </Link>
+        <div className="flex items-center gap-3">
+          <Link
+            href={`/online-classes/book?teacher=${encodeURIComponent(teacher.id)}`}
+            className="flex-1 inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[13px] font-semibold tracking-[-0.005em] leading-none py-2.25 px-3.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px text-center"
+          >
+            Book with {teacherFirstName}
+            <ChevronRight className="h-4 w-4 shrink-0 translate-y-0.5" />
+          </Link>
+          <Link
+            href={`/online-classes/teachers/${encodeURIComponent(teacher.id)}`}
+            className="shrink-0 inline-flex items-center gap-1.5 text-[13px] font-medium text-vv-ink-2 underline underline-offset-2 hover:text-vv-ink transition-colors duration-150 whitespace-nowrap"
+          >
+            Profile
+            <ChevronRight className="h-4 w-4 shrink-0 translate-y-0.5" />
+          </Link>
+        </div>
       </div>
     </article>
   );

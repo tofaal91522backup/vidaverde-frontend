@@ -13,7 +13,7 @@ const AuthSwitcher = async () => {
 
   return (
     <Button asChild className="gap-2">
-      <Link href="/signin" aria-label="Go to sign in">
+      <Link href="/auth/signin" aria-label="Go to sign in">
         <LogIn className="h-4 w-4" aria-hidden />
         Login
       </Link>

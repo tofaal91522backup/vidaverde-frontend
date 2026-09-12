@@ -14,7 +14,7 @@ import { StudentSidebarNavItems } from "./student-sidebar-nav-items";
 
 export function StudentSidebar({ session }: { session: any }) {
   return (
-    <Sidebar collapsible="icon" variant="inset">
+    <Sidebar collapsible="icon" variant="sidebar">
       <SidebarHeader>
         <AppSidebarHeader
           headerInfo={{

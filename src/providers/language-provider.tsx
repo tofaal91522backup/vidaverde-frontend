@@ -8,8 +8,12 @@ import {
   useMemo,
   useState,
 } from "react";
+import {
+  DEFAULT_PUBLIC_LANGUAGE,
+  type PublicLanguage,
+} from "@/features/marketing/constants/public-api";
 
-export type LanguageCode = "en" | "es";
+export type LanguageCode = PublicLanguage;
 
 export type TranslationKey =
   | "nav.primary"
@@ -119,9 +123,9 @@ type LanguageContextValue = {
 const LanguageContext = createContext<LanguageContextValue | null>(null);
 
 function readStoredLanguage(): LanguageCode {
-  if (typeof window === "undefined") return "en";
+  if (typeof window === "undefined") return DEFAULT_PUBLIC_LANGUAGE;
   const stored = window.localStorage.getItem(STORAGE_KEY);
-  return stored === "en" || stored === "es" ? stored : "en";
+  return stored === "en" || stored === "es" ? stored : DEFAULT_PUBLIC_LANGUAGE;
 }
 
 export function LanguageProvider({ children }: { children: ReactNode }) {

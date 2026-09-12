@@ -25,7 +25,7 @@ const VerifyEmailIndex = () => {
       </CardHeader>
       <CardContent className="flex flex-col gap-4">
         <Button className="w-full" asChild>
-          <Link href="/signin">Go to Sign In</Link>
+          <Link href="/auth/signin">Go to Sign In</Link>
         </Button>
         <p className="text-xs text-muted-foreground">
           Did not receive the email? Check your spam folder or try again.

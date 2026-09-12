@@ -1,35 +1,66 @@
+"use client";
+
 import { Container } from "@/components/shared/Container";
+import { useLanguage } from "@/providers/language-provider";
 import {
   ArrowLeft,
   CheckCircle2,
   ChevronRight,
   GraduationCap,
   Languages,
+  UserRound,
   Video,
 } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
-import { notFound } from "next/navigation";
-import { onlineTeachers } from "../data/online-classes.data";
+import { usePublicTeacher } from "../queries/use-public-teachers";
 
-export function getOnlineTeacherBySlug(slug: string) {
-  return onlineTeachers.find((teacher) => teacher.slug === slug);
+function firstName(name: string) {
+  return name.trim().split(/\s+/)[0] || name;
 }
 
-export function getOnlineTeacherSlugs() {
-  return onlineTeachers.map((teacher) => teacher.slug);
-}
+export default function TeacherProfilePage({ id }: { id: string }) {
+  const { language } = useLanguage();
+  const { data: teacher, isLoading, isError } = usePublicTeacher({
+    id,
+    lang: language,
+  });
 
-export default function TeacherProfilePage({ slug }: { slug: string }) {
-  const teacher = getOnlineTeacherBySlug(slug);
-
-  if (!teacher) {
-    notFound();
+  if (isLoading) {
+    return (
+      <section className="min-h-[60vh] py-16">
+        <Container>
+          <p className="text-vv-ink-2" role="status">
+            Loading teacher profile…
+          </p>
+        </Container>
+      </section>
+    );
   }
 
-  const availabilityLabel = teacher.accepting
-    ? "Now accepting new students"
-    : "Limited availability. Book soon";
+  if (isError || !teacher) {
+    return (
+      <section className="min-h-[60vh] py-16">
+        <Container>
+          <Link
+            href="/online-classes#teachers"
+            className="inline-flex items-center gap-2 text-[13px] font-medium text-vv-ink-2 transition hover:text-vv-ink"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Meet all our teachers
+          </Link>
+          <h1 className="mt-8 text-[clamp(30px,4vw,52px)] font-semibold tracking-[-0.03em] text-vv-ink">
+            Teacher profile unavailable
+          </h1>
+          <p className="mt-3 text-vv-ink-2">
+            This teacher may no longer be accepting public bookings. Please choose
+            another teacher.
+          </p>
+        </Container>
+      </section>
+    );
+  }
+
+  const teacherFirstName = firstName(teacher.name);
 
   return (
     <>
@@ -50,18 +81,17 @@ export default function TeacherProfilePage({ slug }: { slug: string }) {
           </Link>
 
           <div className="grid items-center gap-10 lg:grid-cols-[0.88fr_1.12fr] lg:gap-16">
-            <div className="relative overflow-hidden rounded-[22px] border border-vv-line bg-vv-bg shadow-sm">
-              <div className="relative aspect-[4/5]">
-                <Image
-                  src={teacher.image}
+            <div className="relative flex aspect-[4/5] items-center justify-center overflow-hidden rounded-[22px] border border-vv-line bg-vv-bg shadow-sm">
+              {teacher.profile_img_url ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={teacher.profile_img_url}
                   alt={teacher.name}
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 38vw"
-                  className="object-cover"
-                  priority
-                  unoptimized
+                  className="h-full w-full object-cover"
                 />
-              </div>
+              ) : (
+                <UserRound aria-hidden="true" className="h-20 w-20 text-vv-muted" />
+              )}
             </div>
 
             <div>
@@ -69,30 +99,31 @@ export default function TeacherProfilePage({ slug }: { slug: string }) {
                 {"// Teacher Profile"}
               </span>
               <h1 className="mt-4 max-w-[13ch] text-[clamp(38px,5vw,72px)] font-semibold leading-[0.96] tracking-[-0.04em] text-vv-ink">
-                Learn Spanish with {teacher.firstName}
+                Learn Spanish with {teacherFirstName}
               </h1>
               <p className="mt-5 max-w-[58ch] text-[17px] leading-relaxed text-vv-ink-2">
-                {teacher.credentials} · {teacher.experience} · Native Spanish
-                speaker
+                {teacher.institute} · Native Spanish speaker
               </p>
 
-              <div className="mt-7 flex flex-wrap gap-2">
-                {teacher.specialisations.map((specialisation) => (
-                  <span
-                    key={specialisation}
-                    className="rounded-full border border-vv-line bg-vv-bg px-3 py-1 text-[12px] font-medium text-vv-ink-2"
-                  >
-                    {specialisation}
-                  </span>
-                ))}
-              </div>
+              {teacher.tags.length > 0 && (
+                <div className="mt-7 flex flex-wrap gap-2">
+                  {teacher.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="rounded-full border border-vv-line bg-vv-bg px-3 py-1 text-[12px] font-medium text-vv-ink-2"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              )}
 
               <div className="mt-8">
                 <Link
-                  href={`/online-classes/book?teacher=${teacher.firstName.toLowerCase()}`}
+                  href={`/online-classes/book?teacher=${encodeURIComponent(teacher.id)}`}
                   className="inline-flex items-center justify-center gap-2.5 rounded-full border border-vv-accent bg-vv-accent px-5.5 py-3.5 text-[15px] font-semibold tracking-[-0.005em] text-vv-accent-deep transition hover:-translate-y-px hover:bg-vv-accent-hi"
                 >
-                  Book Your First Lesson with {teacher.firstName}
+                  Book Your First Lesson with {teacherFirstName}
                   <ChevronRight className="h-4 w-4 shrink-0 translate-y-0.5" />
                 </Link>
               </div>
@@ -112,10 +143,10 @@ export default function TeacherProfilePage({ slug }: { slug: string }) {
                 {"// Bio"}
               </span>
               <h2 className="mt-4 text-[clamp(28px,3vw,44px)] font-semibold leading-[1.08] tracking-[-0.02em] text-vv-ink">
-                Meet {teacher.firstName}
+                Meet {teacherFirstName}
               </h2>
               <p className="mt-5 text-[17px] leading-[1.75] text-vv-ink-2">
-                {teacher.profileBio}
+                {teacher.description}
               </p>
             </div>
 
@@ -128,10 +159,10 @@ export default function TeacherProfilePage({ slug }: { slug: string }) {
                   <CheckCircle2 className="mt-0.5 h-5 w-5 shrink-0 text-vv-accent-deep" />
                   <div>
                     <div className="text-[14px] font-semibold text-vv-ink">
-                      {availabilityLabel}
+                      {teacher.availability_label}
                     </div>
                     <div className="text-[13px] text-vv-ink-2">
-                      {teacher.availability}
+                      Bookable times are shown during checkout.
                     </div>
                   </div>
                 </div>
@@ -150,24 +181,26 @@ export default function TeacherProfilePage({ slug }: { slug: string }) {
                   <GraduationCap className="mt-0.5 h-5 w-5 shrink-0 text-vv-accent-deep" />
                   <div>
                     <div className="text-[14px] font-semibold text-vv-ink">
-                      {teacher.experience}
+                      {teacher.institute}
                     </div>
                     <div className="text-[13px] text-vv-ink-2">
-                      Professional Spanish teaching experience.
+                      Academic background.
                     </div>
                   </div>
                 </div>
-                <div className="flex gap-3">
-                  <Languages className="mt-0.5 h-5 w-5 shrink-0 text-vv-accent-deep" />
-                  <div>
-                    <div className="text-[14px] font-semibold text-vv-ink">
-                      Specialises in
-                    </div>
-                    <div className="text-[13px] text-vv-ink-2">
-                      {teacher.specialisations.join(", ")}
+                {teacher.tags.length > 0 && (
+                  <div className="flex gap-3">
+                    <Languages className="mt-0.5 h-5 w-5 shrink-0 text-vv-accent-deep" />
+                    <div>
+                      <div className="text-[14px] font-semibold text-vv-ink">
+                        Specialises in
+                      </div>
+                      <div className="text-[13px] text-vv-ink-2">
+                        {teacher.tags.join(", ")}
+                      </div>
                     </div>
                   </div>
-                </div>
+                )}
               </div>
             </aside>
           </div>
@@ -183,15 +216,11 @@ export default function TeacherProfilePage({ slug }: { slug: string }) {
             {"// Ready to start?"}
           </span>
           <h2 className="mx-auto mt-4 max-w-[14ch] text-[clamp(30px,3.5vw,52px)] font-semibold leading-[1.02] tracking-[-0.03em] text-vv-ink">
-            Book your first lesson with {teacher.firstName}
+            Book your first lesson with {teacherFirstName}
           </h2>
-          <p className="mx-auto mt-4 max-w-[48ch] text-[16px] leading-relaxed text-vv-ink-2">
-            Meet your teacher, find your level, and leave with a personalised
-            plan. No contracts. Cancel or continue. It is your call.
-          </p>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <Link
-              href={`/online-classes/book?teacher=${teacher.firstName.toLowerCase()}`}
+              href={`/online-classes/book?teacher=${encodeURIComponent(teacher.id)}`}
               className="inline-flex items-center justify-center gap-2.5 rounded-full border border-vv-accent bg-vv-accent px-5.5 py-3.5 text-[15px] font-semibold tracking-[-0.005em] text-vv-accent-deep transition hover:-translate-y-px hover:bg-vv-accent-hi"
             >
               Book Your First Lesson

@@ -416,16 +416,14 @@ export type AdminSessionResponse = ApiResponse & {
 /**
  * GET /administrator/students/:id/
  *
- * ⚠️ **Ei response-er shape bru te dekhano nai.** Doc shudhu bole: "profile,
- * every package they bought, and every class they have had or are booked into".
- * Tai key gula optional rakha holo ar UI defensive — asol API dekhe confirm kore
- * ekta te thik korte hobe.
+ * ✅ Shape **backend source theke confirm kora**
+ * (`administrator/views/accounts.py` → `StudentDetailView.retrieve`):
+ * `{ success, student, packages, sessions }`.
  */
 export type AdminStudentDetailResponse = ApiResponse & {
-  student?: AdminStudent;
-  profile?: AdminStudent;
-  packages?: AdminBooking[];
-  sessions?: AdminSession[];
+  student: AdminStudent;
+  packages: AdminBooking[];
+  sessions: AdminSession[];
 };
 
 /** `{ success, message_detail }` */

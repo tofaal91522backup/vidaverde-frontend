@@ -73,7 +73,7 @@ export function LeadsTable() {
           variant="outline"
           className="ml-auto gap-1.5"
           disabled={exportLeads.isPending}
-          onClick={() => exportLeads.mutate({ subscribed, converted, search })}
+          onClick={() => exportLeads.mutate()}
         >
           {exportLeads.isPending ? (
             <Spinner className="h-4 w-4" />
@@ -83,6 +83,12 @@ export function LeadsTable() {
           Export CSV
         </Button>
       </div>
+
+      {/* Backend-e verify kora: leads export kono filter mane na */}
+      <p className="text-xs text-amber-600">
+        The CSV export always contains <strong>every</strong> lead — the filters
+        above are not applied to it.
+      </p>
 
       <DataTable
         data={data?.results}
