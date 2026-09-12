@@ -2,9 +2,16 @@ import type { PublicLanguage } from "@/features/marketing/constants/public-api";
 import type { PackageTeachersResponse } from "@/features/marketing/types/public-api.types";
 import { useFetchData } from "@/hooks/use-fetch-data";
 import { makeEndpoint } from "@/lib/http/make-endpoint";
-import { PUBLIC_SLOT_DAYS } from "./use-public-teacher-slots";
 
 export const PACKAGE_TEACHERS_QUERY_KEY = "public-package-teachers";
+
+/**
+ * Ek call-e koto din-er slot ana hoy. Backend 1-31 ney ar default 14 dhore,
+ * kintu booking grid ek week dekhay.
+ *
+ * Student portal-eo ek-i 7 (`student/queries/use-package-teachers.ts`).
+ */
+export const PUBLIC_SLOT_DAYS = 7;
 
 type PackageTeachersParams = {
   packageId: string | null;

@@ -86,6 +86,28 @@ and 30 days for refresh.
 Run the api-sync skill to see whether the backend has moved on again. The
 changelogs in `docs/api-changes/` are the backlog.
 
+### Known gaps going into testing
+
+These are real and worth knowing before you start, so a known gap is not mistaken
+for a new bug:
+
+1. **No `middleware.ts` and no route guards.** A signed-out visitor can open
+   `/dashboard/admin`, and a student can open the admin dashboard. Carried over
+   from Round 1, out of Round 2's scope, never fixed.
+2. **Phase J (token refresh) cannot run** until the backend shortens
+   `ACCESS_TOKEN_LIFETIME`. See above.
+3. **Four eslint errors remain**, all pre-existing and untouched:
+   `ui/carousel.tsx`, `ui/sidebar.tsx`, `hooks/use-mobile.ts`,
+   `shared/form-related/multi-step-form-wrapper.tsx` — shadcn-generated or
+   unused. The build passes; these are lint-only.
+4. **`/public/teachers/:id/slots/` is no longer called anywhere.** The
+   package-teachers endpoint returns the same slots, so it was superseded rather
+   than dropped. Not a regression; noted so its absence is not read as one.
+5. **The 20-class price is still unresolved** ($250.00 vs $254.64).
+
+Verified before handing over: `npm run build` passes, 49/49 static pages;
+`npx tsc --noEmit` clean; eslint clean apart from the four above.
+
 Nothing is half-finished. Working tree clean.
 
 ---

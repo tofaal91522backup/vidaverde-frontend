@@ -262,25 +262,3 @@ export type PublicTeacher = {
   lang: string;
 };
 
-/** docs/bruno/public/teacher slots.bru — ekta bookable slot */
-export type TeacherSlot = {
-  /** Checkout/book-e ei ta hubohu `start_datetime` hisebe pathate hobe */
-  start_utc: string;
-  start_local: string;
-  /** Render-ready, e.g. "14:00" */
-  label: string;
-};
-
-export type TeacherSlotDay = {
-  /** YYYY-MM-DD */
-  date: string;
-  slots: TeacherSlot[];
-};
-
-/** GET /public/teachers/:id/slots/?date=&tz=&days= */
-export type TeacherSlotsResponse = ApiResponse & {
-  teacher: string;
-  timezone: string;
-  duration_minutes: number;
-  days: TeacherSlotDay[];
-};
