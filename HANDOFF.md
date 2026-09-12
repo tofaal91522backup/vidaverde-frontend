@@ -13,23 +13,25 @@
 | | |
 |---|---|
 | **Active plan** | [docs/plan/ROUND2_INDEX.md](docs/plan/ROUND2_INDEX.md) |
-| **Section** | Round 2 — not started |
-| **Next step** | **Auth Step 0** — types ([ROUND2_AUTH_INTEGRATION.md](docs/plan/ROUND2_AUTH_INTEGRATION.md)) |
+| **Section** | Round 2 → Auth (1 of 7 steps done) |
+| **Next step** | **Auth Step 1** — registration schema + server action ([ROUND2_AUTH_INTEGRATION.md](docs/plan/ROUND2_AUTH_INTEGRATION.md)) |
 | **Backend commit** | `63c01f5` (see `.claude/api-sync.json`) |
 | **Last updated** | 2026-09-12 — Claude |
 
 ### What was just done
-- Round 1 public marketing integration committed — the site runs entirely on the
-  real API, no mocks left.
-- Bruno collection synced to backend `63c01f5`.
-- Round 2 plans written (`docs/plan/ROUND2_*.md`). **No `src/` code changed for Round 2 yet.**
+**Auth Step 0 — types.** `src/features/auth/types/auth.types.ts` now models the
+registration and email-verification payloads. Type-only; no UI or action touched.
 
 ### What the next session does
-Open `docs/plan/ROUND2_AUTH_INTEGRATION.md` and do **Step 0** (types + schema base).
-**One step per turn, nothing more.** Wait for the user to say "next" before the step after.
+Open `docs/plan/ROUND2_AUTH_INTEGRATION.md` and do **Step 1** (registration schema
++ server action). **One step per turn, nothing more.** Wait for the user to say
+"next" before the step after.
 
-### Known state
-Working tree is clean as of the last commit. Nothing half-finished.
+### Carried into the next step
+`RegistrationType.errors.username` is still present and marked `@deprecated`.
+The new spec has no `username`, but removing it breaks typecheck in
+`registration.action.ts` and `registration.form.tsx`, which are Step 1 and Step 2
+work. **Step 1 must delete that field.**
 
 ---
 

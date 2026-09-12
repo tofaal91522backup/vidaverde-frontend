@@ -5,9 +5,9 @@
 
 - **Source of truth:** [docs/bruno/student/registration/](../bruno/student/registration/) · [docs/bruno/authentication/](../bruno/authentication/)
 - **Index:** [ROUND2_INDEX.md](ROUND2_INDEX.md)
-- **Started:** —
-- **Current step:** **Step 0** (shuru hoy nai)
-- **Status:** planned
+- **Started:** 2026-09-12
+- **Current step:** **Step 1** — registration schema + server action
+- **Status:** in progress (1/7 done)
 
 ---
 
@@ -78,6 +78,15 @@ puro flow diyeche:
 
 **Done jokhon:** typecheck clean, kono UI file touch kori nai.
 
+> **✅ Shesh — ja jana gelo:**
+> - Login (`sign-in.action.ts`) puro untyped (`data?.access` etc). Verify-email
+>   hubohu ek-i payload dey, tai `AuthSuccessResponse` ek jaygay likhe duitatei
+>   use kora jabe — Step 3-e sign-in-o type kore dile bhalo.
+> - Plan-e `/dashboard/customer` lekha chilo — asol route **`/dashboard/student`**
+>   (folder rename hoye gese). Ei file-e thik kora holo.
+> - `RegistrationType.errors.username` **ekhono ache**, `@deprecated` mark kora —
+>   shorale Step 1/2-er file 3 jaygay typecheck bhenge jay. **Step 1-e muchte hobe.**
+
 ---
 
 ### Step 1 — Registration schema + server action
@@ -92,7 +101,7 @@ puro flow diyeche:
 - `current_spanish_level` enum, default `"none"`
 - Action-e URL `/student/registration/`
 - Response branch:
-  - token ache → `CreateSession(...)` → `{ success: true, redirectTo: "/dashboard/customer" }`
+  - token ache → `CreateSession(...)` → `{ success: true, redirectTo: "/dashboard/student" }`
   - token nai → `{ success: true, verificationRequired: true, email }`
 - Error map: backend field-wise array dey (`email`, `password1`…) — ekhon-kar
   `getRegistrationErrors` `username` dhore, seta `first_name`/`last_name`-e bodlao
@@ -110,7 +119,7 @@ puro flow diyeche:
 - Timezone hidden input, mount-e browser zone bosano
 - Submit-er por:
   - `verificationRequired` → `/auth/verify-email?email=...` (email query-te, resend-er jonno)
-  - session toiri → `router.push("/dashboard/customer")`
+  - session toiri → `router.push("/dashboard/student")`
 - Ekhon `router.push("/auth/verify-email")` hardcoded — oita branch-based korte hobe
 
 **Done jokhon:** registration page-e notun field dekhay, typecheck + eslint clean.
@@ -125,7 +134,7 @@ puro flow diyeche:
   - Server action-e niye giye `CreateSession` dakte hobe (client theke httpOnly
     cookie set kora jabe na)
   - Tai ek ta chhoto `"use server"` action lagbe: `VerifyEmailAction(key)`
-- Success-e "Go to Sign In" er bodole **shoja `/dashboard/customer`**, countdown 3s
+- Success-e "Go to Sign In" er bodole **shoja `/dashboard/student`**, countdown 3s
 - 400 → "link invalid ba expire" + **Resend button** (Step 4)
 
 ⚠️ Ekhon ei page `unAuthorizedApiClient.post` client theke dake. Session banate
@@ -184,7 +193,7 @@ alada kore test kora lagbe (`INTEGRATION_TEST.md`-e ek ta phase add hobe).
 
 | Step | Obostha | Tarikh | Ki korechi |
 |---|---|---|---|
-| 0 — Types | ⬜ baki | — | — |
+| 0 — Types | ✅ done | 2026-09-12 | `auth.types.ts` — `AuthSuccessResponse` (login/verify ek-i payload), `StudentRegistrationPayload`, `RegistrationPendingResponse`, union + `isAuthSuccess()` narrowing helper, `VerifyEmailResponse`, `ResendVerificationResponse`. `RegistrationType.errors` notun field-e bodlano. `SpanishLevel` `domain.type.ts` theke reuse. |
 | 1 — Register schema + action | ⬜ baki | — | — |
 | 2 — Register form UI | ⬜ baki | — | — |
 | 3 — Verify email | ⬜ baki | — | — |
