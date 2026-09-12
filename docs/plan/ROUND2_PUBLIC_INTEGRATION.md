@@ -6,9 +6,9 @@
 
 - **Source of truth:** [docs/bruno/public/](../bruno/public/)
 - **Index:** [ROUND2_INDEX.md](ROUND2_INDEX.md)
-- **Started:** —
-- **Current step:** **Step 0** (shuru hoy nai)
-- **Status:** planned
+- **Started:** 2026-09-12
+- **Current step:** **Step 1** — `usePackageTeachers` hook
+- **Status:** in progress (1/5 done)
 
 ---
 
@@ -106,6 +106,22 @@ eca895a  Add package -> teachers endpoint for booking step 2
 
 **Done jokhon:** typecheck clean, kono component touch kori nai.
 
+> **✅ Shesh — ja jana gelo:**
+> - **`teacher_count` amra feled dicchilam.** Backend 2026-09-05 theke pathacche,
+>   type-e-i chilo na. Ekhon required kora holo — kono mock literal bhange nai,
+>   mane shotti-i kothao use hocchilo na.
+> - ⚠️ **Khali teacher list = "ei koy din-e keu free nai", "teacher nai" na.**
+>   Jei teacher-er window-e ekta-o slot nai, backend take **bad diye dey**. UI-te
+>   ei duita alada kore bolte hobe (Step 2), na hole visitor bhabbe package ta nosto.
+> - **"Exclusive" badge `restricted_to_listed_teachers` dhore dite hobe,
+>   `teacher_count` dhore na.** Unrestricted package-eo `teacher_count` boro hoy,
+>   kintu oita exclusive na.
+> - `next_available` `PublicTeacherSlot`-er moto, kintu `date` extra — tai alada
+>   `PublicSlotRef` banano holo, existing type-e `date` joda korle slot list-e
+>   mithya field aste.
+> - `TeacherPackagesResponse.teacher` `Pick<>` diye toiri — oi block-e
+>   `availability` array ashe na, tai puro `PublicTeacher` bola mithya hoto.
+
 ---
 
 ### Step 1 — `usePackageTeachers` hook
@@ -178,7 +194,7 @@ ek-i moto kaj kore.
 
 | Step | Obostha | Tarikh | Ki korechi |
 |---|---|---|---|
-| 0 — Types | ⬜ baki | — | — |
+| 0 — Types | ✅ done | 2026-09-12 | `public-api.types.ts` — `teacher_count` on `PublicPackage`, notun `PublicSlotRef`/`PublicPackageTeacher`/`PackageTeachersResponse`/`PublicTeacherPackage`/`TeacherPackagesResponse` |
 | 1 — `usePackageTeachers` | ⬜ baki | — | — |
 | 2 — Flow reorder | ⬜ baki | — | — |
 | 3 — Teacher-first entry | ⬜ baki | — | — |

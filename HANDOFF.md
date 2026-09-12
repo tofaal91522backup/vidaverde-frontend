@@ -13,37 +13,36 @@
 | | |
 |---|---|
 | **Active plan** | [docs/plan/ROUND2_INDEX.md](docs/plan/ROUND2_INDEX.md) |
-| **Section** | Round 2 → Auth ✅ complete (7 of 18 steps overall) |
-| **Next step** | **Public Step 0** — types ([ROUND2_PUBLIC_INTEGRATION.md](docs/plan/ROUND2_PUBLIC_INTEGRATION.md)) |
+| **Section** | Round 2 → Public (8 of 18 steps overall) |
+| **Next step** | **Public Step 1** — `usePackageTeachers` hook ([ROUND2_PUBLIC_INTEGRATION.md](docs/plan/ROUND2_PUBLIC_INTEGRATION.md)) |
 | **Backend commit** | `63c01f5` (see `.claude/api-sync.json`) |
 | **Last updated** | 2026-09-12 — Claude |
 
 ### What was just done
-**Auth Step 6 — decided to skip `/rest-auth/user/`, and the Auth section is now
-complete.** The backend's own docs point elsewhere for anything role-aware, and
-editing a name there does not rename the student in the admin dashboard, so
-wiring it would create a second name that silently drifts. `/student/me/` already
-covers this and is integrated.
-
-That review turned up a real bug: sign-in stored `user.username` as the session
-name, but the backend uses the email as the username, so the sidebar showed an
-email where the name belongs. It now reads `profile.name`, which login started
-returning on 2026-09-05.
+**Public Step 0 — types.** `public-api.types.ts` now models the two new booking
+endpoints and picks up `teacher_count`, which the backend has been sending since
+2026-09-05 and the frontend was discarding. Type-only; no component touched.
 
 ### What the next session does
-Start the Public section: open `docs/plan/ROUND2_PUBLIC_INTEGRATION.md` and do
-**Step 0** (types). **One step per turn, nothing more.** Wait for the user to say
-"next" before the step after.
+Open `docs/plan/ROUND2_PUBLIC_INTEGRATION.md` and do **Step 1** (the
+`usePackageTeachers` hook). **One step per turn, nothing more.** Wait for the
+user to say "next" before the step after.
+
+### Carried into the next step
+Two things the types encode that the UI has to respect:
+- An empty teacher list means "nobody is free in this window", not "this package
+  has no teachers" — the backend drops any teacher with zero bookable slots. The
+  UI must say which, or a visitor will think the package is broken.
+- The "exclusive" badge belongs to `restricted_to_listed_teachers`, not to
+  `teacher_count`. Unrestricted packages also carry a large count.
+
+Step 2 is the big one in this section: it reorders the booking flow from five
+steps to four and rewrites `SlotPicker`, which currently fetches its own slots.
 
 ### Needs manual testing before it ships
-Nothing in the Auth section has been tested against a live backend. Two parts
-need it most:
-- **Token refresh (Step 5)** — `INTEGRATION_TEST.md` Phase J. Easier with a short
-  `ACCESS_TOKEN_LIFETIME`; worth asking the backend developer for one.
-- **Registration and verification (Steps 1-4)** — which branch runs depends on
-  the backend's `EMAIL_VERIFICATION_REQUIRED`, and nobody has confirmed which way
-  it is set. Both branches are implemented, but only one of them can be exercised
-  until that is known.
+The whole Auth section is untested against a live backend — see the Auth plan's
+Progress Log. Most urgent: `INTEGRATION_TEST.md` Phase J (token refresh), and
+confirming whether the backend's `EMAIL_VERIFICATION_REQUIRED` is on or off.
 
 Nothing is half-finished. Working tree clean.
 
