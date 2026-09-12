@@ -176,9 +176,13 @@ than through either tool's conversation history.
 and the two can never drift apart.
 
 ### Before starting work — always
-1. Read `HANDOFF.md` in the repo root. It names the current position and the next step.
-2. `git log --oneline -5` and `git status`.
-3. Read the active plan file's Progress Log.
+1. Run `npm run handoff`. `HANDOFF.md` is only accurate up to the commit that last
+   touched it, and the script names any commit that landed after that — work the
+   file does not know about, whether from the other tool or from the user
+   committing by hand after a session ran out of tokens.
+2. If it reports STALE, read those commits before trusting `HANDOFF.md`; the step
+   it names as next may already be done or half done.
+3. Read `HANDOFF.md` for the current position, then the active plan's Progress Log.
 
 ### After finishing a step — always
 1. Mark the plan file's Progress Log row ✅ (date, what was done, files touched).

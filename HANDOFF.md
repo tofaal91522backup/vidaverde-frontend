@@ -36,9 +36,14 @@ Working tree is clean as of the last commit. Nothing half-finished.
 ## 🔁 Protocol — both tools follow this
 
 ### Before starting work
-1. **Read this file** to find the current position.
-2. `git log --oneline -5` — see the last five commits.
-3. `git status` — check for uncommitted or half-finished work.
+1. **Run `npm run handoff`.** It reports whether this file is still accurate.
+   This file is only true up to the commit that last touched it; anything
+   committed after that — by the other tool, or by the user by hand after a
+   session ran out of tokens — is work this file does not know about. The script
+   lists exactly those commits.
+2. **If it says STALE**, read those commits (`git diff --stat <sha>..HEAD`)
+   before trusting "Next step" below. That step may already be done, or half done.
+3. **Read this file** for the current position.
 4. Read the active plan file's **Progress Log** table to find the first ⬜ step.
 
 ### After finishing a step (never skip this)
@@ -57,6 +62,13 @@ Working tree is clean as of the last commit. Nothing half-finished.
   understand what happened; anything uncommitted is invisible to it.
 - If you have to stop mid-step: commit what exists with a `wip:` prefix and write
   plainly under "What was just done" above what is half-finished and what is left.
+
+### If a session dies mid-step and the user commits by hand
+That is fine and needs no special care. The commit alone does not say where in the
+plan the work stopped, but `npm run handoff` will flag this file as stale and name
+the commit, so the next session knows to read the diff instead of trusting the
+"Next step" row. Nothing is lost — the next session just re-derives the position
+from the diff and corrects this file before carrying on.
 
 ---
 
