@@ -163,3 +163,30 @@ src/
 **File upload**: use `request.postFormData("/path/", formData)` as the `mutationFn`
 
 **Server Action** (auth only): `validateForm` → call API via `apiServer` → `CreateSession` → return `{ success, errors }`
+
+---
+
+## Session Handoff (Claude Code ↔ Codex)
+
+Two AI tools work on this project. When one runs out of tokens the other picks up
+from the same place, so the handoff runs through the filesystem and git rather
+than through either tool's conversation history.
+
+**`AGENTS.md` is a symlink to this file**, so both tools read the same conventions
+and the two can never drift apart.
+
+### Before starting work — always
+1. Read `HANDOFF.md` in the repo root. It names the current position and the next step.
+2. `git log --oneline -5` and `git status`.
+3. Read the active plan file's Progress Log.
+
+### After finishing a step — always
+1. Mark the plan file's Progress Log row ✅ (date, what was done, files touched).
+2. Update the "📍 Current position" block in `HANDOFF.md`.
+3. Run `npx tsc --noEmit`.
+4. Commit as `round2(<section>): step <N> — <what was done>`.
+5. Stop and wait for the user's next instruction.
+
+**Never end a session with uncommitted work.** The other tool reads `git log` to
+learn what happened, so anything uncommitted is invisible to it. If a step is only
+half done, commit it with a `wip:` prefix and say so explicitly in `HANDOFF.md`.

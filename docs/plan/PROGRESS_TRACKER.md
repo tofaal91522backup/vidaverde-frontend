@@ -1,14 +1,32 @@
 # Project Progress Tracker
 Last updated: 2026-09-12
 
-> **Student portal API integration ✅ SHESH** (2026-09-12) — 11 ta endpoint live, kono mock nai.
-> Plan + log: [STUDENT_API_INTEGRATION.md](STUDENT_API_INTEGRATION.md) ·
-> Manual test: [STUDENT_TEST_PLAN.md](STUDENT_TEST_PLAN.md)
+> **Shob API integration shesh** (2026-09-12) — student, admin, public tinta-i real API-te.
+> - Student: [STUDENT_API_INTEGRATION.md](STUDENT_API_INTEGRATION.md) · [STUDENT_TEST_PLAN.md](STUDENT_TEST_PLAN.md)
+> - Admin: [ADMIN_API_INTEGRATION.md](ADMIN_API_INTEGRATION.md)
+> - Public: [PUBLIC_API_INTEGRATION.md](PUBLIC_API_INTEGRATION.md)
 >
-> **Admin dashboard integration — plan ready, kaj shuru hoy nai:**
-> [ADMIN_API_INTEGRATION.md](ADMIN_API_INTEGRATION.md) (17 endpoint, 15 step)
+> **Cross-section manual test:** [INTEGRATION_TEST.md](INTEGRATION_TEST.md)
 >
 > Niche-r "Dashboard — Student" section-er info ekhon purono; oi file gula-i shotto.
+
+---
+
+> ## 🔵 Round 2 — notun API (backend `f7ccf8b` → `63c01f5`)
+>
+> Backend abar 3 ta commit-e notun endpoint diyeche. Plan toiri, **kono step shuru hoy nai**.
+>
+> **👉 Shuru koro ekhan theke: [ROUND2_INDEX.md](ROUND2_INDEX.md)**
+>
+> | Section | Plan | Step | Priority |
+> |---|---|---|---|
+> | Auth | [ROUND2_AUTH_INTEGRATION.md](ROUND2_AUTH_INTEGRATION.md) | 7 | 🔴 1 — registration blocker khule gese |
+> | Public | [ROUND2_PUBLIC_INTEGRATION.md](ROUND2_PUBLIC_INTEGRATION.md) | 5 | 🟠 2 — booking flow order bodleche |
+> | Student | [ROUND2_STUDENT_INTEGRATION.md](ROUND2_STUDENT_INTEGRATION.md) | 3 | 🟡 3 — teacher picker restriction mane na |
+> | Admin | [ROUND2_ADMIN_INTEGRATION.md](ROUND2_ADMIN_INTEGRATION.md) | 3 | 🟢 4 — package-e teacher assign UI nai |
+>
+> Mot **18 step**. Changelog-er 61 ta "Added" er beshirbhag bru file split — notun kaj na;
+> kon ta asol, ROUND2_INDEX-e table kora ache.
 
 ## Roles confirmed
 - **Admin** (backend: `ADMIN` — master / manager sub-roles)
@@ -65,7 +83,7 @@ Last updated: 2026-09-12
 - **Status:** In progress (UI complete, integration 0%)
 
 ## Open Issues / Blockers
-- Registration + email-verify frontend ache kintu backend-e nai -- signup asholei checkout-er bhitore hoy. Product-level shidhanto darkar.
+- ~~Registration + email-verify frontend ache kintu backend-e nai~~ — **thik hoye gese** (backend `46e48ae`). `POST /student/registration/` + `/verify-email/` + `/resend-email/` ekhon ache; integration plan: [ROUND2_AUTH_INTEGRATION.md](ROUND2_AUTH_INTEGRATION.md).
 - Shob dashboard/public query hook-er commented placeholder URL bhul prefix (`/api/...`) -- integration-er shomoy `/administrator/`, `/student/`, `/public/`-e bodlate hobe.
 - Mock type gulo (camelCase: `isActive`, `paymentStatus`) backend response (snake_case, `{success, ...}` envelope, `results/count` pagination) er sathe milbe na -- schema/type pura notun kore map korte hobe.
 - Booking payment: backend Phase 1-e dummy gateway (`"declined"` chara shob pass). Stripe UI ekhon cosmetic.
