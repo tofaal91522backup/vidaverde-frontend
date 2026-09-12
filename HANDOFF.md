@@ -13,27 +13,29 @@
 | | |
 |---|---|
 | **Active plan** | [docs/plan/ROUND2_INDEX.md](docs/plan/ROUND2_INDEX.md) |
-| **Section** | Round 2 → Auth (2 of 7 steps done) |
-| **Next step** | **Auth Step 2** — registration form UI ([ROUND2_AUTH_INTEGRATION.md](docs/plan/ROUND2_AUTH_INTEGRATION.md)) |
+| **Section** | Round 2 → Auth (3 of 7 steps done) |
+| **Next step** | **Auth Step 3** — verify email page ([ROUND2_AUTH_INTEGRATION.md](docs/plan/ROUND2_AUTH_INTEGRATION.md)) |
 | **Backend commit** | `63c01f5` (see `.claude/api-sync.json`) |
 | **Last updated** | 2026-09-12 — Claude |
 
 ### What was just done
-**Auth Step 1 — registration schema + server action.** Registration now posts to
-`/student/registration/` with the real field set, creates a session when the
-backend returns tokens, and routes to email verification when it does not.
-`SPANISH_LEVEL_OPTIONS` moved to `src/constants/spanish-levels.ts`.
+**Auth Step 1 and Step 2 — registration is now wired end to end.** The form
+collects the fields the backend documents, posts to `/student/registration/`, and
+either creates a session or routes to email verification depending on what the
+backend returns. The deprecated `username` field is gone from the type.
 
 ### What the next session does
-Open `docs/plan/ROUND2_AUTH_INTEGRATION.md` and do **Step 2** (registration form
-UI). **One step per turn, nothing more.** Wait for the user to say "next" before
-the step after.
+Open `docs/plan/ROUND2_AUTH_INTEGRATION.md` and do **Step 3** (verify email page).
+**One step per turn, nothing more.** Wait for the user to say "next" before the
+step after.
 
 ### Carried into the next step
-`registration.form.tsx` still renders a `username` input and reads
-`state.errors.username`, so `RegistrationType.errors.username` survives as
-`@deprecated`. The form is the only thing holding it. **Step 2 must replace that
-input with first_name/last_name and then delete the field from the type.**
+Step 3 is a structural change, not a tweak. `confirm-email/index.tsx` currently
+posts from the client, but verify-email returns a full login payload and a session
+cookie can only be set server-side — so that call has to move into a
+`"use server"` action before the page can log the user in.
+
+Nothing is half-finished. Working tree clean.
 
 ---
 

@@ -6,8 +6,8 @@
 - **Source of truth:** [docs/bruno/student/registration/](../bruno/student/registration/) · [docs/bruno/authentication/](../bruno/authentication/)
 - **Index:** [ROUND2_INDEX.md](ROUND2_INDEX.md)
 - **Started:** 2026-09-12
-- **Current step:** **Step 2** — registration form UI
-- **Status:** in progress (2/7 done)
+- **Current step:** **Step 3** — verify email page (confirm-email rewrite)
+- **Status:** in progress (3/7 done)
 
 ---
 
@@ -139,6 +139,17 @@ puro flow diyeche:
 
 **Done jokhon:** registration page-e notun field dekhay, typecheck + eslint clean.
 
+> **✅ Shesh — ja jana gelo:**
+> - Timezone-ta `useState` e rakhi nai. Browser zone shudhu client-e jana jay, tai
+>   state rakhle SSR-e khali → client-e bhora = hydration mismatch, ar repo-te
+>   `set-state-in-effect` lint rule-o ache (age confirm-email-e ei ta-i dhorechilo).
+>   Hidden input-e `ref` diye DOM value boshano hoyeche — extra render nai, lint nai.
+>   Kono karone khali theke gele action-e strip hoye jabe, backend school zone dhorbe.
+> - Select-er jonno `components/ui/native-select.tsx` use kora hoyeche — Pattern B
+>   (server action + FormData) e plain `<select>`-i thik, Radix `select.tsx` controlled
+>   state chay ar FormData-te value dey na.
+> - `RegistrationType.errors.username` **muche fela hoyeche** — ar kono file oita dhore nai.
+
 ---
 
 ### Step 3 — Verify email page (confirm-email rewrite)
@@ -210,7 +221,7 @@ alada kore test kora lagbe (`INTEGRATION_TEST.md`-e ek ta phase add hobe).
 |---|---|---|---|
 | 0 — Types | ✅ done | 2026-09-12 | `auth.types.ts` — `AuthSuccessResponse` (login/verify ek-i payload), `StudentRegistrationPayload`, `RegistrationPendingResponse`, union + `isAuthSuccess()` narrowing helper, `VerifyEmailResponse`, `ResendVerificationResponse`. `RegistrationType.errors` notun field-e bodlano. `SpanishLevel` `domain.type.ts` theke reuse. |
 | 1 — Register schema + action | ✅ done | 2026-09-12 | `registration.schema.ts` (username bad, 6 notun field, min 8), `registration.action.ts` (path `/student/registration/`, duita response branch, khali value strip), notun `src/constants/spanish-levels.ts` |
-| 2 — Register form UI | ⬜ baki | — | — |
+| 2 — Register form UI | ✅ done | 2026-09-12 | `registration.form.tsx` — `username` input bad, `first_name`/`last_name`/`country`/`phone_number`/level select add, hidden timezone (ref diye), branch-based redirect. `RegistrationType.errors.username` **muche fela hoyeche**. |
 | 3 — Verify email | ⬜ baki | — | — |
 | 4 — Resend | ⬜ baki | — | — |
 | 5 — Token refresh | ⬜ baki | — | — |

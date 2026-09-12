@@ -27,12 +27,6 @@ export type RegistrationType = {
   email?: string;
   errors: {
     email?: string[];
-    /**
-     * @deprecated Notun spec-e `username` nai — `first_name`/`last_name` eseche.
-     * Action (Step 1) theke shorano hoyeche; shudhu `registration.form.tsx`
-     * ekhono dhore ache. **Step 2-e form thik korar shathe ei field-o muchte hobe.**
-     */
-    username?: string[];
     first_name?: string[];
     last_name?: string[];
     country?: string[];
