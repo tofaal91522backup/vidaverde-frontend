@@ -67,6 +67,28 @@ export const packagesColumns: ColumnDef<AdminPackage>[] = [
     ),
   },
   {
+    id: "teachers",
+    header: "Teachers",
+    cell: ({ row }) => {
+      // `teacher_names` read-only echo. **Khali = shob teacher**, keu na NA —
+      // tai khali obosthay "All" dekhano hoy, "0" ba "None" na.
+      const names = row.original.teacher_names ?? [];
+
+      if (names.length === 0) {
+        return (
+          <span className="text-sm text-muted-foreground">All teachers</span>
+        );
+      }
+
+      return (
+        // Naam gula title-e — column chhoto rakhte hobe, table already chowra
+        <Badge variant="outline" title={names.join(", ")}>
+          {names.length} {names.length === 1 ? "teacher" : "teachers"}
+        </Badge>
+      );
+    },
+  },
+  {
     accessorKey: "sort_order",
     header: "Order",
     cell: ({ row }) => (

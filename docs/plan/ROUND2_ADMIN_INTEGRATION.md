@@ -7,8 +7,8 @@
 - **Source of truth:** [docs/bruno/administrator/](../bruno/administrator/)
 - **Index:** [ROUND2_INDEX.md](ROUND2_INDEX.md)
 - **Started:** 2026-09-12
-- **Current step:** **Step 2** — table-e restriction column (shesh step)
-- **Status:** in progress (2/3 done)
+- **Current step:** ✅ **Shob step (0–2) shesh**
+- **Status:** complete
 
 ---
 
@@ -143,6 +143,14 @@ ache, UI-te pouchay na.
 
 **Done jokhon:** package list dekhei bojha jay kon ta restricted.
 
+> **✅ Shesh — ja jana gelo:**
+> - Khali obosthay **"All teachers"** lekha hoy — **"0" ba "None" na**. Table-e
+>   "0" dekhle admin bhabto package ta mora. Ei ek-i shidhanto form-er helper
+>   text-eo (Step 1).
+> - Naam gula `title=` attribute-e — column chhoto rakhte hoy, table already chowra.
+> - `teacher_names` (read-only echo) pora hoy, `teachers` (uuid) na — table-e
+>   naam dorkar, id na.
+
 ---
 
 ## Progress Log
@@ -151,7 +159,7 @@ ache, UI-te pouchay na.
 |---|---|---|---|
 | 0 — Type + schema | ✅ done | 2026-09-12 | `admin.types.ts` e `teachers` + `teacher_names`, `package.schema.ts` e `teachers` (default `[]`), `package-form.tsx` + `edit-package-page.tsx` er defaultValues |
 | 1 — Form picker | ✅ done | 2026-09-12 | Notun `packages/components/teacher-picker.tsx` (checkbox list, `active: true`, sposhto helper text), `package-form.tsx` e `teachers` field. `to-list.ts` er comment backend source diye update |
-| 2 — Table column | ⬜ baki | — | — |
+| 2 — Table column | ✅ done | 2026-09-12 | `packages-column.tsx` e "Teachers" column — khali hole "All teachers", na hole count badge + hover-e naam |
 
 ---
 

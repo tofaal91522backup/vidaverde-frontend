@@ -14,19 +14,18 @@ Last updated: 2026-09-12
 
 > ## 🔵 Round 2 — notun API (backend `f7ccf8b` → `63c01f5`)
 >
-> Backend abar 3 ta commit-e notun endpoint diyeche. Plan toiri, **kono step shuru hoy nai**.
+> ✅ **18/18 step shesh** (2026-09-12). Kono step browser-e test kora hoy nai — checklist [HANDOFF.md](../../HANDOFF.md) e.
 >
 > **👉 Shuru koro ekhan theke: [ROUND2_INDEX.md](ROUND2_INDEX.md)**
 >
 > | Section | Plan | Step | Priority |
 > |---|---|---|---|
-> | Auth | [ROUND2_AUTH_INTEGRATION.md](ROUND2_AUTH_INTEGRATION.md) | 7 | 🔴 1 — registration blocker khule gese |
-> | Public | [ROUND2_PUBLIC_INTEGRATION.md](ROUND2_PUBLIC_INTEGRATION.md) | 5 | 🟠 2 — booking flow order bodleche |
-> | Student | [ROUND2_STUDENT_INTEGRATION.md](ROUND2_STUDENT_INTEGRATION.md) | 3 | 🟡 3 — teacher picker restriction mane na |
-> | Admin | [ROUND2_ADMIN_INTEGRATION.md](ROUND2_ADMIN_INTEGRATION.md) | 3 | 🟢 4 — package-e teacher assign UI nai |
+> | Auth | [ROUND2_AUTH_INTEGRATION.md](ROUND2_AUTH_INTEGRATION.md) | ✅ 7/7 | registration + verify + resend + token refresh |
+> | Public | [ROUND2_PUBLIC_INTEGRATION.md](ROUND2_PUBLIC_INTEGRATION.md) | ✅ 5/5 | booking ekhon package-first, teacher-first entry |
+> | Student | [ROUND2_STUDENT_INTEGRATION.md](ROUND2_STUDENT_INTEGRATION.md) | ✅ 3/3 | book + reschedule picker restriction mane |
+> | Admin | [ROUND2_ADMIN_INTEGRATION.md](ROUND2_ADMIN_INTEGRATION.md) | ✅ 3/3 | package-e teacher assign kora jay |
 >
-> Mot **18 step**. Changelog-er 61 ta "Added" er beshirbhag bru file split — notun kaj na;
-> kon ta asol, ROUND2_INDEX-e table kora ache.
+> Porer kaj **code na — manual testing**. Order ar checklist [HANDOFF.md](../../HANDOFF.md) e.
 
 ## Roles confirmed
 - **Admin** (backend: `ADMIN` — master / manager sub-roles)

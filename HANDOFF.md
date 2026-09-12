@@ -13,44 +13,51 @@
 | | |
 |---|---|
 | **Active plan** | [docs/plan/ROUND2_INDEX.md](docs/plan/ROUND2_INDEX.md) |
-| **Section** | Round 2 → Admin (17 of 18 steps overall) |
-| **Next step** | **Admin Step 2** — restriction column on the packages table. Last step of Round 2 ([ROUND2_ADMIN_INTEGRATION.md](docs/plan/ROUND2_ADMIN_INTEGRATION.md)) |
+| **Section** | ✅ Round 2 complete — all 18 steps |
+| **Next step** | **Manual testing** — no code left to write. Order and checklist below |
 | **Backend commit** | `63c01f5` (see `.claude/api-sync.json`) |
 | **Last updated** | 2026-09-12 — Claude |
 
 ### What was just done
-**Admin Step 1 — the teacher picker.** Packages can now be limited to specific
-teachers from the admin UI, in both create and edit.
+**Admin Step 2 — restriction column. Round 2 is complete, all 18 steps.**
 
-No multi-select component exists in this project (`components/ui/` has checkbox
-and popover, no command/combobox), and there are only a handful of teachers, so
-it is a checkbox list rather than a new dependency.
-
-**This unblocks testing for the Public and Student sections.** A package can
-finally be restricted, so the restriction work in both can be exercised.
+Round 2 covered backend `f7ccf8b` -> `63c01f5`:
+- **Auth (7)** — student registration, email verification, resend, and a token
+  refresh that had never actually run.
+- **Public (5)** — booking reordered to package-first, teacher-first entry.
+- **Student (3)** — teacher pickers restricted to what the package allows.
+- **Admin (3)** — the UI to restrict a package in the first place.
 
 ### What the next session does
-Open `docs/plan/ROUND2_ADMIN_INTEGRATION.md` and do **Step 2** (restriction
-column on the packages table). That is the last step of Round 2. **One step per
-turn, nothing more.**
+**Do not start new features.** Nothing in Round 2 has been run in a browser, and
+the Public booking flow in particular was rewritten end to end. Test it, in this
+order, since each unblocks the next:
 
-### Carried into the next step
-Read `teacher_names`, not `teachers` — the table wants names, and the backend
-echoes them back read-only. Empty means "All teachers", never "none".
-
-### Needs manual testing before it ships
-Nothing in Round 2 has been run in a browser. Suggested order, since each
-unblocks the next:
-1. **Admin** — restrict a package to one or two teachers and save. Everything
-   below depends on a restricted package existing.
-2. **Public booking** — the largest UI change in Round 2. Walk it from both entry
-   points (pricing card, teacher card), including a package with no availability
-   in the next 7 days and widening the window to 14 and 21.
+1. **Admin** — restrict a package to one or two teachers and save, then reopen it
+   and confirm the selection stuck. Everything below needs a restricted package
+   to exist; there are none in the seed data.
+2. **Public booking** — the largest change in Round 2. Walk it from both entry
+   points (a pricing card, and a teacher card), including a package with no
+   availability in the next 7 days and widening the window to 14 and 21. Check
+   the restricted package offers only its own teachers.
 3. **Student** — book-class from the sidebar and from the My Packages "Book a
-   class" shortcut (which passes `?package=`), plus reschedule. Confirm a
-   restricted package offers only its own teachers.
-4. **Auth** — `INTEGRATION_TEST.md` Phase J (token refresh) first, and confirm
-   whether the backend's `EMAIL_VERIFICATION_REQUIRED` is on or off.
+   class" shortcut (which passes `?package=`), plus reschedule. Confirm both
+   pickers respect the restriction.
+4. **Auth** — `INTEGRATION_TEST.md` Phase J (token refresh) first. It touches
+   every signed-in request, and is much easier to test with a short
+   `ACCESS_TOKEN_LIFETIME`; worth asking the backend developer for one.
+
+### Two things to ask the backend developer
+- **Is `EMAIL_VERIFICATION_REQUIRED` on or off?** Registration branches on it and
+  the frontend cannot see it. Both branches are implemented, but only one can be
+  exercised until this is known.
+- **`upload.bru` is wrong.** It documents `url` and `size`; the API returns
+  `stored_path` and `compression_started`. Confirmed in `server/utils/upload.py`,
+  which spreads the external transfer service's JSON verbatim.
+
+### When the testing is done
+Run the api-sync skill to see whether the backend has moved on again. The
+changelogs in `docs/api-changes/` are the backlog.
 
 Nothing is half-finished. Working tree clean.
 
