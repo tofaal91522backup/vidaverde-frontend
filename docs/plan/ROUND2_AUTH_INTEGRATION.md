@@ -293,12 +293,64 @@ alada kore test kora lagbe (`INTEGRATION_TEST.md`-e ek ta phase add hobe).
 
 ---
 
-## Khola proshno
+## Khola proshno — **backend source theke uttor deya holo (2026-09-12)**
 
-1. **`EMAIL_VERIFICATION_REQUIRED` ekhon on na off?** Backend `.env`-e. Off thakle
-   Step 3/4 test-i kora jabe na (verify-email no-op). Backend dev-ke jigges korte hobe.
-2. **Guest checkout-e banano account** — oi email-e abar register korle 400
-   ("already exists"). UI-te "ei email-e already account ache, sign in koro" type
-   message dekhano dorkar. Step 1-e error map-e dhorbo.
-3. **Google OAuth** (`/rest-auth/google/`) ekhon-o wired na — ei round-er scope-e
-   rakhi nai. Chaile alada step add korbo.
+### 1. `EMAIL_VERIFICATION_REQUIRED` on na off? → ✅ **ON (default `True`)**
+
+`server/.env.example:22` → `EMAIL_VERIFICATION_REQUIRED=True`, ar `AGENTS.md`:
+
+> *"`True` (default) sends a confirmation link and blocks login until it is
+> clicked; `False` issues tokens immediately."*
+
+Mane **Step 3/4 (verify + resend) ta-i live path**. Registration-er "token ashe"
+branch ta shudhu tokhon-i chalbe jodi keu iccha kore off kore.
+
+⚠️ **Ar ekta jinis backend doc-e ache ja jana dorkar:**
+
+> *"Verification is an explicit state, not a missing record. Only registration
+> creates an `EmailAddress` row. Admins, seeded users and checkout students have
+> none… so `is_email_verified()` treats 'no row' as verified."*
+
+Mane **guest checkout-e banano account ar seeded user — tara verified hisebe
+gonno hoy**, tader verify korte hoy na. Shudhu `/student/registration/` diye
+banano account-i link click korar jonno atke thake. Test korar shomoy eta mathay
+rakhte hobe — purono account diye verify flow test kora jabe na.
+
+### 2. 🔴 Token refresh ekhon-kar setting-e **kokhono kaj korbe na**
+
+`server/server/settings.py:175`:
+
+```python
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(days=30),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=30),
+    "ROTATE_REFRESH_TOKENS": False,
+    ...
+}
+```
+
+Duita token-i **30 din**, ar rotate hoy na — mane duita-i login-er ek-i muhurte
+issue hoy ar **ek-i shomoy expire kore**. Access token morar din refresh token-o
+mora. Tai refresh call ta 401 khabe ar shoja logout hobe — thik jemon purono
+buggy code korto.
+
+Tar upor amader session cookie `SESSION_MAX_AGE_DAYS=15` — mane **15 din-e-i user
+logout hobe**, token gula (30 din) chhoar age-i. Refresh path-e pouchano-i jabe na.
+
+**Step 5-er code vul na** — oita thik, ar interceptor-er bug-ta sotti chilo. Kintu
+**ekhon-kar setting-e oi code kokhono chalbe na**, ar "token expire hole logout"
+shomoshha ta-o asholei ghote na.
+
+**Backend dev-ke bolar jinis:** refresh token-er mane-i hocche access token chhoto
+hobe. Standard: `ACCESS_TOKEN_LIFETIME` 15-60 minute, `REFRESH_TOKEN_LIFETIME`
+30 din. Tahole Step 5-er code kaje lagbe ar Phase J test-o kora jabe.
+
+### 3. Guest checkout-e banano email-e abar register?
+
+Ekhon-o live-e jachai kora hoy ni. `register.bru` bole "must not already exist --
+including an account created earlier by a guest checkout", tai 400 asha uchit.
+Step 1-e error map kora ache; asol message ta test-e dekhe nite hobe.
+
+### 4. Google OAuth (`/rest-auth/google/`)
+
+Ekhon-o wired na — ei round-er scope-e rakha hoy nai. Chaile alada step.

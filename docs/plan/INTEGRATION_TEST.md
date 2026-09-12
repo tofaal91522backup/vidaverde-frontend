@@ -203,8 +203,17 @@ Network:   GET /administrator/sessions/?filter=upcoming&p=1 → 200, results: []
 > Round 2 Auth Step 5-e joda holo. Ager code-e access token expire mane-i logout
 > chilo — refresh-er code thaklen-o cholto na.
 >
-> Backend-er access token lifetime jana dorkar (SimpleJWT `ACCESS_TOKEN_LIFETIME`).
-> Chhoto kore (jemon 1 min) set korte parle test onek shohoj — backend dev-ke bolo.
+> 🔴 **Ei phase ekhon chalano jabe na — backend setting bodlate hobe age.**
+>
+> `server/server/settings.py`: `ACCESS_TOKEN_LIFETIME` = **30 din**,
+> `REFRESH_TOKEN_LIFETIME` = **30 din**, `ROTATE_REFRESH_TOKENS` = False.
+>
+> Duita token-i login-er ek-i muhurte issue hoy ar **ek-i shomoy expire kore**,
+> tai refresh kokhono shofol hote pare na. Tar upor amader session cookie 15 din
+> (`SESSION_MAX_AGE_DAYS`), tai oi porjonto pouchano-i jay na.
+>
+> **Backend dev-ke bolte hobe:** `ACCESS_TOKEN_LIFETIME` 15-60 minute koro,
+> `REFRESH_TOKEN_LIFETIME` 30 din-i thak. Tar por ei phase chalano jabe.
 
 | # | Ki korba | Ki dekhbe | ✅ |
 |---|---|---|---|

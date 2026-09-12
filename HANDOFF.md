@@ -43,17 +43,44 @@ order, since each unblocks the next:
 3. **Student** — book-class from the sidebar and from the My Packages "Book a
    class" shortcut (which passes `?package=`), plus reschedule. Confirm both
    pickers respect the restriction.
-4. **Auth** — `INTEGRATION_TEST.md` Phase J (token refresh) first. It touches
-   every signed-in request, and is much easier to test with a short
-   `ACCESS_TOKEN_LIFETIME`; worth asking the backend developer for one.
+4. **Auth** — registration, verification and resend. **Phase J (token refresh)
+   is blocked**: with a 30-day access token it cannot be triggered, and with a
+   30-day refresh token it could not succeed anyway. It needs the backend setting
+   changed first (see below).
 
-### Two things to ask the backend developer
-- **Is `EMAIL_VERIFICATION_REQUIRED` on or off?** Registration branches on it and
-  the frontend cannot see it. Both branches are implemented, but only one can be
-  exercised until this is known.
+### Answered from the backend source (2026-09-12)
+
+- **`EMAIL_VERIFICATION_REQUIRED` is `True` by default** (`server/.env.example`,
+  `AGENTS.md`), so the verify-email path is the live one. Note that only
+  registration creates an `EmailAddress` row — seeded users and guest-checkout
+  students count as verified, so the verify flow cannot be tested with an old
+  account.
+- **Teachers have no slug.** Only the Blog model has one, so teacher URLs stay
+  UUID-based unless the backend adds a field.
+- **Seed data restricts no packages**, confirming Admin Step 1 is the only way to
+  create a restricted one.
+
+### One thing the backend developer needs to change
+
+**`ACCESS_TOKEN_LIFETIME` is 30 days and `REFRESH_TOKEN_LIFETIME` is also 30
+days, with `ROTATE_REFRESH_TOKENS` off** (`server/server/settings.py`). Both
+tokens are issued at login and expire together, so a refresh can never succeed:
+by the time the access token is rejected, the refresh token is dead too. Our
+session cookie expires at 15 days anyway, so the path is never even reached.
+
+The Step 5 fix is correct and the interceptor bug it fixed was real, but the code
+cannot run under these settings, and Phase J cannot be tested. A refresh token is
+only meaningful with a short access token — typically 15-60 minutes for access
+and 30 days for refresh.
+
+### Still open, not answerable from the repo
+
+- The 20-class price. The seed still carries `"250.00"` with an `UNRESOLVED`
+  comment: the spec says $250.00, the copy deck says $254.64. A product decision.
 - **`upload.bru` is wrong.** It documents `url` and `size`; the API returns
-  `stored_path` and `compression_started`. Confirmed in `server/utils/upload.py`,
-  which spreads the external transfer service's JSON verbatim.
+  `stored_path` and `compression_started`, because `server/utils/upload.py`
+  spreads the external transfer service's JSON verbatim. A doc fix, not a
+  question.
 
 ### When the testing is done
 Run the api-sync skill to see whether the backend has moved on again. The

@@ -259,9 +259,11 @@ ek-i moto kaj kore.
 
 ## Khola proshno
 
-1. **Teacher URL ekhon-o UUID-based** (Round 1-er khola issue). `/online-classes/teachers/[name]`
-   route ache — oita UUID na slug, seta ei round-e-o meta hoy nai. Step 3-e
-   teacher profile touch korar shomoy abar uthbe.
+1. ✅ **Teacher URL — uttor peye gechi: backend-e teacher-er kono `slug` nai.**
+   Backend source-e (`server/administrator/models.py`) `slug` field **shudhu Blog
+   model-e** ache, Teacher-e nai. Tai UUID-i ekmatro option — `?teacher=<uuid>`
+   ar `/teachers/<uuid>` thik-i ache. SEO-r jonno slug chaile **backend-e field
+   add korte hobe**, frontend-e kichu kora jabe na.
 2. **"Match me" option** — Round 1-e disable kora hoyechilo (checkout concrete
    teacher chay). Package-first flow-e eta abar kora jay kina — `packages/:id/teachers/`
    theke `next_available` shobcheye kacher jon-ke auto-pick kora jete pare.
