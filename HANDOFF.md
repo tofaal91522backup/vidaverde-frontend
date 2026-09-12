@@ -91,9 +91,18 @@ changelogs in `docs/api-changes/` are the backlog.
 These are real and worth knowing before you start, so a known gap is not mistaken
 for a new bug:
 
-1. **No `middleware.ts` and no route guards.** A signed-out visitor can open
-   `/dashboard/admin`, and a student can open the admin dashboard. Carried over
-   from Round 1, out of Round 2's scope, never fixed.
+1. **Route guarding exists and works** — in `src/proxy.ts`, which is what Next 16
+   renamed `middleware.ts` to. Signed-out visitors are sent to sign-in and
+   wrong-role visitors to their own dashboard. Updated this round to bounce
+   signed-in users away from register / forgot-password / verify-email too, not
+   just sign-in.
+
+   Deliberately **not** guarded: `/auth/email/confirm/...` and
+   `/auth/password/reset/confirm/...`. Someone clicking an emailed link may
+   already have a session, and bouncing them would make the link permanently
+   useless.
+
+   Known limit: a `TEACHER` login lands on `/` because no teacher portal exists.
 2. **Phase J (token refresh) cannot run** until the backend shortens
    `ACCESS_TOKEN_LIFETIME`. See above.
 3. **Four eslint errors remain**, all pre-existing and untouched:
@@ -107,6 +116,9 @@ for a new bug:
 
 Verified before handing over: `npm run build` passes, 49/49 static pages;
 `npx tsc --noEmit` clean; eslint clean apart from the four above.
+
+> If a build fails with `Error while requesting resource` against
+> `next/font/google`, that is Google Fonts being unreachable, not the code. Rerun it.
 
 Nothing is half-finished. Working tree clean.
 

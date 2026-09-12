@@ -48,7 +48,7 @@ Last updated: 2026-09-12
   - **verify-email / email confirm** -- frontend page ache, backend endpoint **nai**
   - **Google OAuth** -- backend `/rest-auth/google/` ache, frontend-e wired na
   - **Post-login redirect nai** -- success-e shudhu `router.refresh()` + toast, `/dashboard/admin` ba `/dashboard/customer`-e push kore na, user `/signin`-e thake jay
-  - **`middleware.ts` nai** -- kono route protection nai
+  - ~~**`middleware.ts` nai**~~ -- ekhon [src/proxy.ts](../../src/proxy.ts) e guard ache (Next 16 rename)
   - Protected layout (`admin/layout.tsx`, `customer/layout.tsx`) `getSession()` dake kintu `null` hole redirect kore na -- logged-out obosthay-o dashboard khole
   - Role-based gating nai -- STUDENT `/dashboard/admin`-e dhukte parbe, ultaTao
   - `(auth)/layout.tsx`-e logged-in user-ke `/signin`-e gele bounce korar check nai
@@ -86,7 +86,7 @@ Last updated: 2026-09-12
 - Shob dashboard/public query hook-er commented placeholder URL bhul prefix (`/api/...`) -- integration-er shomoy `/administrator/`, `/student/`, `/public/`-e bodlate hobe.
 - Mock type gulo (camelCase: `isActive`, `paymentStatus`) backend response (snake_case, `{success, ...}` envelope, `results/count` pagination) er sathe milbe na -- schema/type pura notun kore map korte hobe.
 - Booking payment: backend Phase 1-e dummy gateway (`"declined"` chara shob pass). Stripe UI ekhon cosmetic.
-- Auth: login-er por redirect nai, `middleware.ts` nai, protected route gulo unguarded, role gating nai.
+- ~~Auth: login-er por redirect nai, `middleware.ts` nai, protected route gulo unguarded, role gating nai~~ — **thik hoye gese.** Guard ache [src/proxy.ts](../../src/proxy.ts) e (Next 16-e `middleware.ts`-er notun naam), role gating shoho.
 
 ## Notes for next session
 - Integration priority suggestion: (1) Auth routing fix (redirect + middleware + role guard), (2) Public -- teachers/packages/slots/checkout diye book flow live kora, (3) Student dashboard, (4) Admin dashboard, (5) registration/verify decision + google oauth
