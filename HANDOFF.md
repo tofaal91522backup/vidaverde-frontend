@@ -13,33 +13,34 @@
 | | |
 |---|---|
 | **Active plan** | [docs/plan/ROUND2_INDEX.md](docs/plan/ROUND2_INDEX.md) |
-| **Section** | Round 2 → Student (13 of 18 steps overall) |
-| **Next step** | **Student Step 1** — restrict the book-class teacher list ([ROUND2_STUDENT_INTEGRATION.md](docs/plan/ROUND2_STUDENT_INTEGRATION.md)) |
+| **Section** | Round 2 → Student (14 of 18 steps overall) |
+| **Next step** | **Student Step 2** — restrict the reschedule teacher list, last step of the section ([ROUND2_STUDENT_INTEGRATION.md](docs/plan/ROUND2_STUDENT_INTEGRATION.md)) |
 | **Backend commit** | `63c01f5` (see `.claude/api-sync.json`) |
 | **Last updated** | 2026-09-12 — Claude |
 
 ### What was just done
-**Student Step 0 — `usePackageTeachers` for the portal.** New file at
-`src/features/protected/pages/dashboard/student/queries/use-package-teachers.ts`.
-Nothing renders it yet; Step 1 does.
+**Student Step 1 — book-class teacher list.** The picker now offers only the
+teachers a package allows, and the slot step stopped fetching because the
+teachers response already carries each one's days.
 
 ### What the next session does
-Open `docs/plan/ROUND2_STUDENT_INTEGRATION.md` and do **Step 1** (book-class
-teacher list). **One step per turn, nothing more.** Wait for the user to say
-"next" before the step after.
+Open `docs/plan/ROUND2_STUDENT_INTEGRATION.md` and do **Step 2** (reschedule
+teacher list) in `calendar/components/session-actions.tsx`, the last place still
+calling `usePublicTeachers` and `useTeacherSlots`. **One step per turn, nothing
+more.** Wait for the user to say "next" before the step after.
 
 ### Carried into the next step
-- Pass `StudentPackage.package` (the catalogue UUID), **not** `StudentPackage.id`.
-  Confusing the two returns an empty list with no error.
-- The response already carries each teacher's slots, so `step-slot.tsx` can stop
-  calling `useTeacherSlots` — the same call it saved on the public side.
-- Step 2 still has an unknown: `StudentSession` may not carry the catalogue
-  package UUID, only `package_title`. Verify before starting it.
+**Verify this before writing anything:** `StudentSession` may not carry the
+catalogue package UUID, only `package_title`. If it does not, resolve it from
+`/student/packages/` the way `book-class/index.tsx` now does, or ask the backend
+developer to add the id. Do not guess.
 
 ### Needs manual testing before it ships
 - **Booking flow (Public Steps 2-4)** — the largest UI change in Round 2 and
   entirely untested. Walk it from both entry points, including a package with no
   availability in the next 7 days and widening the window.
+- **Student book-class (Step 1)** — check both entry points: from the sidebar,
+  and the "Book a class" shortcut on My Packages, which passes `?package=`.
 - **Auth section** — all of it. Most urgent: `INTEGRATION_TEST.md` Phase J (token
   refresh), and confirming whether `EMAIL_VERIFICATION_REQUIRED` is on or off.
 - **Restricted packages do not exist yet.** Every seeded package is unrestricted,

@@ -7,8 +7,8 @@
 - **Source of truth:** [docs/bruno/student/](../bruno/student/)
 - **Index:** [ROUND2_INDEX.md](ROUND2_INDEX.md)
 - **Started:** 2026-09-12
-- **Current step:** **Step 1** — book-class teacher list restrict
-- **Status:** in progress (1/3 done)
+- **Current step:** **Step 2** — reschedule teacher list restrict (shesh step)
+- **Status:** in progress (2/3 done)
 
 ---
 
@@ -119,6 +119,21 @@ backend endpoint lagbe na.
 
 **Done jokhon:** book-class-e shudhu allowed teacher dekhay, slot ek call-e ashe.
 
+> **✅ Shesh — ja jana gelo:**
+> - **Duita id alada rakhte hoyeche.** `StudentPackage.id` jay `student_package`
+>   hisebe API te; `StudentPackage.package` (catalogue UUID) jay teachers
+>   endpoint-e. `StepPackage` ekhon duita-i fire dey.
+> - 🔴 **My Packages-er "Book a class" shortcut bhenge jacchilo.** Oi link
+>   `?package=<StudentPackage.id>` pathay — catalogue id thake na, tai teacher
+>   list ana-i jeto na. Prothome "package abar bachao" likhechilam, kintu oita
+>   shortcut-er mane-i noshto kore. Ekhon `useMyPackages()` theke mile ber kora
+>   hoy — `StepPackage`-o ei hook dake, tai React Query cache theke ashe, **extra
+>   request jay na**.
+> - **Ekta call kome gelo** — `step-slot.tsx` ar `useTeacherSlots` dake na,
+>   teacher-er `days` prop hisebe pay (public side-er moto).
+> - **Date control teacher step-e uthe eseche.** Slot step-e thakle mone hoto
+>   shudhu somoy filter hocche, othocho date teacher list-o bodlay.
+
 ---
 
 ### Step 2 — Reschedule: teacher list restrict koro
@@ -140,7 +155,7 @@ backend endpoint lagbe na.
 | Step | Obostha | Tarikh | Ki korechi |
 |---|---|---|---|
 | 0 — `usePackageTeachers` hook | ✅ done | 2026-09-12 | Notun `student/queries/use-package-teachers.ts` — marketing-er `PackageTeachersResponse` type-only import, authenticated `request` (public hook-er moto `client: "public"` na) |
-| 1 — Book a class restrict | ⬜ baki | — | — |
+| 1 — Book a class restrict | ✅ done | 2026-09-12 | `step-teacher.tsx` `usePackageTeachers`-e, date control ekhane uthe eseche, `restricted` note; `step-slot.tsx` ar fetch kore na (`days` prop); `step-package.tsx` duita id dey; `index.tsx` catalogue id resolve kore |
 | 2 — Reschedule restrict | ⬜ baki | — | — |
 
 ---

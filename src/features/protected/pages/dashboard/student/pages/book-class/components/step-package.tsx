@@ -12,7 +12,15 @@ export function StepPackage({
   onSelect,
 }: {
   selectedId: string | null;
-  onSelect: (packageId: string) => void;
+  /**
+   * Duita id-i lage.
+   *
+   * `studentPackageId` (`StudentPackage.id`) jay `POST /student/sessions/` e
+   * `student_package` hisebe. `cataloguePackageId` (`StudentPackage.package`)
+   * jay `GET /public/packages/:id/teachers/` e — oi package-e kon teacher
+   * allowed seta jante. Ei duita golale khali list ashe, kono error na.
+   */
+  onSelect: (studentPackageId: string, cataloguePackageId: string) => void;
 }) {
   const { data, isLoading, isError } = useMyPackages();
 
@@ -43,7 +51,7 @@ export function StepPackage({
             <button
               key={pkg.id}
               type="button"
-              onClick={() => onSelect(pkg.id)}
+              onClick={() => onSelect(pkg.id, pkg.package)}
               className={cn(
                 "flex flex-col gap-2 rounded-xl border p-4 text-left transition",
                 selectedId === pkg.id
