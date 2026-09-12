@@ -46,6 +46,8 @@ export function PackageForm({
       is_first_lesson: false,
       sort_order: 0,
       active: true,
+      // Khali = shob teacher allowed, tai notun package default-e unrestricted
+      teachers: [],
       ...defaultValues,
     },
     fieldLabels: {

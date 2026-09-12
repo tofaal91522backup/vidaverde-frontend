@@ -124,6 +124,21 @@ export type AdminPackage = {
   is_first_lesson: boolean;
   sort_order: number;
   active: boolean;
+  /**
+   * Kon teacher-der shathe ei package book kora jabe — teacher UUID-er list.
+   *
+   * ⚠️ **Khali list = unrestricted** (shob active teacher), **"kono teacher na" NA.**
+   * Ei jaygay ulta bujhle puro feature ta ulta hoye jay. Shob seeded package
+   * ekhon khali, mane shob-i shobar jonno khola.
+   *
+   * Eta drive kore `GET /public/packages/:id/teachers/` (booking step 2), ar
+   * backend checkout ar student portal-er booking duitatei abar enforce kore.
+   *
+   * docs/bruno/administrator/create package.bru (2026-09-05)
+   */
+  teachers: string[];
+  /** Read-only — upor-er assignment-ta naam diye echo kore. Form-e pathano jabe na. */
+  teacher_names: string[];
   /** computed */
   title: string;
   description: string;

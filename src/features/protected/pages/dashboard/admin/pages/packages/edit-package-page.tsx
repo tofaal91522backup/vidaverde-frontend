@@ -25,6 +25,9 @@ function toFormValues(pkg: AdminPackage): PackageFormValues {
     is_first_lesson: pkg.is_first_lesson ?? false,
     sort_order: pkg.sort_order ?? 0,
     active: pkg.active ?? true,
+    // Backend `teachers` (uuid) ar `teacher_names` duita-i dey; `teacher_names`
+    // read-only, tai shudhu `teachers` form-e ashe.
+    teachers: pkg.teachers ?? [],
   };
 }
 

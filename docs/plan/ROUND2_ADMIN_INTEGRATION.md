@@ -6,9 +6,9 @@
 
 - **Source of truth:** [docs/bruno/administrator/](../bruno/administrator/)
 - **Index:** [ROUND2_INDEX.md](ROUND2_INDEX.md)
-- **Started:** —
-- **Current step:** **Step 0** (shuru hoy nai)
-- **Status:** planned
+- **Started:** 2026-09-12
+- **Current step:** **Step 1** — package form-e teacher picker
+- **Status:** in progress (1/3 done)
 
 ---
 
@@ -91,6 +91,16 @@ ache, UI-te pouchay na.
 
 **Done jokhon:** typecheck clean, form ekhono field dekhabe na.
 
+> **✅ Shesh — ja jana gelo:**
+> - Create ar edit duita path-i ek-i `PackageSchema` use kore, tai ek jaygay
+>   field add korlei duitatei chole eseche.
+> - `teacher_names` **schema-te rakha hoy nai** — read-only. Rakhle form submit-e
+>   backend-e chole jeto.
+> - `edit-package-page.tsx` er `toFormValues()` iccha kore shudhu form-er field
+>   gula tule ney (computed `title`/`description`/`lang` bad) — oi pattern-e
+>   `teachers` joda kora holo.
+> - Default `[]` = **unrestricted**, mane notun package purono behaviour-i rakhe.
+
 ---
 
 ### Step 1 — Package form-e teacher picker
@@ -123,7 +133,7 @@ ache, UI-te pouchay na.
 
 | Step | Obostha | Tarikh | Ki korechi |
 |---|---|---|---|
-| 0 — Type + schema | ⬜ baki | — | — |
+| 0 — Type + schema | ✅ done | 2026-09-12 | `admin.types.ts` e `teachers` + `teacher_names`, `package.schema.ts` e `teachers` (default `[]`), `package-form.tsx` + `edit-package-page.tsx` er defaultValues |
 | 1 — Form picker | ⬜ baki | — | — |
 | 2 — Table column | ⬜ baki | — | — |
 

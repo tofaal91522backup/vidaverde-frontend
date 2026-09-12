@@ -13,34 +13,34 @@
 | | |
 |---|---|
 | **Active plan** | [docs/plan/ROUND2_INDEX.md](docs/plan/ROUND2_INDEX.md) |
-| **Section** | Round 2 → Student ✅ complete (15 of 18 steps overall) |
-| **Next step** | **Admin Step 0** — package `teachers` type + schema, last section ([ROUND2_ADMIN_INTEGRATION.md](docs/plan/ROUND2_ADMIN_INTEGRATION.md)) |
+| **Section** | Round 2 → Admin (16 of 18 steps overall) |
+| **Next step** | **Admin Step 1** — teacher picker in the package form ([ROUND2_ADMIN_INTEGRATION.md](docs/plan/ROUND2_ADMIN_INTEGRATION.md)) |
 | **Backend commit** | `63c01f5` (see `.claude/api-sync.json`) |
 | **Last updated** | 2026-09-12 — Claude |
 
 ### What was just done
-**Student Step 2 — reschedule teacher list. The Student section is complete.**
-Rescheduling now offers only the teachers the package allows.
-
-The open question is answered: `StudentSession` does **not** carry the catalogue
-package id, only `student_package` and `package_title`. No backend change was
-needed — the id resolves from `/student/packages/`, the same way book-class does
-it.
-
-Also deleted `student/queries/use-public-teachers.ts` and `use-teacher-slots.ts`.
-Nothing imported them any more, and leaving hooks around that list every teacher
-invites the next person to reintroduce exactly the bug this section fixed.
+**Admin Step 0 — package `teachers` type and schema.** `AdminPackage` gains
+`teachers` and read-only `teacher_names`; `PackageSchema` gains `teachers`
+defaulting to `[]`, which means unrestricted. No form field yet — Step 1 builds it.
 
 ### What the next session does
-Start the last section: open `docs/plan/ROUND2_ADMIN_INTEGRATION.md` and do
-**Step 0** (package `teachers` type and schema). **One step per turn, nothing
-more.** Wait for the user to say "next" before the step after.
+Open `docs/plan/ROUND2_ADMIN_INTEGRATION.md` and do **Step 1** (the teacher
+picker). **One step per turn, nothing more.** Wait for the user to say "next"
+before the step after.
 
-### Why Admin matters more than its size suggests
-Every seeded package is unrestricted, so **none of the restriction work in the
-Public or Student sections can be tested until a package can be limited** — and
-Admin Step 1 builds the only UI that can do that. Three steps, but they unblock
-testing for the other two sections.
+### Carried into the next step
+- Check `src/components/ui/` for a multi-select before adding one. There are only
+  a handful of teachers, so a checkbox list is likely enough; ask before pulling
+  a new shadcn component in.
+- The helper text has to be explicit that **leaving it empty allows every
+  teacher**. An admin reading "no teachers selected" as "nobody can teach this"
+  would have the feature exactly backwards.
+- On PATCH the backend replaces the teacher list rather than merging, so the form
+  must always send the full list.
+
+### Why this step unblocks the rest
+Every seeded package is unrestricted, so the restriction work in the Public and
+Student sections **cannot be tested at all** until this picker can limit one.
 
 ### Needs manual testing before it ships
 - **Booking flow (Public Steps 2-4)** — the largest UI change in Round 2 and

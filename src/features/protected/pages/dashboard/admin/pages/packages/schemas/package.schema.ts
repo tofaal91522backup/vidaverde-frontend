@@ -23,6 +23,18 @@ export const PackageSchema = z.object({
   is_first_lesson: z.boolean(),
   sort_order: z.coerce.number(),
   active: z.boolean(),
+  /**
+   * Kon teacher-der shathe book kora jabe.
+   *
+   * ⚠️ **Khali array = shob teacher allowed**, "keu na" NA. Default-i khali,
+   * tai purono package gulo-r kichu bodlay na.
+   *
+   * PATCH-e ei field pathale backend purono list **replace** kore (merge kore na),
+   * ar na pathale purono ta rekhe dey.
+   *
+   * `teacher_names` read-only, tai ekhane nai.
+   */
+  teachers: z.array(z.string()).default([]),
 });
 
 export type PackageFormValues = z.infer<typeof PackageSchema>;
