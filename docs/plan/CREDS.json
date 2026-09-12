@@ -1,0 +1,10 @@
+{
+  "student": {
+    "email": "test.student@vidaverde.test",
+    "password": "student123"
+  },
+  "admin": {
+    "email": "test.admin@vidaverde.test",
+    "password": "admin123"
+  }
+}

@@ -18,8 +18,9 @@ export default function SignInForm() {
 
   useEffect(() => {
     if (state?.success && !isPending) {
-      router.refresh();
       toast.success("Login successful!");
+      router.replace(state.redirectTo ?? "/");
+      router.refresh();
     }
   }, [state, isPending, router]);
 
@@ -42,7 +43,7 @@ export default function SignInForm() {
         <div className="flex items-center justify-between gap-3">
           <label className="text-sm font-medium text-vv-ink">Password</label>
           <Link
-            href="/forget-password"
+            href="/auth/forget-password"
             className="text-xs font-medium text-vv-accent-deep hover:text-vv-ink"
           >
             Forgot password?
@@ -73,7 +74,7 @@ export default function SignInForm() {
       <p className="text-center text-sm text-muted-foreground">
         New to Vida Verde?{" "}
         <Link
-          href="/registration"
+          href="/auth/registration"
           className="font-medium text-vv-accent-deep hover:text-vv-ink"
         >
           Create an account

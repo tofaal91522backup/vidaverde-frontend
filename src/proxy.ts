@@ -1,26 +1,70 @@
-export async function proxy() {}
+import { jwtVerify, type JWTPayload } from "jose";
+import { NextRequest, NextResponse } from "next/server";
 
-// demo proxy
-// import { NextRequest, NextResponse } from "next/server";
-// import { getSession } from "./utils/session";
+type SessionPayload = JWTPayload & {
+  user?: { role?: string };
+};
 
-// export async function proxy(req: NextRequest) {
-//   const session = await getSession();
-//   const { pathname } = req.nextUrl;
+const cookieName = process.env.SESSION_COOKIE_NAME ?? "__myapp_session";
+const sessionSecret = process.env.SESSION_SECRET_KEY;
 
-//   // ❌ Not logged in → block protected pages
-//   if (!session && pathname.startsWith("/khar-academy/my-bookings")) {
-//     return NextResponse.redirect(new URL("/auth/signin", req.url));
-//   }
+function dashboardHref(role?: string) {
+  if (role === "ADMIN") return "/dashboard/admin";
+  if (role === "STUDENT") return "/dashboard/student";
+  return "/";
+}
 
-//   // ✅ Logged in → prevent access to auth pages
-//   if (session && pathname.startsWith("/auth")) {
-//     return NextResponse.redirect(new URL("/", req.url));
-//   }
+async function readSession(request: NextRequest): Promise<SessionPayload | null> {
+  const token = request.cookies.get(cookieName)?.value;
+  if (!token || !sessionSecret) return null;
 
-//   return NextResponse.next();
-// }
+  try {
+    const { payload } = await jwtVerify(
+      token,
+      new TextEncoder().encode(sessionSecret),
+      { algorithms: ["HS256"] },
+    );
+    return payload as SessionPayload;
+  } catch {
+    return null;
+  }
+}
 
-// export const config = {
-//   matcher: ["/auth/:path*", "/khar-academy/my-bookings/:path*"],
-// };
+function signInRedirect(request: NextRequest) {
+  return NextResponse.redirect(new URL("/auth/signin", request.url));
+}
+
+/**
+ * Route-level auth gate. API authorization remains the backend's job; this
+ * prevents unauthenticated and wrong-role users from rendering dashboards.
+ */
+export async function proxy(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+  const session = await readSession(request);
+  const role = session?.user?.role;
+
+  if (pathname.startsWith("/dashboard/admin")) {
+    if (!session) return signInRedirect(request);
+    if (role !== "ADMIN") {
+      return NextResponse.redirect(new URL(dashboardHref(role), request.url));
+    }
+  }
+
+  if (pathname.startsWith("/dashboard/student")) {
+    if (!session) return signInRedirect(request);
+    if (role !== "STUDENT") {
+      return NextResponse.redirect(new URL(dashboardHref(role), request.url));
+    }
+  }
+
+  // A signed-in visitor should not return to the login form.
+  if (pathname === "/auth/signin" && session) {
+    return NextResponse.redirect(new URL(dashboardHref(role), request.url));
+  }
+
+  return NextResponse.next();
+}
+
+export const config = {
+  matcher: ["/dashboard/:path*", "/auth/signin"],
+};

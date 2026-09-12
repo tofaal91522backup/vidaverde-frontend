@@ -146,6 +146,12 @@ export default function Navbar() {
         <div className="flex items-center gap-3 max-[1100px]:hidden">
           <LangToggle />
           <Link
+            href="/auth/signin"
+            className="text-[13px] font-semibold text-vv-ink-2 transition hover:text-vv-ink"
+          >
+            Login
+          </Link>
+          <Link
             href="/online-classes/book"
             className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[13px] font-semibold tracking-[-0.005em] py-2.25 px-3.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px"
           >
@@ -216,6 +222,14 @@ export default function Navbar() {
                 })}
               </nav>
               <div className="mt-6 flex flex-col gap-4">
+                <SheetClose asChild>
+                  <Link
+                    href="/auth/signin"
+                    className="text-center text-[15px] font-semibold text-vv-ink"
+                  >
+                    Login
+                  </Link>
+                </SheetClose>
                 <SheetClose asChild>
                   <Link
                     href="/online-classes/book"

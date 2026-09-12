@@ -2,6 +2,7 @@ export type LoginType = {
   success?: boolean;
   status?: string;
   accessToken?: string;
+  redirectTo?: string;
   errors: {
     email?: string[];
     password?: string[];

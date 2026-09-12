@@ -1,5 +1,6 @@
 // import { ModeToggle } from "@/components/ui/theme-toggle";
 import { SidebarTrigger } from "@/components/ui/sidebar";
+import SignOut from "@/features/auth/components/sign-out";
 
 const DashboardNavbar = () => {
   return (
@@ -21,7 +22,7 @@ const DashboardNavbar = () => {
       <div className="flex items-center gap-3">
         <SidebarTrigger className="-ml-1" />
       </div>
-      {/* <ModeToggle /> */}
+      <SignOut variant="outline" className="w-auto" label="Sign out" />
     </header>
   );
 };

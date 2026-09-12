@@ -3,11 +3,24 @@
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { destroySession } from "@/features/auth/utils/session";
+import { cn } from "@/lib/utils";
 import { useQueryClient } from "@tanstack/react-query";
 import { LogOut } from "lucide-react";
-import { useState } from "react";
+import { type ComponentProps, useState } from "react";
 
-const SignOut = () => {
+type SignOutProps = {
+  className?: string;
+  label?: string;
+  size?: ComponentProps<typeof Button>["size"];
+  variant?: ComponentProps<typeof Button>["variant"];
+};
+
+const SignOut = ({
+  className,
+  label = "Sign Out",
+  size = "sm",
+  variant = "default",
+}: SignOutProps) => {
   const [loading, setLoading] = useState(false);
   const qc = useQueryClient();
 
@@ -27,13 +40,13 @@ const SignOut = () => {
     <Button
       onClick={handleSignOut}
       disabled={loading}
-      variant="default"
-      size="sm"
-      className="w-full items-center justify-start"
+      variant={variant}
+      size={size}
+      className={cn("w-full items-center justify-start", className)}
     >
       {loading && <Spinner className="mr-2" />}
       <LogOut className="text-white translate-y-0.1" size={16} />
-      Sign Out
+      {label}
     </Button>
   );
 };

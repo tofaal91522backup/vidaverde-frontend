@@ -37,7 +37,7 @@
     ".next/dev/types/**/*.ts",
     "src/features/dashboard/supplier/transportation/services/.service.ts",
     ".next/dev/dev/types/**/*.ts"
-  ],
+,     "docs/plan/CREDS.json"  ],
   "exclude": [
     "node_modules"
   ]

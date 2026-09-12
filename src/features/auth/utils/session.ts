@@ -22,7 +22,8 @@ export async function CreateSession(payload: Session): Promise<void> {
 
   cookieStore.set(SESSION_COOKIE_NAME, session, {
     httpOnly: true,
-    secure: true,
+    // Secure cookies are required in production, but block local HTTP sign-in.
+    secure: !env.isDevelopment,
     maxAge: SESSION_MAX_AGE_SECONDS,
     sameSite: "lax",
     path: "/",

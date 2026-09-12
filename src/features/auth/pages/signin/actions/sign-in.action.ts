@@ -52,7 +52,14 @@ export const SignInAction = async (
       refreshToken: data?.refresh,
     });
 
-    return { success: true, errors: {} };
+    const redirectTo =
+      data?.role === "ADMIN"
+        ? "/dashboard/admin"
+        : data?.role === "STUDENT"
+          ? "/dashboard/student"
+          : "/";
+
+    return { success: true, redirectTo, errors: {} };
   } catch (error) {
     return HandleError(error);
   }

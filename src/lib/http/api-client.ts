@@ -8,7 +8,8 @@ import {
 import { env } from "@/lib/env";
 
 const apiClient = axios.create({
-  baseURL: env.BACKEND_URL,
+  // Browser bundle-e shudhu NEXT_PUBLIC_* env available thake.
+  baseURL: env.NEXT_PUBLIC_BACKEND_URL,
   // withCredentials: true,
 });
 
@@ -47,7 +48,7 @@ apiClient.interceptors.response.use(
 
         // backend e refresh token pathao
         const { data } = await axios.post(
-          `${env.BACKEND_URL}/get-access-token/`,
+          `${env.NEXT_PUBLIC_BACKEND_URL}/get-access-token/`,
           { refresh: session.refreshToken },
         );
 
