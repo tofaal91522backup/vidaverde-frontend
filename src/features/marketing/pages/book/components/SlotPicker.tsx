@@ -1,16 +1,10 @@
 "use client";
 
-import { usePublicTeacherSlots } from "@/features/marketing/pages/book/queries/use-public-teacher-slots";
-import type { PublicTeacherSlot } from "@/features/marketing/types/public-api.types";
+import type {
+  PublicTeacherSlot,
+  PublicTeacherSlotDay,
+} from "@/features/marketing/types/public-api.types";
 import { cn } from "@/lib/utils";
-
-/** Aj-ker date local part theke — `toISOString()` UTC dey, tate ek din agiye jete pare. */
-function todayInput() {
-  const now = new Date();
-  const month = String(now.getMonth() + 1).padStart(2, "0");
-  const day = String(now.getDate()).padStart(2, "0");
-  return `${now.getFullYear()}-${month}-${day}`;
-}
 
 function formatDayHeading(date: string) {
   const parsed = new Date(`${date}T00:00:00`);
@@ -23,96 +17,74 @@ function formatDayHeading(date: string) {
   });
 }
 
+/**
+ * Bachai kora teacher-er khali somoy.
+ *
+ * ⚠️ **Eta nijei kono API dake na.** Age `usePublicTeacherSlots` dakto, kintu
+ * `GET /public/packages/:id/teachers/` ekhon proti teacher-er puro `days` list
+ * ek-i response-e diye dey — tai abar fetch kora mane ek-i data duibar ana.
+ * Date picker ar window control parent-e (booking step 1), karon oigula shudhu
+ * slot na, **teacher list-o** bodlay.
+ */
 export function SlotPicker({
-  teacherId,
+  days,
   timeZone,
-  date,
-  onDateChange,
+  durationMinutes,
   selectedSlot,
   onSelectSlot,
 }: {
-  teacherId: string | null;
-  timeZone: string;
-  date: string;
-  onDateChange: (date: string) => void;
+  days: PublicTeacherSlotDay[];
+  timeZone?: string;
+  durationMinutes?: number;
   selectedSlot: PublicTeacherSlot | null;
   onSelectSlot: (slot: PublicTeacherSlot) => void;
 }) {
-  const { data, isLoading, isError } = usePublicTeacherSlots({
-    teacherId,
-    date,
-    tz: timeZone,
-  });
+  // Backend khali din-o pathay jate week grid-e gap na pore; ekhane list
+  // hisebe dekhachchi bole oigula bad.
+  const daysWithSlots = days.filter((day) => day.slots.length > 0);
 
-  const days = (data?.days ?? []).filter((day) => day.slots.length > 0);
+  if (daysWithSlots.length === 0) {
+    return (
+      <p className="text-[14px] text-vv-ink-2">
+        This teacher has no free times left in the window above. Try a later
+        start date, a longer window, or another teacher.
+      </p>
+    );
+  }
 
   return (
     <div className="flex flex-col gap-5">
-      <div className="flex flex-col gap-1.5">
-        <label
-          htmlFor="book-date"
-          className="text-[12px] font-medium uppercase tracking-wide text-vv-ink-2"
-        >
-          Show availability from
-        </label>
-        <input
-          id="book-date"
-          type="date"
-          value={date}
-          min={todayInput()}
-          onChange={(e) => onDateChange(e.target.value)}
-          className="rounded-lg border border-vv-line bg-vv-bg-warm px-4 py-3 text-[15px] text-vv-ink outline-none focus:border-vv-accent"
-        />
-      </div>
-
-      {isLoading ? (
-        <p className="text-[14px] text-vv-ink-2" role="status">
-          Loading available times…
-        </p>
-      ) : isError ? (
-        <p className="text-[14px] text-red-600" role="alert">
-          We could not load this teacher&apos;s availability. Please try again
-          shortly.
-        </p>
-      ) : days.length === 0 ? (
-        <p className="text-[14px] text-vv-ink-2">
-          No free times in the 7 days from this date. Try a later date or another
-          teacher.
-        </p>
-      ) : (
-        <div className="flex flex-col gap-5">
-          {days.map((day) => (
-            <div key={day.date} className="flex flex-col gap-2">
-              <h3 className="text-[13px] font-semibold text-vv-ink">
-                {formatDayHeading(day.date)}
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {day.slots.map((slot) => (
-                  <button
-                    key={slot.start_utc}
-                    type="button"
-                    aria-pressed={selectedSlot?.start_utc === slot.start_utc}
-                    // `start_utc` hubohu rakha hoy — checkout-e eta-i jabe
-                    onClick={() => onSelectSlot(slot)}
-                    className={cn(
-                      "rounded-lg border px-4 py-2 text-[14px] transition",
-                      selectedSlot?.start_utc === slot.start_utc
-                        ? "border-vv-accent bg-vv-accent/10 font-medium text-vv-ink"
-                        : "border-vv-line text-vv-ink-2 hover:border-vv-ink",
-                    )}
-                  >
-                    {slot.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-          ))}
+      {daysWithSlots.map((day) => (
+        <div key={day.date} className="flex flex-col gap-2">
+          <h3 className="text-[13px] font-semibold text-vv-ink">
+            {formatDayHeading(day.date)}
+          </h3>
+          <div className="flex flex-wrap gap-2">
+            {day.slots.map((slot) => (
+              <button
+                key={slot.start_utc}
+                type="button"
+                aria-pressed={selectedSlot?.start_utc === slot.start_utc}
+                // `start_utc` hubohu rakha hoy — checkout-e eta-i jabe
+                onClick={() => onSelectSlot(slot)}
+                className={cn(
+                  "rounded-lg border px-4 py-2 text-[14px] transition",
+                  selectedSlot?.start_utc === slot.start_utc
+                    ? "border-vv-accent bg-vv-accent/10 font-medium text-vv-ink"
+                    : "border-vv-line text-vv-ink-2 hover:border-vv-ink",
+                )}
+              >
+                {slot.label}
+              </button>
+            ))}
+          </div>
         </div>
-      )}
+      ))}
 
-      {data?.timezone && (
+      {timeZone && (
         <p className="text-[12px] text-vv-ink-2">
-          Times shown in {data.timezone} · {data.duration_minutes}-minute lessons
+          Times shown in {timeZone}
+          {durationMinutes ? ` · ${durationMinutes}-minute lessons` : ""}
         </p>
       )}
     </div>

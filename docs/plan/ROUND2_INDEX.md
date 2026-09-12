@@ -8,7 +8,7 @@
 
 - **Started:** 2026-09-12
 - **Backend commit:** `63c01f5`
-- **Status:** in progress — Auth shesh, Public cholche (9/18 step)
+- **Status:** in progress — Auth shesh, Public cholche (10/18 step)
 
 ---
 
@@ -60,7 +60,7 @@ Verify korte chaile: `grep -rn "<path>" src/`.
 4. Ek section shesh hole porer section, upor-er priority order-e.
 5. Section bodlate chaile bolo — "public ta age koro" — ami oi file dhorbo.
 
-**Ekhon kothay:** ✅ Auth shesh. Public cholche — Step 0-1 done. Porer `next` → **Public Step 2** (boro step).
+**Ekhon kothay:** ✅ Auth shesh. Public cholche — Step 0-2 done (boro step ta shesh). Porer `next` → **Public Step 3**.
 
 ---
 

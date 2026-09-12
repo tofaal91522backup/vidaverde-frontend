@@ -5,7 +5,7 @@ import {
   orderPublicPackages,
   usePublicPackages,
 } from "@/features/marketing/pages/courses/queries/use-public-packages";
-import { usePublicTeachers } from "@/features/marketing/pages/courses/queries/use-public-teachers";
+import { usePackageTeachers } from "@/features/marketing/pages/book/queries/use-package-teachers";
 import { SlotPicker } from "@/features/marketing/pages/book/components/SlotPicker";
 import { getPublicTimeZone } from "@/features/marketing/constants/public-api";
 import type {
@@ -27,13 +27,45 @@ import { useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
 import { ChevronRight, UserRound } from "lucide-react";
 
+/**
+ * Backend-er documented flow: **package -> teacher -> pay**
+ * (`docs/bruno/public/package teachers.bru`).
+ *
+ * Age eta chilo teacher -> package -> slot, 5 step, 3 ta call. Package age
+ * nile `GET /public/packages/:id/teachers/` teacher ar tader puro slot list
+ * ek shathe dey — tai teacher bachai ar somoy bachai ek-i screen-e, ar
+ * package-e allowed noy emon teacher list-e ashe-i na.
+ */
 const STEPS = [
-  "Choose Your Teacher",
   "Choose Your Package",
-  "Date & Time",
+  "Teacher & Time",
   "Your Details",
   "Payment",
 ] as const;
+
+const LAST_STEP = STEPS.length - 1;
+
+/** Slot na pele visitor nijei window barate pare. */
+const WINDOW_OPTIONS = [7, 14, 21] as const;
+
+/** Aj-ker date local part theke — `toISOString()` UTC dey, tate ek din agiye jete pare. */
+function todayInput() {
+  const now = new Date();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+  return `${now.getFullYear()}-${month}-${day}`;
+}
+
+/** Teacher card-er "Next available" badge — chhoto kore, shudhu din. */
+function formatSlotDay(isoLocal: string) {
+  const date = new Date(isoLocal?.slice(0, 19) ?? "");
+  if (Number.isNaN(date.getTime())) return "";
+  return date.toLocaleDateString("en-GB", {
+    weekday: "short",
+    day: "numeric",
+    month: "short",
+  });
+}
 
 /**
  * `start_local` offset shoho ashe ("2026-09-10T15:00:00+02:00"). Oi string-er
@@ -60,16 +92,12 @@ export default function BookRoute() {
   const { language } = useLanguage();
   const { data: packageData, isLoading: packagesLoading, isError: packagesError } =
     usePublicPackages({ lang: language });
-  const { data: teacherData, isLoading: teachersLoading, isError: teachersError } =
-    usePublicTeachers({ lang: language });
   const preselectedTeacher = searchParams.get("teacher");
   const preselectedPackage = searchParams.get("package");
   const packages = useMemo(
     () => orderPublicPackages(packageData ?? []),
     [packageData],
   );
-  const teachers = teacherData ?? [];
-
   const [step, setStep] = useState(0);
   const [selectedTeacherId, setSelectedTeacherId] = useState<string | null>(
     preselectedTeacher,
@@ -77,12 +105,38 @@ export default function BookRoute() {
   const [selectedPackageId, setSelectedPackageId] = useState<string | null>(
     preselectedPackage,
   );
-  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedDate, setSelectedDate] = useState(() => todayInput());
+  const [windowDays, setWindowDays] = useState<number>(WINDOW_OPTIONS[0]);
   const [selectedSlot, setSelectedSlot] = useState<PublicTeacherSlot | null>(
     null,
   );
   // Visitor-er nijer zone; ei zone-e-i backend slot render kore
   const timeZone = useMemo(() => getPublicTimeZone(), []);
+
+  /**
+   * `selectedPackageId` null hote pare (URL-e `?package=` nai), kintu tokhon-o
+   * prothom package ta default hisebe dekhano hoy. Tai hook-e `selectedPackageId`
+   * na diye **`selectedPackage.id`** deya hoy — na hole default package select
+   * thakto othocho teacher list khali dekhato.
+   */
+  const selectedPackage =
+    packages.find((pkg) => pkg.id === selectedPackageId) ?? packages[0] ?? null;
+
+  // Booking step 2 — teacher ar tader slot ek-i call-e
+  const {
+    data: packageTeachersData,
+    isLoading: packageTeachersLoading,
+    isError: packageTeachersError,
+  } = usePackageTeachers({
+    packageId: selectedPackage?.id ?? null,
+    date: selectedDate,
+    tz: timeZone,
+    days: windowDays,
+    lang: language,
+  });
+
+  const packageTeachers = packageTeachersData?.teachers ?? [];
+  const packageMeta = packageTeachersData?.package;
 
   /** `start_local` offset shoho ashe; oi string-er nijer part-i visitor-er shomoy. */
   const slotDateLabel = selectedSlot
@@ -105,10 +159,8 @@ export default function BookRoute() {
   const setDetail = (field: keyof CheckoutDetailsValues, value: string) =>
     setDetails((current) => ({ ...current, [field]: value }));
 
-  const selectedPackage =
-    packages.find((pkg) => pkg.id === selectedPackageId) ?? packages[0] ?? null;
   const selectedTeacher =
-    teachers.find((teacher) => teacher.id === selectedTeacherId) ?? null;
+    packageTeachers.find((teacher) => teacher.id === selectedTeacherId) ?? null;
 
   /** Teacher ba date bodlale purono slot ar valid na — clear kore deওয়া hoy. */
   const changeTeacher = (teacherId: string) => {
@@ -116,17 +168,28 @@ export default function BookRoute() {
     setSelectedSlot(null);
   };
 
+  /**
+   * Date ba window bodlale slot to bodlay-i, **teacher list-o** bodlay — jar oi
+   * window-e slot nai backend take bad dey. Tai duitatei slot clear kora hoy;
+   * teacher select thakle thakuk, list theke chole gele `selectedTeacher`
+   * niজei `null` hoye jabe.
+   */
   const changeDate = (date: string) => {
     setSelectedDate(date);
     setSelectedSlot(null);
   };
 
+  const changeWindow = (days: number) => {
+    setWindowDays(days);
+    setSelectedSlot(null);
+  };
+
   const canAdvance = () => {
-    if (step === 0) return !!selectedTeacher && !teachersLoading;
-    if (step === 1) return !!selectedPackage && !packagesLoading;
-    if (step === 2) return !!selectedSlot;
-    if (step === 3) return CheckoutDetailsSchema.safeParse(details).success;
-    if (step === 4) return true;
+    if (step === 0) return !!selectedPackage && !packagesLoading;
+    // Teacher ar slot duita-i ek-i screen-e — duita chara egono jabe na
+    if (step === 1) return !!selectedTeacher && !!selectedSlot;
+    if (step === 2) return CheckoutDetailsSchema.safeParse(details).success;
+    if (step === LAST_STEP) return true;
     return false;
   };
 
@@ -134,7 +197,7 @@ export default function BookRoute() {
     const parsed = CheckoutDetailsSchema.safeParse(details);
     if (!parsed.success) {
       setDetailErrors(parsed.error.issues.map((issue) => issue.message));
-      setStep(3);
+      setStep(2);
       return;
     }
     if (!selectedTeacher || !selectedPackage || !selectedSlot) return;
@@ -244,76 +307,8 @@ export default function BookRoute() {
           </div>
         </div>
 
-        {/* Step 0. Teacher */}
+        {/* Step 0. Package */}
         {step === 0 && (
-          <div>
-            <h2 className="text-[20px] font-semibold mb-1 text-vv-ink">
-              Choose Your Teacher
-            </h2>
-            <p className="text-[14px] text-vv-ink-2 mb-6">
-              Choose the teacher you would like to learn with.
-            </p>
-            {teachersLoading && (
-              <p className="text-[13px] text-vv-ink-2" role="status">
-                Loading teachers…
-              </p>
-            )}
-            {teachersError && (
-              <p className="text-[13px] text-red-600" role="alert">
-                Teachers are unavailable right now. Please try again shortly.
-              </p>
-            )}
-            {!teachersLoading && !teachersError && teachers.length === 0 && (
-              <p className="text-[13px] text-vv-ink-2">
-                No teachers are currently available.
-              </p>
-            )}
-            {teachers.length > 0 && (
-              <div className="grid gap-4 sm:grid-cols-2">
-                {teachers.map((teacher) => (
-                  <button
-                    key={teacher.id}
-                    type="button"
-                    onClick={() => changeTeacher(teacher.id)}
-                    className={cn(
-                      "flex items-center gap-4 rounded-xl border p-4 text-left transition",
-                      selectedTeacher?.id === teacher.id
-                        ? "border-vv-accent bg-vv-accent/10"
-                        : "border-vv-line hover:border-vv-ink",
-                    )}
-                  >
-                    <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full bg-vv-bg-warm">
-                      {teacher.profile_img_url ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
-                          src={teacher.profile_img_url}
-                          alt={teacher.name}
-                          className="h-full w-full object-cover"
-                        />
-                      ) : (
-                        <UserRound
-                          aria-hidden="true"
-                          className="h-5 w-5 text-vv-muted"
-                        />
-                      )}
-                    </div>
-                    <div>
-                      <div className="font-semibold text-vv-ink text-[15px]">
-                        {teacher.name}
-                      </div>
-                      <div className="text-[12px] text-vv-ink-2">
-                        {teacher.availability_label}
-                      </div>
-                    </div>
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* Step 1. Package */}
-        {step === 1 && (
           <div>
             <h2 className="text-[20px] font-semibold mb-6 text-vv-ink">
               Choose Your Package
@@ -368,6 +363,13 @@ export default function BookRoute() {
                       {" · "}
                       valid for {pkg.validity_days} days
                     </span>
+                    {pkg.teacher_count > 0 && (
+                      <span className="text-[12px] text-vv-muted">
+                        {pkg.teacher_count}{" "}
+                        {pkg.teacher_count === 1 ? "teacher" : "teachers"}{" "}
+                        available
+                      </span>
+                    )}
                   </button>
                 ))}
               </div>
@@ -375,29 +377,170 @@ export default function BookRoute() {
           </div>
         )}
 
-        {/* Step 2. Date & Time */}
-        {step === 2 && (
+        {/* Step 1. Teacher & Time — ek-i call theke, tai ek-i screen */}
+        {step === 1 && (
           <div>
             <h2 className="text-[20px] font-semibold mb-1 text-vv-ink">
-              Choose Your Date &amp; Time
+              Choose Your Teacher &amp; Time
             </h2>
             <p className="text-[13px] text-vv-ink-2 mb-6">
-              Real availability for {selectedTeacher?.name ?? "your teacher"},
+              Real availability for {selectedPackage?.title ?? "your package"},
               shown in your own timezone.
             </p>
-            <SlotPicker
-              teacherId={selectedTeacherId}
-              timeZone={timeZone}
-              date={selectedDate}
-              onDateChange={changeDate}
-              selectedSlot={selectedSlot}
-              onSelectSlot={setSelectedSlot}
-            />
+
+            {/* Window control — date ar koto din. Eta shudhu slot na, **teacher
+                list-o** bodlay: jar ei window-e slot nai, backend take bad dey. */}
+            <div className="mb-6 flex flex-wrap items-end gap-4 rounded-xl border border-vv-line bg-vv-bg-warm p-4">
+              <div className="flex flex-col gap-1.5">
+                <label
+                  htmlFor="book-date"
+                  className="text-[12px] font-medium uppercase tracking-wide text-vv-ink-2"
+                >
+                  Show availability from
+                </label>
+                <input
+                  id="book-date"
+                  type="date"
+                  value={selectedDate}
+                  min={todayInput()}
+                  onChange={(e) => changeDate(e.target.value)}
+                  className="rounded-lg border border-vv-line bg-vv-bg px-4 py-2.5 text-[15px] text-vv-ink outline-none focus:border-vv-accent"
+                />
+              </div>
+              <div className="flex flex-col gap-1.5">
+                <label
+                  htmlFor="book-window"
+                  className="text-[12px] font-medium uppercase tracking-wide text-vv-ink-2"
+                >
+                  Window
+                </label>
+                <select
+                  id="book-window"
+                  value={windowDays}
+                  onChange={(e) => changeWindow(Number(e.target.value))}
+                  className="rounded-lg border border-vv-line bg-vv-bg px-4 py-2.5 text-[15px] text-vv-ink outline-none focus:border-vv-accent"
+                >
+                  {WINDOW_OPTIONS.map((option) => (
+                    <option key={option} value={option}>
+                      Next {option} days
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            {packageTeachersLoading && (
+              <p className="text-[13px] text-vv-ink-2" role="status">
+                Loading teachers and times…
+              </p>
+            )}
+            {packageTeachersError && (
+              <p className="text-[13px] text-red-600" role="alert">
+                Availability is unavailable right now. Please try again shortly.
+              </p>
+            )}
+
+            {/*
+              Khali list mane "ei package-e teacher nai" NA. Jar ei window-e
+              ekta-o slot nai, backend take bad diye dey (take balle khali
+              calendar khulto). Tai ekhane window barano-r kotha bola hoy,
+              "no teachers" bola hoy na.
+            */}
+            {!packageTeachersLoading &&
+              !packageTeachersError &&
+              packageTeachers.length === 0 && (
+                <div className="rounded-xl border border-vv-line bg-vv-bg-warm p-5">
+                  <p className="text-[14px] text-vv-ink">
+                    No one has a free slot in the next {windowDays} days from
+                    this date.
+                  </p>
+                  <p className="mt-1 text-[13px] text-vv-ink-2">
+                    Try a later start date or a longer window — this package is
+                    still available to book.
+                  </p>
+                </div>
+              )}
+
+            {packageTeachers.length > 0 && (
+              <>
+                {packageMeta?.restricted && (
+                  <p className="mb-4 rounded-lg border border-vv-line bg-vv-bg-warm px-4 py-2.5 text-[13px] text-vv-ink-2">
+                    This package can be booked with the teachers below only.
+                  </p>
+                )}
+
+                <div className="grid gap-4 sm:grid-cols-2">
+                  {packageTeachers.map((teacher) => (
+                    <button
+                      key={teacher.id}
+                      type="button"
+                      onClick={() => changeTeacher(teacher.id)}
+                      className={cn(
+                        "flex items-center gap-4 rounded-xl border p-4 text-left transition",
+                        selectedTeacher?.id === teacher.id
+                          ? "border-vv-accent bg-vv-accent/10"
+                          : "border-vv-line hover:border-vv-ink",
+                      )}
+                    >
+                      <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-full bg-vv-bg-warm">
+                        {teacher.profile_img_url ? (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img
+                            src={teacher.profile_img_url}
+                            alt={teacher.name}
+                            className="h-full w-full object-cover"
+                          />
+                        ) : (
+                          <UserRound
+                            aria-hidden="true"
+                            className="h-5 w-5 text-vv-muted"
+                          />
+                        )}
+                      </div>
+                      <div className="min-w-0">
+                        <div className="font-semibold text-vv-ink text-[15px]">
+                          {teacher.name}
+                        </div>
+                        {/* Backend puro window-er prothom khali slot diye dey —
+                            tai eta hisheb kore ber korte hoy na */}
+                        {teacher.next_available ? (
+                          <div className="text-[12px] text-vv-ink-2">
+                            Next available:{" "}
+                            {formatSlotDay(teacher.next_available.start_local)}{" "}
+                            {teacher.next_available.label} ·{" "}
+                            {teacher.slot_count} slots
+                          </div>
+                        ) : (
+                          <div className="text-[12px] text-vv-ink-2">
+                            {teacher.availability_label}
+                          </div>
+                        )}
+                      </div>
+                    </button>
+                  ))}
+                </div>
+
+                {selectedTeacher && (
+                  <div className="mt-8 border-t border-vv-line pt-6">
+                    <h3 className="mb-4 text-[16px] font-semibold text-vv-ink">
+                      Pick a time with {selectedTeacher.name}
+                    </h3>
+                    <SlotPicker
+                      days={selectedTeacher.days}
+                      timeZone={packageTeachersData?.timezone}
+                      durationMinutes={packageTeachersData?.duration_minutes}
+                      selectedSlot={selectedSlot}
+                      onSelectSlot={setSelectedSlot}
+                    />
+                  </div>
+                )}
+              </>
+            )}
           </div>
         )}
 
-        {/* Step 3. Details */}
-        {step === 3 && (
+        {/* Step 2. Details */}
+        {step === 2 && (
           <div>
             <h2 className="text-[20px] font-semibold mb-6 text-vv-ink">
               Your Details
@@ -501,8 +644,8 @@ export default function BookRoute() {
           </div>
         )}
 
-        {/* Step 4. Payment */}
-        {step === 4 && (
+        {/* Step 3. Payment */}
+        {step === 3 && (
           <div>
             <h2 className="text-[20px] font-semibold mb-2 text-vv-ink">
               Payment
@@ -575,7 +718,7 @@ export default function BookRoute() {
             <div />
           )}
 
-          {step < 4 ? (
+          {step < LAST_STEP ? (
             <button
               type="button"
               disabled={!canAdvance()}

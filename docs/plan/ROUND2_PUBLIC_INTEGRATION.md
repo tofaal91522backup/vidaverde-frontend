@@ -7,8 +7,8 @@
 - **Source of truth:** [docs/bruno/public/](../bruno/public/)
 - **Index:** [ROUND2_INDEX.md](ROUND2_INDEX.md)
 - **Started:** 2026-09-12
-- **Current step:** **Step 2** — booking flow reorder (boro step)
-- **Status:** in progress (2/5 done)
+- **Current step:** **Step 3** — teacher-first entry
+- **Status:** in progress (3/5 done)
 
 ---
 
@@ -165,6 +165,24 @@ touch hobe — ei ek ta step-i alada `next`.
 **Done jokhon:** package → teacher+time → details → payment flow cholche, checkout
 ek-i moto kaj kore.
 
+> **✅ Shesh — ja jana gelo:**
+> - **Ekta network call kome gelo.** Age `usePublicTeachers` + `usePublicTeacherSlots`
+>   duita alada call jeto; ekhon `usePackageTeachers` ek call-e teacher ar tader
+>   puro slot list dey. `SlotPicker` ar kono API dake na — `days` prop ney.
+> - **Date/window control `SlotPicker` theke parent-e uthe geche.** Karon oigula
+>   ekhon shudhu slot na, **teacher list-o** bodlay (jar oi window-e slot nai
+>   backend take bad dey). Picker-er bhitore rakhle mone hoto shudhu somoy filter hocche.
+> - **Window barano-r option (7/14/21 din) add kora holo.** Khali list mane "keu
+>   free nai", "teacher nai" na — tai UI-te window barie dekhte bola hoy, ar
+>   sposhto lekha thake package ta tokhon-o bookable.
+> - 🔴 **Ek ta bug dhora porlo:** `selectedPackage` fallback kore `packages[0]`-e,
+>   kintu `selectedPackageId` tokhon-o `null` thake. Hook-e `selectedPackageId`
+>   pathale URL-e `?package=` na thakle default package select-i dekhato othocho
+>   teacher list **khali** ashto. Ekhon `selectedPackage?.id` pathano hoy.
+>   Ager flow-e eta dhora porto na, karon teacher list package-er upor depend korto na.
+> - `next_available` backend-i dey — "Next available: Mon 14:00" badge hisheb kore
+>   ber korte hoy na.
+
 ---
 
 ### Step 3 — Teacher-first entry (`/public/teachers/:id/packages/`)
@@ -204,7 +222,7 @@ ek-i moto kaj kore.
 |---|---|---|---|
 | 0 — Types | ✅ done | 2026-09-12 | `public-api.types.ts` — `teacher_count` on `PublicPackage`, notun `PublicSlotRef`/`PublicPackageTeacher`/`PackageTeachersResponse`/`PublicTeacherPackage`/`TeacherPackagesResponse` |
 | 1 — `usePackageTeachers` | ✅ done | 2026-09-12 | Notun `book/queries/use-package-teachers.ts` — `useFetchData` + `client: "public"`, `days` default `PUBLIC_SLOT_DAYS` (7), `enabled` packageId thakle |
-| 2 — Flow reorder | ⬜ baki | — | — |
+| 2 — Flow reorder | ✅ done | 2026-09-12 | `book/index.tsx` — 5 step → 4 step (package → teacher+time → details → payment), `usePublicTeachers` bad, window control (date + 7/14/21 din), `teacher_count` badge, `restricted` note. `SlotPicker.tsx` ar fetch kore na, `days` prop ney. |
 | 3 — Teacher-first entry | ⬜ baki | — | — |
 | 4 — `teacher_count` + error | ⬜ baki | — | — |
 

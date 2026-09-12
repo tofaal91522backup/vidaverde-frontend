@@ -13,38 +13,36 @@
 | | |
 |---|---|
 | **Active plan** | [docs/plan/ROUND2_INDEX.md](docs/plan/ROUND2_INDEX.md) |
-| **Section** | Round 2 → Public (9 of 18 steps overall) |
-| **Next step** | **Public Step 2** — booking flow reorder, the big one ([ROUND2_PUBLIC_INTEGRATION.md](docs/plan/ROUND2_PUBLIC_INTEGRATION.md)) |
+| **Section** | Round 2 → Public (10 of 18 steps overall) |
+| **Next step** | **Public Step 3** — teacher-first entry ([ROUND2_PUBLIC_INTEGRATION.md](docs/plan/ROUND2_PUBLIC_INTEGRATION.md)) |
 | **Backend commit** | `63c01f5` (see `.claude/api-sync.json`) |
 | **Last updated** | 2026-09-12 — Claude |
 
 ### What was just done
-**Public Step 1 — `usePackageTeachers` hook.** New file at
-`src/features/marketing/pages/book/queries/use-package-teachers.ts`. Nothing
-renders it yet; Step 2 does.
+**Public Step 2 — booking flow reordered.** Five steps became four: package,
+then teacher and time on one screen, then details, then payment. `SlotPicker` no
+longer fetches anything — the package-teachers response already carries each
+teacher's days — and the date/window controls moved up to the page, because they
+change which teachers appear, not just which times.
 
 ### What the next session does
-Open `docs/plan/ROUND2_PUBLIC_INTEGRATION.md` and do **Step 2** — the booking
-flow reorder. **One step per turn, nothing more.** Wait for the user to say
-"next" before the step after.
+Open `docs/plan/ROUND2_PUBLIC_INTEGRATION.md` and do **Step 3** (teacher-first
+entry). **One step per turn, nothing more.** Wait for the user to say "next"
+before the step after.
 
 ### Carried into the next step
-Step 2 is the largest change in this section, so expect it to touch several files
-at once:
-- `STEPS` goes from five entries to four: package, then teacher-and-time
-  together, then details, then payment.
-- `SlotPicker` currently calls `usePublicTeacherSlots` itself. The new endpoint
-  already returns each teacher's `days`, so the picker has to accept them as a
-  prop instead of fetching.
-- An empty teacher list means "nobody free in this window", not "no teachers".
-  Offer to widen `days` rather than declaring the package unbookable.
-- `?package=` and `?teacher=` query params need to keep working; Step 3 sends
-  visitors in with both set.
+Step 3 sends visitors to `/book?package=<id>&teacher=<id>` from teacher cards and
+profile pages. The booking page already reads both params, so check that path
+works rather than adding new handling. Note that a `?teacher=` who has no slots
+in the default 7-day window will not be in the list, and the selection will
+silently come back empty — worth deciding whether that needs a message.
 
 ### Needs manual testing before it ships
-The whole Auth section is untested against a live backend. Most urgent:
-`INTEGRATION_TEST.md` Phase J (token refresh), and confirming whether the
-backend's `EMAIL_VERIFICATION_REQUIRED` is on or off.
+- **Booking flow (Step 2)** — the largest UI change in Round 2 and completely
+  untested. Walk the whole flow end to end, including a package with no
+  availability in the next 7 days, and widening the window to 14 and 21.
+- **Auth section** — all of it. Most urgent: `INTEGRATION_TEST.md` Phase J (token
+  refresh), and confirming whether `EMAIL_VERIFICATION_REQUIRED` is on or off.
 
 Nothing is half-finished. Working tree clean.
 
