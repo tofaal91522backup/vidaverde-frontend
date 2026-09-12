@@ -1,0 +1,62 @@
+meta {
+  name: replace package
+  type: http
+  seq: 25
+}
+
+put {
+  url: {{base_url}}/administrator/packages/:id/
+  body: json
+  auth: inherit
+}
+
+params:path {
+  id: 347cde65-90ad-4178-8816-332e19e04748
+}
+
+body:json {
+  {
+    // Required.
+    "title_en": "10-Class Package",
+    // Required. USD, two decimals.
+    "price": "135.00",
+
+    // Optional, but omitting resets to the model default shown.
+    "title_es": "",
+    "description_en": "10 x 60-minute private lessons. Valid for 3 months.",
+    "description_es": "",
+    "image_url": "",
+    "total_classes": 10,
+    "validity_days": 90,
+    "is_first_lesson": false,
+    "sort_order": 2,
+    "active": true,
+    // [] means unrestricted -- every active teacher.
+    "teachers": []
+  }
+}
+
+docs {
+  ## API explanation
+  `PUT` **replaces** the record: any writable field you leave out is reset to its
+  default or blank, not left alone. Use `PATCH` (see **update package**) unless you are
+  deliberately sending the whole object -- an edit form that omits a field will
+  silently wipe it.
+
+  Replacing a package still does not rewrite history -- existing purchases keep
+  their frozen `package_data` snapshot and their original price.
+
+  ## API example response
+  {
+    "id": "347cde65-90ad-4178-8816-332e19e04748",
+    "title_en": "10-Class Package",
+    "price": "135.00",
+    "total_classes": 10,
+    "validity_days": 90,
+    "active": true,
+    "teachers": [],
+    "teacher_names": [],
+    "lang": "en",
+    "updated_at": "2026-09-12T10:20:00.000000-05:00"
+  }
+}

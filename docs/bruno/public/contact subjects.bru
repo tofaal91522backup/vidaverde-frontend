@@ -1,0 +1,35 @@
+meta {
+  name: contact subjects
+  type: http
+  seq: 12
+}
+
+get {
+  url: {{base_url}}/public/contact/subjects/
+  body: none
+  auth: none
+}
+
+docs {
+  ## API explanation
+  Options for the contact form's subject dropdown, with display labels. Static,
+  from the model's choices.
+
+  Pass a `value` back as `subject` on **contact**.
+
+  Note the copy review (`docs/latest/SectionA_Open_Items.md`, A1) flagged this
+  dropdown as listing "Travel Spanish" twice and missing "Homestay" -- that was
+  only ever wrong in the copy deck document. The real list is below.
+
+  ## API example response
+  {
+    "success": true,
+    "subjects": [
+      { "value": "online_classes", "label": "Online Classes" },
+      { "value": "immersion", "label": "Immersion Programme" },
+      { "value": "homestay", "label": "Homestay" },
+      { "value": "travel_spanish", "label": "Travel Spanish" },
+      { "value": "other", "label": "Other" }
+    ]
+  }
+}

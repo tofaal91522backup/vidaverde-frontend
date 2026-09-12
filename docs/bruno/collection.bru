@@ -17,6 +17,18 @@ docs {
   | `/teacher/` | teachers | reserved for Phase 2 -- no endpoints yet |
   | `/rest-auth/` | login, logout, password | mixed |
 
+  Every route the server exposes has a request here. `authentication/legacy/`
+  holds aliases and URL-name-holder routes -- read those before using them.
+
+  ## Signing up
+
+  `student > registration > register`. Whether the new account can log in
+  immediately depends on `EMAIL_VERIFICATION_REQUIRED` in `server/.env`:
+  `True` (default) sends a confirmation link first, `False` returns tokens
+  straight away.
+
+  A guest checkout also creates an account, and emails a generated password.
+
   ## Getting a token
 
   Run **authentication > login**. Its post-response script stores the access

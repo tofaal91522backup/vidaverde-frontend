@@ -1,0 +1,38 @@
+meta {
+  name: current user
+  type: http
+  seq: 8
+}
+
+get {
+  url: {{base_url}}/rest-auth/user/
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessTokenStudent}}
+}
+
+docs {
+  ## API explanation
+  dj-rest-auth's own "who am I". Returns the `User` row only -- no `role`, and no
+  Admin/Teacher/Student profile.
+
+  For anything role-aware prefer the payload from **login**, or
+  `GET /student/me/` for a student's own profile. This is kept because
+  dj-rest-auth routes it and some clients expect it.
+
+  `PUT` / `PATCH` on the same URL edit `first_name`, `last_name` and `username`.
+  They do **not** touch the Student profile -- name, country, timezone and level
+  live on `PATCH /student/me/`.
+
+  ## API example response
+  {
+    "pk": 4,
+    "username": "marco.reyes@example.com",
+    "email": "marco.reyes@example.com",
+    "first_name": "Marco",
+    "last_name": "Reyes"
+  }
+}

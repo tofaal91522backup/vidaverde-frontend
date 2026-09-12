@@ -1,0 +1,111 @@
+meta {
+  name: package teachers
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{base_url}}/public/packages/:id/teachers/?date=2026-09-07&days=7&tz=Europe/London&lang=en
+  body: none
+  auth: none
+}
+
+params:path {
+  id: 347cde65-90ad-4178-8816-332e19e04748
+}
+
+params:query {
+  date: 2026-09-07
+  days: 7
+  tz: Europe/London
+  lang: en
+}
+
+docs {
+  ## API explanation
+  **Booking step 2.** The flow is: 1. choose package -> 2. choose teacher ->
+  3. fill in details and pay. This is what step 2 renders.
+
+  Given a package, it returns the teachers that package can be booked with, each
+  carrying their full bookable slot list for the requested window -- so step 2
+  and the date picker are one screen with no follow-up call per teacher.
+
+  **Which teachers come back.** A package with no teachers assigned is
+  unrestricted and offers every active teacher (the default, and what all four
+  seeded packages do). Assign teachers via
+  `PATCH /administrator/packages/<id>/ {"teachers": ["<uuid>", ...]}` to limit it.
+  `package.restricted` tells you which case you are in.
+
+  A teacher with **zero** bookable slots in the window is omitted entirely --
+  picking them would lead to an empty calendar. If a restricted package's only
+  teachers are all deactivated, it falls back to every active teacher rather than
+  showing an empty picker.
+
+  Query params:
+
+  - `date` -- `YYYY-MM-DD`, first day of the window. Defaults to today (school time).
+  - `days` -- 1-31, defaults to 7.
+  - `tz` -- IANA name, defaults to `America/Guayaquil`. An unknown zone returns 400.
+  - `lang` -- `en` or `es`, applies to the package title and teacher bios.
+
+  `days` always contains one entry per requested day, including empty weekends,
+  so a week grid renders without gaps. `next_available` is the first slot across
+  the whole window, ready for a "Next available: Mon 14:00" badge.
+  `slot_count` is the total across the window.
+
+  Post the chosen `start_utc` verbatim to **checkout** as `start_datetime`.
+
+  The restriction is enforced again at checkout and when a student books a later
+  class from the portal -- filtering this list is not the only guard.
+
+  ## API example response
+  {
+    "success": true,
+    "package": {
+      "id": "347cde65-90ad-4178-8816-332e19e04748",
+      "title": "10-Class Package",
+      "price": "135.00",
+      "total_classes": 10,
+      "is_first_lesson": false,
+      "restricted": false
+    },
+    "timezone": "Europe/London",
+    "duration_minutes": 60,
+    "from_date": "2026-09-07",
+    "days_requested": 7,
+    "teachers": [
+      {
+        "id": "1e54776b-9910-4742-9f8c-8efd23912d4a",
+        "name": "Fernando Cordero",
+        "profile_img_url": "",
+        "tags": ["beginners", "conversation", "travel spanish"],
+        "institute": "Universidad Central del Ecuador",
+        "availability": [{ "day": "mon", "start": "08:00", "end": "16:00" }],
+        "accepting_students": true,
+        "availability_label": "Accepting new students",
+        "description": "I have taught Spanish for twelve years...",
+        "lang": "en",
+        "next_available": {
+          "start_utc": "2026-09-07T13:00:00+00:00",
+          "start_local": "2026-09-07T14:00:00+01:00",
+          "label": "14:00",
+          "date": "2026-09-07"
+        },
+        "slot_count": 40,
+        "days": [
+          {
+            "date": "2026-09-07",
+            "slots": [
+              {
+                "start_utc": "2026-09-07T13:00:00+00:00",
+                "start_local": "2026-09-07T14:00:00+01:00",
+                "label": "14:00"
+              }
+            ]
+          },
+          { "date": "2026-09-12", "slots": [] }
+        ]
+      }
+    ]
+  }
+}

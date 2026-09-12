@@ -1,0 +1,59 @@
+meta {
+  name: replace teacher
+  type: http
+  seq: 11
+}
+
+put {
+  url: {{base_url}}/administrator/teachers/:id/
+  body: json
+  auth: inherit
+}
+
+params:path {
+  id: 1e54776b-9910-4742-9f8c-8efd23912d4a
+}
+
+body:json {
+  {
+    // Required -- the only mandatory field on this serializer.
+    "name": "Fernando Cordero",
+
+    // Everything below is optional, but anything omitted is RESET.
+    "profile_img_url": "",
+    "tags": ["beginners", "conversation", "travel spanish"],
+    "institute": "Universidad Central del Ecuador",
+    "description_en": "I have taught Spanish for twelve years...",
+    "description_es": "",
+    "availability": [
+      { "day": "mon", "start": "08:00", "end": "16:00" },
+      { "day": "tue", "start": "08:00", "end": "16:00" }
+    ],
+    "accepting_students": true,
+    "google_calendar_id": "",
+    "meet_link": "https://meet.google.com/abc-defg-hij",
+    "active": true
+  }
+}
+
+docs {
+  ## API explanation
+  `PUT` **replaces** the record: any writable field you leave out is reset to its
+  default or blank, not left alone. Use `PATCH` (see **update teacher**) unless you are
+  deliberately sending the whole object -- an edit form that omits a field will
+  silently wipe it.
+
+  `time_off` is read-only here; manage it through the time-off endpoints.
+
+  ## API example response
+  {
+    "id": "1e54776b-9910-4742-9f8c-8efd23912d4a",
+    "name": "Fernando Cordero",
+    "availability": [{ "day": "mon", "start": "08:00", "end": "16:00" }],
+    "accepting_students": true,
+    "active": true,
+    "time_off": [],
+    "lang": "en",
+    "updated_at": "2026-09-12T10:20:00.000000-05:00"
+  }
+}

@@ -1,0 +1,34 @@
+meta {
+  name: deactivate admin
+  type: http
+  seq: 6
+}
+
+delete {
+  url: {{base_url}}/administrator/admins/:id/
+  body: none
+  auth: inherit
+}
+
+params:path {
+  id: 1f4b8c02-7d63-4a19-8e50-2c9f7b3d1a86
+}
+
+docs {
+  ## API explanation
+  **Master admin only.** Deactivates rather than deletes: sets `active` false on
+  the profile and `is_active` false on the login, so the row survives. Blog posts
+  reference their author, and deleting would orphan them.
+
+  A master cannot deactivate their own account -- that returns 400.
+
+  There is no reactivate endpoint; `PATCH` with `{"active": true}` does it,
+  though that leaves `User.is_active` false, so set the password again via
+  `password_txt` to fully restore access.
+
+  ## API example response
+  {
+    "success": true,
+    "message": "Admin deactivated."
+  }
+}

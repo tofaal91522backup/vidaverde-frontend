@@ -1,12 +1,12 @@
 meta {
   name: teacher time off
   type: http
-  seq: 4
+  seq: 13
 }
 
-post {
+get {
   url: {{base_url}}/administrator/teachers/:id/time-off/
-  body: json
+  body: none
   auth: inherit
 }
 
@@ -14,41 +14,26 @@ params:path {
   id: 1e54776b-9910-4742-9f8c-8efd23912d4a
 }
 
-body:json {
-  {
-    // Start of the blackout window. Required, ISO-8601 with offset.
-    "start_datetime": "2026-12-24T00:00:00-05:00",
-
-    // End of the window. Required, and must be after start_datetime.
-    "end_datetime": "2027-01-02T00:00:00-05:00",
-
-    // Optional label, shown in the admin list.
-    "reason": "Christmas holidays"
-  }
-}
-
 docs {
   ## API explanation
-  Holidays and blackout windows, which override the teacher's weekly
-  availability. Any slot overlapping one of these disappears from
-  `GET /public/teachers/<id>/slots/` and is refused at booking time.
+  One teacher's blackout windows. `POST` to the same URL adds one -- see
+  **create time off**.
 
-  This does not cancel classes that are already booked inside the window -- move
-  or cancel those from the sessions list.
-
-  `GET` on the same URL lists that teacher's entries.
-  `GET`/`PUT`/`PATCH`/`DELETE /administrator/time-off/<id>/` handle one entry.
+  These override the weekly availability: any slot overlapping a window vanishes
+  from the public slot endpoints and is refused at booking time.
 
   ## API example response
   {
     "success": true,
-    "time_off": {
-      "id": "c4e8a1b7-2d95-4f30-8a16-9b7c3e5d2f48",
-      "teacher": "1e54776b-9910-4742-9f8c-8efd23912d4a",
-      "start_datetime": "2026-12-24T00:00:00-05:00",
-      "end_datetime": "2027-01-02T00:00:00-05:00",
-      "reason": "Christmas holidays",
-      "created_at": "2026-09-05T09:20:00.000000-05:00"
-    }
+    "results": [
+      {
+        "id": "c4e8a1b7-2d95-4f30-8a16-9b7c3e5d2f48",
+        "teacher": "1e54776b-9910-4742-9f8c-8efd23912d4a",
+        "start_datetime": "2026-12-24T00:00:00-05:00",
+        "end_datetime": "2027-01-02T00:00:00-05:00",
+        "reason": "Christmas holidays",
+        "created_at": "2026-09-05T09:20:00.000000-05:00"
+      }
+    ]
   }
 }

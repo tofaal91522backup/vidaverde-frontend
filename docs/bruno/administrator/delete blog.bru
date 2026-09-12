@@ -1,0 +1,30 @@
+meta {
+  name: delete blog
+  type: http
+  seq: 32
+}
+
+delete {
+  url: {{base_url}}/administrator/blogs/:id/
+  body: none
+  auth: inherit
+}
+
+params:path {
+  id: 5c1e8a2f-9d43-4b76-8e0a-1f2c3d4e5a6b
+}
+
+docs {
+  ## API explanation
+  Permanently deletes a post. This is the one admin resource that really is
+  deleted rather than deactivated -- nothing references a blog post.
+
+  To take a post off the site without losing it, `PATCH` it to
+  `{"status": "draft"}` instead.
+
+  ## API example response
+  {
+    "success": true,
+    "message": "Post deleted."
+  }
+}

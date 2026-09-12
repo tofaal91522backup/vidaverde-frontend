@@ -1,0 +1,51 @@
+meta {
+  name: teacher detail
+  type: http
+  seq: 9
+}
+
+get {
+  url: {{base_url}}/administrator/teachers/:id/
+  body: none
+  auth: inherit
+}
+
+params:path {
+  id: 1e54776b-9910-4742-9f8c-8efd23912d4a
+}
+
+docs {
+  ## API explanation
+  One teacher, with `time_off` embedded. Includes deactivated teachers, unlike
+  the public route.
+
+  ## API example response
+  {
+    "id": "1e54776b-9910-4742-9f8c-8efd23912d4a",
+    "name": "Fernando Cordero",
+    "profile_img_url": "",
+    "tags": ["beginners", "conversation"],
+    "institute": "Universidad Central del Ecuador",
+    "description_en": "I have taught Spanish for twelve years...",
+    "description_es": "",
+    "availability": [{ "day": "mon", "start": "08:00", "end": "16:00" }],
+    "accepting_students": true,
+    "google_calendar_id": "fernando@vidaverde.com",
+    "meet_link": "",
+    "active": true,
+    "time_off": [
+      {
+        "id": "c4e8a1b7-2d95-4f30-8a16-9b7c3e5d2f48",
+        "teacher": "1e54776b-9910-4742-9f8c-8efd23912d4a",
+        "start_datetime": "2026-12-24T00:00:00-05:00",
+        "end_datetime": "2027-01-02T00:00:00-05:00",
+        "reason": "Christmas holidays",
+        "created_at": "2026-09-05T09:20:00.000000-05:00"
+      }
+    ],
+    "description": "I have taught Spanish for twelve years...",
+    "lang": "en",
+    "created_at": "2026-09-05T08:44:12.000000-05:00",
+    "updated_at": "2026-09-05T08:44:12.000000-05:00"
+  }
+}

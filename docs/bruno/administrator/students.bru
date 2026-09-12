@@ -1,31 +1,32 @@
 meta {
   name: students
   type: http
-  seq: 8
+  seq: 19
 }
 
 get {
-  url: {{base_url}}/administrator/students/?search=marco&p=1
+  url: {{base_url}}/administrator/students/?p=1
   body: none
   auth: inherit
 }
 
 params:query {
-  search: marco
   p: 1
+  ~search: marco
 }
 
 docs {
   ## API explanation
-  Enrolled students, paginated. `search` matches name or email.
+  Enrolled students, paginated (`p`, `page_size`). `search` matches name or
+  email. Read-only -- admins do not edit student profiles.
 
-  `GET /administrator/students/<id>/` returns the full picture for one student --
-  profile, every package they bought, and every class they have had or are
-  booked into. Read-only: admins do not edit student profiles.
+  Includes students created by a guest checkout as well as those who registered
+  themselves; there is no flag distinguishing them, because they are the same
+  thing once created.
 
   ## API example response
   {
-    "count": 1,
+    "count": 2,
     "page_size": 10,
     "next": null,
     "previous": null,

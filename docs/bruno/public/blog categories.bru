@@ -1,0 +1,32 @@
+meta {
+  name: blog categories
+  type: http
+  seq: 15
+}
+
+get {
+  url: {{base_url}}/public/blogs/categories/
+  body: none
+  auth: none
+}
+
+docs {
+  ## API explanation
+  The category filter options for the blog index, with display labels. Static --
+  they come from the model's choices, not the database, so a category with no
+  posts still appears.
+
+  Pass a `value` back as `?category=` on **blogs**.
+
+  ## API example response
+  {
+    "success": true,
+    "categories": [
+      { "value": "spanish_learning_tips", "label": "Spanish Learning Tips" },
+      { "value": "ecuador_travel", "label": "Ecuador Travel" },
+      { "value": "school_news", "label": "School News" },
+      { "value": "student_stories", "label": "Student Stories" },
+      { "value": "culture_and_language", "label": "Culture & Language" }
+    ]
+  }
+}

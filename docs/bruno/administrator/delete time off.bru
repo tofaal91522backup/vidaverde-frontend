@@ -1,0 +1,26 @@
+meta {
+  name: delete time off
+  type: http
+  seq: 18
+}
+
+delete {
+  url: {{base_url}}/administrator/time-off/:id/
+  body: none
+  auth: inherit
+}
+
+params:path {
+  id: c4e8a1b7-2d95-4f30-8a16-9b7c3e5d2f48
+}
+
+docs {
+  ## API explanation
+  Removes a blackout window for good. This one really does delete -- nothing
+  references it.
+
+  The freed slots become bookable again straight away.
+
+  ## API example response
+  (204 No Content)
+}

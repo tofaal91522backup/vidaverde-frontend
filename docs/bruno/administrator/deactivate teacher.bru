@@ -1,0 +1,35 @@
+meta {
+  name: deactivate teacher
+  type: http
+  seq: 12
+}
+
+delete {
+  url: {{base_url}}/administrator/teachers/:id/
+  body: none
+  auth: inherit
+}
+
+params:path {
+  id: 1e54776b-9910-4742-9f8c-8efd23912d4a
+}
+
+docs {
+  ## API explanation
+  Deactivates rather than deletes: sets `active` and `accepting_students` to
+  false. Sessions reference the teacher with `PROTECT`, so a real delete would be
+  refused anyway.
+
+  A deactivated teacher disappears from the public lists and from every booking
+  picker, but their past classes and the history on them stay intact.
+  `PATCH {"active": true}` brings them back.
+
+  Classes already booked with them are **not** cancelled -- reassign or cancel
+  those from the sessions list.
+
+  ## API example response
+  {
+    "success": true,
+    "message": "Teacher deactivated."
+  }
+}

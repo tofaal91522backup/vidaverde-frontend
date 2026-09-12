@@ -1,0 +1,65 @@
+meta {
+  name: verify email
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{base_url}}/student/registration/verify-email/
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    // The confirmation key. Required.
+    // It is the last path segment of the link in the email, which the
+    // AccountAdapter points at {{frontend_url}}/auth/email/confirm/<key>.
+    "key": "PASTE_KEY_FROM_THE_EMAIL_LINK"
+  }
+}
+
+script:post-response {
+  const response = res.getBody();
+
+  if (response.access) {
+    bru.setVar("accessTokenStudent", response.access);
+  }
+}
+
+docs {
+  ## API explanation
+  Completes registration. Marks the address verified and logs the account in,
+  returning the same payload as **login** -- making someone click a link and then
+  retype their password would be friction for nothing.
+
+  An invalid or expired key returns 400. Keys are single-use; run
+  **resend verification** for a fresh one.
+
+  Only relevant when `EMAIL_VERIFICATION_REQUIRED=True`.
+
+  ## API example response
+  {
+    "success": true,
+    "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+    "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+    "user": {
+      "pk": 7,
+      "username": "nueva.estudiante@example.com",
+      "email": "nueva.estudiante@example.com",
+      "first_name": "Nueva",
+      "last_name": "Estudiante"
+    },
+    "role": "STUDENT",
+    "profile": {
+      "id": "d41f6b2a-8c37-4e50-91bd-2a7c5e93f108",
+      "name": "Nueva Estudiante",
+      "profile_img_url": "",
+      "country": "Spain",
+      "timezone": "Europe/Madrid",
+      "current_spanish_level": "beginner",
+      "active": true
+    },
+    "message": "Your email is confirmed. Welcome to Vida Verde."
+  }
+}

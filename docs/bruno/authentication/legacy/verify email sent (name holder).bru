@@ -1,0 +1,34 @@
+meta {
+  name: verify email sent (name holder)
+  type: http
+  seq: 7
+}
+
+get {
+  url: {{base_url}}/rest-auth/registration/account-confirm-email/
+  body: none
+  auth: none
+}
+
+docs {
+  ## API explanation
+  **Do not call this.** It is listed only so the collection covers every route
+  the server exposes.
+
+  dj-rest-auth's `VerifyEmailView` is mounted here under the name
+  `account_email_verification_sent`, which allauth reverses in parts of its
+  signup flow. The route carries no `key` path segment, so a GET has nothing to
+  confirm and returns **405**. The POST form of the same URL does work -- see
+  **verify email (dj-rest-auth)** -- and is itself superseded by
+  `POST /student/registration/verify-email/`.
+
+  It stays mounted because deleting a URL name that a library reverses breaks the
+  flow doing the reversing. That already happened once here: removing the
+  `account_confirm_email` route made `send_email_confirmation()` raise, and
+  signup emails silently stopped going out.
+
+  ## API example response
+  {
+    "detail": "Method \"GET\" not allowed."
+  }
+}

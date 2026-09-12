@@ -1,0 +1,36 @@
+meta {
+  name: resend verification
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{base_url}}/student/registration/resend-email/
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    // Address to send a fresh confirmation link to. Required.
+    "email": "nueva.estudiante@example.com"
+  }
+}
+
+docs {
+  ## API explanation
+  Sends a new confirmation link.
+
+  Always returns the same 200 and the same message whether or not the address
+  exists or is already confirmed -- otherwise the endpoint would be a way to
+  discover which emails are registered. Nothing is actually sent for an unknown
+  or already-verified address.
+
+  A no-op when `EMAIL_VERIFICATION_REQUIRED=False`.
+
+  ## API example response
+  {
+    "success": true,
+    "message": "If that address needs confirming, a new link is on its way."
+  }
+}

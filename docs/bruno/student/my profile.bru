@@ -1,0 +1,39 @@
+meta {
+  name: my profile
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{base_url}}/student/me/
+  body: none
+  auth: inherit
+}
+
+docs {
+  ## API explanation
+  The authenticated student's own profile. `PATCH` on the same URL edits it --
+  see **update my profile**.
+
+  This is the `Student` row, not the Django `User`: `name`, `country`,
+  `timezone` and `current_spanish_level` live here. `/rest-auth/user/` is the
+  auth record and carries only first/last name.
+
+  ## API example response
+  {
+    "success": true,
+    "profile": {
+      "id": "2173edc2-1430-4f3e-afd7-5ad8d2e073b3",
+      "email": "marco.reyes@example.com",
+      "name": "Marco Reyes",
+      "profile_img_url": "",
+      "country": "Germany",
+      "phone_number": "",
+      "timezone": "Europe/Berlin",
+      "current_spanish_level": "beginner",
+      "active": true,
+      "created_at": "2026-09-05T03:44:52.700000-05:00",
+      "updated_at": "2026-09-05T03:44:52.700000-05:00"
+    }
+  }
+}

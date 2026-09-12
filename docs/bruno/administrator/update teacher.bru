@@ -1,0 +1,56 @@
+meta {
+  name: update teacher
+  type: http
+  seq: 10
+}
+
+patch {
+  url: {{base_url}}/administrator/teachers/:id/
+  body: json
+  auth: inherit
+}
+
+params:path {
+  id: 1e54776b-9910-4742-9f8c-8efd23912d4a
+}
+
+body:json {
+  {
+    // Optional. Weekly rules in SCHOOL time (America/Guayaquil).
+    // "day" is one of: mon, tue, wed, thu, fri, sat, sun.
+    // "start"/"end" are "HH:MM" and start must be before end -- otherwise 400.
+    "availability": [
+      { "day": "mon", "start": "09:00", "end": "15:00" },
+      { "day": "wed", "start": "09:00", "end": "15:00" }
+    ],
+
+    // Optional. false flips the public badge to "Limited availability".
+    // It does NOT stop bookings -- use active for that.
+    "accepting_students": false
+  }
+}
+
+docs {
+  ## API explanation
+  Edits a teacher. Every field optional on a PATCH -- send only what changed.
+  `PUT` on the same URL expects the full object.
+
+  Changing `availability` does not touch classes already booked outside the new
+  hours; those stay and must be moved from the sessions list. Slot validation
+  only applies to new bookings.
+
+  Field meanings and the `availability` rule format are on the **create teacher**
+  request.
+
+  ## API example response
+  {
+    "id": "1e54776b-9910-4742-9f8c-8efd23912d4a",
+    "name": "Fernando Cordero",
+    "accepting_students": false,
+    "availability": [{ "day": "mon", "start": "09:00", "end": "15:00" }],
+    "active": true,
+    "time_off": [],
+    "lang": "en",
+    "updated_at": "2026-09-12T10:05:00.000000-05:00"
+  }
+}

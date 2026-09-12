@@ -1,0 +1,33 @@
+meta {
+  name: confirm email link
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{base_url}}/rest-auth/registration/account-confirm-email/:key/
+  body: none
+  auth: none
+}
+
+params:path {
+  key: PASTE_KEY_FROM_THE_EMAIL_LINK
+}
+
+docs {
+  ## API explanation
+  Not an API call -- this is the URL allauth reverses when building the
+  activation link, and it must exist or `send_email_confirmation()` raises and
+  no signup email is sent at all.
+
+  `AccountAdapter` rewrites the link in the actual email to
+  `{{frontend_url}}/auth/email/confirm/<key>`, so a user should never reach this
+  route. If one does (an old link, a client that stripped the rewrite), it 302s
+  to that same frontend page rather than 404ing.
+
+  The frontend then posts the key to
+  `POST /student/registration/verify-email/`.
+
+  ## API example response
+  302 Location: {{frontend_url}}/auth/email/confirm/<key>
+}

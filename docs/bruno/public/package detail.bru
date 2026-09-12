@@ -1,0 +1,43 @@
+meta {
+  name: package detail
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{base_url}}/public/packages/:id/?lang=en
+  body: none
+  auth: none
+}
+
+params:path {
+  id: 347cde65-90ad-4178-8816-332e19e04748
+}
+
+params:query {
+  lang: en
+}
+
+docs {
+  ## API explanation
+  One active package, same shape as an entry in the **packages** list. An
+  inactive package returns 404 -- the public API never exposes one.
+
+  `teacher_count` is how many teachers it can be booked with;
+  `GET /public/packages/<id>/teachers/` lists them with their slots.
+
+  ## API example response
+  {
+    "id": "347cde65-90ad-4178-8816-332e19e04748",
+    "image_url": "",
+    "total_classes": 10,
+    "validity_days": 90,
+    "price": "135.00",
+    "is_first_lesson": false,
+    "sort_order": 2,
+    "teacher_count": 4,
+    "title": "10-Class Package",
+    "description": "10 x 60-minute private lessons. Valid for 3 months.",
+    "lang": "en"
+  }
+}

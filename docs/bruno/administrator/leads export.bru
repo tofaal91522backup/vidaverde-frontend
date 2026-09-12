@@ -1,0 +1,31 @@
+meta {
+  name: leads export
+  type: http
+  seq: 46
+}
+
+get {
+  url: {{base_url}}/administrator/leads/export/
+  body: none
+  auth: inherit
+}
+
+docs {
+  ## API explanation
+  CSV download of every lead. Responds with `text/csv` and
+  `Content-Disposition: attachment; filename="vidaverde-leads-20260912.csv"`.
+
+  Unfiltered by design -- it is the whole list, for handing to an email platform.
+  Use **leads** with `?subscribed=true` if you only want the mailable ones.
+
+  **Check `Subscribed` before importing anywhere.** A `no` means that person
+  used the one-click unsubscribe link, and mailing them again is the thing the
+  link exists to prevent.
+
+  Streams with `.iterator()`, so a large list does not load into memory.
+
+  ## API example response
+  Captured,First name,Email,Source,Subscribed,Converted
+  2026-09-05 09:02,Tess,tess@example.com,homepage,yes,
+  2026-09-06 14:31,Tom,curious.learner@example.com,blog_post,yes,2026-09-09
+}

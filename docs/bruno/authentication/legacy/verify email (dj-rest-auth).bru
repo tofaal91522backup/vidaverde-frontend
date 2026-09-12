@@ -1,0 +1,35 @@
+meta {
+  name: verify email (dj-rest-auth)
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{base_url}}/rest-auth/registration/account-confirm-email/
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    // Confirmation key from the emailed link.
+    "key": "PASTE_KEY_FROM_THE_EMAIL_LINK"
+  }
+}
+
+docs {
+  ## API explanation
+  **Use `POST /student/registration/verify-email/` instead.**
+
+  dj-rest-auth's own confirmation view. It marks the address verified but returns
+  only `{"detail": "ok"}` -- no tokens, so the user still has to log in
+  afterwards. Ours confirms and logs them in in one step.
+
+  Kept because allauth reverses this route's name
+  (`account_email_verification_sent`) in parts of its flow.
+
+  ## API example response
+  {
+    "detail": "ok"
+  }
+}

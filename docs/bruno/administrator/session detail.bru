@@ -1,0 +1,50 @@
+meta {
+  name: session detail
+  type: http
+  seq: 42
+}
+
+get {
+  url: {{base_url}}/administrator/sessions/:id/
+  body: none
+  auth: inherit
+}
+
+params:path {
+  id: fd36207a-5413-48bc-809e-f5d229d971bb
+}
+
+docs {
+  ## API explanation
+  One class, with the teacher and student resolved. This is the click-through
+  from the calendar.
+
+  `can_reschedule` is false once the class is inside the 24-hour cutoff, or once
+  it is no longer `scheduled`.
+
+  `PATCH` on the same URL records the outcome -- see **session update**.
+
+  ## API example response
+  {
+    "success": true,
+    "session": {
+      "id": "fd36207a-5413-48bc-809e-f5d229d971bb",
+      "student_package": "534a4812-5ff0-4ba1-a136-ab610f9c9e21",
+      "package_title": "10-Class Package",
+      "teacher": "1e54776b-9910-4742-9f8c-8efd23912d4a",
+      "teacher_name": "Fernando Cordero",
+      "teacher_img": "",
+      "student_name": "Marco Reyes",
+      "student_email": "marco.reyes@example.com",
+      "start_datetime": "2026-09-10T08:00:00-05:00",
+      "end_datetime": "2026-09-10T09:00:00-05:00",
+      "duration_minutes": 60,
+      "status": "scheduled",
+      "meet_link": "https://meet.google.com/abc-defg-hij",
+      "admin_notes": "",
+      "can_reschedule": true,
+      "rescheduled_from": null,
+      "created_at": "2026-09-05T03:44:52.737000-05:00"
+    }
+  }
+}

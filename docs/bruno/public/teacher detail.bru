@@ -1,0 +1,50 @@
+meta {
+  name: teacher detail
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{base_url}}/public/teachers/:id/?lang=en
+  body: none
+  auth: none
+}
+
+params:path {
+  id: 1e54776b-9910-4742-9f8c-8efd23912d4a
+}
+
+params:query {
+  lang: en
+}
+
+docs {
+  ## API explanation
+  One active teacher -- the profile page at `/online-classes/teachers/[name]`.
+  An inactive teacher returns 404.
+
+  Same shape as an entry in the **teachers** list: bio, specialisation tags, the
+  weekly availability rules and the "Accepting new students" / "Limited
+  availability" badge. Calendar ids and Meet links are never exposed publicly.
+
+  For the profile page's "Book with [Name]" CTA, pair this with
+  `GET /public/teachers/<id>/packages/`, which adds the bookable packages and the
+  next free slot.
+
+  ## API example response
+  {
+    "id": "1e54776b-9910-4742-9f8c-8efd23912d4a",
+    "name": "Fernando Cordero",
+    "profile_img_url": "",
+    "tags": ["beginners", "conversation", "travel spanish"],
+    "institute": "Universidad Central del Ecuador",
+    "availability": [
+      { "day": "mon", "start": "08:00", "end": "16:00" },
+      { "day": "tue", "start": "08:00", "end": "16:00" }
+    ],
+    "accepting_students": true,
+    "availability_label": "Accepting new students",
+    "description": "I have taught Spanish for twelve years and still love the moment a student stops translating in their head.",
+    "lang": "en"
+  }
+}

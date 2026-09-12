@@ -14,16 +14,26 @@ auth:bearer {
   token: {{accessTokenStudent}}
 }
 
-settings {
-  encodeUrl: true
+body:json {
+  {
+    // Required. The refresh token from login -- it gets blacklisted so it can
+    // no longer be exchanged for new access tokens.
+    // Omitting it returns 401 "Refresh token was not included in request data."
+    // because JWT_AUTH_HTTPONLY is False, so there is no cookie to read it from.
+    "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+  }
 }
 
 docs {
   ## API explanation
-  dj-rest-auth logout. With `JWT_AUTH_HTTPONLY = False` the frontend holds the
-  tokens, so the practical step is discarding them client-side; posting the
-  refresh token here blacklists it (`rest_framework_simplejwt.token_blacklist`
-  is installed).
+  Blacklists the refresh token (`rest_framework_simplejwt.token_blacklist` is
+  installed), so it cannot be used to mint new access tokens.
+
+  The access token itself stays valid until it expires -- JWTs are not revocable
+  -- so the frontend must also discard both tokens locally. With
+  `JWT_AUTH_HTTPONLY = False` the frontend holds them, so that is its job.
+
+  `GET` on this URL returns **405**; dj-rest-auth removed the GET form.
 
   ## API example response
   {

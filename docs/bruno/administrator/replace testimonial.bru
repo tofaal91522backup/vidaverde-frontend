@@ -1,0 +1,53 @@
+meta {
+  name: replace testimonial
+  type: http
+  seq: 37
+}
+
+put {
+  url: {{base_url}}/administrator/testimonials/:id/
+  body: json
+  auth: inherit
+}
+
+params:path {
+  id: 9a7b6c5d-4e3f-2a1b-0c9d-8e7f6a5b4c3d
+}
+
+body:json {
+  {
+    // Required.
+    "student_name": "Emma",
+    // Required. Must state a specific outcome.
+    "outcome_en": "After 8 weeks with Lucia I held a full conversation with my partner's family in Guayaquil -- no English at all.",
+
+    // Optional; omitting resets to the default shown.
+    "country": "United Kingdom",
+    "photo_url": "",
+    "outcome_es": "",
+    "rating": 5,
+    "programme": "Online Classes",
+    "active": true,
+    "sort_order": 0
+  }
+}
+
+docs {
+  ## API explanation
+  `PUT` **replaces** the record: any writable field you leave out is reset to its
+  default or blank, not left alone. Use `PATCH` (see **update testimonial**) unless you are
+  deliberately sending the whole object -- an edit form that omits a field will
+  silently wipe it.
+
+  ## API example response
+  {
+    "id": "9a7b6c5d-4e3f-2a1b-0c9d-8e7f6a5b4c3d",
+    "student_name": "Emma",
+    "country": "United Kingdom",
+    "rating": 5,
+    "active": true,
+    "sort_order": 0,
+    "lang": "en",
+    "updated_at": "2026-09-12T10:20:00.000000-05:00"
+  }
+}

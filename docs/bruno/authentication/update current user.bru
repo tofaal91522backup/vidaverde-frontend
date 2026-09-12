@@ -1,0 +1,43 @@
+meta {
+  name: update current user
+  type: http
+  seq: 9
+}
+
+patch {
+  url: {{base_url}}/rest-auth/user/
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessTokenStudent}}
+}
+
+body:json {
+  {
+    // Optional. Django's own first/last name on the User row.
+    "first_name": "Marco",
+    "last_name": "Reyes"
+  }
+}
+
+docs {
+  ## API explanation
+  Edits the Django `User` record. Email is read-only here.
+
+  This is **not** the student profile: `name`, `country`, `phone_number`,
+  `timezone` and `current_spanish_level` are on the `Student` row and are edited
+  with `PATCH /student/me/`. Changing the name here does not rename the student
+  in the admin dashboard, so prefer `/student/me/` unless you specifically want
+  the auth record.
+
+  ## API example response
+  {
+    "pk": 4,
+    "username": "marco.reyes@example.com",
+    "email": "marco.reyes@example.com",
+    "first_name": "Marco",
+    "last_name": "Reyes"
+  }
+}

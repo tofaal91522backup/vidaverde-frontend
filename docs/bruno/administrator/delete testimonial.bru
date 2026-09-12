@@ -1,0 +1,25 @@
+meta {
+  name: delete testimonial
+  type: http
+  seq: 38
+}
+
+delete {
+  url: {{base_url}}/administrator/testimonials/:id/
+  body: none
+  auth: inherit
+}
+
+params:path {
+  id: 9a7b6c5d-4e3f-2a1b-0c9d-8e7f6a5b4c3d
+}
+
+docs {
+  ## API explanation
+  Permanently deletes a testimonial -- nothing references one.
+
+  To hide it without losing the quote, `PATCH {"active": false}` instead.
+
+  ## API example response
+  (204 No Content)
+}

@@ -1,0 +1,46 @@
+meta {
+  name: replace current user
+  type: http
+  seq: 11
+}
+
+put {
+  url: {{base_url}}/rest-auth/user/
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessTokenStudent}}
+}
+
+body:json {
+  {
+    // Required on a PUT -- omitting a field blanks it.
+    "username": "marco.reyes@example.com",
+    "first_name": "Marco",
+    "last_name": "Reyes"
+  }
+}
+
+docs {
+  ## API explanation
+  Full replacement of the Django `User` record. Prefer `PATCH` -- see
+  **update current user** -- since anything omitted here is blanked.
+
+  `username` is the account's email in this project (registration and checkout
+  both set it that way), so changing it detaches the login from the email. There
+  is almost never a reason to send it.
+
+  Again: this is the auth record, not the student profile. Name, country,
+  timezone and Spanish level live on `PATCH /student/me/`.
+
+  ## API example response
+  {
+    "pk": 4,
+    "username": "marco.reyes@example.com",
+    "email": "marco.reyes@example.com",
+    "first_name": "Marco",
+    "last_name": "Reyes"
+  }
+}

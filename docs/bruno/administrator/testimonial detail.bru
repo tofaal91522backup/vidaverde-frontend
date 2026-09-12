@@ -1,0 +1,35 @@
+meta {
+  name: testimonial detail
+  type: http
+  seq: 35
+}
+
+get {
+  url: {{base_url}}/administrator/testimonials/:id/
+  body: none
+  auth: inherit
+}
+
+params:path {
+  id: 9a7b6c5d-4e3f-2a1b-0c9d-8e7f6a5b4c3d
+}
+
+docs {
+  ## API explanation
+  One testimonial, active or not.
+
+  ## API example response
+  {
+    "id": "9a7b6c5d-4e3f-2a1b-0c9d-8e7f6a5b4c3d",
+    "student_name": "Emma",
+    "country": "United Kingdom",
+    "photo_url": "",
+    "outcome_en": "After 8 weeks with Lucia I held a full conversation with my partner's family in Guayaquil -- no English at all.",
+    "outcome_es": "",
+    "rating": 5,
+    "programme": "Online Classes",
+    "active": true,
+    "sort_order": 0,
+    "lang": "en"
+  }
+}

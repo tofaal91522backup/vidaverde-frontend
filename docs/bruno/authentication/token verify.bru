@@ -1,0 +1,33 @@
+meta {
+  name: token verify
+  type: http
+  seq: 7
+}
+
+post {
+  url: {{base_url}}/api/token/verify/
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    // Any access or refresh token. Required.
+    "token": "{{accessTokenAdmin}}"
+  }
+}
+
+docs {
+  ## API explanation
+  Checks whether a token is still valid and unexpired. Returns `200 {}` when it
+  is and `401` when it is not -- there is no body either way, so treat the status
+  code as the answer.
+
+  Useful on app boot to decide between "restore the session" and "show the login
+  screen" without waiting for the first real request to 401.
+
+  `/rest-auth/token/verify/` is dj-rest-auth's identical alias.
+
+  ## API example response
+  {}
+}

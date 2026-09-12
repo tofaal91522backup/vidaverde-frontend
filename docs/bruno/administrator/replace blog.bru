@@ -1,0 +1,60 @@
+meta {
+  name: replace blog
+  type: http
+  seq: 31
+}
+
+put {
+  url: {{base_url}}/administrator/blogs/:id/
+  body: json
+  auth: inherit
+}
+
+params:path {
+  id: 5c1e8a2f-9d43-4b76-8e0a-1f2c3d4e5a6b
+}
+
+body:json {
+  {
+    // Required.
+    "title_en": "Five Spanish Phrases That Instantly Make You Sound Local in Quito",
+
+    // Optional, but omitting any of these clears it.
+    "title_es": "",
+    "slug": "five-spanish-phrases-that-instantly-make-you-sound-local-in-quito",
+    "excerpt_en": "Textbook Spanish will get you understood. These five phrases will get you smiled at.",
+    "excerpt_es": "",
+    "body_en": "<p>Textbook Spanish will get you understood...</p>",
+    "body_es": "",
+    "image_urls": [],
+    "category": "spanish_learning_tips",
+    "status": "published",
+    "meta_title": "",
+    "meta_description": ""
+  }
+}
+
+docs {
+  ## API explanation
+  `PUT` **replaces** the record: any writable field you leave out is reset to its
+  default or blank, not left alone. Use `PATCH` (see **update blog**) unless you are
+  deliberately sending the whole object -- an edit form that omits a field will
+  silently wipe it.
+
+  Particularly worth care here: omitting `body_en` blanks the article.
+
+  `slug`, `reading_time` and the author stay server-managed either way, and
+  `published_at` is still stamped only on the first publish.
+
+  ## API example response
+  {
+    "id": "5c1e8a2f-9d43-4b76-8e0a-1f2c3d4e5a6b",
+    "title_en": "Five Spanish Phrases That Instantly Make You Sound Local in Quito",
+    "slug": "five-spanish-phrases-that-instantly-make-you-sound-local-in-quito",
+    "status": "published",
+    "published_at": "2026-09-05T08:44:12.512000-05:00",
+    "reading_time": 4,
+    "lang": "en",
+    "updated_at": "2026-09-12T10:20:00.000000-05:00"
+  }
+}

@@ -1,0 +1,52 @@
+meta {
+  name: update testimonial
+  type: http
+  seq: 36
+}
+
+patch {
+  url: {{base_url}}/administrator/testimonials/:id/
+  body: json
+  auth: inherit
+}
+
+params:path {
+  id: 9a7b6c5d-4e3f-2a1b-0c9d-8e7f6a5b4c3d
+}
+
+body:json {
+  {
+    // Optional. Must state a SPECIFIC outcome, not generic praise.
+    "outcome_en": "After 8 weeks I held a full conversation with my partner's family in Guayaquil.",
+
+    // Optional, 1-5. Feeds the star-rating aggregate.
+    "rating": 5,
+
+    // Optional. Ascending display order on the homepage.
+    "sort_order": 2,
+
+    // Optional. false hides it from the public API.
+    "active": false
+  }
+}
+
+docs {
+  ## API explanation
+  Edits a testimonial. `PUT` expects the full object.
+
+  Keep `outcome_en` outcome-specific -- the spec is explicit that generic praise
+  ("Great school!") does not convert, and the review asked the school to collect
+  outcome-focused replacements. `sort_order` controls the homepage order.
+
+  ## API example response
+  {
+    "id": "9a7b6c5d-4e3f-2a1b-0c9d-8e7f6a5b4c3d",
+    "student_name": "Emma",
+    "country": "United Kingdom",
+    "rating": 5,
+    "active": false,
+    "sort_order": 2,
+    "lang": "en",
+    "updated_at": "2026-09-12T10:15:00.000000-05:00"
+  }
+}

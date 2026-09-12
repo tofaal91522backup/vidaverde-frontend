@@ -1,0 +1,37 @@
+meta {
+  name: blog detail
+  type: http
+  seq: 29
+}
+
+get {
+  url: {{base_url}}/administrator/blogs/:id/
+  body: none
+  auth: inherit
+}
+
+params:path {
+  id: 5c1e8a2f-9d43-4b76-8e0a-1f2c3d4e5a6b
+}
+
+docs {
+  ## API explanation
+  One post by **UUID** -- note the admin routes use the id, while the public
+  route uses the slug. Drafts are visible here.
+
+  ## API example response
+  {
+    "id": "5c1e8a2f-9d43-4b76-8e0a-1f2c3d4e5a6b",
+    "title_en": "Five Spanish Phrases That Instantly Make You Sound Local in Quito",
+    "slug": "five-spanish-phrases-that-instantly-make-you-sound-local-in-quito",
+    "body_en": "<p>Textbook Spanish will get you understood...</p>",
+    "image_urls": [],
+    "thumbnail": "",
+    "category": "spanish_learning_tips",
+    "author": "master@vidaverde.test",
+    "status": "published",
+    "published_at": "2026-09-05T08:44:12.512000-05:00",
+    "reading_time": 4,
+    "lang": "en"
+  }
+}

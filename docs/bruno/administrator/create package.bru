@@ -1,0 +1,100 @@
+meta {
+  name: create package
+  type: http
+  seq: 22
+}
+
+post {
+  url: {{base_url}}/administrator/packages/
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    // Required. English title.
+    "title_en": "20-Class Package",
+
+    // Optional Spanish title. Falls back to the English one when blank.
+    "title_es": "Paquete de 20 Clases",
+
+    // Optional. Shown on the pricing card.
+    "description_en": "20 x 60-minute private lessons. Best value. Valid for 6 months.",
+    "description_es": "",
+
+    // Optional. URL from POST /administrator/upload/.
+    "image_url": "",
+
+    // Optional, defaults to 1. How many classes the purchase grants.
+    "total_classes": 20,
+
+    // Optional, defaults to 90. Days from purchase until the package expires.
+    // Spec: 90 for the 10-class, 180 for the 20-class.
+    "validity_days": 180,
+
+    // Required. USD, two decimal places.
+    // NOTE: the 20-class price is still unresolved -- the spec says $250.00 and
+    // the copy deck says $254.64. Confirm with Rosa/Mateo before launch.
+    "price": "250.00",
+
+    // Optional, defaults to false. Marks the discounted Assessment & First
+    // Lesson: it becomes the highlighted card and can only be bought once per
+    // email. Only one package should carry this flag.
+    "is_first_lesson": false,
+
+    // Optional, defaults to 0. Ascending display order on the pricing section.
+    "sort_order": 3,
+
+    // Optional, defaults to true. False hides it from the public API.
+    "active": true,
+
+    // Optional list of teacher UUIDs this package may be booked with.
+    // An EMPTY list (the default) means unrestricted -- every active teacher
+    // is offered, which is what all four seeded packages do. Send ids here to
+    // limit the package, e.g. senior teachers only on the 20-class pack.
+    "teachers": []
+  }
+}
+
+docs {
+  ## API explanation
+  `GET` lists every package including inactive ones (the public endpoint hides
+  inactive), `POST` creates one. `GET`/`PUT`/`PATCH`/`DELETE
+  /administrator/packages/<id>/` handle a single package. Not paginated.
+
+  `DELETE` deactivates rather than deletes -- purchases reference packages with
+  `PROTECT`, and a deleted package would orphan someone's invoice history.
+
+  `teachers` drives `GET /public/packages/<id>/teachers/` (booking step 2) and is
+  enforced again at checkout and on portal bookings. Empty means unrestricted,
+  not "no teachers". The read-only `teacher_names` echoes the assignment back.
+
+  Editing a package never rewrites existing purchases: each `StudentPackage`
+  keeps a frozen `package_data` snapshot from the moment of sale.
+
+  ## API example response
+  {
+    "id": "6936886f-cd74-4edf-9099-0097b1a2c3d4",
+    "title_en": "20-Class Package",
+    "title_es": "Paquete de 20 Clases",
+    "description_en": "20 x 60-minute private lessons. Best value. Valid for 6 months.",
+    "description_es": "",
+    "image_url": "",
+    "total_classes": 20,
+    "validity_days": 180,
+    "price": "250.00",
+    "is_first_lesson": false,
+    "sort_order": 3,
+    "active": true,
+    "teachers": [],
+    "teacher_names": [],
+    "title": "20-Class Package",
+    "description": "20 x 60-minute private lessons. Best value. Valid for 6 months.",
+    "lang": "en",
+    "created_at": "2026-09-05T08:44:12.000000-05:00",
+    "updated_at": "2026-09-05T08:44:12.000000-05:00"
+  }
+
+  ## Changelog
+  - 2026-09-05: Added the `teachers` field -- an optional list of teacher UUIDs limiting who the package can be booked with. Empty (the default) keeps every package open to all active teachers, so existing packages are unaffected.
+}

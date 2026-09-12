@@ -1,0 +1,57 @@
+meta {
+  name: update blog
+  type: http
+  seq: 30
+}
+
+patch {
+  url: {{base_url}}/administrator/blogs/:id/
+  body: json
+  auth: inherit
+}
+
+params:path {
+  id: 5c1e8a2f-9d43-4b76-8e0a-1f2c3d4e5a6b
+}
+
+body:json {
+  {
+    // Optional. Rich HTML from the editor. reading_time is recomputed from this.
+    "body_en": "<p>Textbook Spanish will get you understood...</p>",
+
+    // Optional. "draft" or "published".
+    // published_at is stamped on the first publish only.
+    "status": "published",
+
+    // Optional. Image URLs from POST /administrator/upload/.
+    // The first is the index thumbnail.
+    "image_urls": ["https://transfer2.ongshak.com/vida_verde/quito-street.jpg"]
+  }
+}
+
+docs {
+  ## API explanation
+  Edits a post. `PUT` expects the full object.
+
+  Three fields stay server-managed: `slug` (regenerated only if you send a new
+  one), `reading_time` (recomputed from `body_en` on every save) and the author.
+
+  `published_at` is stamped the **first** time `status` becomes `published` and is
+  never rewritten, so editing a live post does not bounce it to the top of the
+  index. Flipping back to `draft` pulls it from the public API but keeps the
+  original publish date for when it returns.
+
+  Full field meanings are on **create blog**.
+
+  ## API example response
+  {
+    "id": "5c1e8a2f-9d43-4b76-8e0a-1f2c3d4e5a6b",
+    "title_en": "Five Spanish Phrases That Instantly Make You Sound Local in Quito",
+    "slug": "five-spanish-phrases-that-instantly-make-you-sound-local-in-quito",
+    "status": "published",
+    "published_at": "2026-09-05T08:44:12.512000-05:00",
+    "reading_time": 6,
+    "lang": "en",
+    "updated_at": "2026-09-12T10:12:00.000000-05:00"
+  }
+}

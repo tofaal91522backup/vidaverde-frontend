@@ -1,0 +1,30 @@
+meta {
+  name: verify token (rest-auth alias)
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{base_url}}/rest-auth/token/verify/
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    // Any access or refresh token.
+    "token": "{{accessTokenAdmin}}"
+  }
+}
+
+docs {
+  ## API explanation
+  Identical to `POST /api/token/verify/` -- see **token verify**. Both are
+  SimpleJWT's `TokenVerifyView`; dj-rest-auth just routes it under its own
+  prefix as well.
+
+  200 with an empty body when valid, 401 when not.
+
+  ## API example response
+  {}
+}

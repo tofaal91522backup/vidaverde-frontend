@@ -1,0 +1,35 @@
+meta {
+  name: admin detail
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{base_url}}/administrator/admins/:id/
+  body: none
+  auth: inherit
+}
+
+params:path {
+  id: 1f4b8c02-7d63-4a19-8e50-2c9f7b3d1a86
+}
+
+docs {
+  ## API explanation
+  **Master admin only.** One staff account.
+
+  ## API example response
+  {
+    "success": true,
+    "admin": {
+      "id": "1f4b8c02-7d63-4a19-8e50-2c9f7b3d1a86",
+      "email": "manager@vidaverde.test",
+      "name": "Mateo Vega",
+      "role": "manager",
+      "password_txt": "vidaverde123",
+      "active": true,
+      "created_at": "2026-09-05T08:44:12.000000-05:00",
+      "updated_at": "2026-09-05T08:44:12.000000-05:00"
+    }
+  }
+}

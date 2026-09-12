@@ -1,0 +1,57 @@
+meta {
+  name: update admin
+  type: http
+  seq: 5
+}
+
+patch {
+  url: {{base_url}}/administrator/admins/:id/
+  body: json
+  auth: inherit
+}
+
+params:path {
+  id: 1f4b8c02-7d63-4a19-8e50-2c9f7b3d1a86
+}
+
+body:json {
+  {
+    // Optional. Display name.
+    "name": "Mateo Vega",
+
+    // Optional. One of: "master", "manager".
+    "role": "manager",
+
+    // Optional. Setting this ALSO resets the real login password to the same
+    // value. Omit to leave the password unchanged.
+    "password_txt": "nuevaClave2026",
+
+    // Optional. false blocks the account from the dashboard.
+    "active": true
+  }
+}
+
+docs {
+  ## API explanation
+  **Master admin only.** Edits a staff account.
+
+  Sending `password_txt` also resets the real login password, so the clear-text
+  mirror and the hash never drift apart. Omit it to leave the password alone.
+
+  `PUT` on the same URL behaves the same but expects every writable field.
+
+  ## API example response
+  {
+    "success": true,
+    "admin": {
+      "id": "1f4b8c02-7d63-4a19-8e50-2c9f7b3d1a86",
+      "email": "manager@vidaverde.test",
+      "name": "Mateo Vega",
+      "role": "manager",
+      "password_txt": "nuevaClave2026",
+      "active": true,
+      "created_at": "2026-09-05T08:44:12.000000-05:00",
+      "updated_at": "2026-09-12T10:02:00.000000-05:00"
+    }
+  }
+}

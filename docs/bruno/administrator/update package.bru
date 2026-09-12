@@ -1,0 +1,58 @@
+meta {
+  name: update package
+  type: http
+  seq: 24
+}
+
+patch {
+  url: {{base_url}}/administrator/packages/:id/
+  body: json
+  auth: inherit
+}
+
+params:path {
+  id: 347cde65-90ad-4178-8816-332e19e04748
+}
+
+body:json {
+  {
+    // Optional. USD, two decimal places. Existing purchases keep the old price.
+    "price": "145.00",
+
+    // Optional. Teacher UUIDs this package may be booked with.
+    // [] (the default) means unrestricted -- every active teacher.
+    "teachers": ["b7a40c24-3aad-4bcf-9763-68a0f0c3496f"],
+
+    // Optional. false hides it from the public API and every booking picker.
+    "active": true
+  }
+}
+
+docs {
+  ## API explanation
+  Edits a package. `PUT` on the same URL expects the full object.
+
+  **Editing never rewrites history.** Each purchase stores a frozen
+  `package_data` snapshot taken at the moment of sale, so changing the price or
+  the class count here does not alter what anyone already bought, or what their
+  invoice says.
+
+  Assigning `teachers` limits who the package can be booked with, and is enforced
+  at checkout and on portal bookings -- not just in the picker.
+
+  Full field meanings are on **create package**.
+
+  ## API example response
+  {
+    "id": "347cde65-90ad-4178-8816-332e19e04748",
+    "title_en": "10-Class Package",
+    "price": "145.00",
+    "total_classes": 10,
+    "validity_days": 90,
+    "active": true,
+    "teachers": ["b7a40c24-3aad-4bcf-9763-68a0f0c3496f"],
+    "teacher_names": ["Ximena Duarte"],
+    "lang": "en",
+    "updated_at": "2026-09-12T10:10:00.000000-05:00"
+  }
+}

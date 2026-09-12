@@ -1,0 +1,34 @@
+meta {
+  name: deactivate package
+  type: http
+  seq: 26
+}
+
+delete {
+  url: {{base_url}}/administrator/packages/:id/
+  body: none
+  auth: inherit
+}
+
+params:path {
+  id: 347cde65-90ad-4178-8816-332e19e04748
+}
+
+docs {
+  ## API explanation
+  Deactivates rather than deletes: sets `active` false. Purchases reference
+  packages with `PROTECT`, so deleting one would orphan invoice history and is
+  refused at the database level anyway.
+
+  It disappears from the public pricing and from every picker; existing
+  purchases and their remaining classes are untouched and can still be booked
+  against.
+
+  `PATCH {"active": true}` restores it.
+
+  ## API example response
+  {
+    "success": true,
+    "message": "Package deactivated."
+  }
+}

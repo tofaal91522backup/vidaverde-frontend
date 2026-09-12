@@ -1,0 +1,20 @@
+meta {
+  name: legacy
+  seq: 2
+}
+
+auth {
+  mode: none
+}
+
+docs {
+  Routes that exist for compatibility or because a library reverses their URL
+  name. **Nothing here is the preferred way to do anything** -- each request says
+  what to use instead.
+
+  They are documented rather than deleted because removing a URL name that
+  allauth or dj-rest-auth reverses breaks the flow that reverses it. That is
+  exactly how the confirmation email broke once: dropping the
+  `account_confirm_email` route made `send_email_confirmation()` raise, and no
+  signup email went out at all.
+}

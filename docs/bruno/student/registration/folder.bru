@@ -1,0 +1,27 @@
+meta {
+  name: registration
+  seq: 1
+}
+
+auth {
+  mode: none
+}
+
+docs {
+  Student self-signup. Unauthenticated -- these override the parent folder's
+  bearer auth.
+
+  Whether a new account can log in immediately is one env var,
+  `EMAIL_VERIFICATION_REQUIRED` in `server/.env`:
+
+  | Value | Register returns | Login before confirming |
+  |---|---|---|
+  | `True` (default) | "check your inbox", no tokens | 403 |
+  | `False` | tokens, same shape as login | works |
+
+  Accounts created by a paid checkout bypass this either way -- they paid.
+
+  The other route into an account is `POST /public/bookings/checkout/`, which
+  creates one silently and emails a generated password. Registering with an email
+  that already booked is refused; use the password from that email, or reset it.
+}

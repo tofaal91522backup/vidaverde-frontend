@@ -1,0 +1,33 @@
+meta {
+  name: logout (GET)
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{base_url}}/rest-auth/logout/
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessTokenStudent}}
+}
+
+docs {
+  ## API explanation
+  **Use `POST /rest-auth/logout/` instead** -- see **logout**.
+
+  This version of dj-rest-auth (5.0.1) no longer accepts GET here -- it returns
+  **405 Method Not Allowed**. Older releases did, which is why the route still
+  answers at all.
+
+  It is listed only so the collection covers every method the server exposes. A
+  GET that logs someone out was always a bad idea anyway: browser prefetchers and
+  link scanners follow GETs.
+
+  ## API example response
+  {
+    "detail": "Method \"GET\" not allowed."
+  }
+}

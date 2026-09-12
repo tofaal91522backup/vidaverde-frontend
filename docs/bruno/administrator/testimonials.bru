@@ -1,70 +1,37 @@
 meta {
   name: testimonials
   type: http
-  seq: 7
+  seq: 33
 }
 
-post {
+get {
   url: {{base_url}}/administrator/testimonials/
-  body: json
+  body: none
   auth: inherit
-}
-
-body:json {
-  {
-    // Required. First name is enough -- that is what the spec shows.
-    "student_name": "Emma",
-
-    // Optional. Rendered next to a flag on the homepage.
-    "country": "United Kingdom",
-
-    // Optional. URL from POST /administrator/upload/.
-    "photo_url": "",
-
-    // Required. Must describe a SPECIFIC outcome, not a generic compliment --
-    // the spec is explicit that "Great school!" does not convert.
-    "outcome_en": "After 8 weeks with Lucia I held a full conversation with my partner's family in Guayaquil -- no English at all.",
-
-    // Optional Spanish version.
-    "outcome_es": "",
-
-    // Optional, defaults to 5. Feeds the star-rating aggregate.
-    "rating": 5,
-
-    // Optional free text, e.g. "Online Classes", "Quito Immersion".
-    "programme": "Online Classes",
-
-    // Optional, defaults to true.
-    "active": true,
-
-    // Optional, defaults to 0. Ascending display order.
-    "sort_order": 0
-  }
 }
 
 docs {
   ## API explanation
-  `GET` lists all testimonials, `POST` creates one.
-  `GET`/`PUT`/`PATCH`/`DELETE /administrator/testimonials/<id>/` handle one.
-  Not paginated.
-
-  The public endpoint returns only `active` ones, ordered by `sort_order`.
+  Every testimonial, inactive ones included. Not paginated. Ordered by
+  `sort_order`, which is also the public order.
 
   ## API example response
-  {
-    "id": "9a7b6c5d-4e3f-2a1b-0c9d-8e7f6a5b4c3d",
-    "student_name": "Emma",
-    "country": "United Kingdom",
-    "photo_url": "",
-    "outcome_en": "After 8 weeks with Lucia I held a full conversation with my partner's family in Guayaquil -- no English at all.",
-    "outcome_es": "",
-    "rating": 5,
-    "programme": "Online Classes",
-    "active": true,
-    "sort_order": 0,
-    "outcome": "After 8 weeks with Lucia I held a full conversation with my partner's family in Guayaquil -- no English at all.",
-    "lang": "en",
-    "created_at": "2026-09-05T08:44:12.000000-05:00",
-    "updated_at": "2026-09-05T08:44:12.000000-05:00"
-  }
+  [
+    {
+      "id": "9a7b6c5d-4e3f-2a1b-0c9d-8e7f6a5b4c3d",
+      "student_name": "Emma",
+      "country": "United Kingdom",
+      "photo_url": "",
+      "outcome_en": "After 8 weeks with Lucia I held a full conversation with my partner's family in Guayaquil -- no English at all.",
+      "outcome_es": "",
+      "rating": 5,
+      "programme": "Online Classes",
+      "active": true,
+      "sort_order": 0,
+      "outcome": "After 8 weeks with Lucia I held a full conversation...",
+      "lang": "en",
+      "created_at": "2026-09-05T08:44:12.000000-05:00",
+      "updated_at": "2026-09-05T08:44:12.000000-05:00"
+    }
+  ]
 }

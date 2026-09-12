@@ -1,0 +1,34 @@
+meta {
+  name: refresh token (rest-auth alias)
+  type: http
+  seq: 10
+}
+
+post {
+  url: {{base_url}}/rest-auth/token/refresh/
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    // Refresh token from the login response. Required.
+    "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+  }
+}
+
+docs {
+  ## API explanation
+  dj-rest-auth's refresh endpoint. Functionally the same as
+  **get access token** (`/get-access-token/`) -- it also reads the refresh token
+  from the `refresh` cookie when one is set, which this project does not use
+  (`JWT_AUTH_HTTPONLY = False`, so the frontend holds the tokens).
+
+  Pick one and stay with it; `/get-access-token/` is the one the rest of this
+  collection uses.
+
+  ## API example response
+  {
+    "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+  }
+}

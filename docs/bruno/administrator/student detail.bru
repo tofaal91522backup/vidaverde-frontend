@@ -1,0 +1,61 @@
+meta {
+  name: student detail
+  type: http
+  seq: 20
+}
+
+get {
+  url: {{base_url}}/administrator/students/:id/
+  body: none
+  auth: inherit
+}
+
+params:path {
+  id: 2173edc2-1430-4f3e-afd7-5ad8d2e073b3
+}
+
+docs {
+  ## API explanation
+  The full picture for one student in a single call: their profile, every package
+  they bought (with payment status and classes remaining), and every class they
+  have had or are booked into.
+
+  This is the "click a student in the dashboard" view. Read-only.
+
+  ## API example response
+  {
+    "success": true,
+    "student": {
+      "id": "2173edc2-1430-4f3e-afd7-5ad8d2e073b3",
+      "email": "marco.reyes@example.com",
+      "name": "Marco Reyes",
+      "country": "Germany",
+      "timezone": "Europe/Berlin",
+      "current_spanish_level": "beginner",
+      "active": true
+    },
+    "packages": [
+      {
+        "id": "534a4812-5ff0-4ba1-a136-ab610f9c9e21",
+        "package_title": "10-Class Package",
+        "payment_status": "paid",
+        "amount_paid": "135.00",
+        "classes_used": 1,
+        "classes_total": 10,
+        "classes_remaining": 9,
+        "expires_at": "2026-12-04T03:44:52.780000-05:00",
+        "can_book": true,
+        "progress_percent": 10
+      }
+    ],
+    "sessions": [
+      {
+        "id": "fd36207a-5413-48bc-809e-f5d229d971bb",
+        "teacher_name": "Fernando Cordero",
+        "start_datetime": "2026-09-10T08:00:00-05:00",
+        "status": "scheduled",
+        "meet_link": "https://meet.google.com/abc-defg-hij"
+      }
+    ]
+  }
+}

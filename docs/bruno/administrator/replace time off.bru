@@ -1,0 +1,50 @@
+meta {
+  name: replace time off
+  type: http
+  seq: 17
+}
+
+put {
+  url: {{base_url}}/administrator/time-off/:id/
+  body: json
+  auth: inherit
+}
+
+params:path {
+  id: c4e8a1b7-2d95-4f30-8a16-9b7c3e5d2f48
+}
+
+body:json {
+  {
+    // Required. Which teacher this window belongs to.
+    "teacher": "1e54776b-9910-4742-9f8c-8efd23912d4a",
+    // Required, ISO-8601 with offset.
+    "start_datetime": "2026-12-24T00:00:00-05:00",
+    // Required, and must be after start_datetime.
+    "end_datetime": "2027-01-02T00:00:00-05:00",
+
+    // Optional; omitting clears it.
+    "reason": "Christmas holidays"
+  }
+}
+
+docs {
+  ## API explanation
+  `PUT` **replaces** the record: any writable field you leave out is reset to its
+  default or blank, not left alone. Use `PATCH` (see **update time off**) unless you are
+  deliberately sending the whole object -- an edit form that omits a field will
+  silently wipe it.
+
+  All three of `teacher`, `start_datetime` and `end_datetime` are required, and
+  the end must be after the start.
+
+  ## API example response
+  {
+    "id": "c4e8a1b7-2d95-4f30-8a16-9b7c3e5d2f48",
+    "teacher": "1e54776b-9910-4742-9f8c-8efd23912d4a",
+    "start_datetime": "2026-12-24T00:00:00-05:00",
+    "end_datetime": "2027-01-02T00:00:00-05:00",
+    "reason": "Christmas holidays",
+    "created_at": "2026-09-05T09:20:00.000000-05:00"
+  }
+}

@@ -1,7 +1,7 @@
 meta {
   name: checkout
   type: http
-  seq: 4
+  seq: 8
 }
 
 post {
@@ -12,20 +12,21 @@ post {
 
 body:json {
   {
-    // UUID of the chosen teacher (booking step 1). Required.
-    // Must be an active teacher -- see the "teachers" request.
-    "teacher": "1e54776b-9910-4742-9f8c-8efd23912d4a",
-
-    // UUID of the package being bought (booking step 2). Required.
+    // UUID of the package being bought (booking step 1). Required.
     // A package with "is_first_lesson": true can only be bought once per email.
     "package": "2da599cd-ed31-4aa1-b919-0828e1f2e2e9",
 
-    // Start of the first class (booking step 3). Required, ISO-8601 with offset.
-    // Copy a "start_utc" straight from the "teacher slots" response -- the slot
-    // is re-validated here, so a stale one is rejected rather than double-booked.
+    // UUID of the chosen teacher (booking step 2). Required.
+    // Must be active AND allowed on this package -- see "package teachers".
+    "teacher": "1e54776b-9910-4742-9f8c-8efd23912d4a",
+
+    // Start of the first class, picked in step 2 alongside the teacher.
+    // Required, ISO-8601 with offset. Copy a "start_utc" straight from the
+    // "package teachers" response -- the slot is re-validated here, so a stale
+    // one is rejected rather than double-booked.
     "start_datetime": "2026-09-10T13:00:00+00:00",
 
-    // --- booking step 4: student details ---
+    // --- booking step 3: student details ---
 
     // Required.
     "first_name": "Marco",
@@ -51,7 +52,7 @@ body:json {
     // student profile and used to render every date back to them.
     "timezone": "Europe/Berlin",
 
-    // --- booking step 5: payment ---
+    // --- booking step 3 (continued): payment ---
 
     // Optional. Phase 1 runs the dummy gateway, so any value succeeds --
     // except the literal "declined", which exercises the failure branch.
@@ -61,7 +62,11 @@ body:json {
 
 docs {
   ## API explanation
-  The entire public booking flow -- steps 1 to 6 -- in one call. No login needed.
+  The entire public booking flow in one call. No login needed.
+
+  The UI collects it in three steps -- 1. choose package, 2. choose teacher and
+  time, 3. fill in details and pay -- but the payload arrives together, so the
+  order the frontend asks in is entirely its own choice.
 
   In a single transaction it validates the slot, finds or creates the User +
   Student, creates the purchase, charges the gateway, books the first class and
@@ -82,6 +87,7 @@ docs {
   - "The teacher is not available at that time."
   - "That time is too soon. Please choose a later slot."
   - "The discounted first lesson can only be purchased once. Please choose another package."
+  - "<Teacher> cannot be booked with this package. Please choose another teacher."
   - "Card was declined (dummy gateway)."
 
   ## API example response
@@ -105,4 +111,7 @@ docs {
       "account_created": true
     }
   }
+
+  ## Changelog
+  - 2026-09-05: Rejects a teacher not allowed on the selected package, matching the new package-first booking order. Field comments renumbered to the 3-step flow.
 }

@@ -1,0 +1,41 @@
+meta {
+  name: package detail
+  type: http
+  seq: 23
+}
+
+get {
+  url: {{base_url}}/administrator/packages/:id/
+  body: none
+  auth: inherit
+}
+
+params:path {
+  id: 347cde65-90ad-4178-8816-332e19e04748
+}
+
+docs {
+  ## API explanation
+  One package, including an inactive one.
+
+  ## API example response
+  {
+    "id": "347cde65-90ad-4178-8816-332e19e04748",
+    "title_en": "10-Class Package",
+    "title_es": "",
+    "description_en": "10 x 60-minute private lessons. Valid for 3 months.",
+    "image_url": "",
+    "total_classes": 10,
+    "validity_days": 90,
+    "price": "135.00",
+    "is_first_lesson": false,
+    "sort_order": 2,
+    "active": true,
+    "teachers": [],
+    "teacher_names": [],
+    "title": "10-Class Package",
+    "lang": "en",
+    "created_at": "2026-09-05T08:44:12.000000-05:00",
+    "updated_at": "2026-09-05T08:44:12.000000-05:00"
+  }
+}

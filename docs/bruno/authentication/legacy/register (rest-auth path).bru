@@ -1,0 +1,42 @@
+meta {
+  name: register (rest-auth path)
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base_url}}/rest-auth/registration/
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    // Same payload as student > registration > register.
+    "email": "nueva.estudiante@example.com",
+    "password1": "caminante2026",
+    "password2": "caminante2026",
+    "first_name": "Nueva",
+    "last_name": "Estudiante"
+  }
+}
+
+docs {
+  ## API explanation
+  **Use `POST /student/registration/` instead** -- this is the same view under
+  its old path, kept so existing clients do not break.
+
+  It used to be dj-rest-auth's own `RegisterView`, whose default serializer
+  created a `User` with no `is_student` flag and no `Student` profile. Such an
+  account could authenticate but every portal endpoint rejected it with
+  "Student profile is missing". The path now points at the real registration
+  view, so that account can no longer be created.
+
+  ## API example response
+  {
+    "success": true,
+    "email_verification_required": true,
+    "email": "nueva.estudiante@example.com",
+    "message": "Almost there. Check your inbox and click the link to activate your account."
+  }
+}

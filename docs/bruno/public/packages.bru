@@ -26,7 +26,11 @@ docs {
 
   `lang` is `en` or `es`; a missing Spanish translation falls back to English.
 
-  `GET /public/packages/<id>/` returns a single package in the same shape.
+  `teacher_count` is how many teachers the package can be booked with, so the
+  pricing card can say "4 teachers available" before step 2.
+
+  `GET /public/packages/<id>/` returns a single package in the same shape, and
+  `GET /public/packages/<id>/teachers/` is booking step 2.
 
   ## API example response
   [
@@ -38,6 +42,7 @@ docs {
       "price": "12.00",
       "is_first_lesson": true,
       "sort_order": 0,
+      "teacher_count": 4,
       "title": "Spanish Assessment & First Lesson",
       "description": "A 60-minute session: level assessment, a personalised learning plan, and your first full lesson. One per student.",
       "lang": "en"
@@ -50,9 +55,13 @@ docs {
       "price": "135.00",
       "is_first_lesson": false,
       "sort_order": 2,
+      "teacher_count": 4,
       "title": "10-Class Package",
       "description": "10 x 60-minute private lessons. Valid for 3 months.",
       "lang": "en"
     }
   ]
+
+  ## Changelog
+  - 2026-09-05: Added `teacher_count` to each package.
 }

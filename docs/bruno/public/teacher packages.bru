@@ -1,0 +1,108 @@
+meta {
+  name: teacher packages
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{base_url}}/public/teachers/:id/packages/?days=14&tz=Europe/London&lang=en
+  body: none
+  auth: none
+}
+
+params:path {
+  id: 1e54776b-9910-4742-9f8c-8efd23912d4a
+}
+
+params:query {
+  days: 14
+  tz: Europe/London
+  lang: en
+}
+
+docs {
+  ## API explanation
+  The mirror of **package teachers**: given a teacher, which packages can be
+  bought with them.
+
+  The main booking flow is package-first (package -> teacher -> pay), so this is
+  for the **teacher-first** arrival instead: the "Book with [Name]" CTA on a
+  teacher card or profile page, and the per-teacher SEO landing pages in the
+  spec. The visitor picks the package here, then a time.
+
+  **Which packages come back.** Active packages whose teacher list includes this
+  teacher, plus every package with no teacher list at all (unrestricted is the
+  default). `restricted_to_listed_teachers` is true only for packages that are
+  explicitly limited and name this teacher -- badge those as exclusive if you
+  want.
+
+  Availability does not vary by package, so the teacher's `next_available` is
+  resolved once on the `teacher` block rather than repeated on every card. It is
+  `null` when the teacher has nothing bookable in the window -- the packages are
+  still listed, since they remain purchasable.
+
+  Query params:
+
+  - `days` -- 1-31, defaults to 14. How far ahead to look for `next_available`.
+  - `tz` -- IANA name, defaults to `America/Guayaquil`. Unknown zone returns 400.
+  - `lang` -- `en` or `es`, applies to package titles and the teacher bio.
+
+  An inactive teacher returns 404.
+
+  This endpoint and **package teachers** are guaranteed to agree: both read the
+  same rule on `Package` (the package's active listed teachers, or everyone if
+  it lists none), and a test asserts the two directions never disagree.
+
+  ## API example response
+  {
+    "success": true,
+    "teacher": {
+      "id": "1e54776b-9910-4742-9f8c-8efd23912d4a",
+      "name": "Fernando Cordero",
+      "profile_img_url": "",
+      "tags": ["beginners", "conversation", "travel spanish"],
+      "institute": "Universidad Central del Ecuador",
+      "description": "I have taught Spanish for twelve years...",
+      "accepting_students": true,
+      "availability_label": "Accepting new students",
+      "next_available": {
+        "start_utc": "2026-09-07T13:00:00+00:00",
+        "start_local": "2026-09-07T14:00:00+01:00",
+        "label": "14:00",
+        "date": "2026-09-07"
+      }
+    },
+    "timezone": "Europe/London",
+    "days_searched": 14,
+    "packages": [
+      {
+        "id": "2da599cd-ed31-4aa1-b919-0828e1f2e2e9",
+        "image_url": "",
+        "total_classes": 1,
+        "validity_days": 90,
+        "price": "12.00",
+        "is_first_lesson": true,
+        "sort_order": 0,
+        "teacher_count": 4,
+        "title": "Spanish Assessment & First Lesson",
+        "description": "A 60-minute session: level assessment, a personalised learning plan, and your first full lesson. One per student.",
+        "lang": "en",
+        "restricted_to_listed_teachers": false
+      },
+      {
+        "id": "347cde65-90ad-4178-8816-332e19e04748",
+        "image_url": "",
+        "total_classes": 10,
+        "validity_days": 90,
+        "price": "135.00",
+        "is_first_lesson": false,
+        "sort_order": 2,
+        "teacher_count": 4,
+        "title": "10-Class Package",
+        "description": "10 x 60-minute private lessons. Valid for 3 months.",
+        "lang": "en",
+        "restricted_to_listed_teachers": false
+      }
+    ]
+  }
+}

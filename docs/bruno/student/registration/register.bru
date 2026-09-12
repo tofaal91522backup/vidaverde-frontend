@@ -1,0 +1,82 @@
+meta {
+  name: register
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base_url}}/student/registration/
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    // Required. Lowercased on save, and must not already exist -- including an
+    // account created earlier by a guest checkout.
+    "email": "nueva.estudiante@example.com",
+
+    // Required, minimum 8 characters. Also run through Django's
+    // AUTH_PASSWORD_VALIDATORS: not too similar to the email, not a common
+    // password, not entirely numeric.
+    "password1": "caminante2026",
+
+    // Must match password1 exactly. Required.
+    "password2": "caminante2026",
+
+    // Required.
+    "first_name": "Nueva",
+
+    // Optional.
+    "last_name": "Estudiante",
+
+    // Optional.
+    "country": "Spain",
+
+    // Optional.
+    "phone_number": "+34 600 123 456",
+
+    // Optional IANA timezone, defaults to "America/Guayaquil" (the school's).
+    // Everything in the portal is rendered in this zone. Unknown zone -> 400.
+    "timezone": "Europe/Madrid",
+
+    // Optional, defaults to "none". One of:
+    // "none", "beginner", "intermediate", "upper_intermediate", "advanced".
+    "current_spanish_level": "beginner"
+  }
+}
+
+script:post-response {
+  const response = res.getBody();
+
+  // Only present when EMAIL_VERIFICATION_REQUIRED=False.
+  if (response.access) {
+    bru.setVar("accessTokenStudent", response.access);
+  }
+}
+
+docs {
+  ## API explanation
+  Creates a `User` (flagged `is_student`) **and** the matching `Student` profile
+  in one call, so the account can use the portal immediately.
+
+  The response depends on `EMAIL_VERIFICATION_REQUIRED`:
+
+  - **True** -- 201 with `email_verification_required: true` and no tokens. A
+    confirmation email goes out; the account cannot log in until the link is
+    clicked (login returns 403). Continue with **verify email**.
+  - **False** -- 201 with `access` / `refresh` / `role` / `profile`, exactly like
+    a login. The address is marked verified on creation.
+
+  `POST /rest-auth/registration/` is the same view under its legacy path. It used
+  to be dj-rest-auth's default, which created a `User` with no `Student` profile
+  and no `is_student` flag -- an account that could not use any portal endpoint.
+
+  ## API example response
+  {
+    "success": true,
+    "email_verification_required": true,
+    "email": "nueva.estudiante@example.com",
+    "message": "Almost there. Check your inbox and click the link to activate your account."
+  }
+}

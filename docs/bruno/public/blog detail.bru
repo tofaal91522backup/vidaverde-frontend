@@ -1,0 +1,54 @@
+meta {
+  name: blog detail
+  type: http
+  seq: 14
+}
+
+get {
+  url: {{base_url}}/public/blogs/:slug/?lang=en
+  body: none
+  auth: none
+}
+
+params:path {
+  slug: five-spanish-phrases-that-instantly-make-you-sound-local-in-quito
+}
+
+params:query {
+  lang: en
+}
+
+docs {
+  ## API explanation
+  One published post, looked up by **slug** rather than id -- the slug is the
+  public URL. A draft returns 404.
+
+  Adds `body` (the full HTML) to the list shape, plus up to three
+  `related_posts` from the same category for the footer of the article, and the
+  `meta_title` / `meta_description` for the page head.
+
+  The spec also wants the lead-capture widget under the article body -- that
+  posts to `POST /public/leads/` with `source: "blog_post"`.
+
+  ## API example response
+  {
+    "success": true,
+    "post": {
+      "id": "5c1e8a2f-9d43-4b76-8e0a-1f2c3d4e5a6b",
+      "slug": "five-spanish-phrases-that-instantly-make-you-sound-local-in-quito",
+      "image_urls": [],
+      "category": "spanish_learning_tips",
+      "category_label": "Spanish Learning Tips",
+      "author": "master@vidaverde.test",
+      "published_at": "2026-09-05T08:44:12.512000-05:00",
+      "reading_time": 4,
+      "meta_title": "",
+      "meta_description": "",
+      "lang": "en",
+      "title": "Five Spanish Phrases That Instantly Make You Sound Local in Quito",
+      "excerpt": "Textbook Spanish will get you understood. These five phrases will get you smiled at.",
+      "body": "<p>Textbook Spanish will get you understood...</p>",
+      "related_posts": []
+    }
+  }
+}
