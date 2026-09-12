@@ -7,8 +7,8 @@
 - **Source of truth:** [docs/bruno/public/](../bruno/public/)
 - **Index:** [ROUND2_INDEX.md](ROUND2_INDEX.md)
 - **Started:** 2026-09-12
-- **Current step:** **Step 1** — `usePackageTeachers` hook
-- **Status:** in progress (1/5 done)
+- **Current step:** **Step 2** — booking flow reorder (boro step)
+- **Status:** in progress (2/5 done)
 
 ---
 
@@ -136,6 +136,14 @@ eca895a  Add package -> teachers endpoint for booking step 2
 
 **Done jokhon:** hook ache, typecheck clean, kono page e ekhono use hoy nai.
 
+> **✅ Shesh — ja jana gelo:**
+> - `days` default **7**, backend-er 14 na. `PUBLIC_SLOT_DAYS` existing slots hook
+>   theke import kora — duita jaygay duita number thakle booking grid ar teacher
+>   list alada window dekhato.
+> - Query key `[KEY, packageId, query]` — existing `usePublicTeacherSlots`-er
+>   moto id ta alada rakha, jate package bodlalei notun cache entry hoy.
+> - `client: "public"` — ei hook-ta authenticated `apiClient` use korbe na.
+
 ---
 
 ### Step 2 — Booking flow reorder 🔴 (boro step)
@@ -195,7 +203,7 @@ ek-i moto kaj kore.
 | Step | Obostha | Tarikh | Ki korechi |
 |---|---|---|---|
 | 0 — Types | ✅ done | 2026-09-12 | `public-api.types.ts` — `teacher_count` on `PublicPackage`, notun `PublicSlotRef`/`PublicPackageTeacher`/`PackageTeachersResponse`/`PublicTeacherPackage`/`TeacherPackagesResponse` |
-| 1 — `usePackageTeachers` | ⬜ baki | — | — |
+| 1 — `usePackageTeachers` | ✅ done | 2026-09-12 | Notun `book/queries/use-package-teachers.ts` — `useFetchData` + `client: "public"`, `days` default `PUBLIC_SLOT_DAYS` (7), `enabled` packageId thakle |
 | 2 — Flow reorder | ⬜ baki | — | — |
 | 3 — Teacher-first entry | ⬜ baki | — | — |
 | 4 — `teacher_count` + error | ⬜ baki | — | — |

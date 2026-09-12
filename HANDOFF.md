@@ -13,36 +13,38 @@
 | | |
 |---|---|
 | **Active plan** | [docs/plan/ROUND2_INDEX.md](docs/plan/ROUND2_INDEX.md) |
-| **Section** | Round 2 → Public (8 of 18 steps overall) |
-| **Next step** | **Public Step 1** — `usePackageTeachers` hook ([ROUND2_PUBLIC_INTEGRATION.md](docs/plan/ROUND2_PUBLIC_INTEGRATION.md)) |
+| **Section** | Round 2 → Public (9 of 18 steps overall) |
+| **Next step** | **Public Step 2** — booking flow reorder, the big one ([ROUND2_PUBLIC_INTEGRATION.md](docs/plan/ROUND2_PUBLIC_INTEGRATION.md)) |
 | **Backend commit** | `63c01f5` (see `.claude/api-sync.json`) |
 | **Last updated** | 2026-09-12 — Claude |
 
 ### What was just done
-**Public Step 0 — types.** `public-api.types.ts` now models the two new booking
-endpoints and picks up `teacher_count`, which the backend has been sending since
-2026-09-05 and the frontend was discarding. Type-only; no component touched.
+**Public Step 1 — `usePackageTeachers` hook.** New file at
+`src/features/marketing/pages/book/queries/use-package-teachers.ts`. Nothing
+renders it yet; Step 2 does.
 
 ### What the next session does
-Open `docs/plan/ROUND2_PUBLIC_INTEGRATION.md` and do **Step 1** (the
-`usePackageTeachers` hook). **One step per turn, nothing more.** Wait for the
-user to say "next" before the step after.
+Open `docs/plan/ROUND2_PUBLIC_INTEGRATION.md` and do **Step 2** — the booking
+flow reorder. **One step per turn, nothing more.** Wait for the user to say
+"next" before the step after.
 
 ### Carried into the next step
-Two things the types encode that the UI has to respect:
-- An empty teacher list means "nobody is free in this window", not "this package
-  has no teachers" — the backend drops any teacher with zero bookable slots. The
-  UI must say which, or a visitor will think the package is broken.
-- The "exclusive" badge belongs to `restricted_to_listed_teachers`, not to
-  `teacher_count`. Unrestricted packages also carry a large count.
-
-Step 2 is the big one in this section: it reorders the booking flow from five
-steps to four and rewrites `SlotPicker`, which currently fetches its own slots.
+Step 2 is the largest change in this section, so expect it to touch several files
+at once:
+- `STEPS` goes from five entries to four: package, then teacher-and-time
+  together, then details, then payment.
+- `SlotPicker` currently calls `usePublicTeacherSlots` itself. The new endpoint
+  already returns each teacher's `days`, so the picker has to accept them as a
+  prop instead of fetching.
+- An empty teacher list means "nobody free in this window", not "no teachers".
+  Offer to widen `days` rather than declaring the package unbookable.
+- `?package=` and `?teacher=` query params need to keep working; Step 3 sends
+  visitors in with both set.
 
 ### Needs manual testing before it ships
-The whole Auth section is untested against a live backend — see the Auth plan's
-Progress Log. Most urgent: `INTEGRATION_TEST.md` Phase J (token refresh), and
-confirming whether the backend's `EMAIL_VERIFICATION_REQUIRED` is on or off.
+The whole Auth section is untested against a live backend. Most urgent:
+`INTEGRATION_TEST.md` Phase J (token refresh), and confirming whether the
+backend's `EMAIL_VERIFICATION_REQUIRED` is on or off.
 
 Nothing is half-finished. Working tree clean.
 
