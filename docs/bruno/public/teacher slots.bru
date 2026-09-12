@@ -1,0 +1,64 @@
+meta {
+  name: teacher slots
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{base_url}}/public/teachers/:id/slots/?date=2026-09-10&tz=Europe/London&days=7
+  body: none
+  auth: none
+}
+
+params:path {
+  id: 1e54776b-9910-4742-9f8c-8efd23912d4a
+}
+
+params:query {
+  date: 2026-09-10
+  tz: Europe/London
+  days: 7
+}
+
+docs {
+  ## API explanation
+  Step 3 of the booking flow: real bookable slots, in the visitor's own timezone.
+
+  Nothing is stored -- slots are computed per request from the teacher's weekly
+  rules, minus booked sessions, minus time off, minus anything starting within
+  `BOOKING_MIN_LEAD_HOURS` (12) of now.
+
+  Query params:
+
+  - `date` -- `YYYY-MM-DD`. Defaults to today (school time). A malformed date returns 400.
+  - `tz` -- IANA name, e.g. `Europe/London`, `America/New_York`. Defaults to `America/Guayaquil`. An unknown zone returns 400.
+  - `days` -- how many consecutive days to return, 1-31. Defaults to 1. Use 7 to fill a week view in one call.
+
+  Post `start_utc` back verbatim as the checkout's `start_datetime`. `label` is
+  ready to render; `start_local` is the same instant in `tz`.
+
+  ## API example response
+  {
+    "success": true,
+    "teacher": "Fernando Cordero",
+    "timezone": "Europe/London",
+    "duration_minutes": 60,
+    "days": [
+      {
+        "date": "2026-09-10",
+        "slots": [
+          {
+            "start_utc": "2026-09-10T13:00:00+00:00",
+            "start_local": "2026-09-10T14:00:00+01:00",
+            "label": "14:00"
+          },
+          {
+            "start_utc": "2026-09-10T15:00:00+00:00",
+            "start_local": "2026-09-10T16:00:00+01:00",
+            "label": "16:00"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -44,4 +44,13 @@ export const request = {
     });
     return res.data;
   },
+
+  /**
+   * Binary download (PDF, file etc.) — JSON na, blob ashe.
+   * Jemon: GET /student/invoices/:id/pdf/
+   */
+  getBlob: async (url: string): Promise<Blob> => {
+    const res = await apiClient.get<Blob>(url, { responseType: "blob" });
+    return res.data;
+  },
 };

@@ -1,0 +1,49 @@
+meta {
+  name: teachers
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{base_url}}/public/teachers/?lang=en
+  body: none
+  auth: none
+}
+
+params:query {
+  lang: en
+}
+
+docs {
+  ## API explanation
+  Active teachers for the "Choose Your Teacher" section and the booking flow's
+  step 1. Not paginated.
+
+  `availability_label` is the badge text the spec asks for -- "Accepting new
+  students" or "Limited availability" -- derived from `accepting_students`.
+  `availability` is the raw weekly rule set in SCHOOL time (America/Guayaquil);
+  use the **teacher slots** request for actual bookable times.
+
+  Calendar ids and Meet links are deliberately not exposed here.
+
+  `GET /public/teachers/<id>/` returns one teacher in the same shape.
+
+  ## API example response
+  [
+    {
+      "id": "1e54776b-9910-4742-9f8c-8efd23912d4a",
+      "name": "Fernando Cordero",
+      "profile_img_url": "",
+      "tags": ["beginners", "conversation", "travel spanish"],
+      "institute": "Universidad Central del Ecuador",
+      "availability": [
+        { "day": "mon", "start": "08:00", "end": "16:00" },
+        { "day": "tue", "start": "08:00", "end": "16:00" }
+      ],
+      "accepting_students": true,
+      "availability_label": "Accepting new students",
+      "description": "I have taught Spanish for twelve years...",
+      "lang": "en"
+    }
+  ]
+}

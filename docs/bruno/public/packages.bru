@@ -1,0 +1,58 @@
+meta {
+  name: packages
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{base_url}}/public/packages/?lang=en
+  body: none
+  auth: none
+}
+
+params:query {
+  lang: en
+}
+
+docs {
+  ## API explanation
+  Every active package, for the "Simple, Transparent Pricing" section. Not
+  paginated -- there are only a handful.
+
+  `is_first_lesson` marks the discounted Assessment & First Lesson, which is the
+  primary card and can only be bought once per student. `validity_days` is how
+  long the package stays usable after purchase (90 for the 10-class, 180 for the
+  20-class).
+
+  `lang` is `en` or `es`; a missing Spanish translation falls back to English.
+
+  `GET /public/packages/<id>/` returns a single package in the same shape.
+
+  ## API example response
+  [
+    {
+      "id": "2da599cd-ed31-4aa1-b919-0828e1f2e2e9",
+      "image_url": "",
+      "total_classes": 1,
+      "validity_days": 90,
+      "price": "12.00",
+      "is_first_lesson": true,
+      "sort_order": 0,
+      "title": "Spanish Assessment & First Lesson",
+      "description": "A 60-minute session: level assessment, a personalised learning plan, and your first full lesson. One per student.",
+      "lang": "en"
+    },
+    {
+      "id": "347cde65-90ad-4178-8816-332e19e04748",
+      "image_url": "",
+      "total_classes": 10,
+      "validity_days": 90,
+      "price": "135.00",
+      "is_first_lesson": false,
+      "sort_order": 2,
+      "title": "10-Class Package",
+      "description": "10 x 60-minute private lessons. Valid for 3 months.",
+      "lang": "en"
+    }
+  ]
+}

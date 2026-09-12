@@ -2,74 +2,101 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import type { AdminPackage } from "@/features/protected/pages/dashboard/admin/types/admin.types";
 import { ColumnDef } from "@tanstack/react-table";
 import { Edit, Power } from "lucide-react";
 import Link from "next/link";
-import DeleteMutation from "@/components/shared/delete-mutation";
-import {
-  Package,
-  PACKAGES_QUERY_KEY,
-  useTogglePackageStatus,
-} from "../queries/use-packages";
+import { useTogglePackageStatus } from "../queries/use-packages";
 
-function ToggleStatusButton({ pkg }: { pkg: Package }) {
+function ToggleStatusButton({ pkg }: { pkg: AdminPackage }) {
   const { mutate, isPending } = useTogglePackageStatus();
   return (
     <Button
       variant="outline"
       size="sm"
       disabled={isPending}
-      onClick={() => mutate({ id: pkg.id, isActive: !pkg.isActive })}
+      onClick={() => mutate({ id: pkg.id, active: !pkg.active })}
       className="gap-1"
     >
       <Power className="h-3.5 w-3.5" />
-      {pkg.isActive ? "Deactivate" : "Activate"}
+      {pkg.active ? "Deactivate" : "Activate"}
     </Button>
   );
 }
 
-export const packagesColumns: ColumnDef<Package>[] = [
+export const packagesColumns: ColumnDef<AdminPackage>[] = [
   {
-    accessorKey: "name",
-    header: "Package Name",
+    accessorKey: "title_en",
+    header: "Package",
     cell: ({ row }) => (
-      <span className="font-medium">{row.original.name}</span>
+      <div>
+        <p className="font-medium">{row.original.title_en}</p>
+        {row.original.title_es && (
+          <p className="text-xs text-muted-foreground">
+            {row.original.title_es}
+          </p>
+        )}
+      </div>
     ),
   },
   {
     accessorKey: "price",
     header: "Price",
+    // Decimal string — toFixed kora jabe na
     cell: ({ row }) => (
-      <span className="text-sm font-medium">${row.original.price}</span>
+      <span className="text-sm font-semibold tabular-nums">
+        ${row.original.price}
+      </span>
     ),
   },
   {
-    accessorKey: "classesCount",
+    accessorKey: "total_classes",
     header: "Classes",
     cell: ({ row }) => (
-      <span className="text-sm">{row.original.classesCount} classes</span>
+      <span className="text-sm">
+        {row.original.total_classes} class
+        {row.original.total_classes === 1 ? "" : "es"}
+      </span>
     ),
   },
   {
-    accessorKey: "validityDays",
+    accessorKey: "validity_days",
     header: "Validity",
     cell: ({ row }) => (
-      <span className="text-sm">{row.original.validityDays} days</span>
+      <span className="text-sm">{row.original.validity_days} days</span>
     ),
   },
   {
-    accessorKey: "isActive",
+    accessorKey: "sort_order",
+    header: "Order",
+    cell: ({ row }) => (
+      <span className="text-sm text-muted-foreground tabular-nums">
+        {row.original.sort_order}
+      </span>
+    ),
+  },
+  {
+    accessorKey: "active",
     header: "Status",
     cell: ({ row }) => (
-      <Badge variant={row.original.isActive ? "default" : "secondary"}>
-        {row.original.isActive ? "Active" : "Inactive"}
-      </Badge>
+      <div className="flex flex-col items-start gap-1">
+        <Badge variant={row.original.active ? "default" : "secondary"}>
+          {row.original.active ? "Active" : "Inactive"}
+        </Badge>
+        {row.original.is_first_lesson && (
+          <Badge variant="outline" className="text-[10px]">
+            First lesson
+          </Badge>
+        )}
+      </div>
     ),
   },
   {
     id: "actions",
     header: "Actions",
     cell: ({ row }) => (
+      // Delete button nai — backend-e DELETE asholei deactivate kore (purchase
+      // package ke PROTECT kore), ar sheta Deactivate button-i kore
       <div className="flex items-center justify-end gap-2">
         <Button variant="outline" size="sm" asChild className="gap-1">
           <Link href={`/dashboard/admin/packages/${row.original.id}/edit`}>
@@ -78,14 +105,6 @@ export const packagesColumns: ColumnDef<Package>[] = [
           </Link>
         </Button>
         <ToggleStatusButton pkg={row.original} />
-        <DeleteMutation
-          endpoint={`/api/packages/${row.original.id}/`}
-          invalidateKeys={[[PACKAGES_QUERY_KEY]]}
-          confirmMessage="Delete this package?"
-          confirmDescription="This will permanently remove the package."
-          successMessage="Package deleted!"
-          errorMessage="Failed to delete package."
-        />
       </div>
     ),
   },

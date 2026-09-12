@@ -1,100 +1,94 @@
+import type {
+  AdminPackage,
+  AdminPackagesResponse,
+} from "@/features/protected/pages/dashboard/admin/types/admin.types";
 import { useFetchData } from "@/hooks/use-fetch-data";
 import { useMutationHandler } from "@/hooks/use-mutation-handler";
-import { makeEndpoint } from "@/lib/http/make-endpoint";
+import { request } from "@/lib/http/request";
 
 export const PACKAGES_QUERY_KEY = "admin-packages";
 export const PACKAGE_DETAILS_QUERY_KEY = "admin-package-details";
 
-export type Package = {
-  id: string;
-  name: string;
-  price: number;
-  classesCount: number;
-  validityDays: number;
-  isActive: boolean;
-};
-
-type PackagesResponse = { results: Package[]; count: number };
-type PackageParams = { page?: number; search?: string };
-
-// ─── DEMO DATA ────────────────────────────────────────────────────────────────
-const MOCK_PACKAGES: Package[] = [
-  { id: "p1", name: "Assessment + First Lesson", price: 12, classesCount: 1, validityDays: 14, isActive: true },
-  { id: "p2", name: "Starter Pack. 5 Classes", price: 55, classesCount: 5, validityDays: 60, isActive: true },
-  { id: "p3", name: "Regular Pack. 10 Classes", price: 100, classesCount: 10, validityDays: 90, isActive: true },
-  { id: "p4", name: "Intensive. 20 Classes", price: 180, classesCount: 20, validityDays: 120, isActive: true },
-  { id: "p5", name: "Trial Lesson", price: 0, classesCount: 1, validityDays: 7, isActive: false },
-];
-// ─────────────────────────────────────────────────────────────────────────────
-
-export function usePackages(params: PackageParams) {
-  // ✅ REAL API. Uncomment this and remove the demo block below:
-  // return useFetchData<PackagesResponse>({
-  //   url: makeEndpoint("/api/packages/", params),
-  //   querykey: [PACKAGES_QUERY_KEY, params],
-  // });
-
-  const filtered = params.search
-    ? MOCK_PACKAGES.filter((p) =>
-        p.name.toLowerCase().includes(params.search!.toLowerCase()),
-      )
-    : MOCK_PACKAGES;
-
-  const page = params.page ?? 1;
-  const paginated = filtered.slice((page - 1) * 10, page * 10);
-
-  return useFetchData<PackagesResponse>({
-    url: makeEndpoint("/api/packages/", params),
-    querykey: [PACKAGES_QUERY_KEY, params],
-    options: { enabled: false, initialData: { results: paginated, count: filtered.length } },
+/**
+ * GET /administrator/packages/ — inactive gulo-o ashe (public endpoint oigula lukay).
+ *
+ * Doc bole **not paginated**, kintu list-er exact shape bru te dekhano nai —
+ * tai `toList()` diye normalize kora hoy.
+ *
+ * docs/bruno/administrator/packages.bru
+ */
+export function usePackages() {
+  return useFetchData<AdminPackagesResponse>({
+    url: "/administrator/packages/",
+    querykey: [PACKAGES_QUERY_KEY],
   });
 }
 
+/** GET /administrator/packages/:id/ — bare object */
 export function usePackageDetails(id: string) {
-  // ✅ REAL API. Uncomment this and remove the demo block below:
-  // return useFetchData<Package>({
-  //   url: `/api/packages/${id}/`,
-  //   querykey: [PACKAGE_DETAILS_QUERY_KEY, id],
-  //   options: { enabled: !!id },
-  // });
-
-  const found = MOCK_PACKAGES.find((p) => p.id === id);
-  return useFetchData<Package>({
-    url: `/api/packages/${id}/`,
+  return useFetchData<AdminPackage>({
+    url: `/administrator/packages/${id}/`,
     querykey: [PACKAGE_DETAILS_QUERY_KEY, id],
-    options: { enabled: false, initialData: found },
+    options: { enabled: Boolean(id) },
   });
 }
 
+type PackagePayload = Partial<
+  Pick<
+    AdminPackage,
+    | "title_en"
+    | "title_es"
+    | "description_en"
+    | "description_es"
+    | "image_url"
+    | "total_classes"
+    | "validity_days"
+    | "price"
+    | "is_first_lesson"
+    | "sort_order"
+    | "active"
+  >
+>;
+
+/** POST /administrator/packages/ — **bare object** ferot dey, envelope na */
 export function useCreatePackage() {
-  // ✅ REAL API. Swap mutationFn and restore invalidateKeys:
-  // mutationFn: (data) => request.post("/api/packages/", data),
-  // invalidateKeys: [[PACKAGES_QUERY_KEY]],
-  return useMutationHandler<any, any>({
-    mutationFn: () => Promise.resolve(),
-    successMessage: "Package created!",
+  return useMutationHandler<AdminPackage, PackagePayload>({
+    mutationFn: (data) => request.post("/administrator/packages/", data),
+    invalidateKeys: [[PACKAGES_QUERY_KEY]],
+    successMessage: "Package created.",
+    errorMessage: "Could not create the package.",
     debugLabel: "CreatePackage",
   });
 }
 
-export function useUpdatePackage(_id: string) {
-  // ✅ REAL API. Swap mutationFn and restore invalidateKeys:
-  // mutationFn: (data) => request.put(`/api/packages/${_id}/`, data),
-  // invalidateKeys: [[PACKAGES_QUERY_KEY], [PACKAGE_DETAILS_QUERY_KEY, _id]],
-  return useMutationHandler<any, any>({
-    mutationFn: () => Promise.resolve(),
-    successMessage: "Package updated!",
+/** PATCH /administrator/packages/:id/ */
+export function useUpdatePackage(id: string) {
+  return useMutationHandler<AdminPackage, PackagePayload>({
+    mutationFn: (data) => request.patch(`/administrator/packages/${id}/`, data),
+    invalidateKeys: [
+      [PACKAGES_QUERY_KEY],
+      [PACKAGE_DETAILS_QUERY_KEY, id],
+    ],
+    successMessage: "Package updated.",
+    errorMessage: "Could not update the package.",
     debugLabel: "UpdatePackage",
   });
 }
 
+/**
+ * Active toggle — PATCH diye.
+ *
+ * Backend-e DELETE deactivate kore (purchase package ke `PROTECT` kore reference
+ * kore; delete korle karo invoice history orphan hoye jeto). Activate korte-o
+ * PATCH lage, tai duito dik-i PATCH.
+ */
 export function useTogglePackageStatus() {
-  // ✅ REAL API. Swap mutationFn and restore invalidateKeys:
-  // mutationFn: ({ id, isActive }) => request.patch(`/api/packages/${id}/`, { isActive }),
-  // invalidateKeys: [[PACKAGES_QUERY_KEY]],
-  return useMutationHandler<any, { id: string; isActive: boolean }>({
-    mutationFn: () => Promise.resolve(),
-    successMessage: "Package status updated!",
+  return useMutationHandler<AdminPackage, { id: string; active: boolean }>({
+    mutationFn: ({ id, active }) =>
+      request.patch(`/administrator/packages/${id}/`, { active }),
+    invalidateKeys: [[PACKAGES_QUERY_KEY]],
+    successMessage: "Package status updated.",
+    errorMessage: "Could not update the package status.",
     debugLabel: "TogglePackageStatus",
   });
 }

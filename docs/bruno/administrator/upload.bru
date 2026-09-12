@@ -1,0 +1,44 @@
+meta {
+  name: upload file
+  type: http
+  seq: 17
+}
+
+post {
+  url: {{base_url}}/administrator/upload/
+  body: multipartForm
+  auth: inherit
+}
+
+body:multipart-form {
+  file: @file()
+}
+
+docs {
+  ## API explanation
+  Uploads one file and returns a public URL. Nothing is stored on this server --
+  the file is forwarded to Ongshak's transfer service and only the resulting URL
+  is kept, which is why every model field is a `*_url` rather than a `FileField`.
+
+  Pick the file in Bruno's UI for the `file` field (it is the only field, and it
+  is required).
+
+  Rules enforced by the view:
+
+  - Maximum 20 MB; anything larger returns 400.
+  - A `.jpg`, `.jpeg` or `.png` over 2 MB is compressed at level 50 on the way through.
+  - Files land under the `vida_verde` path (`TRANSFER_ONGSHAK_PATH`).
+
+  Requires `TRANSFER_ONGSHAK_API_KEY` in `server/.env` -- still to be supplied.
+
+  Use the returned URL for `profile_img_url`, `image_url`, `photo_url` or an
+  entry in a blog's `image_urls`.
+
+  ## API example response
+  {
+    "success": true,
+    "url": "https://transfer2.ongshak.com/vida_verde/fernando-cordero.jpg",
+    "filename": "fernando-cordero.jpg",
+    "size": 184320
+  }
+}

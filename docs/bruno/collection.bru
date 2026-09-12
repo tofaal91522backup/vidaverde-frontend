@@ -1,0 +1,39 @@
+auth {
+  mode: none
+}
+
+docs {
+  # Vida Verde API
+
+  Backend for the Vida Verde Spanish school platform (Phase 1).
+
+  ## URL prefixes -- one per audience
+
+  | Prefix | Who | Auth |
+  |---|---|---|
+  | `/public/` | marketing site visitors | none |
+  | `/student/` | logged-in students | Bearer `{{accessTokenStudent}}` |
+  | `/administrator/` | school staff | Bearer `{{accessTokenAdmin}}` |
+  | `/teacher/` | teachers | reserved for Phase 2 -- no endpoints yet |
+  | `/rest-auth/` | login, logout, password | mixed |
+
+  ## Getting a token
+
+  Run **authentication > login**. Its post-response script stores the access
+  token in `accessTokenAdmin` or `accessTokenStudent` depending on the role
+  the API returns, so every other request picks it up automatically.
+
+  Seed logins (`python manage.py seed_demo`):
+
+  - master admin -- `master@vidaverde.test` / `vidaverde123`
+  - manager -- `manager@vidaverde.test` / `vidaverde123`
+  - student -- `ana.lopez@example.com` / `student123`
+
+  ## Response shape
+
+  Writes and errors return `{"success": true|false, ...}`. Errors are flattened
+  by `administrator.serializers.custom_exception_handler` into
+  `{"success": false, "message": "(field) explanation"}`.
+
+  List endpoints that paginate use `?p=<page>&page_size=<n>`.
+}

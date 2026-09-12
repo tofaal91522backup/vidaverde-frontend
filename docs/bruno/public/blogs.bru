@@ -1,0 +1,57 @@
+meta {
+  name: blogs
+  type: http
+  seq: 8
+}
+
+get {
+  url: {{base_url}}/public/blogs/?category=spanish_learning_tips&p=1&page_size=10&lang=en
+  body: none
+  auth: none
+}
+
+params:query {
+  category: spanish_learning_tips
+  p: 1
+  page_size: 10
+  lang: en
+}
+
+docs {
+  ## API explanation
+  Published posts only -- drafts are invisible here and 404 on the detail route.
+
+  Paginated with the project's `StandardResultsSetPagination`: `p` is the page
+  number and `page_size` the size (default 10, max 500).
+
+  `category` filters the grid. Valid values: `spanish_learning_tips`,
+  `ecuador_travel`, `school_news`, `student_stories`, `culture_and_language`.
+  `GET /public/blogs/categories/` returns them with display labels.
+
+  `GET /public/blogs/<slug>/` returns one post with its `body`, plus up to three
+  `related_posts` from the same category.
+
+  ## API example response
+  {
+    "count": 3,
+    "page_size": 10,
+    "next": null,
+    "previous": null,
+    "num_pages": 1,
+    "current_page": 1,
+    "results": [
+      {
+        "id": "5c1e8a2f-9d43-4b76-8e0a-1f2c3d4e5a6b",
+        "slug": "five-spanish-phrases-that-instantly-make-you-sound-local-in-quito",
+        "thumbnail": "",
+        "category": "spanish_learning_tips",
+        "category_label": "Spanish Learning Tips",
+        "published_at": "2026-09-05T08:44:12.512000-05:00",
+        "reading_time": 4,
+        "title": "Five Spanish Phrases That Instantly Make You Sound Local in Quito",
+        "excerpt": "Textbook Spanish will get you understood. These five phrases will get you smiled at.",
+        "lang": "en"
+      }
+    ]
+  }
+}

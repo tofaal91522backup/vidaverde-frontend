@@ -27,6 +27,8 @@ export type Session = {
     name: string;
     email: string;
     role: string;
+    /** Present only for an ADMIN login; used for master-only dashboard UI. */
+    adminRole?: "master" | "manager";
   };
   accessToken: string;
   refreshToken: string;

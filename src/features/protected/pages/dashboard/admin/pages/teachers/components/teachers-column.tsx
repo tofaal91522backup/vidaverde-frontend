@@ -2,38 +2,37 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import type { AdminTeacher } from "@/features/protected/pages/dashboard/admin/types/admin.types";
 import { ColumnDef } from "@tanstack/react-table";
 import { Edit, Power } from "lucide-react";
 import Link from "next/link";
-import { Teacher, useToggleTeacherStatus } from "../queries/use-teachers";
-import DeleteMutation from "@/components/shared/delete-mutation";
-import { TEACHERS_QUERY_KEY } from "../queries/use-teachers";
+import { useToggleTeacherStatus } from "../queries/use-teachers";
 
-function ToggleStatusButton({ teacher }: { teacher: Teacher }) {
+function ToggleStatusButton({ teacher }: { teacher: AdminTeacher }) {
   const { mutate, isPending } = useToggleTeacherStatus();
   return (
     <Button
       variant="outline"
       size="sm"
       disabled={isPending}
-      onClick={() => mutate({ id: teacher.id, isActive: !teacher.isActive })}
+      onClick={() => mutate({ id: teacher.id, active: !teacher.active })}
       className="gap-1"
     >
       <Power className="h-3.5 w-3.5" />
-      {teacher.isActive ? "Deactivate" : "Activate"}
+      {teacher.active ? "Deactivate" : "Activate"}
     </Button>
   );
 }
 
-export const teachersColumns: ColumnDef<Teacher>[] = [
+export const teachersColumns: ColumnDef<AdminTeacher>[] = [
   {
-    accessorKey: "photo",
+    accessorKey: "profile_img_url",
     header: "Photo",
     cell: ({ row }) =>
-      row.original.photo ? (
+      row.original.profile_img_url ? (
         // eslint-disable-next-line @next/next/no-img-element
         <img
-          src={row.original.photo}
+          src={row.original.profile_img_url}
           alt={row.original.name}
           className="h-9 w-9 rounded-full object-cover border"
         />
@@ -47,40 +46,71 @@ export const teachersColumns: ColumnDef<Teacher>[] = [
     accessorKey: "name",
     header: "Name",
     cell: ({ row }) => (
-      <span className="font-medium">{row.original.name}</span>
+      <div>
+        <p className="font-medium">{row.original.name}</p>
+        {row.original.institute && (
+          <p className="text-xs text-muted-foreground">
+            {row.original.institute}
+          </p>
+        )}
+      </div>
     ),
   },
   {
-    accessorKey: "specialisations",
+    accessorKey: "tags",
     header: "Specialisations",
+    cell: ({ row }) => {
+      const tags = row.original.tags ?? [];
+      return (
+        <div className="flex flex-wrap gap-1 max-w-60">
+          {tags.slice(0, 3).map((tag) => (
+            <Badge key={tag} variant="secondary" className="text-xs capitalize">
+              {tag}
+            </Badge>
+          ))}
+          {tags.length > 3 && (
+            <Badge variant="outline" className="text-xs">
+              +{tags.length - 3}
+            </Badge>
+          )}
+        </div>
+      );
+    },
+  },
+  {
+    accessorKey: "availability",
+    header: "Weekly hours",
+    cell: ({ row }) => {
+      const days = new Set((row.original.availability ?? []).map((r) => r.day));
+      return (
+        <span className="text-sm text-muted-foreground">
+          {days.size === 0 ? "—" : `${days.size} day${days.size === 1 ? "" : "s"}`}
+        </span>
+      );
+    },
+  },
+  {
+    accessorKey: "active",
+    header: "Status",
     cell: ({ row }) => (
-      <div className="flex flex-wrap gap-1 max-w-[240px]">
-        {row.original.specialisations.slice(0, 3).map((s) => (
-          <Badge key={s} variant="secondary" className="text-xs">
-            {s}
-          </Badge>
-        ))}
-        {row.original.specialisations.length > 3 && (
-          <Badge variant="outline" className="text-xs">
-            +{row.original.specialisations.length - 3}
+      <div className="flex flex-col items-start gap-1">
+        <Badge variant={row.original.active ? "default" : "secondary"}>
+          {row.original.active ? "Active" : "Inactive"}
+        </Badge>
+        {row.original.active && !row.original.accepting_students && (
+          <Badge variant="outline" className="text-[10px]">
+            Limited availability
           </Badge>
         )}
       </div>
     ),
   },
   {
-    accessorKey: "isActive",
-    header: "Status",
-    cell: ({ row }) => (
-      <Badge variant={row.original.isActive ? "default" : "secondary"}>
-        {row.original.isActive ? "Active" : "Inactive"}
-      </Badge>
-    ),
-  },
-  {
     id: "actions",
     header: "Actions",
     cell: ({ row }) => (
+      // Delete button nai — backend-e DELETE asholei deactivate kore, ar
+      // sheta ei Deactivate button-i kore. Duita rakhle bhul bujhabe.
       <div className="flex items-center justify-end gap-2">
         <Button variant="outline" size="sm" asChild className="gap-1">
           <Link href={`/dashboard/admin/teachers/${row.original.id}/edit`}>
@@ -89,14 +119,6 @@ export const teachersColumns: ColumnDef<Teacher>[] = [
           </Link>
         </Button>
         <ToggleStatusButton teacher={row.original} />
-        <DeleteMutation
-          endpoint={`/api/teachers/${row.original.id}/`}
-          invalidateKeys={[[TEACHERS_QUERY_KEY]]}
-          confirmMessage="Delete this teacher?"
-          confirmDescription="This will permanently remove the teacher and all related data."
-          successMessage="Teacher deleted!"
-          errorMessage="Failed to delete teacher."
-        />
       </div>
     ),
   },

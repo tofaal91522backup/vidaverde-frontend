@@ -1,0 +1,58 @@
+meta {
+  name: google oauth
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{base_url}}/rest-auth/google/
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    // The Google ID token from Google Identity Services on the frontend.
+    // Send `access_token` instead (or as well) if you use the implicit flow,
+    // or `code` if you use the authorization-code flow.
+    "id_token": "PASTE_GOOGLE_ID_TOKEN_HERE"
+  }
+}
+
+script:post-response {
+  const response = res.getBody();
+
+  if (response.access) {
+    bru.setVar("accessTokenStudent", response.access);
+  }
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  ## API explanation
+  Social login via allauth's Google provider. Requires a `Social application`
+  row in the Django admin (provider `google`, client id + secret, attached to the
+  site for `SITE_ID = 1`) -- see the README.
+
+  Note this returns dj-rest-auth's own payload, not the shape of
+  `/rest-auth/login/`: there is no `role` or `profile` key here.
+
+  ## API example response
+  {
+    "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+    "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+    "user": {
+      "pk": 4,
+      "username": "marco.reyes@example.com",
+      "email": "marco.reyes@example.com",
+      "first_name": "Marco",
+      "last_name": "Reyes"
+    }
+  }
+
+  ## Changelog
+  - 2026-09-05: Fixed the URL (was missing the `/` after `{{base_url}}`) and the post-response script, which read a `role` key this endpoint never returns.
+}

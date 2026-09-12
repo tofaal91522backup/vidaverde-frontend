@@ -1,0 +1,53 @@
+meta {
+  name: contact
+  type: http
+  seq: 7
+}
+
+post {
+  url: {{base_url}}/public/contact/
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    // Required.
+    "name": "Julia Brandt",
+
+    // Required.
+    "email": "traveller@example.com",
+
+    // Optional, defaults to "other". The contact page's subject dropdown.
+    // One of: "online_classes", "immersion", "homestay", "travel_spanish", "other".
+    // Fetch the labels from GET /public/contact/subjects/.
+    "subject": "immersion",
+
+    // Required.
+    "message": "Hello! I am travelling to Ecuador in November and would like to know if the Quito Immersion Program has space.",
+
+    // Optional free text. Set it when the enquiry came from a specific
+    // Study-in-Quito programme page, e.g. "Quito Immersion Program".
+    "programme": "Quito Immersion Program"
+  }
+}
+
+docs {
+  ## API explanation
+  Contact form and the "Inquire about a programme" CTA. Stores the message,
+  acknowledges it to the sender and notifies `SCHOOL_NOTIFICATION_EMAIL`.
+
+  Immersion programmes are coordinated by hand -- this is an enquiry, not a
+  checkout.
+
+  The 48-hour promise in the acknowledgement email comes from
+  `public.views.RESPONSE_TIME_HOURS`. That figure is still unconfirmed with the
+  school (open item A4); change it in one place if they say 24.
+
+  ## API example response
+  {
+    "success": true,
+    "message": "Thanks -- we'll reply within 48 hours, Monday to Friday.",
+    "id": "b3d91f47-2c8a-4e15-9f60-7a2d1e4c8b93"
+  }
+}

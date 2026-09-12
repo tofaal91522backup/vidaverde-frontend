@@ -1,0 +1,85 @@
+meta {
+  name: login
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{base_url}}/rest-auth/login/
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    // Account email. Required.
+    // The view authenticates on email, not username -- allauth is configured
+    // with ACCOUNT_AUTHENTICATION_METHOD = "email".
+    "email": "master@vidaverde.test",
+
+    // Required. Seed passwords: admins "vidaverde123", student "student123".
+    // A student whose account was auto-created at checkout gets a generated
+    // password emailed to them.
+    "password": "vidaverde123"
+  }
+}
+
+script:post-response {
+  const response = res.getBody();
+
+  if (response.role === "ADMIN") {
+    bru.setVar("accessTokenAdmin", response.access);
+  }
+
+  if (response.role === "STUDENT") {
+    bru.setVar("accessTokenStudent", response.access);
+  }
+
+  if (response.role === "TEACHER") {
+    bru.setVar("accessTokenTeacher", response.access);
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}
+
+docs {
+  ## API explanation
+  Password login for every role. Returns a JWT pair plus `role` and the matching
+  role profile, so the frontend can route straight to the right dashboard.
+
+  `role` is one of `ADMIN`, `TEACHER`, `STUDENT` (or `UNKNOWN` for a user with no
+  role flag set). `profile` mirrors whichever profile row exists -- Admin,
+  Teacher or Student -- and is `null` if none does.
+
+  Returns 401 on bad credentials and 403 if the account has been deactivated.
+
+  The post-response script stores the access token in `accessTokenAdmin` /
+  `accessTokenStudent` / `accessTokenTeacher` for the rest of the collection.
+
+  ## API example response
+  {
+    "success": true,
+    "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+    "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+    "user": {
+      "pk": 1,
+      "username": "master@vidaverde.test",
+      "email": "master@vidaverde.test",
+      "first_name": "Rosa Herrera",
+      "last_name": ""
+    },
+    "role": "ADMIN",
+    "profile": {
+      "id": "0a2f1c9e-6d51-4a37-bb84-4a1f0d2c8e77",
+      "name": "Rosa Herrera",
+      "role": "master",
+      "active": true
+    }
+  }
+
+  ## Changelog
+  - 2026-09-05: Request body now sends `email` instead of `email_reg` -- the view has always read `email`, so the saved request never worked. Response gained `profile`, and `role` can now be `TEACHER`.
+}

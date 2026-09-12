@@ -1,0 +1,40 @@
+meta {
+  name: submit email
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base_url}}/rest-auth/password/reset/
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    // Email of the account to reset. Required.
+    // Always returns 200, whether or not the account exists -- that is
+    // deliberate, so the endpoint cannot be used to discover which emails
+    // are registered.
+    "email": "ana.lopez@example.com"
+  }
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  ## API explanation
+  Sends the password-reset email. `all_auth_extended.AccountAdapter` rewrites the
+  link to point at the frontend -- `{{frontend_url}}/auth/password/reset/confirm/<uid>/<token>`
+  -- not at the Django view.
+
+  ## API example response
+  {
+    "detail": "Password reset e-mail has been sent."
+  }
+
+  ## Changelog
+  - 2026-09-05: Request body now sends `email` instead of `email_reg`; the serializer has always expected `email`.
+}

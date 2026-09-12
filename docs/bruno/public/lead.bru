@@ -1,0 +1,47 @@
+meta {
+  name: lead capture
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{base_url}}/public/leads/
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    // Required. First name only -- the spec is explicit that the form asks for
+    // nothing else besides the email.
+    "first_name": "Tess",
+
+    // Required.
+    "email": "tess@example.com",
+
+    // Required and must be true. This is the GDPR consent checkbox
+    // ("I agree to receive emails from Vida Verde"); false returns 400.
+    "gdpr_consent": true,
+
+    // Optional, defaults to "homepage". Which widget captured the lead --
+    // "homepage" or "blog_post" (the same component renders under every post).
+    "source": "homepage"
+  }
+}
+
+docs {
+  ## API explanation
+  Tier 1 of the funnel: the free guide in exchange for an email.
+
+  Sends the guide immediately and queues the nurture sequence at day 3, 7 and 14
+  as `ScheduledEmail` rows. Submitting an email that is already on the list
+  returns 200 without re-queueing the sequence, so a double-click cannot start a
+  second run.
+
+  ## API example response
+  {
+    "success": true,
+    "message": "Your guide is on its way. Check your inbox.",
+    "id": "027dfbfa-8190-4d3b-8079-81d3be9fd24e"
+  }
+}

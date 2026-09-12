@@ -1,0 +1,98 @@
+meta {
+  name: teachers
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{base_url}}/administrator/teachers/
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    // Required.
+    "name": "Fernando Cordero",
+
+    // Optional. URL from POST /administrator/upload/.
+    "profile_img_url": "https://transfer2.ongshak.com/vida_verde/fernando.jpg",
+
+    // Optional list of free-text specialisations, shown as chips on the
+    // teacher card. Defaults to [].
+    "tags": ["beginners", "conversation", "travel spanish"],
+
+    // Optional. University or qualification, shown under the name.
+    "institute": "Universidad Central del Ecuador",
+
+    // Optional. The teaching bio, English and Spanish. The public API serves
+    // whichever matches ?lang= and falls back to English.
+    "description_en": "I have taught Spanish for twelve years and still love the moment a student stops translating in their head.",
+    "description_es": "",
+
+    // Optional. Weekly recurring availability, in SCHOOL time (America/Guayaquil).
+    // "day" is one of: mon, tue, wed, thu, fri, sat, sun.
+    // "start"/"end" are "HH:MM", 24-hour, and start must be before end.
+    // Bookable slots are computed from these minus booked classes and time off --
+    // nothing is stored per slot.
+    "availability": [
+      { "day": "mon", "start": "08:00", "end": "16:00" },
+      { "day": "tue", "start": "08:00", "end": "16:00" },
+      { "day": "wed", "start": "08:00", "end": "16:00" },
+      { "day": "thu", "start": "08:00", "end": "16:00" },
+      { "day": "fri", "start": "08:00", "end": "16:00" }
+    ],
+
+    // Optional, defaults to true. Drives the public badge:
+    // true -> "Accepting new students", false -> "Limited availability".
+    "accepting_students": true,
+
+    // Optional. The Google Calendar this teacher's bookings are created on.
+    // Leave blank to skip Calendar sync and use meet_link instead.
+    "google_calendar_id": "fernando@vidaverde.com",
+
+    // Optional. Static fallback room, used when the Calendar API is
+    // unavailable or unconfigured -- a booking never fails over Google.
+    "meet_link": "https://meet.google.com/abc-defg-hij",
+
+    // Optional, defaults to true.
+    "active": true
+  }
+}
+
+docs {
+  ## API explanation
+  `GET` lists teachers (with `?search=` over name/institute and `?active=true|false`),
+  `POST` creates one. `GET`/`PUT`/`PATCH`/`DELETE /administrator/teachers/<id>/`
+  handle a single teacher; the detail response embeds `time_off`.
+
+  `availability` is validated: an unknown day, a malformed time or a start at or
+  after the end all return 400 with the specific reason.
+
+  `DELETE` deactivates -- it sets `active` and `accepting_students` to false and
+  keeps the row, because sessions reference the teacher with `PROTECT`.
+
+  ## API example response
+  {
+    "success": true,
+    "teacher": {
+      "id": "1e54776b-9910-4742-9f8c-8efd23912d4a",
+      "name": "Fernando Cordero",
+      "profile_img_url": "",
+      "tags": ["beginners", "conversation", "travel spanish"],
+      "institute": "Universidad Central del Ecuador",
+      "description_en": "I have taught Spanish for twelve years...",
+      "description_es": "",
+      "availability": [{ "day": "mon", "start": "08:00", "end": "16:00" }],
+      "accepting_students": true,
+      "google_calendar_id": "",
+      "meet_link": "https://meet.google.com/abc-defg-hij",
+      "active": true,
+      "time_off": [],
+      "description": "I have taught Spanish for twelve years...",
+      "lang": "en",
+      "created_at": "2026-09-05T08:44:12.000000-05:00",
+      "updated_at": "2026-09-05T08:44:12.000000-05:00"
+    }
+  }
+}

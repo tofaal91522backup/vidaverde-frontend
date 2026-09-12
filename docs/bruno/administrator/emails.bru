@@ -1,0 +1,58 @@
+meta {
+  name: scheduled emails
+  type: http
+  seq: 16
+}
+
+get {
+  url: {{base_url}}/administrator/emails/?status=pending&p=1
+  body: none
+  auth: inherit
+}
+
+params:query {
+  status: pending
+  p: 1
+}
+
+docs {
+  ## API explanation
+  The email outbox -- what is queued, what went out, what failed. Read-only,
+  paginated.
+
+  `status` is `pending`, `sent`, `failed` or `cancelled`. Rows are drained by
+  `python manage.py send_due_emails`, which cron runs every 5 minutes; a row is
+  retried up to 3 times before it is marked `failed` with the reason in `error`.
+
+  `cancelled` rows are ones whose subject went away -- a rescheduled class's old
+  reminder, or an unsubscribed lead's remaining nurture emails.
+
+  `template_key` is one of: `lead_guide`, `nurture_2`, `nurture_3`, `nurture_4`,
+  `booking_confirmation`, `booking_credentials`, `teacher_new_booking`,
+  `session_reminder`, `session_followup`, `contact_received`,
+  `contact_notification`.
+
+  ## API example response
+  {
+    "count": 2,
+    "page_size": 10,
+    "next": null,
+    "previous": null,
+    "num_pages": 1,
+    "current_page": 1,
+    "results": [
+      {
+        "id": "e1f2a3b4-c5d6-4e7f-8a9b-0c1d2e3f4a5b",
+        "to_email": "marco.reyes@example.com",
+        "template_key": "session_reminder",
+        "subject": "Your Spanish class is tomorrow",
+        "send_at": "2026-09-09T08:00:00-05:00",
+        "sent_at": null,
+        "status": "pending",
+        "attempts": 0,
+        "error": "",
+        "created_at": "2026-09-05T03:44:52.900000-05:00"
+      }
+    ]
+  }
+}

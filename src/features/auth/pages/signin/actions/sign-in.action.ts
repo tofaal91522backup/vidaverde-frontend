@@ -40,6 +40,13 @@ export const SignInAction = async (
         name: data?.user?.username ?? "",
         email: data?.user?.email ?? "",
         role: data?.role,
+        // `/administrator/admins/` is master-only. Keep only the documented
+        // admin profile values; never trust an arbitrary profile role.
+        adminRole:
+          data?.role === "ADMIN" &&
+          (data?.profile?.role === "master" || data?.profile?.role === "manager")
+            ? data.profile.role
+            : undefined,
       },
       accessToken: data?.access,
       refreshToken: data?.refresh,

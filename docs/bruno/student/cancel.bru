@@ -1,0 +1,35 @@
+meta {
+  name: cancel a class
+  type: http
+  seq: 9
+}
+
+post {
+  url: {{base_url}}/student/sessions/:id/cancel/
+  body: none
+  auth: inherit
+}
+
+params:path {
+  id: fd36207a-5413-48bc-809e-f5d229d971bb
+}
+
+docs {
+  ## API explanation
+  Cancels a scheduled class. No body.
+
+  The cancellation policy shown before payment is enforced here: cancelling more
+  than `RESCHEDULE_CUTOFF_HOURS` (24) before the class returns the class to the
+  package (`class_returned: true`); cancelling inside that window forfeits it
+  (`class_returned: false`). Either way the slot goes back on the teacher's
+  calendar and the pending reminder is cancelled.
+
+  Only a `scheduled` class can be cancelled -- anything else returns 400.
+
+  ## API example response
+  {
+    "success": true,
+    "class_returned": true,
+    "message": "Your class has been cancelled and returned to your package."
+  }
+}

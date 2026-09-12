@@ -1,119 +1,154 @@
 "use client";
 
 import DataTable from "@/components/shared/data-table";
+import { ReusableSelect } from "@/components/shared/form-related/reusable-select";
 import Pagination from "@/components/shared/pagination";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
+import { Spinner } from "@/components/ui/spinner";
+import { useTeachers } from "@/features/protected/pages/dashboard/admin/pages/teachers/queries/use-teachers";
+import type { PaymentStatus } from "@/features/protected/pages/dashboard/admin/types/admin.types";
+import { toList } from "@/features/protected/pages/dashboard/admin/utils/to-list";
 import { Download, Search } from "lucide-react";
 import { useState } from "react";
-import { Booking, useBookings } from "../queries/use-bookings";
+import { useBookings, useExportBookings } from "../queries/use-bookings";
 import { bookingsColumns } from "./bookings-column";
 
-function exportToCsv(bookings: Booking[]) {
-  const headers = ["ID", "Student", "Email", "Teacher", "Date", "Time", "Package", "Status", "Created"];
-  const rows = bookings.map((b) => [
-    b.id,
-    b.student.name,
-    b.student.email,
-    b.teacher.name,
-    b.date,
-    b.time,
-    b.package,
-    b.status,
-    new Date(b.createdAt).toLocaleDateString(),
-  ]);
-
-  const csv = [headers, ...rows]
-    .map((row) => row.map((cell) => `"${String(cell).replace(/"/g, '""')}"`).join(","))
-    .join("\n");
-
-  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = `bookings-${new Date().toISOString().slice(0, 10)}.csv`;
-  a.click();
-  URL.revokeObjectURL(url);
-}
+const PAYMENT_OPTIONS = [
+  { value: "paid", label: "Paid" },
+  { value: "pending", label: "Pending" },
+  { value: "failed", label: "Failed" },
+  { value: "refunded", label: "Refunded" },
+];
 
 export function BookingsTable() {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
   const [teacher, setTeacher] = useState("");
-  const [status, setStatus] = useState("");
-  const [dateFrom, setDateFrom] = useState("");
-  const [dateTo, setDateTo] = useState("");
+  const [paymentStatus, setPaymentStatus] = useState<PaymentStatus | "">("");
+  const [from, setFrom] = useState("");
+  const [to, setTo] = useState("");
+
+  const { data: teacherData } = useTeachers();
+  const teacherOptions = toList(teacherData).map((t) => ({
+    value: t.id,
+    label: t.name,
+  }));
 
   const { data, isLoading, isError } = useBookings({
     page,
     search,
-    teacher: teacher || undefined,
-    status: status || undefined,
-    dateFrom: dateFrom || undefined,
-    dateTo: dateTo || undefined,
+    teacher,
+    payment_status: paymentStatus,
+    from,
+    to,
   });
+
+  const exportBookings = useExportBookings();
+
+  const resetPage = () => setPage(1);
+
+  // Export endpoint teacher/search ignore kore — admin ke sposhto bola dorkar
+  const exportIgnoresFilters = Boolean(teacher || search);
 
   return (
     <div className="space-y-4">
-      <div className="flex flex-wrap items-center gap-3">
-        <div className="relative flex-1 min-w-[180px] max-w-sm">
+      <div className="flex flex-wrap items-end gap-3">
+        <div className="relative min-w-45 max-w-sm flex-1">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
-            placeholder="Search by student or teacher..."
+            placeholder="Search by student email..."
             value={search}
-            onChange={(e) => { setSearch(e.target.value); setPage(1); }}
+            onChange={(e) => {
+              setSearch(e.target.value);
+              resetPage();
+            }}
             className="pl-9"
           />
         </div>
 
-        <Select
-          value={status || "all"}
-          onValueChange={(v) => { setStatus(v === "all" ? "" : v); setPage(1); }}
-        >
-          <SelectTrigger className="w-36">
-            <SelectValue placeholder="Status" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All statuses</SelectItem>
-            <SelectItem value="pending">Pending</SelectItem>
-            <SelectItem value="confirmed">Confirmed</SelectItem>
-            <SelectItem value="completed">Completed</SelectItem>
-            <SelectItem value="cancelled">Cancelled</SelectItem>
-          </SelectContent>
-        </Select>
+        <ReusableSelect
+          className="w-44"
+          value={teacher}
+          options={teacherOptions}
+          placeholder="All teachers"
+          onChange={(e) => {
+            setTeacher(e.target.value);
+            resetPage();
+          }}
+        />
 
-        <Input
-          type="date"
-          value={dateFrom}
-          onChange={(e) => { setDateFrom(e.target.value); setPage(1); }}
-          className="w-36"
-          title="From date"
+        <ReusableSelect
+          className="w-40"
+          value={paymentStatus}
+          options={PAYMENT_OPTIONS}
+          placeholder="All payments"
+          onChange={(e) => {
+            setPaymentStatus(e.target.value as PaymentStatus | "");
+            resetPage();
+          }}
         />
-        <Input
-          type="date"
-          value={dateTo}
-          onChange={(e) => { setDateTo(e.target.value); setPage(1); }}
-          className="w-36"
-          title="To date"
-        />
+
+        <div className="flex flex-col gap-1">
+          <Label htmlFor="bookings-from" className="text-xs">
+            From
+          </Label>
+          <Input
+            id="bookings-from"
+            type="date"
+            className="w-40"
+            value={from}
+            onChange={(e) => {
+              setFrom(e.target.value);
+              resetPage();
+            }}
+          />
+        </div>
+
+        <div className="flex flex-col gap-1">
+          <Label htmlFor="bookings-to" className="text-xs">
+            To
+          </Label>
+          <Input
+            id="bookings-to"
+            type="date"
+            className="w-40"
+            value={to}
+            onChange={(e) => {
+              setTo(e.target.value);
+              resetPage();
+            }}
+          />
+        </div>
 
         <Button
           variant="outline"
-          onClick={() => data?.results && exportToCsv(data.results)}
-          disabled={!data?.results?.length}
-          className="gap-2 ml-auto"
+          className="ml-auto gap-1.5"
+          disabled={exportBookings.isPending}
+          onClick={() =>
+            exportBookings.mutate({
+              payment_status: paymentStatus,
+              from,
+              to,
+            })
+          }
         >
-          <Download className="h-4 w-4" />
+          {exportBookings.isPending ? (
+            <Spinner className="h-4 w-4" />
+          ) : (
+            <Download className="h-4 w-4" />
+          )}
           Export CSV
         </Button>
       </div>
+
+      {exportIgnoresFilters && (
+        <p className="text-xs text-amber-600">
+          The CSV export only applies the payment status and date filters — the
+          teacher and search filters are not included.
+        </p>
+      )}
 
       <DataTable
         data={data?.results}

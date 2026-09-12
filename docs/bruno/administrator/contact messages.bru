@@ -1,0 +1,54 @@
+meta {
+  name: contact messages
+  type: http
+  seq: 15
+}
+
+patch {
+  url: {{base_url}}/administrator/contact-messages/:id/
+  body: json
+  auth: inherit
+}
+
+params:path {
+  id: b3d91f47-2c8a-4e15-9f60-7a2d1e4c8b93
+}
+
+body:json {
+  {
+    // Optional. Mark the enquiry as dealt with. Setting it true stamps
+    // handled_at automatically.
+    "handled": true,
+
+    // Optional internal note.
+    "admin_notes": "Replied with November availability and the homestay rates."
+  }
+}
+
+docs {
+  ## API explanation
+  `GET /administrator/contact-messages/` lists submissions, paginated, filterable
+  by `?handled=true|false` and `?subject=`. `PATCH` on one marks it handled and
+  records a note.
+
+  Only `handled` and `admin_notes` are writable -- the submitted content itself
+  is a record and stays as the visitor sent it.
+
+  ## API example response
+  {
+    "success": true,
+    "message_detail": {
+      "id": "b3d91f47-2c8a-4e15-9f60-7a2d1e4c8b93",
+      "name": "Julia Brandt",
+      "email": "traveller@example.com",
+      "subject": "immersion",
+      "subject_label": "Immersion Programme",
+      "message": "Hello! I am travelling to Ecuador in November...",
+      "programme": "",
+      "handled": true,
+      "handled_at": "2026-09-05T10:15:00.000000-05:00",
+      "admin_notes": "Replied with November availability and the homestay rates.",
+      "created_at": "2026-09-05T08:44:12.000000-05:00"
+    }
+  }
+}

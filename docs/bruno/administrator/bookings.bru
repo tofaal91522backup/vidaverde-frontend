@@ -1,0 +1,72 @@
+meta {
+  name: bookings
+  type: http
+  seq: 9
+}
+
+get {
+  url: {{base_url}}/administrator/bookings/?payment_status=paid&from=2026-09-01&to=2026-09-30&p=1
+  body: none
+  auth: inherit
+}
+
+params:query {
+  payment_status: paid
+  from: 2026-09-01
+  to: 2026-09-30
+  p: 1
+  ~teacher: 1e54776b-9910-4742-9f8c-8efd23912d4a
+  ~search: marco
+}
+
+docs {
+  ## API explanation
+  "Manage Bookings": every purchase, paginated, with the filters the DevPlan asks
+  for.
+
+  - `payment_status` -- `pending`, `paid`, `failed`, `refunded`
+  - `teacher` -- UUID; keeps purchases that have at least one class with that teacher
+  - `from` / `to` -- `YYYY-MM-DD`, on the purchase date
+  - `search` -- substring of the student's email
+
+  `GET /administrator/bookings/export/` returns the same rows as a CSV download
+  (`vidaverde-bookings-YYYYMMDD.csv`), honouring `payment_status`, `from` and
+  `to`.
+
+  ## API example response
+  {
+    "count": 2,
+    "page_size": 10,
+    "next": null,
+    "previous": null,
+    "num_pages": 1,
+    "current_page": 1,
+    "results": [
+      {
+        "id": "534a4812-5ff0-4ba1-a136-ab610f9c9e21",
+        "package_title": "Spanish Assessment & First Lesson",
+        "amount_paid": "12.00",
+        "payment_status": "paid",
+        "payment_provider": "dummy",
+        "payment_reference": "pi_dummy_3603f68905934869ba494e38",
+        "paid_at": "2026-09-05T03:44:52.780000-05:00",
+        "student_email": "marco.reyes@example.com",
+        "student_name": "Marco Reyes",
+        "current_spanish_level": "beginner",
+        "classes_total": 1,
+        "classes_used": 1,
+        "classes_remaining": 0,
+        "expires_at": "2026-12-04T03:44:52.780000-05:00",
+        "is_expired": false,
+        "can_book": false,
+        "progress_percent": 100,
+        "invoice": {
+          "number": "VV-2026-00002",
+          "amount": "12.00",
+          "currency": "USD"
+        },
+        "created_at": "2026-09-05T03:44:52.760000-05:00"
+      }
+    ]
+  }
+}

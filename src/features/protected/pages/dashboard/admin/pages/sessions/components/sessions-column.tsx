@@ -7,102 +7,134 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import type {
+  AdminSession,
+  SessionStatus,
+} from "@/features/protected/pages/dashboard/admin/types/admin.types";
+import {
+  formatSchoolDate,
+  formatSchoolTime,
+} from "@/features/protected/pages/dashboard/admin/utils/format-school-datetime";
 import { ColumnDef } from "@tanstack/react-table";
 import { ChevronDown, MessageSquare } from "lucide-react";
 import { useState } from "react";
-import {
-  Session,
-  SessionStatus,
-  useUpdateSession,
-} from "../queries/use-sessions";
+import { useUpdateSession } from "../queries/use-sessions";
 
 const STATUS_VARIANTS: Record<
   SessionStatus,
   "default" | "secondary" | "destructive" | "outline"
 > = {
-  upcoming: "default",
+  scheduled: "default",
   completed: "outline",
-  "no-show": "destructive",
+  no_show: "destructive",
+  cancelled: "destructive",
   rescheduled: "secondary",
 };
 
-function SessionActions({ session }: { session: Session }) {
+const STATUS_LABELS: Record<SessionStatus, string> = {
+  scheduled: "scheduled",
+  completed: "completed",
+  no_show: "no show",
+  cancelled: "cancelled",
+  rescheduled: "rescheduled",
+};
+
+/** `scheduled` class-e admin je outcome boshate pare */
+const OUTCOME_ACTIONS: { status: SessionStatus; label: string }[] = [
+  { status: "completed", label: "✅ Mark completed" },
+  { status: "no_show", label: "❌ Mark no-show" },
+  { status: "cancelled", label: "🚫 Mark cancelled" },
+  { status: "rescheduled", label: "🔄 Mark rescheduled" },
+];
+
+function SessionActions({ session }: { session: AdminSession }) {
   const { mutate, isPending } = useUpdateSession();
 
-  const handleStatus = (status: SessionStatus) => {
-    mutate({ id: session.id, status });
-  };
-
-  if (session.status !== "upcoming") return null;
+  // Outcome shudhu ekhono scheduled thaka class-e boshano jay
+  if (session.status !== "scheduled") return null;
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="sm" disabled={isPending} className="gap-1">
+        <Button
+          variant="outline"
+          size="sm"
+          disabled={isPending}
+          className="gap-1"
+        >
           Action
           <ChevronDown className="h-3.5 w-3.5" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => handleStatus("completed")}>
-          ✅ Mark Completed
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => handleStatus("no-show")}>
-          ❌ Mark No-Show
-        </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => handleStatus("rescheduled")}>
-          🔄 Mark Rescheduled
-        </DropdownMenuItem>
+        {OUTCOME_ACTIONS.map((action) => (
+          <DropdownMenuItem
+            key={action.status}
+            onClick={() => mutate({ id: session.id, status: action.status })}
+          >
+            {action.label}
+          </DropdownMenuItem>
+        ))}
       </DropdownMenuContent>
     </DropdownMenu>
   );
 }
 
-function AdminNotesButton({ session }: { session: Session }) {
-  const { mutate, isPending } = useUpdateSession();
-  const [notes, setNotes] = useState(session.adminNotes ?? "");
+function AdminNotesButton({ session }: { session: AdminSession }) {
   const [open, setOpen] = useState(false);
+  const [notes, setNotes] = useState(session.admin_notes ?? "");
 
-  const handleSave = () => {
-    mutate(
-      { id: session.id, adminNotes: notes },
-      { onSuccess: () => setOpen(false) } as any,
-    );
-  };
+  const mutation = useUpdateSession();
 
   return (
     <AppDialog
       open={open}
-      onOpenChange={setOpen}
+      onOpenChange={(next) => {
+        setOpen(next);
+        // Bondho kore abar khulle server-er value-i dekhabe, half-edit na
+        if (!next) setNotes(session.admin_notes ?? "");
+      }}
       trigger={
         <Button variant="ghost" size="sm" className="gap-1">
           <MessageSquare className="h-3.5 w-3.5" />
           Notes
+          {session.admin_notes && (
+            <span className="ml-0.5 h-1.5 w-1.5 rounded-full bg-primary" />
+          )}
         </Button>
       }
-      title="Admin Notes"
-      description={`Notes for ${session.student.name}'s session on ${session.date}`}
+      title="Admin notes"
+      description={`${session.student_name} · ${formatSchoolDate(session.start_datetime)}`}
       size="md"
       footer={
-        <div className="flex justify-end gap-2 w-full">
-          <Button variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
-          <Button onClick={handleSave} disabled={isPending}>
-            {isPending ? "Saving..." : "Save Notes"}
+        <div className="flex w-full justify-end gap-2">
+          <Button variant="outline" onClick={() => setOpen(false)}>
+            Cancel
+          </Button>
+          <Button
+            disabled={mutation.isPending}
+            onClick={() =>
+              mutation.mutate(
+                { id: session.id, admin_notes: notes },
+                { onSuccess: () => setOpen(false) },
+              )
+            }
+          >
+            {mutation.isPending ? "Saving..." : "Save notes"}
           </Button>
         </div>
       }
     >
-      <div className="py-2 space-y-2">
-        <Label>Admin Notes</Label>
+      <div className="space-y-2 py-2">
+        <Label>Internal note</Label>
         <Textarea
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
-          placeholder="Add internal notes about this session..."
+          placeholder="Never shown to the student."
           rows={5}
         />
       </div>
@@ -110,39 +142,49 @@ function AdminNotesButton({ session }: { session: Session }) {
   );
 }
 
-export const sessionsColumns: ColumnDef<Session>[] = [
+export const sessionsColumns: ColumnDef<AdminSession>[] = [
   {
-    id: "student",
+    accessorKey: "student_name",
     header: "Student",
     cell: ({ row }) => (
       <div>
-        <div className="font-medium text-sm">{row.original.student.name}</div>
-        <div className="text-xs text-muted-foreground">{row.original.student.email}</div>
+        <p className="text-sm font-medium">{row.original.student_name}</p>
+        <p className="text-xs text-muted-foreground">
+          {row.original.student_email}
+        </p>
       </div>
     ),
   },
   {
-    id: "teacher",
+    accessorKey: "teacher_name",
     header: "Teacher",
     cell: ({ row }) => (
-      <span className="text-sm">{row.original.teacher.name}</span>
+      <span className="text-sm">{row.original.teacher_name}</span>
     ),
   },
   {
-    accessorKey: "date",
-    header: "Date",
-    cell: ({ row }) => <span className="text-sm">{row.original.date}</span>,
-  },
-  {
-    accessorKey: "time",
-    header: "Time",
-    cell: ({ row }) => <span className="text-sm">{row.original.time}</span>,
-  },
-  {
-    accessorKey: "duration",
-    header: "Duration",
+    accessorKey: "package_title",
+    header: "Package",
     cell: ({ row }) => (
-      <span className="text-sm">{row.original.duration} min</span>
+      <span className="text-sm text-muted-foreground">
+        {row.original.package_title}
+      </span>
+    ),
+  },
+  {
+    accessorKey: "start_datetime",
+    header: "When",
+    // School time — table-er upore label-e bola ache
+    cell: ({ row }) => (
+      <div>
+        <p className="text-sm tabular-nums">
+          {formatSchoolDate(row.original.start_datetime)}
+        </p>
+        <p className="text-xs text-muted-foreground tabular-nums">
+          {formatSchoolTime(row.original.start_datetime)} ·{" "}
+          {row.original.duration_minutes} min
+        </p>
+      </div>
     ),
   },
   {
@@ -153,7 +195,7 @@ export const sessionsColumns: ColumnDef<Session>[] = [
         variant={STATUS_VARIANTS[row.original.status]}
         className="capitalize"
       >
-        {row.original.status.replace("-", " ")}
+        {STATUS_LABELS[row.original.status]}
       </Badge>
     ),
   },

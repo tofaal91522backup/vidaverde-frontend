@@ -1,55 +1,128 @@
 "use client";
 
 import DataTable from "@/components/shared/data-table";
+import { ReusableSelect } from "@/components/shared/form-related/reusable-select";
 import Pagination from "@/components/shared/pagination";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Search } from "lucide-react";
+import { useTeachers } from "@/features/protected/pages/dashboard/admin/pages/teachers/queries/use-teachers";
+import type { SessionStatus } from "@/features/protected/pages/dashboard/admin/types/admin.types";
+import { SCHOOL_TIMEZONE_LABEL } from "@/features/protected/pages/dashboard/admin/utils/format-school-datetime";
+import { toList } from "@/features/protected/pages/dashboard/admin/utils/to-list";
 import { useState } from "react";
-import { useSessions } from "../queries/use-sessions";
+import { useSessions, type SessionFilter } from "../queries/use-sessions";
 import { sessionsColumns } from "./sessions-column";
 
-type TabType = "upcoming" | "past";
+const STATUS_OPTIONS = [
+  { value: "scheduled", label: "Scheduled" },
+  { value: "completed", label: "Completed" },
+  { value: "no_show", label: "No show" },
+  { value: "cancelled", label: "Cancelled" },
+  { value: "rescheduled", label: "Rescheduled" },
+];
 
 export function SessionsTable() {
   const [page, setPage] = useState(1);
-  const [search, setSearch] = useState("");
-  const [tab, setTab] = useState<TabType>("upcoming");
+  const [filter, setFilter] = useState<SessionFilter>("upcoming");
+  const [teacher, setTeacher] = useState("");
+  const [status, setStatus] = useState<SessionStatus | "">("");
+  const [from, setFrom] = useState("");
+  const [to, setTo] = useState("");
 
-  const statusFilter =
-    tab === "upcoming" ? "upcoming" : "completed,no-show,rescheduled";
+  const { data: teacherData } = useTeachers();
+  const teacherOptions = toList(teacherData).map((t) => ({
+    value: t.id,
+    label: t.name,
+  }));
 
   const { data, isLoading, isError } = useSessions({
+    filter,
     page,
-    search,
-    status: statusFilter,
+    teacher,
+    status,
+    from,
+    to,
   });
 
-  const handleTabChange = (value: string) => {
-    setTab(value as TabType);
-    setPage(1);
-  };
+  /** Kono filter bodlale prothom page-e fire jaওয়া uchit */
+  const resetPage = () => setPage(1);
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between gap-4">
-        <Tabs value={tab} onValueChange={handleTabChange}>
+      <div className="flex flex-wrap items-end gap-3">
+        <Tabs
+          value={filter}
+          onValueChange={(value) => {
+            setFilter(value as SessionFilter);
+            resetPage();
+          }}
+        >
           <TabsList>
             <TabsTrigger value="upcoming">Upcoming</TabsTrigger>
             <TabsTrigger value="past">Past</TabsTrigger>
           </TabsList>
         </Tabs>
 
-        <div className="relative max-w-sm flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+        <ReusableSelect
+          className="w-48"
+          value={teacher}
+          options={teacherOptions}
+          placeholder="All teachers"
+          onChange={(e) => {
+            setTeacher(e.target.value);
+            resetPage();
+          }}
+        />
+
+        <ReusableSelect
+          className="w-40"
+          value={status}
+          options={STATUS_OPTIONS}
+          placeholder="All statuses"
+          onChange={(e) => {
+            setStatus(e.target.value as SessionStatus | "");
+            resetPage();
+          }}
+        />
+
+        <div className="flex flex-col gap-1">
+          <Label htmlFor="sessions-from" className="text-xs">
+            From
+          </Label>
           <Input
-            placeholder="Search by student or teacher..."
-            value={search}
-            onChange={(e) => { setSearch(e.target.value); setPage(1); }}
-            className="pl-9"
+            id="sessions-from"
+            type="date"
+            className="w-40"
+            value={from}
+            onChange={(e) => {
+              setFrom(e.target.value);
+              resetPage();
+            }}
+          />
+        </div>
+
+        <div className="flex flex-col gap-1">
+          <Label htmlFor="sessions-to" className="text-xs">
+            To
+          </Label>
+          <Input
+            id="sessions-to"
+            type="date"
+            className="w-40"
+            value={to}
+            onChange={(e) => {
+              setTo(e.target.value);
+              resetPage();
+            }}
           />
         </div>
       </div>
+
+      {/* Admin-er shob time school time e — na bolle bhul bojhabe */}
+      <p className="text-xs text-muted-foreground">
+        Times in {SCHOOL_TIMEZONE_LABEL}.
+      </p>
 
       <DataTable
         data={data?.results}

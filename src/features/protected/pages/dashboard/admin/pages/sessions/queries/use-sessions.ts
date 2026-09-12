@@ -1,88 +1,78 @@
+import { ADMIN_DASHBOARD_QUERY_KEY } from "@/features/protected/pages/dashboard/admin/pages/overview/queries/use-admin-dashboard";
+import type {
+  AdminSessionResponse,
+  AdminSessionsResponse,
+  SessionStatus,
+} from "@/features/protected/pages/dashboard/admin/types/admin.types";
 import { useFetchData } from "@/hooks/use-fetch-data";
 import { useMutationHandler } from "@/hooks/use-mutation-handler";
 import { makeEndpoint } from "@/lib/http/make-endpoint";
+import { request } from "@/lib/http/request";
 
 export const SESSIONS_QUERY_KEY = "admin-sessions";
 
-export type SessionStatus = "upcoming" | "completed" | "no-show" | "rescheduled";
+/** `upcoming` — shobar age-erta age · `past` — notun ta age */
+export type SessionFilter = "upcoming" | "past";
 
-export type Session = {
-  id: string;
-  student: { id: string; name: string; email: string };
-  teacher: { id: string; name: string };
-  date: string;
-  time: string;
-  duration: number;
-  status: SessionStatus;
-  adminNotes?: string;
-  package?: string;
-};
-
-type SessionsResponse = { results: Session[]; count: number };
-type SessionParams = {
+type SessionListParams = {
+  filter?: SessionFilter;
   page?: number;
-  search?: string;
-  status?: string;
+  /** Teacher UUID */
   teacher?: string;
-  dateFrom?: string;
-  dateTo?: string;
+  status?: SessionStatus | "";
+  /** YYYY-MM-DD, class-er date-er upore */
+  from?: string;
+  to?: string;
 };
 
-// ─── DEMO DATA ────────────────────────────────────────────────────────────────
-const MOCK_SESSIONS: Session[] = [
-  { id: "ss1", student: { id: "s1", name: "James Wilson", email: "james.w@example.com" }, teacher: { id: "t1", name: "María González" }, date: "2026-06-15", time: "10:00", duration: 60, status: "upcoming", package: "Starter Pack" },
-  { id: "ss2", student: { id: "s2", name: "Sophie Müller", email: "sophie.m@example.com" }, teacher: { id: "t2", name: "Carlos Rodríguez" }, date: "2026-06-16", time: "09:00", duration: 60, status: "upcoming", package: "Assessment" },
-  { id: "ss3", student: { id: "s3", name: "Liam Chen", email: "liam.c@example.com" }, teacher: { id: "t1", name: "María González" }, date: "2026-06-18", time: "14:00", duration: 60, status: "upcoming", package: "Regular Pack" },
-  { id: "ss4", student: { id: "s5", name: "Nicolás López", email: "nicolas.l@example.com" }, teacher: { id: "t1", name: "María González" }, date: "2026-06-20", time: "15:00", duration: 60, status: "upcoming", package: "Intensive" },
-  { id: "ss5", student: { id: "s7", name: "Anna Kowalski", email: "anna.k@example.com" }, teacher: { id: "t1", name: "María González" }, date: "2026-06-22", time: "09:00", duration: 60, status: "upcoming", package: "Regular Pack" },
-  { id: "ss6", student: { id: "s4", name: "Emma Davis", email: "emma.d@example.com" }, teacher: { id: "t2", name: "Carlos Rodríguez" }, date: "2026-06-05", time: "11:00", duration: 60, status: "completed", package: "Starter Pack", adminNotes: "Great progress with ser/estar." },
-  { id: "ss7", student: { id: "s6", name: "Yuki Tanaka", email: "yuki.t@example.com" }, teacher: { id: "t2", name: "Carlos Rodríguez" }, date: "2026-06-03", time: "10:00", duration: 60, status: "no-show", adminNotes: "Student did not join. Sent follow-up email." },
-  { id: "ss8", student: { id: "s8", name: "Tom Harrison", email: "tom.h@example.com" }, teacher: { id: "t2", name: "Carlos Rodríguez" }, date: "2026-06-01", time: "14:00", duration: 60, status: "rescheduled" },
-  { id: "ss9", student: { id: "s1", name: "James Wilson", email: "james.w@example.com" }, teacher: { id: "t1", name: "María González" }, date: "2026-05-28", time: "10:00", duration: 60, status: "completed", package: "Starter Pack" },
-  { id: "ss10", student: { id: "s3", name: "Liam Chen", email: "liam.c@example.com" }, teacher: { id: "t1", name: "María González" }, date: "2026-05-25", time: "14:00", duration: 60, status: "completed", package: "Regular Pack", adminNotes: "Focused on business vocabulary. Ready for next level." },
-];
-// ─────────────────────────────────────────────────────────────────────────────
+/**
+ * GET /administrator/sessions/ — puro school-er class, paginated.
+ *
+ * ⚠️ Ei endpoint-e **`search` param nai** — filter, teacher, status, from, to.
+ * Student-er theke alada: response-e `start_local` nai, shob **school time**.
+ *
+ * docs/bruno/administrator/sessions.bru
+ */
+export function useSessions(params: SessionListParams = {}) {
+  const query = {
+    filter: params.filter,
+    p: params.page,
+    teacher: params.teacher || undefined,
+    status: params.status || undefined,
+    from: params.from || undefined,
+    to: params.to || undefined,
+  };
 
-export function useSessions(params: SessionParams) {
-  // ✅ REAL API. Uncomment this and remove the demo block below:
-  // return useFetchData<SessionsResponse>({
-  //   url: makeEndpoint("/api/sessions/", params),
-  //   querykey: [SESSIONS_QUERY_KEY, params],
-  // });
-
-  let filtered = MOCK_SESSIONS;
-
-  if (params.status) {
-    const statuses = params.status.split(",") as SessionStatus[];
-    filtered = filtered.filter((s) => statuses.includes(s.status));
-  }
-  if (params.search) {
-    const q = params.search.toLowerCase();
-    filtered = filtered.filter(
-      (s) =>
-        s.student.name.toLowerCase().includes(q) ||
-        s.teacher.name.toLowerCase().includes(q),
-    );
-  }
-  if (params.teacher) filtered = filtered.filter((s) => s.teacher.id === params.teacher);
-
-  const page = params.page ?? 1;
-  const paginated = filtered.slice((page - 1) * 10, page * 10);
-
-  return useFetchData<SessionsResponse>({
-    url: makeEndpoint("/api/sessions/", params),
-    querykey: [SESSIONS_QUERY_KEY, params],
-    options: { enabled: false, initialData: { results: paginated, count: filtered.length } },
+  return useFetchData<AdminSessionsResponse>({
+    url: makeEndpoint("/administrator/sessions/", query),
+    querykey: [SESSIONS_QUERY_KEY, query],
   });
 }
 
+type UpdateSessionPayload = {
+  id: string;
+  status?: SessionStatus;
+  admin_notes?: string;
+};
+
+/**
+ * PATCH /administrator/sessions/:id/
+ *
+ * **Shudhu `status` ar `admin_notes` lekha jay.** Time ar teacher ichchhe kore
+ * lock kora — class shorate hole reschedule endpoint diye jete hobe, jate
+ * calendar event, class count ar reminder email shob mile thake.
+ *
+ * `completed` / `no_show` / `cancelled` korle queue-e thaka reminder cancel hoy.
+ *
+ * docs/bruno/administrator/session update.bru
+ */
 export function useUpdateSession() {
-  // ✅ REAL API. Swap mutationFn and restore invalidateKeys:
-  // mutationFn: ({ id, ...data }) => request.patch(`/api/sessions/${id}/`, data),
-  // invalidateKeys: [[SESSIONS_QUERY_KEY]],
-  return useMutationHandler<any, { id: string; status?: SessionStatus; adminNotes?: string }>({
-    mutationFn: () => Promise.resolve(),
-    successMessage: "Session updated!",
+  return useMutationHandler<AdminSessionResponse, UpdateSessionPayload>({
+    mutationFn: ({ id, ...data }) =>
+      request.patch(`/administrator/sessions/${id}/`, data),
+    invalidateKeys: [[SESSIONS_QUERY_KEY], [ADMIN_DASHBOARD_QUERY_KEY]],
+    successMessage: "Session updated.",
+    errorMessage: "Could not update the session.",
     debugLabel: "UpdateSession",
   });
 }

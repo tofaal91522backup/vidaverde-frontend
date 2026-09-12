@@ -1,0 +1,55 @@
+meta {
+  name: session update
+  type: http
+  seq: 12
+}
+
+patch {
+  url: {{base_url}}/administrator/sessions/:id/
+  body: json
+  auth: inherit
+}
+
+params:path {
+  id: fd36207a-5413-48bc-809e-f5d229d971bb
+}
+
+body:json {
+  {
+    // Optional. The outcome of the class. One of:
+    // "scheduled", "completed", "no_show", "cancelled", "rescheduled".
+    // Setting completed / no_show / cancelled cancels any reminder still queued.
+    "status": "completed",
+
+    // Optional. Internal note, never shown to the student.
+    "admin_notes": "Covered past tense. Student is ready for the 10-class package."
+  }
+}
+
+docs {
+  ## API explanation
+  Marks a class Completed / No-Show / Rescheduled and records admin notes -- the
+  "Manage Sessions" action from the DevPlan.
+
+  Only `status` and `admin_notes` are writable. Times and teacher deliberately
+  are not: moving a class has to go through the reschedule endpoint so the
+  calendar event, the class count and the reminder email all stay in step.
+
+  `GET /administrator/sessions/<id>/` returns one session.
+
+  ## API example response
+  {
+    "success": true,
+    "session": {
+      "id": "fd36207a-5413-48bc-809e-f5d229d971bb",
+      "teacher_name": "Fernando Cordero",
+      "student_name": "Marco Reyes",
+      "start_datetime": "2026-09-10T08:00:00-05:00",
+      "end_datetime": "2026-09-10T09:00:00-05:00",
+      "status": "completed",
+      "admin_notes": "Covered past tense. Student is ready for the 10-class package.",
+      "meet_link": "https://meet.google.com/abc-defg-hij",
+      "can_reschedule": false
+    }
+  }
+}

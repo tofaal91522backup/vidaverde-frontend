@@ -1,0 +1,64 @@
+meta {
+  name: me
+  type: http
+  seq: 2
+}
+
+patch {
+  url: {{base_url}}/student/me/
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    // Optional. Display name.
+    "name": "Marco Reyes",
+
+    // Optional. URL returned by POST /administrator/upload/ -- this API stores
+    // URLs, it does not host files.
+    "profile_img_url": "https://transfer2.ongshak.com/vida_verde/marco.jpg",
+
+    // Optional.
+    "country": "Germany",
+
+    // Optional.
+    "phone_number": "+49 170 1234567",
+
+    // Optional IANA timezone, e.g. "Europe/Berlin", "America/New_York".
+    // Everything in the portal is rendered in this zone. An unknown zone
+    // returns 400.
+    "timezone": "Europe/Berlin",
+
+    // Optional. One of: "none", "beginner", "intermediate",
+    // "upper_intermediate", "advanced".
+    "current_spanish_level": "beginner"
+  }
+}
+
+docs {
+  ## API explanation
+  `GET` returns the profile, `PATCH` updates it. Every field is optional on a
+  PATCH -- send only what changed.
+
+  `id`, `email` and `active` are read-only: email changes go through the account
+  system, and deactivation is an admin action.
+
+  ## API example response
+  {
+    "success": true,
+    "profile": {
+      "id": "2173edc2-1430-4f3e-afd7-5ad8d2e073b3",
+      "email": "marco.reyes@example.com",
+      "name": "Marco Reyes",
+      "profile_img_url": "",
+      "country": "Germany",
+      "phone_number": "+49 170 1234567",
+      "timezone": "Europe/Berlin",
+      "current_spanish_level": "beginner",
+      "active": true,
+      "created_at": "2026-09-05T03:44:52.700000-05:00",
+      "updated_at": "2026-09-05T04:01:18.220000-05:00"
+    }
+  }
+}

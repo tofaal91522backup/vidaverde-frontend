@@ -1,0 +1,40 @@
+meta {
+  name: dashboard
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{base_url}}/student/dashboard/
+  body: none
+  auth: inherit
+}
+
+docs {
+  ## API explanation
+  Portal landing page: the next upcoming class, every paid package with its
+  progress, and the five most recent invoices -- the three cards the DevPlan asks
+  for in one call.
+
+  `next_session` is `null` when nothing is scheduled.
+
+  ## API example response
+  {
+    "success": true,
+    "timezone": "Europe/Berlin",
+    "next_session": {
+      "id": "fd36207a-5413-48bc-809e-f5d229d971bb",
+      "package_title": "Spanish Assessment & First Lesson",
+      "teacher_name": "Fernando Cordero",
+      "start_datetime": "2026-09-10T08:00:00-05:00",
+      "start_local": "2026-09-10T15:00:00+02:00",
+      "end_datetime": "2026-09-10T09:00:00-05:00",
+      "duration_minutes": 60,
+      "status": "scheduled",
+      "meet_link": "https://meet.google.com/abc-defg-hij",
+      "can_reschedule": true
+    },
+    "packages": [],
+    "recent_invoices": []
+  }
+}

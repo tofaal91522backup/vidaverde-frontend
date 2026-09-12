@@ -1,0 +1,58 @@
+meta {
+  name: book a class
+  type: http
+  seq: 7
+}
+
+post {
+  url: {{base_url}}/student/sessions/
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    // UUID of a package this student already owns. Required.
+    // Must have "can_book": true -- see "my packages".
+    "student_package": "534a4812-5ff0-4ba1-a136-ab610f9c9e21",
+
+    // UUID of the teacher for this class. Required. Does not have to be the
+    // teacher of the first class -- a student can switch between classes.
+    "teacher": "1e54776b-9910-4742-9f8c-8efd23912d4a",
+
+    // Required, ISO-8601 with offset. Copy a "start_utc" from
+    // GET /public/teachers/<id>/slots/ -- it is re-validated here.
+    "start_datetime": "2026-09-17T13:00:00+00:00"
+  }
+}
+
+docs {
+  ## API explanation
+  Books one of the classes remaining on a package. This is how classes 2..N of a
+  10- or 20-class package get scheduled: one at a time, as the student goes,
+  never all at once.
+
+  Consumes one class, creates the calendar event and Meet link, emails the
+  confirmation and the teacher's notice, and queues the 24h reminder and 1h
+  follow-up -- the same path the public checkout takes for the first class.
+
+  Returns 400 if the package is exhausted, expired or unpaid, or if the slot is
+  unavailable.
+
+  ## API example response
+  {
+    "success": true,
+    "session": {
+      "id": "8b1d4e60-3f27-4a95-b0c8-1e5f7a2d9c34",
+      "package_title": "10-Class Package",
+      "teacher_name": "Fernando Cordero",
+      "start_datetime": "2026-09-17T08:00:00-05:00",
+      "end_datetime": "2026-09-17T09:00:00-05:00",
+      "duration_minutes": 60,
+      "status": "scheduled",
+      "meet_link": "https://meet.google.com/abc-defg-hij",
+      "can_reschedule": true,
+      "rescheduled_from": null
+    }
+  }
+}

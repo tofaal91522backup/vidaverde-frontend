@@ -1,0 +1,92 @@
+meta {
+  name: blogs
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{base_url}}/administrator/blogs/
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    // Required. English title. Also the source of the auto-generated slug.
+    "title_en": "Five Spanish Phrases That Instantly Make You Sound Local in Quito",
+
+    // Optional Spanish title.
+    "title_es": "",
+
+    // Optional. Auto-generated from title_en when omitted, with -2, -3 appended
+    // if that slug is taken. Must be unique.
+    "slug": "five-spanish-phrases-quito",
+
+    // Optional. The 1-2 sentence teaser on the index card.
+    "excerpt_en": "Textbook Spanish will get you understood. These five phrases will get you smiled at.",
+    "excerpt_es": "",
+
+    // Optional. Post body as rich HTML from the editor.
+    "body_en": "<p>Textbook Spanish will get you understood...</p>",
+    "body_es": "",
+
+    // Optional list of image URLs from POST /administrator/upload/.
+    // The first one is used as the index thumbnail. Defaults to [].
+    "image_urls": ["https://transfer2.ongshak.com/vida_verde/quito-street.jpg"],
+
+    // Optional, defaults to "school_news". One of:
+    // "spanish_learning_tips", "ecuador_travel", "school_news",
+    // "student_stories", "culture_and_language".
+    "category": "spanish_learning_tips",
+
+    // Optional, defaults to "draft". One of: "draft", "published".
+    // Only "published" posts appear on /public/blogs/. Switching to "published"
+    // stamps published_at once and never rewrites it on later edits.
+    "status": "published",
+
+    // Optional SEO fields for the post's <head>.
+    "meta_title": "5 Spanish Phrases to Sound Local in Quito | Vida Verde",
+    "meta_description": "Five phrases that will get you smiled at in Quito, from a Spanish school that has been there since 1999."
+  }
+}
+
+docs {
+  ## API explanation
+  `GET` lists posts (paginated; filter with `?status=` and `?category=`),
+  `POST` creates one. `GET`/`PUT`/`PATCH`/`DELETE /administrator/blogs/<id>/`
+  handle a single post -- and here `DELETE` really does delete.
+
+  Three fields are filled in for you and are read-only: `slug` (from `title_en`,
+  de-duplicated), `reading_time` (word count / 200, minimum 1) and the author
+  (`created_by` plus a denormalised `created_by_email`, taken from the logged-in
+  admin).
+
+  `published_at` is stamped the first time `status` becomes `published` and is
+  left alone afterwards, so editing a live post does not bump it to the top of
+  the index.
+
+  ## API example response
+  {
+    "id": "5c1e8a2f-9d43-4b76-8e0a-1f2c3d4e5a6b",
+    "title_en": "Five Spanish Phrases That Instantly Make You Sound Local in Quito",
+    "title_es": "",
+    "slug": "five-spanish-phrases-quito",
+    "excerpt_en": "Textbook Spanish will get you understood. These five phrases will get you smiled at.",
+    "body_en": "<p>Textbook Spanish will get you understood...</p>",
+    "image_urls": ["https://transfer2.ongshak.com/vida_verde/quito-street.jpg"],
+    "thumbnail": "https://transfer2.ongshak.com/vida_verde/quito-street.jpg",
+    "category": "spanish_learning_tips",
+    "author": "master@vidaverde.test",
+    "status": "published",
+    "published_at": "2026-09-05T09:30:00.000000-05:00",
+    "meta_title": "5 Spanish Phrases to Sound Local in Quito | Vida Verde",
+    "meta_description": "Five phrases that will get you smiled at in Quito.",
+    "reading_time": 4,
+    "title": "Five Spanish Phrases That Instantly Make You Sound Local in Quito",
+    "excerpt": "Textbook Spanish will get you understood.",
+    "body": "<p>Textbook Spanish will get you understood...</p>",
+    "lang": "en",
+    "created_at": "2026-09-05T09:30:00.000000-05:00",
+    "updated_at": "2026-09-05T09:30:00.000000-05:00"
+  }
+}

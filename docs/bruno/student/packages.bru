@@ -1,0 +1,67 @@
+meta {
+  name: my packages
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{base_url}}/student/packages/
+  body: none
+  auth: inherit
+}
+
+docs {
+  ## API explanation
+  "My Packages": what was bought, how much of it is left, and when it expires.
+
+  `classes_remaining`, `progress_percent`, `is_expired` and `can_book` are all
+  computed. `can_book` is the one the UI should gate the "Book a class" button
+  on -- it means paid, not expired, and at least one class left.
+
+  `package_data` is the frozen copy of the package as it was at purchase, so
+  later edits to the catalogue never rewrite someone's history.
+
+  ## API example response
+  {
+    "success": true,
+    "results": [
+      {
+        "id": "534a4812-5ff0-4ba1-a136-ab610f9c9e21",
+        "package": "347cde65-90ad-4178-8816-332e19e04748",
+        "package_title": "10-Class Package",
+        "package_data": {
+          "id": "347cde65-90ad-4178-8816-332e19e04748",
+          "price": "135.00",
+          "title_en": "10-Class Package",
+          "total_classes": 10,
+          "validity_days": 90,
+          "is_first_lesson": false
+        },
+        "amount_paid": "135.00",
+        "payment_status": "paid",
+        "payment_provider": "dummy",
+        "payment_reference": "pi_dummy_d9fe57a9518c42688d69cf74",
+        "paid_at": "2026-09-05T03:44:52.780000-05:00",
+        "student_email": "marco.reyes@example.com",
+        "student_name": "Marco Reyes",
+        "current_spanish_level": "beginner",
+        "classes_total": 10,
+        "classes_used": 1,
+        "classes_remaining": 9,
+        "expires_at": "2026-12-04T03:44:52.780000-05:00",
+        "is_expired": false,
+        "can_book": true,
+        "progress_percent": 10,
+        "invoice": {
+          "id": "7c2a9f31-5b8e-4d06-a1f7-2e9c4b6d8a30",
+          "number": "VV-2026-00002",
+          "issued_at": "2026-09-05T03:44:52.800000-05:00",
+          "amount": "135.00",
+          "currency": "USD",
+          "package_title": "10-Class Package"
+        },
+        "created_at": "2026-09-05T03:44:52.760000-05:00"
+      }
+    ]
+  }
+}

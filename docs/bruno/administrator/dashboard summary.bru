@@ -1,0 +1,45 @@
+meta {
+  name: dashboard summary
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{base_url}}/administrator/dashboard/summary/
+  body: none
+  auth: inherit
+}
+
+docs {
+  ## API explanation
+  Every number on the dashboard's summary cards in one call, plus the next ten
+  upcoming sessions.
+
+  `revenue_30d` and `bookings_30d` count paid purchases in the last 30 days.
+  `emails_failed` is worth surfacing in the UI -- it means the cron job hit
+  something it could not send after three attempts.
+
+  ## API example response
+  {
+    "success": true,
+    "cards": {
+      "students": 2,
+      "teachers": 4,
+      "sessions_upcoming": 2,
+      "sessions_today": 0,
+      "bookings_30d": 2,
+      "revenue_30d": "24.00",
+      "leads_total": 2,
+      "leads_30d": 2,
+      "contact_unhandled": 1,
+      "blogs_draft": 0,
+      "emails_pending": 5,
+      "emails_failed": 0
+    },
+    "sessions_by_status": [
+      { "status": "scheduled", "count": 2 },
+      { "status": "rescheduled", "count": 1 }
+    ],
+    "upcoming_sessions": []
+  }
+}

@@ -1,139 +1,115 @@
+import { ADMIN_DASHBOARD_QUERY_KEY } from "@/features/protected/pages/dashboard/admin/pages/overview/queries/use-admin-dashboard";
+import type {
+  AdminTeacher,
+  AdminTeacherResponse,
+  AdminTeachersResponse,
+} from "@/features/protected/pages/dashboard/admin/types/admin.types";
 import { useFetchData } from "@/hooks/use-fetch-data";
 import { useMutationHandler } from "@/hooks/use-mutation-handler";
 import { makeEndpoint } from "@/lib/http/make-endpoint";
+import { request } from "@/lib/http/request";
 
 export const TEACHERS_QUERY_KEY = "admin-teachers";
 export const TEACHER_DETAILS_QUERY_KEY = "admin-teacher-details";
 
-export type Teacher = {
-  id: string;
-  name: string;
-  bio: string;
-  photo: string;
-  specialisations: string[];
-  isActive: boolean;
-  schedule: Record<string, string[]>;
+type TeacherListParams = {
+  /** name / institute er upore match kore */
+  search?: string;
+  active?: boolean;
 };
 
-type TeachersResponse = { results: Teacher[]; count: number };
-type TeacherParams = { page?: number; search?: string };
+/**
+ * GET /administrator/teachers/
+ *
+ * ⚠️ List response-er shape bru te dekhano nai — bare array naki
+ * `{ success, results }` ta nishchit na. Tai `toList()` diye normalize kora hoy.
+ * Pagination-er kono ullekh-o nai, tai `<Pagination>` boshano hoy ni.
+ *
+ * docs/bruno/administrator/teachers.bru
+ */
+export function useTeachers(params: TeacherListParams = {}) {
+  const query = { search: params.search, active: params.active };
 
-// ─── DEMO DATA ────────────────────────────────────────────────────────────────
-// Remove this block and uncomment the real API lines below when backend is ready.
-
-const MOCK_TEACHERS: Teacher[] = [
-  {
-    id: "t1",
-    name: "María González",
-    bio: "Experienced Spanish teacher with 8 years of online teaching. Specialises in business and professional Spanish for corporate clients.",
-    photo: "https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&w=200",
-    specialisations: ["Business Spanish", "Conversation Practice", "DELE Preparation"],
-    isActive: true,
-    schedule: {
-      monday: ["09:00", "10:00", "11:00", "14:00", "15:00"],
-      tuesday: ["09:00", "10:00", "14:00", "15:00"],
-      wednesday: ["09:00", "10:00", "11:00"],
-      thursday: ["14:00", "15:00", "16:00"],
-      friday: ["09:00", "10:00"],
-    },
-  },
-  {
-    id: "t2",
-    name: "Carlos Rodríguez",
-    bio: "Native Ecuadorian teacher with a degree in Hispanic Linguistics. Loves helping complete beginners build real confidence from day one.",
-    photo: "https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=200",
-    specialisations: ["Beginner Courses", "Grammar Focus", "Travel Spanish"],
-    isActive: true,
-    schedule: {
-      monday: ["10:00", "11:00"],
-      tuesday: ["09:00", "10:00", "11:00", "15:00"],
-      thursday: ["09:00", "10:00", "11:00"],
-      friday: ["14:00", "15:00", "16:00", "17:00"],
-      saturday: ["09:00", "10:00"],
-    },
-  },
-  {
-    id: "t3",
-    name: "Ana Martínez",
-    bio: "Cultural educator and language coach passionate about bringing Ecuador's rich culture into every lesson. Specialises in younger learners.",
-    photo: "https://images.pexels.com/photos/1181686/pexels-photo-1181686.jpeg?auto=compress&cs=tinysrgb&w=200",
-    specialisations: ["Cultural Immersion", "Children & Teens", "Conversation Practice"],
-    isActive: false,
-    schedule: {
-      wednesday: ["14:00", "15:00", "16:00"],
-      friday: ["10:00", "11:00"],
-    },
-  },
-];
-// ─────────────────────────────────────────────────────────────────────────────
-
-export function useTeachers(params: TeacherParams) {
-  // ✅ REAL API. Uncomment this and remove the demo block below:
-  // return useFetchData<TeachersResponse>({
-  //   url: makeEndpoint("/api/teachers/", params),
-  //   querykey: [TEACHERS_QUERY_KEY, params],
-  // });
-
-  const filtered = params.search
-    ? MOCK_TEACHERS.filter((t) =>
-        t.name.toLowerCase().includes(params.search!.toLowerCase()),
-      )
-    : MOCK_TEACHERS;
-  const page = params.page ?? 1;
-  const paginated = filtered.slice((page - 1) * 10, page * 10);
-
-  return useFetchData<TeachersResponse>({
-    url: makeEndpoint("/api/teachers/", params),
-    querykey: [TEACHERS_QUERY_KEY, params],
-    options: { enabled: false, initialData: { results: paginated, count: filtered.length } },
+  return useFetchData<AdminTeachersResponse>({
+    url: makeEndpoint("/administrator/teachers/", query),
+    querykey: [TEACHERS_QUERY_KEY, query],
   });
 }
 
+/** GET /administrator/teachers/:id/ — response-e `time_off` embed thake */
 export function useTeacherDetails(id: string) {
-  // ✅ REAL API. Uncomment this and remove the demo block below:
-  // return useFetchData<Teacher>({
-  //   url: `/api/teachers/${id}/`,
-  //   querykey: [TEACHER_DETAILS_QUERY_KEY, id],
-  //   options: { enabled: !!id },
-  // });
-
-  const found = MOCK_TEACHERS.find((t) => t.id === id);
-  return useFetchData<Teacher>({
-    url: `/api/teachers/${id}/`,
+  return useFetchData<AdminTeacherResponse>({
+    url: `/administrator/teachers/${id}/`,
     querykey: [TEACHER_DETAILS_QUERY_KEY, id],
-    options: { enabled: false, initialData: found },
+    options: { enabled: Boolean(id) },
   });
 }
 
+type TeacherPayload = Partial<
+  Pick<
+    AdminTeacher,
+    | "name"
+    | "profile_img_url"
+    | "tags"
+    | "institute"
+    | "description_en"
+    | "description_es"
+    | "availability"
+    | "accepting_students"
+    | "google_calendar_id"
+    | "meet_link"
+    | "active"
+  >
+>;
+
+/** POST /administrator/teachers/ */
 export function useCreateTeacher() {
-  // ✅ REAL API. Swap mutationFn and restore invalidateKeys:
-  // mutationFn: (data) => request.post("/api/teachers/", data),
-  // invalidateKeys: [[TEACHERS_QUERY_KEY]],
-  return useMutationHandler<any, any>({
-    mutationFn: () => Promise.resolve(),
-    successMessage: "Teacher created successfully!",
+  return useMutationHandler<AdminTeacherResponse, TeacherPayload>({
+    mutationFn: (data) => request.post("/administrator/teachers/", data),
+    invalidateKeys: [[TEACHERS_QUERY_KEY], [ADMIN_DASHBOARD_QUERY_KEY]],
+    successMessage: "Teacher created.",
+    errorMessage: "Could not create the teacher.",
     debugLabel: "CreateTeacher",
   });
 }
 
-export function useUpdateTeacher(_id: string) {
-  // ✅ REAL API. Swap mutationFn and restore invalidateKeys:
-  // mutationFn: (data) => request.put(`/api/teachers/${_id}/`, data),
-  // invalidateKeys: [[TEACHERS_QUERY_KEY], [TEACHER_DETAILS_QUERY_KEY, _id]],
-  return useMutationHandler<any, any>({
-    mutationFn: () => Promise.resolve(),
-    successMessage: "Teacher updated successfully!",
+/** PATCH /administrator/teachers/:id/ */
+export function useUpdateTeacher(id: string) {
+  return useMutationHandler<AdminTeacherResponse, TeacherPayload>({
+    mutationFn: (data) => request.patch(`/administrator/teachers/${id}/`, data),
+    invalidateKeys: [
+      [TEACHERS_QUERY_KEY],
+      [TEACHER_DETAILS_QUERY_KEY, id],
+      [ADMIN_DASHBOARD_QUERY_KEY],
+    ],
+    successMessage: "Teacher updated.",
+    errorMessage: "Could not update the teacher.",
     debugLabel: "UpdateTeacher",
   });
 }
 
+/**
+ * Active toggle — PATCH diye, DELETE diye na.
+ *
+ * Backend-e DELETE `active` ar `accepting_students` duito-i false kore dey ar
+ * row rakhe (session teacher ke PROTECT diye reference kore). Kintu abar
+ * activate korar jonno PATCH-i lage, tai duita khetrei PATCH use kora hoy —
+ * behaviour ek rokom thake.
+ */
 export function useToggleTeacherStatus() {
-  // ✅ REAL API. Swap mutationFn and restore invalidateKeys:
-  // mutationFn: ({ id, isActive }) => request.patch(`/api/teachers/${id}/`, { isActive }),
-  // invalidateKeys: [[TEACHERS_QUERY_KEY]],
-  return useMutationHandler<any, { id: string; isActive: boolean }>({
-    mutationFn: () => Promise.resolve(),
-    successMessage: "Teacher status updated!",
+  return useMutationHandler<
+    AdminTeacherResponse,
+    { id: string; active: boolean }
+  >({
+    mutationFn: ({ id, active }) =>
+      request.patch(`/administrator/teachers/${id}/`, {
+        active,
+        // Backend delete korar shomoy ei duito-i namay — deactivate-e mil rakha hocche
+        ...(active ? {} : { accepting_students: false }),
+      }),
+    invalidateKeys: [[TEACHERS_QUERY_KEY], [ADMIN_DASHBOARD_QUERY_KEY]],
+    successMessage: "Teacher status updated.",
+    errorMessage: "Could not update the teacher status.",
     debugLabel: "ToggleTeacherStatus",
   });
 }

@@ -1,0 +1,30 @@
+meta {
+  name: unsubscribe
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{base_url}}/public/leads/unsubscribe/:token/
+  body: none
+  auth: none
+}
+
+params:path {
+  token: 8f2c1d90-6b4a-4f77-9a1e-3d5c7b2e4a10
+}
+
+docs {
+  ## API explanation
+  One-click unsubscribe -- a legal requirement on the nurture emails. The token
+  is `Lead.unsubscribe_token`, embedded in the footer of every marketing email.
+
+  Marks the lead unsubscribed and cancels every still-pending email queued for
+  them. Idempotent.
+
+  ## API example response
+  {
+    "success": true,
+    "message": "You have been unsubscribed."
+  }
+}

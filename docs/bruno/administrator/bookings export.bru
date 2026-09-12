@@ -1,0 +1,34 @@
+meta {
+  name: bookings export
+  type: http
+  seq: 10
+}
+
+get {
+  url: {{base_url}}/administrator/bookings/export/?payment_status=paid&from=2026-09-01&to=2026-09-30
+  body: none
+  auth: inherit
+}
+
+params:query {
+  payment_status: paid
+  from: 2026-09-01
+  to: 2026-09-30
+}
+
+docs {
+  ## API explanation
+  CSV download of the bookings list -- "Export CSV" in the DevPlan. Responds with
+  `text/csv` and `Content-Disposition: attachment; filename="vidaverde-bookings-20260905.csv"`.
+
+  Accepts `payment_status`, `from` and `to`, same meanings as the bookings list.
+  Streams with `.iterator()`, so a large export does not load everything into
+  memory.
+
+  `GET /administrator/leads/export/` is the equivalent for leads.
+
+  ## API example response
+  Purchased,Student,Email,Package,Amount,Payment status,Reference,Classes used,Classes total,Expires
+  2026-09-05 08:44,Marco Reyes,marco.reyes@example.com,Spanish Assessment & First Lesson,12.00,paid,pi_dummy_3603f68905934869ba494e38,1,1,2026-12-04
+  2026-09-05 08:44,Ana Lopez,ana.lopez@example.com,Spanish Assessment & First Lesson,12.00,paid,pi_dummy_seed0000000000000,1,1,2026-12-04
+}

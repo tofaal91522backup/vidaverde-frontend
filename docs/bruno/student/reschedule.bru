@@ -1,0 +1,56 @@
+meta {
+  name: reschedule a class
+  type: http
+  seq: 8
+}
+
+post {
+  url: {{base_url}}/student/sessions/:id/reschedule/
+  body: json
+  auth: inherit
+}
+
+params:path {
+  id: fd36207a-5413-48bc-809e-f5d229d971bb
+}
+
+body:json {
+  {
+    // New start time. Required, ISO-8601 with offset.
+    // Validated against the target teacher's availability like any booking.
+    "start_datetime": "2026-09-17T13:00:00+00:00",
+
+    // Optional. UUID of a different teacher, to move the class to them as well.
+    // Omit to keep the current teacher.
+    "teacher": "b7a40c24-3aad-4bcf-9763-68a0f0c3496f"
+  }
+}
+
+docs {
+  ## API explanation
+  Moves a scheduled class. Free up to `RESCHEDULE_CUTOFF_HOURS` (24) before it
+  starts; inside that window it returns 400.
+
+  The original row is marked `rescheduled` and a new one is created pointing back
+  at it via `rescheduled_from`, so the history stays readable. It does **not**
+  consume a second class. The stale reminder is cancelled and a new one queued.
+
+  Keeping the same teacher moves the existing Google Calendar event; switching
+  teachers creates a fresh one.
+
+  ## API example response
+  {
+    "success": true,
+    "message": "Your class has been moved.",
+    "session": {
+      "id": "8b1d4e60-3f27-4a95-b0c8-1e5f7a2d9c34",
+      "teacher_name": "Fernando Cordero",
+      "start_datetime": "2026-09-17T08:00:00-05:00",
+      "end_datetime": "2026-09-17T09:00:00-05:00",
+      "status": "scheduled",
+      "meet_link": "https://meet.google.com/abc-defg-hij",
+      "can_reschedule": true,
+      "rescheduled_from": "fd36207a-5413-48bc-809e-f5d229d971bb"
+    }
+  }
+}

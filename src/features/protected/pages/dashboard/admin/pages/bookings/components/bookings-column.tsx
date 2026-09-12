@@ -1,82 +1,114 @@
 "use client";
 
 import { Badge } from "@/components/ui/badge";
+import type {
+  AdminBooking,
+  PaymentStatus,
+} from "@/features/protected/pages/dashboard/admin/types/admin.types";
+import { formatSchoolDate } from "@/features/protected/pages/dashboard/admin/utils/format-school-datetime";
+import { cn } from "@/lib/utils";
 import { ColumnDef } from "@tanstack/react-table";
-import { Booking } from "../queries/use-bookings";
 
-const STATUS_VARIANTS: Record<
-  Booking["status"],
+const PAYMENT_VARIANTS: Record<
+  PaymentStatus,
   "default" | "secondary" | "destructive" | "outline"
 > = {
+  paid: "default",
   pending: "secondary",
-  confirmed: "default",
-  completed: "outline",
-  cancelled: "destructive",
+  failed: "destructive",
+  refunded: "outline",
 };
 
-export const bookingsColumns: ColumnDef<Booking>[] = [
+export const bookingsColumns: ColumnDef<AdminBooking>[] = [
   {
-    accessorKey: "id",
-    header: "ID",
-    cell: ({ row }) => (
-      <span className="text-xs text-muted-foreground font-mono">
-        #{row.original.id.slice(0, 8)}
-      </span>
-    ),
-  },
-  {
-    id: "student",
+    accessorKey: "student_name",
     header: "Student",
     cell: ({ row }) => (
       <div>
-        <div className="font-medium text-sm">{row.original.student.name}</div>
-        <div className="text-xs text-muted-foreground">{row.original.student.email}</div>
+        <p className="text-sm font-medium">{row.original.student_name}</p>
+        <p className="text-xs text-muted-foreground">
+          {row.original.student_email}
+        </p>
       </div>
     ),
   },
   {
-    id: "teacher",
-    header: "Teacher",
-    cell: ({ row }) => (
-      <span className="text-sm">{row.original.teacher.name}</span>
-    ),
-  },
-  {
-    accessorKey: "date",
-    header: "Date",
-    cell: ({ row }) => (
-      <span className="text-sm">{row.original.date}</span>
-    ),
-  },
-  {
-    accessorKey: "time",
-    header: "Time",
-    cell: ({ row }) => (
-      <span className="text-sm">{row.original.time}</span>
-    ),
-  },
-  {
-    accessorKey: "package",
+    accessorKey: "package_title",
     header: "Package",
     cell: ({ row }) => (
-      <span className="text-sm">{row.original.package}</span>
+      <span className="text-sm">{row.original.package_title}</span>
     ),
   },
   {
-    accessorKey: "status",
-    header: "Status",
+    accessorKey: "amount_paid",
+    header: "Amount",
+    // Decimal string — toFixed kora jabe na
     cell: ({ row }) => (
-      <Badge variant={STATUS_VARIANTS[row.original.status]} className="capitalize">
-        {row.original.status}
-      </Badge>
+      <div>
+        <p className="text-sm font-semibold tabular-nums">
+          {row.original.amount_paid} {row.original.invoice?.currency ?? ""}
+        </p>
+        {row.original.invoice?.number && (
+          <p className="font-mono text-xs text-muted-foreground">
+            {row.original.invoice.number}
+          </p>
+        )}
+      </div>
     ),
   },
   {
-    accessorKey: "createdAt",
-    header: "Created",
+    accessorKey: "payment_status",
+    header: "Payment",
     cell: ({ row }) => (
-      <span className="text-xs text-muted-foreground">
-        {new Date(row.original.createdAt).toLocaleDateString()}
+      <div className="flex flex-col items-start gap-1">
+        <Badge
+          variant={PAYMENT_VARIANTS[row.original.payment_status] ?? "secondary"}
+          className="capitalize"
+        >
+          {row.original.payment_status}
+        </Badge>
+        {row.original.payment_provider && (
+          <span className="text-[10px] text-muted-foreground">
+            {row.original.payment_provider}
+          </span>
+        )}
+      </div>
+    ),
+  },
+  {
+    id: "classes",
+    header: "Classes",
+    cell: ({ row }) => (
+      <div>
+        <p className="text-sm tabular-nums">
+          {row.original.classes_used} / {row.original.classes_total} used
+        </p>
+        <p className="text-xs text-muted-foreground tabular-nums">
+          {row.original.classes_remaining} left · {row.original.progress_percent}%
+        </p>
+      </div>
+    ),
+  },
+  {
+    accessorKey: "expires_at",
+    header: "Expires",
+    cell: ({ row }) => (
+      <span
+        className={cn(
+          "text-sm",
+          row.original.is_expired && "text-muted-foreground line-through",
+        )}
+      >
+        {formatSchoolDate(row.original.expires_at)}
+      </span>
+    ),
+  },
+  {
+    accessorKey: "paid_at",
+    header: "Purchased",
+    cell: ({ row }) => (
+      <span className="text-sm text-muted-foreground">
+        {formatSchoolDate(row.original.paid_at || row.original.created_at)}
       </span>
     ),
   },

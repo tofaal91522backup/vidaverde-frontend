@@ -1,0 +1,23 @@
+meta {
+  name: student
+  seq: 3
+}
+
+auth {
+  mode: bearer
+}
+
+auth:bearer {
+  token: {{accessTokenStudent}}
+}
+
+docs {
+  The customer portal. Every request needs a student's bearer token -- run
+  **authentication > login** as `ana.lopez@example.com` / `student123` first.
+
+  A non-student token is rejected with
+  `{"success": false, "message": "(detail) User is not a student."}`.
+
+  All datetimes come back as ISO-8601 UTC offsets; where a list renders for the
+  student, a `start_local` field is added in their own timezone.
+}

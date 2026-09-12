@@ -1,0 +1,29 @@
+meta {
+  name: invoice pdf
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{base_url}}/student/invoices/:id/pdf/
+  body: none
+  auth: inherit
+}
+
+params:path {
+  id: 7c2a9f31-5b8e-4d06-a1f7-2e9c4b6d8a30
+}
+
+docs {
+  ## API explanation
+  Downloads one invoice as a PDF. Responds with `Content-Type: application/pdf`
+  and `Content-Disposition: attachment; filename="VV-2026-00002.pdf"` -- a binary
+  body, not JSON, so Bruno shows it in the raw/preview pane.
+
+  Rendered on demand from `templates/invoices/invoice.html` by weasyprint;
+  nothing is stored on disk. Scoped to the authenticated student -- another
+  student's invoice id returns 404.
+
+  ## API example response
+  (binary PDF -- roughly 45 KB)
+}

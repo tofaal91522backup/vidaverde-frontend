@@ -1,0 +1,52 @@
+meta {
+  name: calendar
+  type: http
+  seq: 13
+}
+
+get {
+  url: {{base_url}}/administrator/sessions/calendar/?from=2026-09-01&to=2026-09-30
+  body: none
+  auth: inherit
+}
+
+params:query {
+  from: 2026-09-01
+  to: 2026-09-30
+  ~teacher: 1e54776b-9910-4742-9f8c-8efd23912d4a
+  ~status: scheduled
+}
+
+docs {
+  ## API explanation
+  The admin calendar: every class across every teacher, month or week view,
+  colour-coded by teacher.
+
+  Events come back in a shape a full-calendar component can consume directly
+  (`id`, `title`, `start`, `end`, `color`). `color` is assigned from a fixed
+  palette in teacher order, so a teacher keeps the same colour across a reload.
+  Click-through detail comes from `GET /administrator/sessions/<id>/`.
+
+  Filters: `from` / `to` (`YYYY-MM-DD`), `teacher` (UUID), `status`. Without a
+  date range it returns everything, so always send one for a month view.
+
+  ## API example response
+  {
+    "success": true,
+    "timezone": "America/Guayaquil",
+    "events": [
+      {
+        "id": "fd36207a-5413-48bc-809e-f5d229d971bb",
+        "title": "Fernando Cordero / Marco Reyes",
+        "start": "2026-09-10T08:00:00-05:00",
+        "end": "2026-09-10T09:00:00-05:00",
+        "status": "scheduled",
+        "teacher_id": "1e54776b-9910-4742-9f8c-8efd23912d4a",
+        "teacher_name": "Fernando Cordero",
+        "student_name": "Marco Reyes",
+        "meet_link": "https://meet.google.com/abc-defg-hij",
+        "color": "#1a5b3a"
+      }
+    ]
+  }
+}

@@ -1,20 +1,32 @@
 "use client";
 
 import DataTable from "@/components/shared/data-table";
-import Pagination from "@/components/shared/pagination";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { toList } from "@/features/protected/pages/dashboard/admin/utils/to-list";
 import { Plus, Search } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { usePackages } from "../queries/use-packages";
 import { packagesColumns } from "./packages-column";
 
 export function PackagesTable() {
-  const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
 
-  const { data, isLoading, isError } = usePackages({ page, search });
+  const { data, isLoading, isError } = usePackages();
+
+  // Ei endpoint search param ney na ar paginated-o na — tai filter client-side
+  const packages = useMemo(() => {
+    const all = toList(data);
+    const query = search.trim().toLowerCase();
+    if (!query) return all;
+
+    return all.filter(
+      (pkg) =>
+        pkg.title_en.toLowerCase().includes(query) ||
+        pkg.title_es?.toLowerCase().includes(query),
+    );
+  }, [data, search]);
 
   return (
     <div className="space-y-4">
@@ -24,7 +36,7 @@ export function PackagesTable() {
           <Input
             placeholder="Search packages..."
             value={search}
-            onChange={(e) => { setSearch(e.target.value); setPage(1); }}
+            onChange={(e) => setSearch(e.target.value)}
             className="pl-9"
           />
         </div>
@@ -37,13 +49,13 @@ export function PackagesTable() {
       </div>
 
       <DataTable
-        data={data?.results}
+        data={packages}
         columns={packagesColumns}
         loading={isLoading}
         error={isError ? "Failed to load packages." : ""}
       />
 
-      <Pagination page={page} total={data?.count ?? 0} onPageChange={setPage} />
+      {/* Backend doc: "Not paginated" — tai <Pagination> nai */}
     </div>
   );
 }

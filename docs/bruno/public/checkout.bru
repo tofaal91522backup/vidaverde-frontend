@@ -1,0 +1,108 @@
+meta {
+  name: checkout
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{base_url}}/public/bookings/checkout/
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    // UUID of the chosen teacher (booking step 1). Required.
+    // Must be an active teacher -- see the "teachers" request.
+    "teacher": "1e54776b-9910-4742-9f8c-8efd23912d4a",
+
+    // UUID of the package being bought (booking step 2). Required.
+    // A package with "is_first_lesson": true can only be bought once per email.
+    "package": "2da599cd-ed31-4aa1-b919-0828e1f2e2e9",
+
+    // Start of the first class (booking step 3). Required, ISO-8601 with offset.
+    // Copy a "start_utc" straight from the "teacher slots" response -- the slot
+    // is re-validated here, so a stale one is rejected rather than double-booked.
+    "start_datetime": "2026-09-10T13:00:00+00:00",
+
+    // --- booking step 4: student details ---
+
+    // Required.
+    "first_name": "Marco",
+
+    // Optional.
+    "last_name": "Reyes",
+
+    // Required. Identifies the account: an existing student is reused, a new one
+    // is created and the generated password is emailed to them.
+    "email": "marco.reyes@example.com",
+
+    // Optional.
+    "phone_number": "+49 170 1234567",
+
+    // Optional.
+    "country": "Germany",
+
+    // Optional, defaults to "none". One of:
+    // "none", "beginner", "intermediate", "upper_intermediate", "advanced".
+    "spanish_level": "beginner",
+
+    // Optional IANA timezone, defaults to "America/Guayaquil". Stored on the
+    // student profile and used to render every date back to them.
+    "timezone": "Europe/Berlin",
+
+    // --- booking step 5: payment ---
+
+    // Optional. Phase 1 runs the dummy gateway, so any value succeeds --
+    // except the literal "declined", which exercises the failure branch.
+    "payment_method": "pm_card_visa"
+  }
+}
+
+docs {
+  ## API explanation
+  The entire public booking flow -- steps 1 to 6 -- in one call. No login needed.
+
+  In a single transaction it validates the slot, finds or creates the User +
+  Student, creates the purchase, charges the gateway, books the first class and
+  issues the invoice. If anything fails, nothing is left behind.
+
+  After the commit it creates the Google Calendar event (falling back to the
+  teacher's static Meet room if Calendar is unavailable), emails the confirmation,
+  the credentials for a brand-new account and the teacher's new-booking notice,
+  then queues the 24h reminder and the 1h follow-up.
+
+  `classes_remaining` is what is left *after* this first class, so a 1-class
+  package reports 0. `account_created` tells the frontend whether to show
+  "check your email for your password".
+
+  Common 400s -- all as `{"success": false, "message": "..."}`:
+
+  - "That slot has just been taken. Please choose another."
+  - "The teacher is not available at that time."
+  - "That time is too soon. Please choose a later slot."
+  - "The discounted first lesson can only be purchased once. Please choose another package."
+  - "Card was declined (dummy gateway)."
+
+  ## API example response
+  {
+    "success": true,
+    "message": "Your lesson is booked. Check your email for the details.",
+    "booking": {
+      "student_package_id": "534a4812-5ff0-4ba1-a136-ab610f9c9e21",
+      "session_id": "fd36207a-5413-48bc-809e-f5d229d971bb",
+      "package_title": "Spanish Assessment & First Lesson",
+      "teacher": "Fernando Cordero",
+      "start_datetime": "2026-09-10T08:00:00-05:00",
+      "start_local": "2026-09-10T15:00:00+02:00",
+      "timezone": "Europe/Berlin",
+      "duration_minutes": 60,
+      "meet_link": "https://meet.google.com/abc-defg-hij",
+      "amount_paid": "12.00",
+      "currency": "USD",
+      "invoice_number": "VV-2026-00002",
+      "classes_remaining": 0,
+      "account_created": true
+    }
+  }
+}

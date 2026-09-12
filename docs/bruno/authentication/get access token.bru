@@ -1,0 +1,38 @@
+meta {
+  name: get access token
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{base_url}}/get-access-token/
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    // A refresh token from the login response. Required.
+    // Refresh tokens last 30 days (SIMPLE_JWT.REFRESH_TOKEN_LIFETIME).
+    "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+  }
+}
+
+settings {
+  encodeUrl: true
+}
+
+docs {
+  ## API explanation
+  Exchanges a refresh token for a fresh access token (SimpleJWT's
+  `TokenRefreshView`). Rotation is off, so the same refresh token keeps working
+  until it expires.
+
+  ## API example response
+  {
+    "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+  }
+
+  ## Changelog
+  - 2026-09-05: Replaced the hardcoded expired token and the stray credential comments with a placeholder.
+}

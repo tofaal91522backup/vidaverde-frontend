@@ -1,0 +1,63 @@
+meta {
+  name: my sessions
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{base_url}}/student/sessions/?filter=upcoming&p=1
+  body: none
+  auth: inherit
+}
+
+params:query {
+  filter: upcoming
+  p: 1
+}
+
+docs {
+  ## API explanation
+  "My Calendar". Paginated with `StandardResultsSetPagination` (`p`, `page_size`).
+
+  `filter` is `upcoming` (scheduled, from now, soonest first), `past` (everything
+  already started, newest first) or `all` (the default).
+
+  Every row carries `start_local` in the student's own timezone alongside the
+  canonical `start_datetime`, and the response echoes `timezone` so the UI can
+  label it. `can_reschedule` is false once the class is inside the 24-hour
+  cutoff.
+
+  ## API example response
+  {
+    "count": 1,
+    "page_size": 10,
+    "next": null,
+    "previous": null,
+    "num_pages": 1,
+    "current_page": 1,
+    "results": [
+      {
+        "id": "fd36207a-5413-48bc-809e-f5d229d971bb",
+        "student_package": "534a4812-5ff0-4ba1-a136-ab610f9c9e21",
+        "package_title": "10-Class Package",
+        "teacher": "1e54776b-9910-4742-9f8c-8efd23912d4a",
+        "teacher_name": "Fernando Cordero",
+        "teacher_img": "",
+        "student_name": "Marco Reyes",
+        "student_email": "marco.reyes@example.com",
+        "start_datetime": "2026-09-10T08:00:00-05:00",
+        "start_local": "2026-09-10T15:00:00+02:00",
+        "end_datetime": "2026-09-10T09:00:00-05:00",
+        "duration_minutes": 60,
+        "status": "scheduled",
+        "meet_link": "https://meet.google.com/abc-defg-hij",
+        "admin_notes": "",
+        "can_reschedule": true,
+        "rescheduled_from": null,
+        "created_at": "2026-09-05T03:44:52.737000-05:00"
+      }
+    ],
+    "timezone": "Europe/Berlin",
+    "success": true
+  }
+}

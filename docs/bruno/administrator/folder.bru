@@ -1,0 +1,30 @@
+meta {
+  name: administrator
+  seq: 4
+}
+
+auth {
+  mode: bearer
+}
+
+auth:bearer {
+  token: {{accessTokenAdmin}}
+}
+
+docs {
+  The admin dashboard API. Needs an admin bearer token -- run
+  **authentication > login** as `master@vidaverde.test` / `vidaverde123` first.
+
+  Two roles:
+
+  - **manager** -- runs the school: teachers, students, packages, blogs,
+    testimonials, bookings, sessions, calendar, leads, contact messages.
+  - **master** -- all of the above, plus the `admins/` endpoints.
+
+  A manager calling an `admins/` route gets
+  `{"success": false, "message": "(detail) Only a master admin can perform this action."}`.
+
+  Deletes are deactivations wherever a row is referenced by history: teachers and
+  packages flip `active` to false rather than disappearing. Blog posts really are
+  deleted.
+}

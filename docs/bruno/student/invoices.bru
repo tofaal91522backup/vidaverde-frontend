@@ -1,0 +1,36 @@
+meta {
+  name: my invoices
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{base_url}}/student/invoices/
+  body: none
+  auth: inherit
+}
+
+docs {
+  ## API explanation
+  Invoice list for "My Invoices" -- date, package, amount, status.
+
+  `GET /student/invoices/<id>/pdf/` streams that invoice as a PDF
+  (`application/pdf`, rendered on demand by weasyprint, filename
+  `VV-2026-00002.pdf`). A student can only fetch their own; anyone else's
+  returns 404.
+
+  ## API example response
+  {
+    "success": true,
+    "results": [
+      {
+        "id": "7c2a9f31-5b8e-4d06-a1f7-2e9c4b6d8a30",
+        "number": "VV-2026-00002",
+        "issued_at": "2026-09-05T03:44:52.800000-05:00",
+        "amount": "12.00",
+        "currency": "USD",
+        "package_title": "Spanish Assessment & First Lesson"
+      }
+    ]
+  }
+}

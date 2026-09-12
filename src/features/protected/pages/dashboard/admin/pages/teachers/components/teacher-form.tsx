@@ -4,31 +4,25 @@ import { FormFieldWrapper } from "@/components/shared/form-related/form-field-wr
 import SingleFileUploader from "@/components/shared/form-related/single-file-uploader";
 import { SubmitButton } from "@/components/shared/form-related/submit-button";
 import { SubmitErrorSummary } from "@/components/shared/form-related/submit-error-summary";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
-import { useZodTanstackForm } from "@/hooks/use-zod-tanstack-form";
+import {
+  useZodTanstackForm,
+  type AnyMutationLike,
+} from "@/hooks/use-zod-tanstack-form";
 import { useRouter } from "next/navigation";
-import { TeacherFormValues, TeacherSchema } from "../schemas/teacher.schema";
-import { WeeklyScheduleGrid } from "./weekly-schedule-grid";
-
-const SPECIALISATION_OPTIONS = [
-  "Business Spanish",
-  "Medical Spanish",
-  "Legal Spanish",
-  "DELE Preparation",
-  "Conversation Practice",
-  "Grammar Focus",
-  "Travel Spanish",
-  "Cultural Immersion",
-  "Children & Teens",
-  "Beginner Courses",
-];
+import {
+  TeacherSchema,
+  type AvailabilityRuleValue,
+  type TeacherFormValues,
+} from "../schemas/teacher.schema";
+import { AvailabilityEditor } from "./availability-editor";
+import { TagsInput } from "./tags-input";
 
 interface TeacherFormProps {
-  mutation: any;
+  mutation: AnyMutationLike<TeacherFormValues>;
   defaultValues?: Partial<TeacherFormValues>;
   redirectTo?: string;
 }
@@ -45,20 +39,30 @@ export function TeacherForm({
     mutation,
     defaultValues: {
       name: "",
-      bio: "",
-      photo: "",
-      specialisations: [],
-      isActive: true,
-      schedule: {},
+      profile_img_url: "",
+      tags: [],
+      institute: "",
+      description_en: "",
+      description_es: "",
+      availability: [],
+      accepting_students: true,
+      google_calendar_id: "",
+      meet_link: "",
+      active: true,
       ...defaultValues,
     },
     fieldLabels: {
-      name: "Name",
-      bio: "Bio",
-      photo: "Photo",
-      specialisations: "Specialisations",
-      isActive: "Active Status",
-      schedule: "Schedule",
+      name: "Full name",
+      profile_img_url: "Profile photo",
+      tags: "Specialisations",
+      institute: "Institute",
+      description_en: "Bio (English)",
+      description_es: "Bio (Spanish)",
+      availability: "Weekly availability",
+      accepting_students: "Accepting new students",
+      google_calendar_id: "Google Calendar ID",
+      meet_link: "Fallback Meet link",
+      active: "Status",
     },
     onValidSubmit: () => {
       router.push(redirectTo);
@@ -78,28 +82,176 @@ export function TeacherForm({
       <div className="grid gap-5 sm:grid-cols-2">
         <form.Field name="name">
           {(field) => (
-            <FormFieldWrapper<string> field={field} label="Full Name">
+            <FormFieldWrapper<string> field={field} label="Full name">
+              {(p) => (
+                <Input {...p.inputProps} placeholder="e.g. Fernando Cordero" />
+              )}
+            </FormFieldWrapper>
+          )}
+        </form.Field>
+
+        <form.Field name="institute">
+          {(field) => (
+            <FormFieldWrapper<string> field={field} label="Institute">
               {(p) => (
                 <Input
                   {...p.inputProps}
-                  placeholder="e.g. María González"
+                  placeholder="e.g. Universidad Central del Ecuador"
+                />
+              )}
+            </FormFieldWrapper>
+          )}
+        </form.Field>
+      </div>
+
+      <form.Field name="profile_img_url">
+        {(field) => (
+          <div className="flex flex-col gap-1.5">
+            <Label>Profile photo</Label>
+            <SingleFileUploader
+              label="Upload photo"
+              value={field.state.value}
+              onChange={field.handleChange}
+            />
+          </div>
+        )}
+      </form.Field>
+
+      <form.Field name="tags">
+        {(field) => (
+          <div className="flex flex-col gap-1.5">
+            <Label>Specialisations</Label>
+            <TagsInput
+              value={field.state.value}
+              onChange={field.handleChange}
+            />
+          </div>
+        )}
+      </form.Field>
+
+      {/* Bilingual — public API ?lang= onujayi dey, na pele English e fallback */}
+      <div className="grid gap-5 lg:grid-cols-2">
+        <form.Field name="description_en">
+          {(field) => (
+            <FormFieldWrapper<string> field={field} label="Bio (English)">
+              {(p) => (
+                <Textarea
+                  id={p.inputProps.id}
+                  name={p.inputProps.name}
+                  value={p.inputProps.value}
+                  onBlur={p.inputProps.onBlur}
+                  onChange={(e) => p.onChangeValue(e.target.value)}
+                  aria-invalid={p.inputProps["aria-invalid"]}
+                  rows={5}
+                  placeholder="Teaching background and style..."
                 />
               )}
             </FormFieldWrapper>
           )}
         </form.Field>
 
-        <form.Field name="isActive">
+        <form.Field name="description_es">
+          {(field) => (
+            <FormFieldWrapper<string> field={field} label="Bio (Spanish)">
+              {(p) => (
+                <Textarea
+                  id={p.inputProps.id}
+                  name={p.inputProps.name}
+                  value={p.inputProps.value}
+                  onBlur={p.inputProps.onBlur}
+                  onChange={(e) => p.onChangeValue(e.target.value)}
+                  aria-invalid={p.inputProps["aria-invalid"]}
+                  rows={5}
+                  placeholder="Leave blank to fall back to English"
+                />
+              )}
+            </FormFieldWrapper>
+          )}
+        </form.Field>
+      </div>
+
+      <form.Field name="availability">
+        {(field) => (
+          <div className="flex flex-col gap-1.5">
+            <Label>Weekly availability</Label>
+            <AvailabilityEditor
+              value={field.state.value as AvailabilityRuleValue[]}
+              onChange={field.handleChange}
+            />
+          </div>
+        )}
+      </form.Field>
+
+      <div className="grid gap-5 sm:grid-cols-2">
+        <form.Field name="google_calendar_id">
+          {(field) => (
+            <FormFieldWrapper<string> field={field} label="Google Calendar ID">
+              {(p) => (
+                <Input
+                  {...p.inputProps}
+                  placeholder="Leave blank to skip Calendar sync"
+                />
+              )}
+            </FormFieldWrapper>
+          )}
+        </form.Field>
+
+        <form.Field name="meet_link">
+          {(field) => (
+            <FormFieldWrapper<string> field={field} label="Fallback Meet link">
+              {(p) => (
+                <Input
+                  {...p.inputProps}
+                  placeholder="https://meet.google.com/..."
+                />
+              )}
+            </FormFieldWrapper>
+          )}
+        </form.Field>
+      </div>
+      <p className="-mt-4 text-xs text-muted-foreground">
+        The fallback room is used when Google Calendar is unavailable, so a
+        booking never fails because of Google.
+      </p>
+
+      <div className="grid gap-5 sm:grid-cols-2">
+        <form.Field name="accepting_students">
+          {(field) => (
+            <div className="flex flex-col gap-2">
+              <Label>Accepting new students</Label>
+              <div className="flex h-9 items-center gap-2">
+                <Switch
+                  id="accepting_students"
+                  checked={field.state.value}
+                  onCheckedChange={field.handleChange}
+                />
+                <Label
+                  htmlFor="accepting_students"
+                  className="cursor-pointer text-sm font-normal"
+                >
+                  {field.state.value
+                    ? "Accepting new students"
+                    : "Limited availability"}
+                </Label>
+              </div>
+            </div>
+          )}
+        </form.Field>
+
+        <form.Field name="active">
           {(field) => (
             <div className="flex flex-col gap-2">
               <Label>Status</Label>
-              <div className="flex items-center gap-2 h-9">
+              <div className="flex h-9 items-center gap-2">
                 <Switch
+                  id="active"
                   checked={field.state.value}
                   onCheckedChange={field.handleChange}
-                  id="isActive"
                 />
-                <Label htmlFor="isActive" className="text-sm font-normal cursor-pointer">
+                <Label
+                  htmlFor="active"
+                  className="cursor-pointer text-sm font-normal"
+                >
                   {field.state.value ? "Active" : "Inactive"}
                 </Label>
               </div>
@@ -108,84 +260,8 @@ export function TeacherForm({
         </form.Field>
       </div>
 
-      <form.Field name="bio">
-        {(field) => (
-          <FormFieldWrapper<string> field={field} label="Bio">
-            {(p) => (
-              <Textarea
-                id={p.inputProps.id}
-                name={p.inputProps.name}
-                value={p.inputProps.value}
-                onBlur={p.inputProps.onBlur}
-                onChange={(e) => p.onChangeValue(e.target.value)}
-                aria-invalid={p.inputProps["aria-invalid"]}
-                placeholder="Brief description of the teacher's background and teaching style..."
-                rows={4}
-              />
-            )}
-          </FormFieldWrapper>
-        )}
-      </form.Field>
-
-      <form.Field name="photo">
-        {(field) => (
-          <div className="flex flex-col gap-1.5">
-            <Label>Profile Photo</Label>
-            <SingleFileUploader
-              label=""
-              value={field.state.value}
-              onChange={field.handleChange}
-            />
-          </div>
-        )}
-      </form.Field>
-
-      <form.Field name="specialisations">
-        {(field) => (
-          <div className="flex flex-col gap-2">
-            <Label>Specialisations</Label>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-              {SPECIALISATION_OPTIONS.map((opt) => {
-                const checked = (field.state.value ?? []).includes(opt);
-                return (
-                  <label
-                    key={opt}
-                    className="flex items-center gap-2 text-sm cursor-pointer"
-                  >
-                    <Checkbox
-                      checked={checked}
-                      onCheckedChange={(v) => {
-                        const current = field.state.value ?? [];
-                        field.handleChange(
-                          v
-                            ? [...current, opt]
-                            : current.filter((s) => s !== opt),
-                        );
-                      }}
-                    />
-                    {opt}
-                  </label>
-                );
-              })}
-            </div>
-          </div>
-        )}
-      </form.Field>
-
-      <form.Field name="schedule">
-        {(field) => (
-          <div className="flex flex-col gap-2">
-            <Label>Weekly Availability</Label>
-            <WeeklyScheduleGrid
-              value={field.state.value ?? {}}
-              onChange={field.handleChange}
-            />
-          </div>
-        )}
-      </form.Field>
-
       <div className="flex justify-end gap-3 pt-2">
-        <SubmitButton isLoading={mutation.isPending}>Save Teacher</SubmitButton>
+        <SubmitButton isLoading={mutation.isPending}>Save teacher</SubmitButton>
       </div>
     </form>
   );

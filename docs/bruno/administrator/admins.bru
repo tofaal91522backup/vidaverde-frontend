@@ -1,0 +1,63 @@
+meta {
+  name: admins
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{base_url}}/administrator/admins/
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    // Required. Becomes both the login email and the username. Must be unused.
+    "email": "new.manager@vidaverde.test",
+
+    // Required. Display name.
+    "name": "New Manager",
+
+    // Required, at least 6 characters. Also stored in clear text on
+    // Admin.password_txt so a master admin can look it up later -- see the
+    // note in the docs below.
+    "password": "vidaverde123",
+
+    // Optional, defaults to "manager". One of: "master", "manager".
+    // "master" additionally unlocks these admins/ endpoints.
+    "role": "manager"
+  }
+}
+
+docs {
+  ## API explanation
+  **Master admin only.** `GET` lists staff accounts, `POST` creates one.
+
+  `PATCH /administrator/admins/<id>/` edits name, role, active or `password_txt`
+  -- sending `password_txt` also resets the real login password, so the two stay
+  in step.
+
+  `DELETE /administrator/admins/<id>/` deactivates the account (sets
+  `active: false` and `is_active: false`) rather than deleting it, because blog
+  posts reference their author. A master cannot deactivate their own account.
+
+  **Security note.** `password_txt` stores a working password in clear text. It
+  is modelled that way on purpose (it is on the ERD), but it means any database
+  dump or backup leaks live credentials, and it is only ever returned to a master
+  admin. Do not surface it anywhere else.
+
+  ## API example response
+  {
+    "success": true,
+    "admin": {
+      "id": "1f4b8c02-7d63-4a19-8e50-2c9f7b3d1a86",
+      "email": "new.manager@vidaverde.test",
+      "name": "New Manager",
+      "role": "manager",
+      "password_txt": "vidaverde123",
+      "active": true,
+      "created_at": "2026-09-05T09:12:00.000000-05:00",
+      "updated_at": "2026-09-05T09:12:00.000000-05:00"
+    }
+  }
+}

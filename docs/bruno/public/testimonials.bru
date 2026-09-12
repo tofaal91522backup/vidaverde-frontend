@@ -1,0 +1,38 @@
+meta {
+  name: testimonials
+  type: http
+  seq: 9
+}
+
+get {
+  url: {{base_url}}/public/testimonials/?lang=en
+  body: none
+  auth: none
+}
+
+params:query {
+  lang: en
+}
+
+docs {
+  ## API explanation
+  Active testimonials for the "Real Students. Real Results." section, ordered by
+  `sort_order`. Not paginated.
+
+  Each one states a specific outcome rather than a generic compliment -- the
+  spec is explicit that generic testimonials do not convert.
+
+  ## API example response
+  [
+    {
+      "id": "9a7b6c5d-4e3f-2a1b-0c9d-8e7f6a5b4c3d",
+      "student_name": "Emma",
+      "country": "United Kingdom",
+      "photo_url": "",
+      "rating": 5,
+      "programme": "Online Classes",
+      "outcome": "After 8 weeks with Lucia I held a full conversation with my partner's family in Guayaquil -- no English at all.",
+      "lang": "en"
+    }
+  ]
+}

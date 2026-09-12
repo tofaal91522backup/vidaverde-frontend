@@ -5,7 +5,8 @@ import { useForm } from "@tanstack/react-form";
 import { useMemo, useState } from "react";
 import type { ZodSchema } from "zod";
 
-type AnyMutationLike<T> = {
+/** Form component-er `mutation` prop type korte export kora hoyeche */
+export type AnyMutationLike<T> = {
   mutate: (data: T) => void;
   mutateAsync: (data: T, options?: any) => Promise<any>; // ✅ এটি যোগ করুন
   reset: () => void;

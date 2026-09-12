@@ -12,9 +12,17 @@ import { AppSidebarFooter } from "@/components/layout/sidebar/app-sidebar-footer
 import { AppSidebarHeader } from "@/components/layout/sidebar/app-sidebar-header";
 
 import AppSidebarItems from "@/components/layout/sidebar/app-sidebar-items";
-import { AdminSidebarNavItems } from "./admin-sidebar-nav-items";
+import {
+  AdminSidebarNavItems,
+  MasterAdminSidebarNavItems,
+} from "./admin-sidebar-nav-items";
 
 export function AdminSidebar({ session }: { session: any }) {
+  const items =
+    session?.user?.adminRole === "master"
+      ? [...AdminSidebarNavItems, ...MasterAdminSidebarNavItems]
+      : AdminSidebarNavItems;
+
   return (
     <Sidebar collapsible="icon" variant="inset">
       <SidebarHeader>
@@ -28,7 +36,7 @@ export function AdminSidebar({ session }: { session: any }) {
       </SidebarHeader>
 
       <SidebarContent className="pl-1">
-        <AppSidebarItems items={AdminSidebarNavItems} />
+        <AppSidebarItems items={items} />
       </SidebarContent>
 
       <SidebarRail />
