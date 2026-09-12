@@ -690,16 +690,43 @@ export default function BookRoute() {
             </div>
 
             {checkout.isError && (
-              <p
+              <div
                 role="alert"
                 className="mt-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-[13px] text-red-700"
               >
-                {/* Backend-er nijer message — slot chole geche, lead time, first-lesson
-                    limit ba declined card — shob ekhanei bola hoy */}
-                {(checkout.error as { response?: { data?: { message?: string } } })
-                  ?.response?.data?.message ??
-                  "We could not complete your booking. Please try again."}
-              </p>
+                {/* Backend-er nijer message — slot chole geche, lead time,
+                    first-lesson limit, package-e oi teacher allowed na, ba
+                    declined card — shob ekhanei porar moto kore bola hoy */}
+                <p>
+                  {(
+                    checkout.error as {
+                      response?: { data?: { message?: string } };
+                    }
+                  )?.response?.data?.message ??
+                    "We could not complete your booking. Please try again."}
+                </p>
+
+                {/*
+                  Ei 400 gulor beshirbhag-i step 1-e giye thik korte hoy — slot
+                  chole geche, somoy boro taratari, ba oi teacher ei package-e
+                  allowed na. Message-er text dekhe kon karon ta anuman korar
+                  cheshta kori na (oita backend-er prose, bodlate pare); tar
+                  bodole ek click-e ferar poth deya hoy. Purono slot clear kora
+                  hoy, karon "slot ta chole geche" ei list-er shobcheye shadharon
+                  karon.
+                */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSelectedSlot(null);
+                    setStep(1);
+                  }}
+                  className="mt-2 inline-flex items-center gap-1 font-semibold underline underline-offset-2 hover:no-underline"
+                >
+                  Choose another teacher or time
+                  <ChevronRight className="h-3.5 w-3.5 shrink-0" />
+                </button>
+              </div>
             )}
           </div>
         )}

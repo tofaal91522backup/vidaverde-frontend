@@ -8,7 +8,7 @@
 
 - **Started:** 2026-09-12
 - **Backend commit:** `63c01f5`
-- **Status:** in progress — Auth shesh, Public cholche (11/18 step)
+- **Status:** in progress — Auth ✅ + Public ✅ shesh (12/18 step)
 
 ---
 
@@ -43,7 +43,7 @@ Verify korte chaile: `grep -rn "<path>" src/`.
 | Section | Plan file | Step | Keno dorkar | Priority |
 |---|---|---|---|---|
 | **Auth** | [ROUND2_AUTH_INTEGRATION.md](ROUND2_AUTH_INTEGRATION.md) | ✅ 7/7 shesh | Student registration backend-e **ekhon ache** — ager blocker khule gese | ✅ done |
-| **Public** | [ROUND2_PUBLIC_INTEGRATION.md](ROUND2_PUBLIC_INTEGRATION.md) | 0–4 (5 ta) | Booking flow order bodleche + package-e teacher restriction | 🟠 2 |
+| **Public** | [ROUND2_PUBLIC_INTEGRATION.md](ROUND2_PUBLIC_INTEGRATION.md) | ✅ 5/5 shesh | Booking flow order bodleche + package-e teacher restriction | ✅ done |
 | **Student** | [ROUND2_STUDENT_INTEGRATION.md](ROUND2_STUDENT_INTEGRATION.md) | 0–2 (3 ta) | Portal-e teacher picker restriction mane na → 400 khabe | 🟡 3 |
 | **Admin** | [ROUND2_ADMIN_INTEGRATION.md](ROUND2_ADMIN_INTEGRATION.md) | 0–2 (3 ta) | Package-e teacher assign korar UI nai | 🟢 4 |
 
@@ -60,7 +60,7 @@ Verify korte chaile: `grep -rn "<path>" src/`.
 4. Ek section shesh hole porer section, upor-er priority order-e.
 5. Section bodlate chaile bolo — "public ta age koro" — ami oi file dhorbo.
 
-**Ekhon kothay:** ✅ Auth shesh. Public cholche — Step 0-3 done. Porer `next` → **Public Step 4** (section-er shesh step).
+**Ekhon kothay:** ✅ Auth ar Public duita-i shesh. Porer `next` → **Student Step 0**.
 
 ---
 

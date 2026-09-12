@@ -127,6 +127,15 @@ export function PricingSection() {
                       )}
                     >
                       {pkg.validity_days}-day validity
+                      {/* Booking step 2-e koyjon teacher dekhabe — backend
+                          `teacher_count` diye dey. `0` hole badge-i dekhai na
+                          (edge case; tokhon kichu bola-r cheye chup thaka bhalo). */}
+                      {pkg.teacher_count > 0 && (
+                        <> · {pkg.teacher_count}{" "}
+                          {pkg.teacher_count === 1 ? "teacher" : "teachers"}{" "}
+                          available
+                        </>
+                      )}
                     </div>
                   </div>
 

@@ -7,8 +7,8 @@
 - **Source of truth:** [docs/bruno/public/](../bruno/public/)
 - **Index:** [ROUND2_INDEX.md](ROUND2_INDEX.md)
 - **Started:** 2026-09-12
-- **Current step:** **Step 4** — `teacher_count` + checkout restriction error (shesh step)
-- **Status:** in progress (4/5 done)
+- **Current step:** ✅ **Shob step (0–4) shesh**
+- **Status:** complete
 
 ---
 
@@ -229,6 +229,20 @@ ek-i moto kaj kore.
 
 **Done jokhon:** pricing card-e count dekhay, invalid combo-te bodhgommo error.
 
+> **✅ Shesh — ja jana gelo:**
+> - **Error message-er kaj backend already kore diyeche.** `checkout.bru` e 6 ta
+>   documented 400, shob gula-i `{success: false, message}` ar shob gula-i porar
+>   moto ("*Fernando Cordero cannot be booked with this package. Please choose
+>   another teacher.*"). Amader UI oi `message` already dekhacchilo — notun kore
+>   error text banano mane backend-er bhalo copy-r upor kharap copy boshano.
+> - **Ja asholei nai chilo: ferar poth.** Error hoy payment step-e, kintu thik
+>   korte hoy step 1-e — visitor-ke duibar Back chapte hoto. Ekhon ek ta button.
+> - ⚠️ **Message-er text match kore karon anuman kori nai.** Oita backend-er
+>   prose, kono din bodlalei amader logic chup-chap bhangto. Tar bodole shob
+>   error-e ek-i recovery button — slot clear kore step 1-e.
+> - `teacher_count === 0` hole badge lukano hoy. Edge case, kintu "0 teachers
+>   available" lekha pricing card-e dekhale package ta mora mone hoto.
+
 ---
 
 ## Progress Log
@@ -239,7 +253,7 @@ ek-i moto kaj kore.
 | 1 — `usePackageTeachers` | ✅ done | 2026-09-12 | Notun `book/queries/use-package-teachers.ts` — `useFetchData` + `client: "public"`, `days` default `PUBLIC_SLOT_DAYS` (7), `enabled` packageId thakle |
 | 2 — Flow reorder | ✅ done | 2026-09-12 | `book/index.tsx` — 5 step → 4 step (package → teacher+time → details → payment), `usePublicTeachers` bad, window control (date + 7/14/21 din), `teacher_count` badge, `restricted` note. `SlotPicker.tsx` ar fetch kore na, `days` prop ney. |
 | 3 — Teacher-first entry | ✅ done | 2026-09-12 | Notun `book/queries/use-teacher-packages.ts` + `teacher-profile/components/TeacherPackages.tsx` (`#packages` section, Exclusive badge, next_available). Teacher card ar profile-er 4 ta CTA `/book?teacher=` theke `teachers/:id#packages` e. |
-| 4 — `teacher_count` + error | ⬜ baki | — | — |
+| 4 — `teacher_count` + error | ✅ done | 2026-09-12 | `PricingSection.tsx` e `teacher_count` badge (0 hole lukano), `book/index.tsx` er checkout error block-e "Choose another teacher or time" recovery button |
 
 ---
 

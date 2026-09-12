@@ -13,31 +13,34 @@
 | | |
 |---|---|
 | **Active plan** | [docs/plan/ROUND2_INDEX.md](docs/plan/ROUND2_INDEX.md) |
-| **Section** | Round 2 → Public (11 of 18 steps overall) |
-| **Next step** | **Public Step 4** — teacher_count on pricing cards + checkout restriction error, last step of the section ([ROUND2_PUBLIC_INTEGRATION.md](docs/plan/ROUND2_PUBLIC_INTEGRATION.md)) |
+| **Section** | Round 2 → Public ✅ complete (12 of 18 steps overall) |
+| **Next step** | **Student Step 0** — `usePackageTeachers` in the student folder ([ROUND2_STUDENT_INTEGRATION.md](docs/plan/ROUND2_STUDENT_INTEGRATION.md)) |
 | **Backend commit** | `63c01f5` (see `.claude/api-sync.json`) |
 | **Last updated** | 2026-09-12 — Claude |
 
 ### What was just done
-**Public Step 3 — teacher-first entry.** Teacher profiles now list the packages
-that can be bought with that teacher, and every "Book with X" call to action
-routes through it.
-
-This also repaired a regression Step 2 introduced: four CTAs still pointed at
-`/book?teacher=<id>`, which after the reorder dropped the visitor on the package
-screen with their chosen teacher nowhere in sight.
+**Public Step 4 — pricing cards and checkout recovery. The Public section is
+complete.** Pricing cards show `teacher_count`, and a failed checkout now offers
+one click back to the teacher-and-time step instead of two presses of Back.
 
 ### What the next session does
-Open `docs/plan/ROUND2_PUBLIC_INTEGRATION.md` and do **Step 4** — `teacher_count`
-on the pricing cards and a readable error when checkout rejects a teacher who is
-not allowed on the package. That is the last step of the Public section; after it,
-move to `docs/plan/ROUND2_STUDENT_INTEGRATION.md`.
+Start the Student section: open `docs/plan/ROUND2_STUDENT_INTEGRATION.md` and do
+**Step 0**. **One step per turn, nothing more.** Wait for the user to say "next"
+before the step after.
+
+The Public work it depends on is done, so Step 0 is mostly a thin wrapper over
+the hook and types that already exist.
+
+### Carried into the next step
+Student Step 2 has an unknown in it: `StudentSession` may not carry the catalogue
+package UUID, only `package_title`. Verify that first. If the id is absent, it
+has to be resolved from `/student/packages/`, or the backend asked to add it.
 
 ### Needs manual testing before it ships
-- **Booking flow (Steps 2-3)** — the largest UI change in Round 2 and entirely
-  untested. Walk it end to end from both entry points: package-first from the
-  pricing section, and teacher-first from a teacher card. Include a package with
-  no availability in the next 7 days, and widening the window to 14 and 21.
+- **Booking flow (Public Steps 2-4)** — the largest UI change in Round 2 and
+  entirely untested. Walk it from both entry points: package-first from the
+  pricing section, teacher-first from a teacher card. Include a package with no
+  availability in the next 7 days, and widening the window to 14 and 21.
 - **Auth section** — all of it. Most urgent: `INTEGRATION_TEST.md` Phase J (token
   refresh), and confirming whether `EMAIL_VERIFICATION_REQUIRED` is on or off.
 
