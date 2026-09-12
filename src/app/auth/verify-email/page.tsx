@@ -1,7 +1,13 @@
-﻿import VerifyEmailIndex from "@/features/auth/pages/verify-email";
+import VerifyEmailIndex from "@/features/auth/pages/verify-email";
 
-const Page = () => {
-  return <VerifyEmailIndex />;
+const Page = async ({
+  searchParams,
+}: {
+  searchParams: Promise<{ email?: string }>;
+}) => {
+  const { email } = await searchParams;
+
+  return <VerifyEmailIndex email={email} />;
 };
 
 export default Page;

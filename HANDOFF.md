@@ -13,32 +13,32 @@
 | | |
 |---|---|
 | **Active plan** | [docs/plan/ROUND2_INDEX.md](docs/plan/ROUND2_INDEX.md) |
-| **Section** | Round 2 → Auth (4 of 7 steps done) |
-| **Next step** | **Auth Step 4** — resend verification ([ROUND2_AUTH_INTEGRATION.md](docs/plan/ROUND2_AUTH_INTEGRATION.md)) |
+| **Section** | Round 2 → Auth (5 of 7 steps done) |
+| **Next step** | **Auth Step 5** — token refresh ([ROUND2_AUTH_INTEGRATION.md](docs/plan/ROUND2_AUTH_INTEGRATION.md)) |
 | **Backend commit** | `63c01f5` (see `.claude/api-sync.json`) |
 | **Last updated** | 2026-09-12 — Claude |
 
 ### What was just done
-**Auth Step 3 — email verification.** The confirmation call moved from the client
-into a `"use server"` action so it can create a session, and confirming an address
-now signs the user in and sends them to the portal instead of back to the sign-in
-form.
+**Auth Step 4 — resend verification.** The verify-email page now has a working
+resend form with a 30-second cooldown, prefilled from the `?email=` query param
+that registration passes along.
+
+Registration is now complete end to end: register, verify, resend, and sign in.
 
 ### What the next session does
-Open `docs/plan/ROUND2_AUTH_INTEGRATION.md` and do **Step 4** (resend
-verification). **One step per turn, nothing more.** Wait for the user to say
-"next" before the step after.
+Open `docs/plan/ROUND2_AUTH_INTEGRATION.md` and do **Step 5** (token refresh).
+**One step per turn, nothing more.** Wait for the user to say "next" before the
+step after.
 
 ### Carried into the next step
-`confirm-email`'s error state links to `/auth/verify-email` with a "Send me a new
-link" button, but that page has no resend form on it yet. Step 4 builds it. The
-address arrives as an `?email=` query param from registration, so prefill from
-there and fall back to an input when it is absent.
+Step 5 is the riskiest step in this plan. It changes `session.ts` and the
+`apiClient` 401 interceptor, which every signed-in request in the app goes
+through — a mistake there logs everyone out or, worse, loops. Two things to get
+right: the refresh call must bypass the interceptor that triggered it, and it
+must retry at most once before destroying the session.
 
-Note when building it: the resend endpoint deliberately returns the same 200 and
-the same message whether or not the address exists, so that it cannot be used to
-discover which emails are registered. The UI must never say "that email is not
-registered".
+Worth adding a phase to `docs/plan/INTEGRATION_TEST.md` for it, since nothing
+else in the manual test plan covers token expiry.
 
 Nothing is half-finished. Working tree clean.
 

@@ -6,8 +6,8 @@
 - **Source of truth:** [docs/bruno/student/registration/](../bruno/student/registration/) · [docs/bruno/authentication/](../bruno/authentication/)
 - **Index:** [ROUND2_INDEX.md](ROUND2_INDEX.md)
 - **Started:** 2026-09-12
-- **Current step:** **Step 4** — resend verification
-- **Status:** in progress (4/7 done)
+- **Current step:** **Step 5** — token refresh
+- **Status:** in progress (5/7 done)
 
 ---
 
@@ -193,6 +193,17 @@ hobe bole server action-e shorate hobe — eta structural change, chhoto na.
 
 **Done jokhon:** verify-email page theke notun link chaite para jay.
 
+> **✅ Shesh — ja jana gelo:**
+> - **Server action na, `useMutationHandler`.** Baki auth page gula Pattern B
+>   karon tara session banay; resend kono session banay na, tai httpOnly cookie-r
+>   dorkar nai. Shadharon public mutation — project-er normal pattern-i thik,
+>   ar `isPending` binamulye pawa jay.
+> - **Backend-er message hubohu dekhano hoy.** Response iccha kore ambiguous
+>   ("If that address needs confirming…") — email registered kina faash na korar
+>   jonno. Nijer theke "sent!" ba "email nai" lekha mane oi protection-ta noshto kora.
+> - Backend-e rate limit nai, tai **30s cooldown client-e** rakha hoyeche.
+> - `?email=` na thakle input khali thake — expired link theke ashle emon-i hobe.
+
 ---
 
 ### Step 5 — Token refresh
@@ -236,7 +247,7 @@ alada kore test kora lagbe (`INTEGRATION_TEST.md`-e ek ta phase add hobe).
 | 1 — Register schema + action | ✅ done | 2026-09-12 | `registration.schema.ts` (username bad, 6 notun field, min 8), `registration.action.ts` (path `/student/registration/`, duita response branch, khali value strip), notun `src/constants/spanish-levels.ts` |
 | 2 — Register form UI | ✅ done | 2026-09-12 | `registration.form.tsx` — `username` input bad, `first_name`/`last_name`/`country`/`phone_number`/level select add, hidden timezone (ref diye), branch-based redirect. `RegistrationType.errors.username` **muche fela hoyeche**. |
 | 3 — Verify email | ✅ done | 2026-09-12 | Notun `confirm-email/actions/verify-email.action.ts` (server action, session banay), `confirm-email/index.tsx` rewrite — client axios bad, success-e shoja dashboard, error-e "Send me a new link". `VerifyEmailState` type add. |
-| 4 — Resend | ⬜ baki | — | — |
+| 4 — Resend | ✅ done | 2026-09-12 | Notun `verify-email/queries/use-resend-verification.ts` + `components/resend-verification-form.tsx` (30s cooldown), `verify-email/index.tsx` + route-e `?email=` prefill |
 | 5 — Token refresh | ⬜ baki | — | — |
 | 6 — `/rest-auth/user/` shidhanto | ⬜ baki | — | — |
 
