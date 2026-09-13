@@ -1,4 +1,10 @@
-import type { Course, CourseCategory, FeatureBlock, Stat, Testimonial } from "@/features/marketing/types";
+import type {
+  Course,
+  CourseCategory,
+  FeatureBlock,
+  Stat,
+  Testimonial,
+} from "@/features/marketing/types";
 
 export const trustBadges = [
   "Est. 1999",
@@ -105,41 +111,41 @@ export const testimonials: Testimonial[] = [
       "I really loved the warm and welcoming atmosphere at Vida Verde. Irma is a great teacher who encouraged me every day to step up my skills. Our lessons were never boring. Thanks for the amazing experience, organised tours, and those funny Friday music sessions!",
     initials: "AS",
     name: "Anita S",
-    meta: "Germany 🇩🇪 · Solo · Quito Immersion · Jun 2023",
+    meta: "Germany · Solo · Quito Immersion · Jun 2023",
   },
   {
     quote:
       "The teachers at Vida Verde were wonderful, fun, knowledgeable and helpful! My 12-year-old son and I took daily lessons for a month. They were flexible with our schedule and we loved the location.",
     initials: "TC",
     name: "Tracy C",
-    meta: "USA 🇺🇸 · Family · 1-month stay · Jun 2022",
+    meta: "USA · Family · 1-month stay · Jun 2022",
   },
   {
     quote:
       "Vida Verde is one of the absolute best language schools I have attended. The instructors are kind, smart, dedicated and well trained. Each day my son and I walked away with new learning. I am definitely returning.",
     initials: "RA",
     name: "Rachael A",
-    meta: "Denver, Colorado 🇺🇸 · Family · Jun 2022",
+    meta: "Denver, Colorado · Family · Jun 2022",
   },
   {
     quote:
       "The professors for all the classes were amazing! Fernando taught Spanish better than I have ever been taught. Rosa makes sure everyone feels welcome and is super fun.",
     initials: "EA",
     name: "Errol A",
-    meta: "USA 🇺🇸 · Group · Quito Immersion · May 2022",
+    meta: "USA · Group · Quito Immersion · May 2022",
   },
   {
     quote:
       "Fantastic school with warm and welcoming staff. Vida Verde was my last stop after three months travelling Latin America and it was definitely one of the best. My only regret is I only stayed for one week.",
     initials: "BW",
     name: "Breanne W",
-    meta: "Whistler, Canada 🇨🇦 · Solo · Feb 2020",
+    meta: "Whistler, Canada · Solo · Feb 2020",
   },
   {
     quote:
       "All of my teachers were great, always well-prepared, quickly adapting to my needs and putting a lot of passion into their work. Back home, I now take online classes at Vida Verde via Google Meet.",
     initials: "S",
     name: "Silke",
-    meta: "Germany 🇩🇪 · Solo · 3 weeks in Quito + Amazon · Feb 2019",
+    meta: "Germany · Solo · 3 weeks in Quito + Amazon · Feb 2019",
   },
 ];

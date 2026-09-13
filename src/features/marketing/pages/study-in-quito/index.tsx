@@ -2,6 +2,7 @@ import { Container } from "@/components/shared/Container";
 import { programs } from "./data/programs.data";
 import Image from "next/image";
 import Link from "next/link";
+import { ArrowDown } from "lucide-react";
 import { ChevronRight } from "lucide-react";
 
 export default function StudyInQuitoRoute() {
@@ -254,15 +255,16 @@ export default function StudyInQuitoRoute() {
           <p className="text-vv-ink-2 text-[clamp(17px,1.4vw,20px)] leading-normal max-w-[52ch] text-pretty m-0">
             From a week of classes and culture in Quito to a journey across
             Ecuador — Vida Verde&apos;s immersion programmes weave expert
-            teaching, guided activities, and life with a local Ecuadorian
-            family into a single, unforgettable experience.
+            teaching, guided activities, and life with a local Ecuadorian family
+            into a single, unforgettable experience.
           </p>
           <div className="flex flex-wrap gap-3 mt-6">
             <a
               href="#programmes"
               className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] leading-none py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px"
             >
-              Explore Our Programmes ↓
+              Explore Our Programmes
+              <ArrowDown className="size-4" aria-hidden="true" />
             </a>
             <Link
               href="/contact"
@@ -361,13 +363,12 @@ export default function StudyInQuitoRoute() {
                 </span>
                 <div className="max-w-[58ch]">
                   <h2 className="text-[clamp(30px,3.4vw,48px)] font-semibold tracking-[-0.025em] leading-[1.04] m-0 text-balance">
-                    The best Spanish classroom isn&apos;t a classroom at all
-                    — it&apos;s a family dinner table in Quito.
+                    The best Spanish classroom isn&apos;t a classroom at all —
+                    it&apos;s a family dinner table in Quito.
                   </h2>
                   <p className="mt-4 text-[16px] leading-[1.75] text-vv-ink-2 m-0">
-                    Our homestay programme places you with a vetted
-                    Ecuadorian family, so the immersion never stops when the
-                    lesson does.
+                    Our homestay programme places you with a vetted Ecuadorian
+                    family, so the immersion never stops when the lesson does.
                   </p>
                 </div>
 

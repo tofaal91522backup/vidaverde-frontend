@@ -1,5 +1,6 @@
 import { Container } from "@/components/shared/Container";
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
 export type LegalListItem = { term?: string; text: string };
 
@@ -96,9 +97,10 @@ function Block({ block }: { block: LegalBlock }) {
     return (
       <Link
         href={block.href}
-        className="w-fit text-[15px] font-semibold text-vv-ink underline underline-offset-4 transition hover:text-vv-accent-deep"
+        className="inline-flex w-fit items-center gap-1.5 text-[15px] font-semibold text-vv-ink underline underline-offset-4 transition hover:text-vv-accent-deep"
       >
         {block.label}
+        <ArrowRight className="size-4" aria-hidden="true" />
       </Link>
     );
   }

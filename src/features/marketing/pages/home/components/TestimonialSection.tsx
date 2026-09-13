@@ -1,4 +1,5 @@
 import { Container } from "@/components/shared/Container";
+import { Star } from "lucide-react";
 import { TestimonialCarousel } from "./TestimonialCarousel";
 import { CountUpStat } from "./CountUpStat";
 import { socialStats } from "../data/marketing.data";
@@ -7,7 +8,11 @@ function Stars({ color = "text-amber-400" }: { color?: string }) {
   return (
     <div className="flex gap-0.5" aria-label="5 out of 5 stars">
       {Array.from({ length: 5 }).map((_, i) => (
-        <span key={i} className={color} aria-hidden="true">★</span>
+        <Star
+          key={i}
+          className={`size-3.5 fill-current ${color}`}
+          aria-hidden="true"
+        />
       ))}
     </div>
   );
@@ -27,7 +32,9 @@ function TripAdvisorBadge() {
       </div>
       <div>
         <Stars color="text-[#34E0A1]" />
-        <p className="text-[12px] text-vv-ink-2 mt-0.5 m-0">Rated Excellent · TripAdvisor</p>
+        <p className="text-[12px] text-vv-ink-2 mt-0.5 m-0">
+          Rated Excellent · TripAdvisor
+        </p>
       </div>
     </a>
   );
@@ -35,12 +42,13 @@ function TripAdvisorBadge() {
 
 const TestimonialSection = () => {
   return (
-    <section className="bg-vv-bg-warm border-t border-vv-line" data-screen-label="06 Testimonials">
+    <section
+      className="bg-vv-bg-warm border-t border-vv-line"
+      data-screen-label="06 Testimonials"
+    >
       <Container>
-
         {/* Header row. Title left, rating right */}
         <div className="grid lg:grid-cols-[1fr_auto] items-end gap-10 mb-12 max-[760px]:grid-cols-1">
-
           {/* Left */}
           <div className="flex flex-col gap-4">
             <span className="font-code text-vv-muted text-[11px] font-medium tracking-[0.14em] uppercase">
@@ -62,7 +70,9 @@ const TestimonialSection = () => {
                 5.0
               </div>
               <Stars />
-              <p className="text-vv-muted text-[11px] font-code mt-1.5 m-0">200+ reviews</p>
+              <p className="text-vv-muted text-[11px] font-code mt-1.5 m-0">
+                200+ reviews
+              </p>
             </div>
             <div className="w-px h-14 bg-vv-line shrink-0" aria-hidden="true" />
             <TripAdvisorBadge />
@@ -72,7 +82,10 @@ const TestimonialSection = () => {
         {/* Stats inline row */}
         <div className="flex flex-wrap justify-evenly items-center gap-y-4 mb-10 border-t border-b border-vv-line py-6">
           {socialStats.map((stat, i) => (
-            <div key={stat.label} className="flex items-center justify-between gap-5">
+            <div
+              key={stat.label}
+              className="flex items-center justify-between gap-5"
+            >
               <div>
                 <CountUpStat
                   value={stat.value}
@@ -83,7 +96,10 @@ const TestimonialSection = () => {
                 </span>
               </div>
               {i < socialStats.length - 1 && (
-                <div className="h-8 w-px bg-vv-line shrink-0" aria-hidden="true" />
+                <div
+                  className="h-8 w-px bg-vv-line shrink-0"
+                  aria-hidden="true"
+                />
               )}
             </div>
           ))}
@@ -91,7 +107,6 @@ const TestimonialSection = () => {
 
         {/* Carousel */}
         <TestimonialCarousel />
-
       </Container>
     </section>
   );

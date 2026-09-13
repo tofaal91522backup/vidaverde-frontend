@@ -272,7 +272,7 @@ export default function OurSchoolRoute() {
                   fontWeight="700"
                   fill="#1f3d1a"
                 >
-                  25+ Yrs ✓
+                  25+ Yrs
                 </text>
 
                 {/* Stat badge 1. 25+ Years */}
@@ -425,8 +425,8 @@ export default function OurSchoolRoute() {
               </h2>
               <p className="text-vv-ink-2 text-[clamp(16px,1.2vw,18px)] leading-relaxed max-w-[62ch] text-pretty m-0">
                 Rosa&apos;s founding story, in her own words, is on its way.
-                Check back soon to hear what inspired her to start Vida Verde
-                in 1999.
+                Check back soon to hear what inspired her to start Vida Verde in
+                1999.
               </p>
             </div>
           </div>
@@ -459,9 +459,8 @@ export default function OurSchoolRoute() {
                 La Floresta, Quito
               </h2>
               <p className="text-[15px] leading-[1.7] text-vv-ink-2">
-                La Floresta is one of Quito&apos;s most beloved
-                neighbourhoods — bohemian, walkable, and full of life.
-                It&apos;s home to
+                La Floresta is one of Quito&apos;s most beloved neighbourhoods —
+                bohemian, walkable, and full of life. It&apos;s home to
                 independent cafés, art galleries, local markets, and some of the
                 best food in the city.
               </p>

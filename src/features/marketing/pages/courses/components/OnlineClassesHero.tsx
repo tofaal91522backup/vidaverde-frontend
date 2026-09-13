@@ -1,4 +1,5 @@
 import { Container } from "@/components/shared/Container";
+import { Check } from "lucide-react";
 import Link from "next/link";
 import { AnimatedBookButton } from "../../home/components/HeroSection";
 
@@ -48,52 +49,230 @@ export function OnlineClassesHero() {
               fill="#1f3d1a"
               opacity="0.09"
             />
-          ))
+          )),
         )}
 
         {/* Laptop / screen icon */}
         <g transform="translate(680, 110)" opacity="0.13">
-          <rect x="0" y="0" width="90" height="60" rx="8" fill="none" stroke="#1f3d1a" strokeWidth="1.8" />
-          <line x1="0" y1="46" x2="90" y2="46" stroke="#1f3d1a" strokeWidth="1.2" />
-          <rect x="34" y="58" width="22" height="10" rx="3" fill="none" stroke="#1f3d1a" strokeWidth="1.2" />
+          <rect
+            x="0"
+            y="0"
+            width="90"
+            height="60"
+            rx="8"
+            fill="none"
+            stroke="#1f3d1a"
+            strokeWidth="1.8"
+          />
+          <line
+            x1="0"
+            y1="46"
+            x2="90"
+            y2="46"
+            stroke="#1f3d1a"
+            strokeWidth="1.2"
+          />
+          <rect
+            x="34"
+            y="58"
+            width="22"
+            height="10"
+            rx="3"
+            fill="none"
+            stroke="#1f3d1a"
+            strokeWidth="1.2"
+          />
           {/* Screen content lines */}
-          <rect x="10" y="12" width="50" height="5" rx="2.5" fill="#a3d635" opacity="0.6" />
-          <rect x="10" y="22" width="38" height="4" rx="2" fill="#1f3d1a" opacity="0.3" />
-          <rect x="10" y="30" width="44" height="4" rx="2" fill="#1f3d1a" opacity="0.3" />
+          <rect
+            x="10"
+            y="12"
+            width="50"
+            height="5"
+            rx="2.5"
+            fill="#a3d635"
+            opacity="0.6"
+          />
+          <rect
+            x="10"
+            y="22"
+            width="38"
+            height="4"
+            rx="2"
+            fill="#1f3d1a"
+            opacity="0.3"
+          />
+          <rect
+            x="10"
+            y="30"
+            width="44"
+            height="4"
+            rx="2"
+            fill="#1f3d1a"
+            opacity="0.3"
+          />
         </g>
 
         {/* Video call avatar circles */}
         <g transform="translate(830, 100)" opacity="0.11">
-          <circle cx="24" cy="24" r="24" fill="none" stroke="#a3d635" strokeWidth="1.5" />
-          <circle cx="24" cy="20" r="10" fill="none" stroke="#a3d635" strokeWidth="1.2" />
-          <path d="M 4 48 Q 24 38 44 48" fill="none" stroke="#a3d635" strokeWidth="1.2" />
+          <circle
+            cx="24"
+            cy="24"
+            r="24"
+            fill="none"
+            stroke="#a3d635"
+            strokeWidth="1.5"
+          />
+          <circle
+            cx="24"
+            cy="20"
+            r="10"
+            fill="none"
+            stroke="#a3d635"
+            strokeWidth="1.2"
+          />
+          <path
+            d="M 4 48 Q 24 38 44 48"
+            fill="none"
+            stroke="#a3d635"
+            strokeWidth="1.2"
+          />
         </g>
         <g transform="translate(884, 100)" opacity="0.08">
-          <circle cx="24" cy="24" r="24" fill="none" stroke="#1f3d1a" strokeWidth="1.5" />
-          <circle cx="24" cy="20" r="10" fill="none" stroke="#1f3d1a" strokeWidth="1.2" />
-          <path d="M 4 48 Q 24 38 44 48" fill="none" stroke="#1f3d1a" strokeWidth="1.2" />
+          <circle
+            cx="24"
+            cy="24"
+            r="24"
+            fill="none"
+            stroke="#1f3d1a"
+            strokeWidth="1.5"
+          />
+          <circle
+            cx="24"
+            cy="20"
+            r="10"
+            fill="none"
+            stroke="#1f3d1a"
+            strokeWidth="1.2"
+          />
+          <path
+            d="M 4 48 Q 24 38 44 48"
+            fill="none"
+            stroke="#1f3d1a"
+            strokeWidth="1.2"
+          />
         </g>
 
         {/* Book icon */}
         <g transform="translate(900, 270)" opacity="0.1">
-          <rect x="0" y="0" width="52" height="68" rx="5" fill="none" stroke="#a3d635" strokeWidth="1.6" />
-          <line x1="6" y1="18" x2="46" y2="18" stroke="#a3d635" strokeWidth="1.1" />
-          <line x1="6" y1="28" x2="46" y2="28" stroke="#a3d635" strokeWidth="1.1" />
-          <line x1="6" y1="38" x2="36" y2="38" stroke="#a3d635" strokeWidth="1.1" />
-          <line x1="6" y1="48" x2="40" y2="48" stroke="#a3d635" strokeWidth="1.1" />
-          <line x1="26" y1="0" x2="26" y2="68" stroke="#a3d635" strokeWidth="1" opacity="0.4" />
+          <rect
+            x="0"
+            y="0"
+            width="52"
+            height="68"
+            rx="5"
+            fill="none"
+            stroke="#a3d635"
+            strokeWidth="1.6"
+          />
+          <line
+            x1="6"
+            y1="18"
+            x2="46"
+            y2="18"
+            stroke="#a3d635"
+            strokeWidth="1.1"
+          />
+          <line
+            x1="6"
+            y1="28"
+            x2="46"
+            y2="28"
+            stroke="#a3d635"
+            strokeWidth="1.1"
+          />
+          <line
+            x1="6"
+            y1="38"
+            x2="36"
+            y2="38"
+            stroke="#a3d635"
+            strokeWidth="1.1"
+          />
+          <line
+            x1="6"
+            y1="48"
+            x2="40"
+            y2="48"
+            stroke="#a3d635"
+            strokeWidth="1.1"
+          />
+          <line
+            x1="26"
+            y1="0"
+            x2="26"
+            y2="68"
+            stroke="#a3d635"
+            strokeWidth="1"
+            opacity="0.4"
+          />
         </g>
 
         {/* Speech bubbles */}
         <g transform="translate(760, 280)" opacity="0.1">
-          <rect x="0" y="0" width="72" height="36" rx="10" fill="none" stroke="#1f3d1a" strokeWidth="1.4" />
-          <path d="M 12 36 L 6 48 L 22 36 Z" fill="none" stroke="#1f3d1a" strokeWidth="1.2" strokeLinejoin="round" />
-          <rect x="8" y="10" width="40" height="4" rx="2" fill="#1f3d1a" opacity="0.4" />
-          <rect x="8" y="20" width="28" height="4" rx="2" fill="#1f3d1a" opacity="0.4" />
+          <rect
+            x="0"
+            y="0"
+            width="72"
+            height="36"
+            rx="10"
+            fill="none"
+            stroke="#1f3d1a"
+            strokeWidth="1.4"
+          />
+          <path
+            d="M 12 36 L 6 48 L 22 36 Z"
+            fill="none"
+            stroke="#1f3d1a"
+            strokeWidth="1.2"
+            strokeLinejoin="round"
+          />
+          <rect
+            x="8"
+            y="10"
+            width="40"
+            height="4"
+            rx="2"
+            fill="#1f3d1a"
+            opacity="0.4"
+          />
+          <rect
+            x="8"
+            y="20"
+            width="28"
+            height="4"
+            rx="2"
+            fill="#1f3d1a"
+            opacity="0.4"
+          />
         </g>
         <g transform="translate(790, 340)" opacity="0.08">
-          <rect x="0" y="0" width="56" height="28" rx="8" fill="none" stroke="#a3d635" strokeWidth="1.2" />
-          <path d="M 44 28 L 50 38 L 36 28 Z" fill="none" stroke="#a3d635" strokeWidth="1" strokeLinejoin="round" />
+          <rect
+            x="0"
+            y="0"
+            width="56"
+            height="28"
+            rx="8"
+            fill="none"
+            stroke="#a3d635"
+            strokeWidth="1.2"
+          />
+          <path
+            d="M 44 28 L 50 38 L 36 28 Z"
+            fill="none"
+            stroke="#a3d635"
+            strokeWidth="1"
+            strokeLinejoin="round"
+          />
         </g>
 
         {/* Scattered accent dots */}
@@ -106,15 +285,31 @@ export function OnlineClassesHero() {
         <circle cx="980" cy="360" r="4.5" fill="#1f3d1a" opacity="0.06" />
 
         {/* Plus marks */}
-        {([
-          [690, 250, "#a3d635", 0.16],
-          [840, 460, "#1f3d1a", 0.12],
-          [970, 140, "#a3d635", 0.14],
-          [640, 420, "#1f3d1a", 0.1],
-        ] as const).map(([x, y, c, o], i) => (
+        {(
+          [
+            [690, 250, "#a3d635", 0.16],
+            [840, 460, "#1f3d1a", 0.12],
+            [970, 140, "#a3d635", 0.14],
+            [640, 420, "#1f3d1a", 0.1],
+          ] as const
+        ).map(([x, y, c, o], i) => (
           <g key={`plus-${i}`} opacity={o}>
-            <line x1={x - 7} y1={y} x2={x + 7} y2={y} stroke={c} strokeWidth="1.1" />
-            <line x1={x} y1={y - 7} x2={x} y2={y + 7} stroke={c} strokeWidth="1.1" />
+            <line
+              x1={x - 7}
+              y1={y}
+              x2={x + 7}
+              y2={y}
+              stroke={c}
+              strokeWidth="1.1"
+            />
+            <line
+              x1={x}
+              y1={y - 7}
+              x2={x}
+              y2={y + 7}
+              stroke={c}
+              strokeWidth="1.1"
+            />
           </g>
         ))}
 
@@ -152,7 +347,7 @@ export function OnlineClassesHero() {
             "Classes via Google Meet",
           ].map((item) => (
             <span key={item} className="flex items-center gap-1.5">
-              <span className="text-vv-accent" aria-hidden="true">✓</span>
+              <Check className="size-4 text-vv-accent" aria-hidden="true" />
               {item}
             </span>
           ))}

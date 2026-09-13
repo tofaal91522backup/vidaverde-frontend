@@ -2,6 +2,7 @@
 
 import { Container } from "@/components/shared/Container";
 import { cn } from "@/lib/utils";
+import { ArrowRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import { howItWorksSteps } from "../data/online-classes.data";
 
@@ -45,7 +46,10 @@ export function HowItWorksSection() {
             return (
               <div
                 key={step.step}
-                onMouseEnter={() => { setPaused(true); setActiveStep(i); }}
+                onMouseEnter={() => {
+                  setPaused(true);
+                  setActiveStep(i);
+                }}
                 onMouseLeave={() => setPaused(false)}
                 className={cn(
                   "relative flex flex-col gap-5 p-7 lg:p-8 transition-colors duration-300 cursor-default",
@@ -57,9 +61,10 @@ export function HowItWorksSection() {
                     Step {String(step.step).padStart(2, "0")}
                   </span>
                   {i < howItWorksSteps.length - 1 && (
-                    <span className="hidden lg:block text-vv-line-2 text-[18px] leading-none select-none">
-                      →
-                    </span>
+                    <ArrowRight
+                      className="hidden size-4.5 text-vv-line-2 lg:block"
+                      aria-hidden="true"
+                    />
                   )}
                 </div>
 
@@ -89,8 +94,8 @@ export function HowItWorksSection() {
                       isActive && !paused
                         ? "w-full transition-[width] ease-linear"
                         : isActive && paused
-                        ? "w-full"
-                        : "w-0",
+                          ? "w-full"
+                          : "w-0",
                     )}
                     style={
                       isActive && !paused

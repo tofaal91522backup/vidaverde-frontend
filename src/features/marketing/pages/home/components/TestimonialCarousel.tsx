@@ -3,6 +3,7 @@
 import { usePublicTestimonials } from "@/features/marketing/pages/home/queries/use-public-testimonials";
 import type { PublicTestimonial } from "@/features/marketing/types/public-api.types";
 import { cn } from "@/lib/utils";
+import { Star } from "lucide-react";
 import { useLanguage } from "@/providers/language-provider";
 
 function initials(name: string) {
@@ -19,13 +20,14 @@ function Rating({ rating }: { rating: number }) {
   return (
     <div className="flex gap-0.5" aria-label={`${rating} out of 5 stars`}>
       {Array.from({ length: 5 }).map((_, index) => (
-        <span
+        <Star
           key={index}
           aria-hidden="true"
-          className={index < rating ? "text-amber-400" : "text-vv-line-2"}
-        >
-          ★
-        </span>
+          className={cn(
+            "size-3.5 fill-current",
+            index < rating ? "text-amber-400" : "text-vv-line-2",
+          )}
+        />
       ))}
     </div>
   );
@@ -33,12 +35,18 @@ function Rating({ rating }: { rating: number }) {
 
 export function TestimonialCarousel() {
   const { language } = useLanguage();
-  const { data, isLoading, isError } = usePublicTestimonials({ lang: language });
+  const { data, isLoading, isError } = usePublicTestimonials({
+    lang: language,
+  });
   const testimonials = data ?? [];
   const marqueeTestimonials = [...testimonials, ...testimonials];
 
   if (isLoading) {
-    return <p className="text-vv-ink-2" role="status">Loading testimonials…</p>;
+    return (
+      <p className="text-vv-ink-2" role="status">
+        Loading testimonials…
+      </p>
+    );
   }
 
   if (isError) {
@@ -50,7 +58,9 @@ export function TestimonialCarousel() {
   }
 
   if (testimonials.length === 0) {
-    return <p className="text-vv-ink-2">No testimonials are currently available.</p>;
+    return (
+      <p className="text-vv-ink-2">No testimonials are currently available.</p>
+    );
   }
 
   return (

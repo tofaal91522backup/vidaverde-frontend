@@ -4,6 +4,7 @@ import type { PublicBlogDetail } from "@/features/marketing/types/public-api.typ
 import { ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 import { sanitizeBlogHtml } from "./utils/sanitize-blog-html";
 
 function formatPublishedAt(value: string, lang: string) {
@@ -156,9 +157,10 @@ export function PostDetail({ post }: { post: PublicBlogDetail }) {
             <div className="mt-6">
               <Link
                 href="/blog"
-                className="text-[13px] text-vv-ink-2 underline hover:text-vv-ink"
+                className="inline-flex items-center gap-1.5 text-[13px] text-vv-ink-2 underline hover:text-vv-ink"
               >
-                ← All posts
+                <ArrowLeft className="size-3.5" aria-hidden="true" />
+                All posts
               </Link>
             </div>
           </Container>

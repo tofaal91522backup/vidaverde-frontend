@@ -1,4 +1,5 @@
 import { Container } from "@/components/shared/Container";
+import { Check } from "lucide-react";
 import {
   faqs,
   homestayMosaic,
@@ -44,8 +45,8 @@ export default function HomestayRoute() {
                 Live Like a Local. Learn Faster.
               </h1>
               <p className="text-vv-ink-2 text-[clamp(18px,1.45vw,21px)] leading-normal max-w-[54ch] text-pretty m-0">
-                The best Spanish classroom isn&apos;t a classroom at all. It&apos;s
-                a family dinner table in Quito.
+                The best Spanish classroom isn&apos;t a classroom at all.
+                It&apos;s a family dinner table in Quito.
               </p>
               <div className="mt-7 flex flex-wrap gap-3">
                 <Link
@@ -108,9 +109,9 @@ export default function HomestayRoute() {
                 What Is a Homestay?
               </h2>
               <p className="text-vv-ink-2 text-[17px] leading-normal mt-4.5 max-w-[39ch] m-0">
-                A Vida Verde homestay means living with a real Ecuadorian
-                family during your studies, not in a hotel, not in a hostel,
-                but in a home.
+                A Vida Verde homestay means living with a real Ecuadorian family
+                during your studies, not in a hotel, not in a hostel, but in a
+                home.
               </p>
             </div>
             <div className="grid gap-4 sm:grid-cols-2">
@@ -247,7 +248,7 @@ export default function HomestayRoute() {
                         }
                         aria-hidden="true"
                       >
-                        ✓
+                        <Check className="size-4" strokeWidth={3} />
                       </span>
                       <span
                         className={
@@ -359,7 +360,7 @@ export default function HomestayRoute() {
         className="border-t border-vv-line bg-vv-bg-warm"
         data-screen-label="07 FAQ"
       >
-        <Container >
+        <Container>
           <span className="font-code text-vv-muted text-[11px] font-medium tracking-[0.14em] uppercase">
             {"// Common questions"}
           </span>

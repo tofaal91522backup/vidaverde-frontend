@@ -8,6 +8,7 @@ import type {
 import { useMutationHandler } from "@/hooks/use-mutation-handler";
 import { request } from "@/lib/http/request";
 import { toast } from "sonner";
+import { toastIcons } from "@/components/shared/toast-icons";
 import { STUDENT_SESSIONS_QUERY_KEY } from "./use-student-sessions";
 
 /**
@@ -41,7 +42,7 @@ export function useCancelSession(options?: {
     onSuccess: (data) => {
       toast(data.message, {
         position: "top-center",
-        icon: data.class_returned ? "✅" : "⚠️",
+        icon: data.class_returned ? toastIcons.success : toastIcons.warning,
       });
       options?.onSuccess?.(data);
     },
@@ -77,7 +78,10 @@ export function useRescheduleSession(options?: {
     errorMessage: "Could not move this class.",
     debugLabel: "RescheduleSession",
     onSuccess: (data) => {
-      toast(data.message, { position: "top-center", icon: "✅" });
+      toast(data.message, {
+        position: "top-center",
+        icon: toastIcons.success,
+      });
       options?.onSuccess?.(data);
     },
   });

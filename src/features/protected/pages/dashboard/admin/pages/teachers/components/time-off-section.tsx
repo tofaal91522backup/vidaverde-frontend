@@ -14,7 +14,7 @@ import {
 } from "@/features/protected/pages/dashboard/admin/utils/format-school-datetime";
 import { toList } from "@/features/protected/pages/dashboard/admin/utils/to-list";
 import { useZodTanstackForm } from "@/hooks/use-zod-tanstack-form";
-import { CalendarOff, Info, Plus } from "lucide-react";
+import { ArrowRight, CalendarOff, Info, Plus } from "lucide-react";
 import {
   TIME_OFF_QUERY_KEY,
   useCreateTimeOff,
@@ -141,7 +141,10 @@ export function TimeOffSection({ teacherId }: { teacherId: string }) {
                 <div className="min-w-0">
                   <p className="text-sm font-medium">
                     {formatSchoolDateTime(entry.start_datetime)}
-                    <span className="text-muted-foreground"> → </span>
+                    <ArrowRight
+                      className="mx-1.5 inline size-3.5 align-middle text-muted-foreground"
+                      aria-hidden="true"
+                    />
                     {formatSchoolDateTime(entry.end_datetime)}
                   </p>
                   {entry.reason && (

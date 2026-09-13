@@ -2,6 +2,7 @@ import { env } from "@/lib/env";
 import { QueryKey, useMutation, useQueryClient } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { toast } from "sonner";
+import { toastIcons } from "@/components/shared/toast-icons";
 
 type UseMutationHandlerOptions<TData, TVariables> = {
   mutationFn: (data: TVariables) => Promise<TData>;
@@ -40,7 +41,7 @@ export function useMutationHandler<TData, TVariables>({
     onSuccess: async (data) => {
       // Debug logging for success
       if (debug && env.isDevelopment) {
-        console.group(`✅ [${debugLabel ?? "Mutation"}] Success`);
+        console.group(`[${debugLabel ?? "Mutation"}] Success`);
         console.log("Response:", data);
         console.groupEnd();
       }
@@ -56,7 +57,7 @@ export function useMutationHandler<TData, TVariables>({
       if (showSuccessToast && successMessage) {
         toast(successMessage, {
           position: "top-center",
-          icon: "✅",
+          icon: toastIcons.success,
         });
       }
       // Call the onSuccess callback if provided
@@ -68,7 +69,7 @@ export function useMutationHandler<TData, TVariables>({
         error.response?.data?.message || errorMessage || "Something went wrong";
       // Debug logging for errors
       if (debug && env.isDevelopment) {
-        console.group(`❌ [${debugLabel ?? "Mutation"}] Error`);
+        console.group(`[${debugLabel ?? "Mutation"}] Error`);
         console.log("Status:", error.response?.status);
         console.log("Message:", msg);
         console.log("Full error:", error);
@@ -78,7 +79,7 @@ export function useMutationHandler<TData, TVariables>({
       if (showErrorToast) {
         toast.error(msg, {
           position: "top-center",
-          icon: "❌",
+          icon: toastIcons.error,
         });
       }
       // Call the onError callback if provided

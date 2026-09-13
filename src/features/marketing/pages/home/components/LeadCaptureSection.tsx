@@ -1,6 +1,7 @@
 "use client";
 
 import { Container } from "@/components/shared/Container";
+import { Check, PartyPopper } from "lucide-react";
 import { SubmitErrorSummary } from "@/components/shared/form-related/submit-error-summary";
 import { useCaptureLead } from "@/features/marketing/queries/use-capture-lead";
 import {
@@ -69,9 +70,11 @@ export function LeadCaptureSection() {
                   key={item}
                   className="flex items-center gap-2 text-[15px] text-vv-ink-2"
                 >
-                  <span className="text-vv-accent font-bold" aria-hidden="true">
-                    ✓
-                  </span>
+                  <Check
+                    className="size-4 shrink-0 text-vv-accent"
+                    strokeWidth={3}
+                    aria-hidden="true"
+                  />
                   {item}
                 </li>
               ))}
@@ -81,9 +84,10 @@ export function LeadCaptureSection() {
           <div className="rounded-[22px] border border-vv-line bg-vv-bg p-8 max-[640px]:p-6">
             {response ? (
               <div className="flex flex-col items-center gap-4 py-6 text-center">
-                <div className="text-5xl" aria-hidden="true">
-                  🎉
-                </div>
+                <PartyPopper
+                  className="size-11 text-vv-accent-deep"
+                  aria-hidden="true"
+                />
                 <h3 className="text-[22px] font-semibold text-vv-ink m-0">
                   Check your inbox!
                 </h3>
@@ -136,8 +140,13 @@ export function LeadCaptureSection() {
                         type="text"
                         value={field.state.value}
                         onBlur={field.handleBlur}
-                        onChange={(event) => field.handleChange(event.target.value)}
-                        aria-invalid={field.state.meta.isTouched && !field.state.meta.isValid}
+                        onChange={(event) =>
+                          field.handleChange(event.target.value)
+                        }
+                        aria-invalid={
+                          field.state.meta.isTouched &&
+                          !field.state.meta.isValid
+                        }
                         placeholder="Maria"
                         className="rounded-lg border border-vv-line bg-vv-bg-warm px-4 py-3 text-[15px] text-vv-ink outline-none placeholder:text-vv-ink-2/50 focus:border-vv-accent"
                       />
@@ -159,8 +168,13 @@ export function LeadCaptureSection() {
                         type="email"
                         value={field.state.value}
                         onBlur={field.handleBlur}
-                        onChange={(event) => field.handleChange(event.target.value)}
-                        aria-invalid={field.state.meta.isTouched && !field.state.meta.isValid}
+                        onChange={(event) =>
+                          field.handleChange(event.target.value)
+                        }
+                        aria-invalid={
+                          field.state.meta.isTouched &&
+                          !field.state.meta.isValid
+                        }
                         placeholder="maria@example.com"
                         className="rounded-lg border border-vv-line bg-vv-bg-warm px-4 py-3 text-[15px] text-vv-ink outline-none placeholder:text-vv-ink-2/50 focus:border-vv-accent"
                       />
@@ -176,8 +190,13 @@ export function LeadCaptureSection() {
                         type="checkbox"
                         checked={field.state.value}
                         onBlur={field.handleBlur}
-                        onChange={(event) => field.handleChange(event.target.checked)}
-                        aria-invalid={field.state.meta.isTouched && !field.state.meta.isValid}
+                        onChange={(event) =>
+                          field.handleChange(event.target.checked)
+                        }
+                        aria-invalid={
+                          field.state.meta.isTouched &&
+                          !field.state.meta.isValid
+                        }
                         className="mt-1 h-4 w-4 accent-vv-accent cursor-pointer"
                       />
                       <label
@@ -185,7 +204,10 @@ export function LeadCaptureSection() {
                         className="text-[12px] text-vv-ink-2 leading-normal"
                       >
                         I agree to receive emails from Vida Verde.{" "}
-                        <Link href="/privacy" className="underline hover:text-vv-ink">
+                        <Link
+                          href="/privacy"
+                          className="underline hover:text-vv-ink"
+                        >
                           Privacy Policy
                         </Link>
                       </label>

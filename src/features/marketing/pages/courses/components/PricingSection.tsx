@@ -3,7 +3,7 @@
 import { Container } from "@/components/shared/Container";
 import { cn } from "@/lib/utils";
 import { useLanguage } from "@/providers/language-provider";
-import { ChevronRight, PackageOpen } from "lucide-react";
+import { Check, ChevronRight, PackageOpen } from "lucide-react";
 import Link from "next/link";
 import {
   orderPublicPackages,
@@ -131,7 +131,9 @@ export function PricingSection() {
                           `teacher_count` diye dey. `0` hole badge-i dekhai na
                           (edge case; tokhon kichu bola-r cheye chup thaka bhalo). */}
                       {pkg.teacher_count > 0 && (
-                        <> · {pkg.teacher_count}{" "}
+                        <>
+                          {" "}
+                          · {pkg.teacher_count}{" "}
                           {pkg.teacher_count === 1 ? "teacher" : "teachers"}{" "}
                           available
                         </>
@@ -163,7 +165,7 @@ export function PricingSection() {
                             }
                             aria-hidden="true"
                           >
-                            ✓
+                            <Check className="size-4" strokeWidth={3} />
                           </span>
                           <span
                             className={

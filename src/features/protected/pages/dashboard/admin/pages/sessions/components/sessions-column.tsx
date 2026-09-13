@@ -20,7 +20,16 @@ import {
   formatSchoolTime,
 } from "@/features/protected/pages/dashboard/admin/utils/format-school-datetime";
 import { ColumnDef } from "@tanstack/react-table";
-import { ChevronDown, MessageSquare } from "lucide-react";
+import {
+  Ban,
+  CalendarClock,
+  CheckCircle2,
+  ChevronDown,
+  MessageSquare,
+  UserX,
+  type LucideIcon,
+} from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 import { useUpdateSession } from "../queries/use-sessions";
 
@@ -44,11 +53,15 @@ const STATUS_LABELS: Record<SessionStatus, string> = {
 };
 
 /** `scheduled` class-e admin je outcome boshate pare */
-const OUTCOME_ACTIONS: { status: SessionStatus; label: string }[] = [
-  { status: "completed", label: "✅ Mark completed" },
-  { status: "no_show", label: "❌ Mark no-show" },
-  { status: "cancelled", label: "🚫 Mark cancelled" },
-  { status: "rescheduled", label: "🔄 Mark rescheduled" },
+const OUTCOME_ACTIONS: {
+  status: SessionStatus;
+  label: string;
+  icon: LucideIcon;
+}[] = [
+  { status: "completed", label: "Mark completed", icon: CheckCircle2 },
+  { status: "no_show", label: "Mark no-show", icon: UserX },
+  { status: "cancelled", label: "Mark cancelled", icon: Ban },
+  { status: "rescheduled", label: "Mark rescheduled", icon: CalendarClock },
 ];
 
 function SessionActions({ session }: { session: AdminSession }) {
@@ -74,8 +87,10 @@ function SessionActions({ session }: { session: AdminSession }) {
         {OUTCOME_ACTIONS.map((action) => (
           <DropdownMenuItem
             key={action.status}
+            className="gap-2"
             onClick={() => mutate({ id: session.id, status: action.status })}
           >
+            <action.icon className="size-4 text-muted-foreground" />
             {action.label}
           </DropdownMenuItem>
         ))}
@@ -158,8 +173,14 @@ export const sessionsColumns: ColumnDef<AdminSession>[] = [
   {
     accessorKey: "teacher_name",
     header: "Teacher",
+    // Session row-e teacher-er UUID ache, tai shoja tar edit page-e jaওয়া jay
     cell: ({ row }) => (
-      <span className="text-sm">{row.original.teacher_name}</span>
+      <Link
+        href={`/dashboard/admin/teachers/${row.original.teacher}/edit`}
+        className="text-sm font-medium underline-offset-4 hover:underline"
+      >
+        {row.original.teacher_name}
+      </Link>
     ),
   },
   {

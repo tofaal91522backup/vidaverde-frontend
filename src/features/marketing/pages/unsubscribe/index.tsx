@@ -1,6 +1,7 @@
 import { Container } from "@/components/shared/Container";
 import type { UnsubscribeResult } from "./queries/get-public-unsubscribe";
 import Link from "next/link";
+import { AlertTriangle, CheckCircle2 } from "lucide-react";
 
 /**
  * Ei page-e ichchhe kore **kono lead/newsletter form nai** — je mat্র
@@ -13,9 +14,18 @@ export default function UnsubscribeIndex({
   result: UnsubscribeResult;
 }) {
   return (
-    <section className="min-h-[60vh] flex items-center" data-screen-label="Unsubscribe">
+    <section
+      className="min-h-[60vh] flex items-center"
+      data-screen-label="Unsubscribe"
+    >
       <Container className="py-20 text-center">
-        <div className="text-5xl mb-6">{result.ok ? "✅" : "⚠️"}</div>
+        <div className="mb-6 flex justify-center">
+          {result.ok ? (
+            <CheckCircle2 className="size-12 text-vv-accent-deep" />
+          ) : (
+            <AlertTriangle className="size-12 text-amber-600" />
+          )}
+        </div>
 
         <h1 className="text-[clamp(28px,3vw,44px)] font-semibold tracking-[-0.02em] leading-[1.08] m-0 mb-4 text-balance">
           {result.ok ? "You're unsubscribed" : "We couldn't unsubscribe you"}

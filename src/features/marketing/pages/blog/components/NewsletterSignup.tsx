@@ -1,4 +1,5 @@
 "use client";
+import { PartyPopper } from "lucide-react";
 
 import { Container } from "@/components/shared/Container";
 import { SubmitErrorSummary } from "@/components/shared/form-related/submit-error-summary";
@@ -56,9 +57,10 @@ export function NewsletterSignup() {
 
             {response ? (
               <div className="flex flex-col items-start gap-3 rounded-[22px] border border-vv-accent bg-vv-accent/10 p-8">
-                <div className="text-4xl" aria-hidden="true">
-                  🎉
-                </div>
+                <PartyPopper
+                  className="size-9 text-vv-accent-deep"
+                  aria-hidden="true"
+                />
                 <h3 className="text-[20px] font-semibold text-vv-ink m-0">
                   You&apos;re on the list.
                 </h3>
@@ -96,8 +98,13 @@ export function NewsletterSignup() {
                           type="text"
                           value={field.state.value}
                           onBlur={field.handleBlur}
-                          onChange={(event) => field.handleChange(event.target.value)}
-                          aria-invalid={field.state.meta.isTouched && !field.state.meta.isValid}
+                          onChange={(event) =>
+                            field.handleChange(event.target.value)
+                          }
+                          aria-invalid={
+                            field.state.meta.isTouched &&
+                            !field.state.meta.isValid
+                          }
                           placeholder="Maria"
                           className="rounded-lg border border-vv-line bg-vv-bg-warm px-4 py-3 text-[15px] text-vv-ink outline-none placeholder:text-vv-ink-2/50 focus:border-vv-accent"
                         />
@@ -118,8 +125,13 @@ export function NewsletterSignup() {
                           type="email"
                           value={field.state.value}
                           onBlur={field.handleBlur}
-                          onChange={(event) => field.handleChange(event.target.value)}
-                          aria-invalid={field.state.meta.isTouched && !field.state.meta.isValid}
+                          onChange={(event) =>
+                            field.handleChange(event.target.value)
+                          }
+                          aria-invalid={
+                            field.state.meta.isTouched &&
+                            !field.state.meta.isValid
+                          }
                           placeholder="maria@example.com"
                           className="rounded-lg border border-vv-line bg-vv-bg-warm px-4 py-3 text-[15px] text-vv-ink outline-none placeholder:text-vv-ink-2/50 focus:border-vv-accent"
                         />
@@ -136,8 +148,13 @@ export function NewsletterSignup() {
                         type="checkbox"
                         checked={field.state.value}
                         onBlur={field.handleBlur}
-                        onChange={(event) => field.handleChange(event.target.checked)}
-                        aria-invalid={field.state.meta.isTouched && !field.state.meta.isValid}
+                        onChange={(event) =>
+                          field.handleChange(event.target.checked)
+                        }
+                        aria-invalid={
+                          field.state.meta.isTouched &&
+                          !field.state.meta.isValid
+                        }
                         className="mt-1 h-4 w-4 accent-vv-accent cursor-pointer"
                       />
                       <label
@@ -145,7 +162,10 @@ export function NewsletterSignup() {
                         className="text-[12px] text-vv-ink-2 leading-normal"
                       >
                         I agree to receive emails from Vida Verde.{" "}
-                        <Link href="/privacy" className="underline hover:text-vv-ink">
+                        <Link
+                          href="/privacy"
+                          className="underline hover:text-vv-ink"
+                        >
                           Privacy Policy
                         </Link>
                       </label>

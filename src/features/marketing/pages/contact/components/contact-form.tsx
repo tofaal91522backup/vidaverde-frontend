@@ -1,7 +1,11 @@
 "use client";
+import { Check } from "lucide-react";
 
 import { SubmitErrorSummary } from "@/components/shared/form-related/submit-error-summary";
-import { useContactSubjects, useSendContactMessage } from "@/features/marketing/queries/use-contact";
+import {
+  useContactSubjects,
+  useSendContactMessage,
+} from "@/features/marketing/queries/use-contact";
 import {
   ContactSchema,
   type ContactFormValues,
@@ -16,8 +20,11 @@ import { useState } from "react";
 export function ContactForm({ programme = "" }: { programme?: string }) {
   const [response, setResponse] =
     useState<PublicAcknowledgementResponse | null>(null);
-  const { data: subjectData, isLoading: subjectsLoading, isError: subjectsError } =
-    useContactSubjects();
+  const {
+    data: subjectData,
+    isLoading: subjectsLoading,
+    isError: subjectsError,
+  } = useContactSubjects();
   const mutation = useSendContactMessage({ onSuccess: setResponse });
   const { form, submitErrors } = useZodTanstackForm<ContactFormValues>({
     defaultValues: {
@@ -41,8 +48,8 @@ export function ContactForm({ programme = "" }: { programme?: string }) {
   if (response) {
     return (
       <div className="flex flex-col items-start gap-4 py-2">
-        <div className="flex h-14 w-14 items-center justify-center rounded-full bg-vv-accent text-vv-accent-deep text-xl font-bold">
-          ✓
+        <div className="flex h-14 w-14 items-center justify-center rounded-full bg-vv-accent text-vv-accent-deep">
+          <Check className="size-6" strokeWidth={3} aria-hidden="true" />
         </div>
         <h3 className="text-[22px] font-semibold text-vv-ink m-0">
           Message sent!
@@ -108,7 +115,9 @@ export function ContactForm({ programme = "" }: { programme?: string }) {
               value={field.state.value}
               onBlur={field.handleBlur}
               onChange={(event) => field.handleChange(event.target.value)}
-              aria-invalid={field.state.meta.isTouched && !field.state.meta.isValid}
+              aria-invalid={
+                field.state.meta.isTouched && !field.state.meta.isValid
+              }
               placeholder="Your full name"
               className="rounded-lg border border-vv-line bg-vv-bg px-4 py-3 text-[15px] text-vv-ink outline-none placeholder:text-vv-ink-2/50 focus:border-vv-accent transition-colors"
             />
@@ -131,7 +140,9 @@ export function ContactForm({ programme = "" }: { programme?: string }) {
               value={field.state.value}
               onBlur={field.handleBlur}
               onChange={(event) => field.handleChange(event.target.value)}
-              aria-invalid={field.state.meta.isTouched && !field.state.meta.isValid}
+              aria-invalid={
+                field.state.meta.isTouched && !field.state.meta.isValid
+              }
               placeholder="you@example.com"
               className="rounded-lg border border-vv-line bg-vv-bg px-4 py-3 text-[15px] text-vv-ink outline-none placeholder:text-vv-ink-2/50 focus:border-vv-accent transition-colors"
             />
@@ -152,9 +163,15 @@ export function ContactForm({ programme = "" }: { programme?: string }) {
               id="contact-subject"
               value={field.state.value}
               onBlur={field.handleBlur}
-              onChange={(event) => field.handleChange(event.target.value as ContactFormValues["subject"])}
+              onChange={(event) =>
+                field.handleChange(
+                  event.target.value as ContactFormValues["subject"],
+                )
+              }
               disabled={subjectsLoading || subjectsError}
-              aria-invalid={field.state.meta.isTouched && !field.state.meta.isValid}
+              aria-invalid={
+                field.state.meta.isTouched && !field.state.meta.isValid
+              }
               className="rounded-lg border border-vv-line bg-vv-bg px-4 py-3 text-[15px] text-vv-ink outline-none focus:border-vv-accent transition-colors disabled:cursor-not-allowed disabled:opacity-60"
             >
               {subjectsLoading && <option>Loading subjects…</option>}
@@ -189,7 +206,9 @@ export function ContactForm({ programme = "" }: { programme?: string }) {
               value={field.state.value}
               onBlur={field.handleBlur}
               onChange={(event) => field.handleChange(event.target.value)}
-              aria-invalid={field.state.meta.isTouched && !field.state.meta.isValid}
+              aria-invalid={
+                field.state.meta.isTouched && !field.state.meta.isValid
+              }
               placeholder="Tell us a bit about what you're looking for. We'll get back to you within 24 hours."
               className="rounded-lg border border-vv-line bg-vv-bg px-4 py-3 text-[15px] text-vv-ink outline-none resize-none placeholder:text-vv-ink-2/50 focus:border-vv-accent transition-colors"
             />

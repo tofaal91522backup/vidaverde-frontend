@@ -3,6 +3,7 @@ import { CountUpStat } from "@/features/marketing/pages/home/components/CountUpS
 import type { Program } from "./data/programs.data";
 import Image from "next/image";
 import Link from "next/link";
+import { ArrowLeft, Check } from "lucide-react";
 import { ChevronRight } from "lucide-react";
 import { TestimonialCarousel } from "../home/components/TestimonialCarousel";
 
@@ -90,9 +91,11 @@ export function ProgramDetail({ program }: { program: Program }) {
                     key={item}
                     className="flex items-start gap-2 text-[14px] text-vv-ink-2"
                   >
-                    <span className="mt-0.5 text-vv-accent font-bold shrink-0">
-                      ✓
-                    </span>
+                    <Check
+                      className="mt-0.5 size-4 shrink-0 text-vv-accent"
+                      strokeWidth={3}
+                      aria-hidden="true"
+                    />
                     {item}
                   </li>
                 ))}
@@ -247,9 +250,10 @@ export function ProgramDetail({ program }: { program: Program }) {
           <div className="mt-4">
             <Link
               href="/study-in-quito"
-              className="text-[13px] text-vv-ink-2 underline hover:text-vv-ink"
+              className="inline-flex items-center gap-1.5 text-[13px] text-vv-ink-2 underline hover:text-vv-ink"
             >
-              ← Back to all programmes
+              <ArrowLeft className="size-3.5" aria-hidden="true" />
+              Back to all programmes
             </Link>
           </div>
         </Container>

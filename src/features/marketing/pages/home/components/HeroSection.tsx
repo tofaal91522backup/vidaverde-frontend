@@ -3,7 +3,7 @@
 import { Container } from "@/components/shared/Container";
 import { MarketingButton } from "@/features/marketing/components/MarketingButton";
 import Link from "next/link";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, Heart, Star, type LucideIcon } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 
@@ -98,16 +98,18 @@ export function AnimatedBookButton() {
   );
 }
 
-const trustItems = [
-  { icon: "★", label: "Est. 1999", sub: "25+ years of teaching" },
-  { icon: "♡", label: "4,700+ Students", sub: "From over 50 countries" },
-  {
-    icon: "A1",
-    label: "All Levels Welcome",
-    sub: "A1 beginners to C1 advanced",
-  },
-  { icon: "G", label: "Classes via Google Meet", sub: "Join from anywhere" },
-];
+/** `icon` icon-o hote pare, chhoto text-o ("A1", "G") */
+const trustItems: { icon: LucideIcon | string; label: string; sub: string }[] =
+  [
+    { icon: Star, label: "Est. 1999", sub: "25+ years of teaching" },
+    { icon: Heart, label: "4,700+ Students", sub: "From over 50 countries" },
+    {
+      icon: "A1",
+      label: "All Levels Welcome",
+      sub: "A1 beginners to C1 advanced",
+    },
+    { icon: "G", label: "Classes via Google Meet", sub: "Join from anywhere" },
+  ];
 
 export function HeroSection() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -156,7 +158,9 @@ export function HeroSection() {
               <span className="block min-h-[1.2em]">
                 <TypewriterCycle />
               </span>
-              <span className="block text-white/65 font-normal">With a Real Teacher</span>
+              <span className="block text-white/65 font-normal">
+                With a Real Teacher
+              </span>
             </h1>
 
             {/* Subheadline */}
@@ -190,7 +194,11 @@ export function HeroSection() {
                   className="text-vv-accent text-[17px] leading-none shrink-0 mt-0.5"
                   aria-hidden="true"
                 >
-                  {item.icon}
+                  {typeof item.icon === "string" ? (
+                    item.icon
+                  ) : (
+                    <item.icon className="size-[17px] fill-current" />
+                  )}
                 </span>
                 <div>
                   <div className="text-white text-[14px] font-semibold leading-tight">

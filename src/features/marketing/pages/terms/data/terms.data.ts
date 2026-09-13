@@ -45,7 +45,9 @@ export const termsContent: LegalContent = {
             {
               text: "cultural activities, transfers, and travel-Spanish arrangements; and",
             },
-            { text: "learning resources, guides, and customer-portal features." },
+            {
+              text: "learning resources, guides, and customer-portal features.",
+            },
           ],
         },
         {
@@ -315,7 +317,7 @@ export const termsContent: LegalContent = {
           type: "p",
           text: "Our Privacy Policy explains how we process personal data. Marketing and optional data-processing consent are requested separately and are not conditions of purchasing a standard lesson.",
         },
-        { type: "link", label: "Read our Privacy Policy →", href: "/privacy" },
+        { type: "link", label: "Read our Privacy Policy", href: "/privacy" },
       ],
     },
     {

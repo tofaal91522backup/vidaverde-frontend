@@ -1,6 +1,7 @@
 "use client";
 
 import { Container } from "@/components/shared/Container";
+import { ArrowLeft, PartyPopper, Star } from "lucide-react";
 import {
   orderPublicPackages,
   usePublicPackages,
@@ -90,8 +91,11 @@ function formatSlotTime(isoLocal: string) {
 export default function BookRoute() {
   const searchParams = useSearchParams();
   const { language } = useLanguage();
-  const { data: packageData, isLoading: packagesLoading, isError: packagesError } =
-    usePublicPackages({ lang: language });
+  const {
+    data: packageData,
+    isLoading: packagesLoading,
+    isError: packagesError,
+  } = usePublicPackages({ lang: language });
   const preselectedTeacher = searchParams.get("teacher");
   const preselectedPackage = searchParams.get("package");
   const packages = useMemo(
@@ -222,7 +226,9 @@ export default function BookRoute() {
         data-screen-label="Booking Confirmed"
       >
         <Container className="text-center py-20">
-          <div className="text-6xl mb-6">🎉</div>
+          <div className="mb-6 flex justify-center">
+            <PartyPopper className="size-14 text-vv-accent-deep" />
+          </div>
           <h1 className="text-[clamp(28px,3vw,44px)] font-semibold tracking-[-0.02em] leading-[1.08] m-0 mb-4 text-balance">
             You&apos;re booked!
           </h1>
@@ -256,7 +262,9 @@ export default function BookRoute() {
               ].map(([label, value]) => (
                 <div key={label} className="flex justify-between gap-4">
                   <dt className="text-vv-ink-2">{label}</dt>
-                  <dd className="font-medium text-vv-ink text-right">{value}</dd>
+                  <dd className="font-medium text-vv-ink text-right">
+                    {value}
+                  </dd>
                 </div>
               ))}
             </dl>
@@ -320,7 +328,8 @@ export default function BookRoute() {
             )}
             {packagesError && (
               <p className="text-[13px] text-red-600" role="alert">
-                Packages are unavailable right now. Please go back and try again.
+                Packages are unavailable right now. Please go back and try
+                again.
               </p>
             )}
             {!packagesLoading && !packagesError && packages.length === 0 && (
@@ -343,8 +352,9 @@ export default function BookRoute() {
                     )}
                   >
                     {pkg.is_first_lesson && (
-                      <span className="absolute -top-2.5 right-4 rounded-full bg-vv-accent px-2.5 py-0.5 text-[10px] font-semibold text-vv-accent-deep">
-                        ★ Recommended for new students
+                      <span className="absolute -top-2.5 right-4 inline-flex items-center gap-1 rounded-full bg-vv-accent px-2.5 py-0.5 text-[10px] font-semibold text-vv-accent-deep">
+                        <Star className="size-3 fill-current" />
+                        Recommended for new students
                       </span>
                     )}
                     <div className="flex justify-between items-start gap-2">
@@ -359,7 +369,8 @@ export default function BookRoute() {
                       {pkg.description}
                     </p>
                     <span className="text-[12px] text-vv-muted">
-                      {pkg.total_classes} {pkg.total_classes === 1 ? "class" : "classes"}
+                      {pkg.total_classes}{" "}
+                      {pkg.total_classes === 1 ? "class" : "classes"}
                       {" · "}
                       valid for {pkg.validity_days} days
                     </span>
@@ -547,7 +558,10 @@ export default function BookRoute() {
             </h2>
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="flex flex-col gap-1.5">
-                <label htmlFor="bk-first" className="text-[12px] font-medium uppercase tracking-wide text-vv-ink-2">
+                <label
+                  htmlFor="bk-first"
+                  className="text-[12px] font-medium uppercase tracking-wide text-vv-ink-2"
+                >
                   First name
                 </label>
                 <input
@@ -560,7 +574,10 @@ export default function BookRoute() {
                 />
               </div>
               <div className="flex flex-col gap-1.5">
-                <label htmlFor="bk-last" className="text-[12px] font-medium uppercase tracking-wide text-vv-ink-2">
+                <label
+                  htmlFor="bk-last"
+                  className="text-[12px] font-medium uppercase tracking-wide text-vv-ink-2"
+                >
                   Last name <span className="normal-case">(optional)</span>
                 </label>
                 <input
@@ -572,7 +589,10 @@ export default function BookRoute() {
                 />
               </div>
               <div className="flex flex-col gap-1.5 sm:col-span-2">
-                <label htmlFor="bk-email" className="text-[12px] font-medium uppercase tracking-wide text-vv-ink-2">
+                <label
+                  htmlFor="bk-email"
+                  className="text-[12px] font-medium uppercase tracking-wide text-vv-ink-2"
+                >
                   Email address
                 </label>
                 <input
@@ -588,7 +608,10 @@ export default function BookRoute() {
                 </p>
               </div>
               <div className="flex flex-col gap-1.5">
-                <label htmlFor="bk-phone" className="text-[12px] font-medium uppercase tracking-wide text-vv-ink-2">
+                <label
+                  htmlFor="bk-phone"
+                  className="text-[12px] font-medium uppercase tracking-wide text-vv-ink-2"
+                >
                   Phone <span className="normal-case">(optional)</span>
                 </label>
                 <input
@@ -600,7 +623,10 @@ export default function BookRoute() {
                 />
               </div>
               <div className="flex flex-col gap-1.5">
-                <label htmlFor="bk-country" className="text-[12px] font-medium uppercase tracking-wide text-vv-ink-2">
+                <label
+                  htmlFor="bk-country"
+                  className="text-[12px] font-medium uppercase tracking-wide text-vv-ink-2"
+                >
                   Country <span className="normal-case">(optional)</span>
                 </label>
                 <input
@@ -612,7 +638,10 @@ export default function BookRoute() {
                 />
               </div>
               <div className="flex flex-col gap-1.5 sm:col-span-2">
-                <label htmlFor="bk-level" className="text-[12px] font-medium uppercase tracking-wide text-vv-ink-2">
+                <label
+                  htmlFor="bk-level"
+                  className="text-[12px] font-medium uppercase tracking-wide text-vv-ink-2"
+                >
                   Your current Spanish level
                 </label>
                 {/* Free text na — backend enum value gula-i pathano hoy */}
@@ -739,7 +768,8 @@ export default function BookRoute() {
               onClick={() => setStep((s) => s - 1)}
               className="inline-flex items-center justify-center gap-2.5 border border-vv-line-2 rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] leading-none py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-transparent text-vv-ink hover:bg-vv-ink hover:border-vv-ink hover:text-vv-bg"
             >
-              ← Back
+              <ArrowLeft className="size-4" />
+              Back
             </button>
           ) : (
             <div />
