@@ -11,6 +11,8 @@ import type { StudentProfile } from "@/features/protected/pages/dashboard/studen
 import { useZodTanstackForm } from "@/hooks/use-zod-tanstack-form";
 import { useMemo } from "react";
 import { useUpdateStudentProfile } from "../queries/use-student-profile";
+import { PhoneInput } from "@/components/shared/form-related/phone-input";
+import { COUNTRY_OPTIONS } from "@/constants/countries";
 import { SPANISH_LEVEL_OPTIONS } from "@/constants/spanish-levels";
 import { Globe2, ShieldCheck, UserRound } from "lucide-react";
 import {
@@ -119,7 +121,16 @@ export function ProfileForm({ profile }: { profile: StudentProfile }) {
                   {(field) => (
                     <FormFieldWrapper<string> field={field} label="Country">
                       {(p) => (
-                        <Input {...p.inputProps} placeholder="e.g. Germany" />
+                        <ReusableSelect
+                          id={p.inputProps.id}
+                          name={p.inputProps.name}
+                          value={p.inputProps.value}
+                          onBlur={p.inputProps.onBlur}
+                          onChange={(e) => p.onChangeValue(e.target.value)}
+                          aria-invalid={p.inputProps["aria-invalid"]}
+                          options={COUNTRY_OPTIONS}
+                          placeholder="Select your country"
+                        />
                       )}
                     </FormFieldWrapper>
                   )}
@@ -129,7 +140,13 @@ export function ProfileForm({ profile }: { profile: StudentProfile }) {
                   {(field) => (
                     <FormFieldWrapper<string> field={field} label="Phone number">
                       {(p) => (
-                        <Input {...p.inputProps} placeholder="+49 170 1234567" />
+                        <PhoneInput
+                          id={p.inputProps.id}
+                          value={p.inputProps.value}
+                          onBlur={p.inputProps.onBlur}
+                          onChange={p.onChangeValue}
+                          aria-invalid={p.inputProps["aria-invalid"]}
+                        />
                       )}
                     </FormFieldWrapper>
                   )}

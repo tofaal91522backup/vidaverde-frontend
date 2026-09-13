@@ -7,6 +7,8 @@ import {
   NativeSelectOption,
 } from "@/components/ui/native-select";
 import { Spinner } from "@/components/ui/spinner";
+import { PhoneInput } from "@/components/shared/form-related/phone-input";
+import { COUNTRY_OPTIONS } from "@/constants/countries";
 import { SPANISH_LEVEL_OPTIONS } from "@/constants/spanish-levels";
 import { RegistrationAction } from "@/features/auth/pages/registration/actions/registration.action";
 import Link from "next/link";
@@ -137,20 +139,22 @@ export default function RegistrationForm() {
         </NativeSelect>
       </Field>
 
-      <div className="grid gap-4 sm:grid-cols-2">
-        <Field label="Country" error={state.errors.country} optional>
-          <Input name="country" type="text" placeholder="Spain" />
-        </Field>
+      <Field label="Country" error={state.errors.country} optional>
+        {/* Native `<select name>` — FormData-te shoja chole jay */}
+        <NativeSelect name="country" defaultValue="">
+          <NativeSelectOption value="">Select your country</NativeSelectOption>
+          {COUNTRY_OPTIONS.map((option) => (
+            <NativeSelectOption key={option.value} value={option.value}>
+              {option.label}
+            </NativeSelectOption>
+          ))}
+        </NativeSelect>
+      </Field>
 
-        <Field label="Phone" error={state.errors.phone_number} optional>
-          <Input
-            name="phone_number"
-            type="tel"
-            autoComplete="tel"
-            placeholder="+34 600 123 456"
-          />
-        </Field>
-      </div>
+      <Field label="Phone" error={state.errors.phone_number} optional>
+        {/* `name` dile bhitore ekta hidden input-e jora number ta bose */}
+        <PhoneInput name="phone_number" />
+      </Field>
 
       <Button type="submit" disabled={isPending} className="w-full">
         {isPending && <Spinner className="mr-2" />}

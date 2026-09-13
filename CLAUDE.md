@@ -195,6 +195,23 @@ Anything past a handful of fields is grouped into `<FormSection>` cards. Copy
 - Single-column forms (a handful of fields) skip the grid and just stack
   `FormSection`s.
 
+### Country and phone fields
+
+Never a free-text input. `src/constants/countries.ts` wraps `countries.json`
+(242 entries, ISO code + dial code + name).
+
+- **Country** — a select over `COUNTRY_OPTIONS`. The value is the country *name*,
+  not the code, because the backend stores `country` as free text ("Spain").
+- **Phone** — `<PhoneInput>` (`components/shared/form-related/phone-input.tsx`):
+  a dial-code select plus the number, joined into the single string the backend
+  expects ("+34 600 123 456"). Pass `value`/`onChange` in a TanStack form, or
+  `name` in a Pattern B form and it writes a hidden input for FormData.
+- `DIAL_CODE_OPTIONS` is keyed by ISO code, not dial code — "+1" belongs to
+  several countries and duplicate `<option value>`s break selection.
+- The marketing booking form builds the same two selects inline instead, because
+  its inputs use the `vv-*` styling rather than shadcn. It shares the data and
+  the `splitPhone`/`joinPhone` helpers.
+
 ### Detail pages
 
 Not a form — a read-only record (`admin/pages/students/student-detail-page.tsx`).

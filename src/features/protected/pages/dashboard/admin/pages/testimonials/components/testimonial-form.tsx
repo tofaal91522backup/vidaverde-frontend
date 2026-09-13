@@ -2,6 +2,8 @@
 
 import { FormFieldWrapper } from "@/components/shared/form-related/form-field-wrapper";
 import { FormSection } from "@/components/shared/form-related/form-section";
+import { ReusableSelect } from "@/components/shared/form-related/reusable-select";
+import { COUNTRY_OPTIONS } from "@/constants/countries";
 import SingleFileUploader from "@/components/shared/form-related/single-file-uploader";
 import { SubmitButton } from "@/components/shared/form-related/submit-button";
 import { SubmitErrorSummary } from "@/components/shared/form-related/submit-error-summary";
@@ -99,9 +101,15 @@ export function TestimonialForm({
                 {(field) => (
                   <FormFieldWrapper<string> field={field} label="Country">
                     {(p) => (
-                      <Input
-                        {...p.inputProps}
-                        placeholder="e.g. United Kingdom"
+                      <ReusableSelect
+                        id={p.inputProps.id}
+                        name={p.inputProps.name}
+                        value={p.inputProps.value}
+                        onBlur={p.inputProps.onBlur}
+                        onChange={(e) => p.onChangeValue(e.target.value)}
+                        aria-invalid={p.inputProps["aria-invalid"]}
+                        options={COUNTRY_OPTIONS}
+                        placeholder="Select a country"
                       />
                     )}
                   </FormFieldWrapper>

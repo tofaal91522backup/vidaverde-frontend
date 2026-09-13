@@ -22,6 +22,13 @@ import {
   DUMMY_PAYMENT_METHOD,
   useCheckout,
 } from "@/features/marketing/queries/use-checkout";
+import {
+  COUNTRY_OPTIONS,
+  DEFAULT_DIAL_COUNTRY,
+  DIAL_CODE_OPTIONS,
+  joinPhone,
+  splitPhone,
+} from "@/constants/countries";
 import { cn } from "@/lib/utils";
 import { useLanguage } from "@/providers/language-provider";
 import { useSearchParams } from "next/navigation";
@@ -154,6 +161,14 @@ export default function BookRoute() {
     country: "",
     spanish_level: "none",
   });
+  /*
+    Phone-er dial country alada state-e — `joinPhone` number khali hole khali
+    string dey, tai number muchle derive kora country default-e fire jeto ar
+    user-er bachai hariye jeto.
+  */
+  const [phoneCountry, setPhoneCountry] = useState(
+    () => splitPhone("").countryCode || DEFAULT_DIAL_COUNTRY,
+  );
   const [detailErrors, setDetailErrors] = useState<string[]>([]);
   /** Confirmation screen backend-er ferot deওয়া data theke banano hoy. */
   const [result, setResult] = useState<PublicCheckoutResponse | null>(null);
@@ -614,13 +629,43 @@ export default function BookRoute() {
                 >
                   Phone <span className="normal-case">(optional)</span>
                 </label>
-                <input
-                  id="bk-phone"
-                  type="tel"
-                  value={details.phone_number}
-                  onChange={(e) => setDetail("phone_number", e.target.value)}
-                  className="rounded-lg border border-vv-line bg-vv-bg-warm px-4 py-3 text-[15px] text-vv-ink outline-none focus:border-vv-accent"
-                />
+                <div className="flex gap-2">
+                  <select
+                    aria-label="Country dialling code"
+                    value={phoneCountry}
+                    onChange={(e) => {
+                      setPhoneCountry(e.target.value);
+                      setDetail(
+                        "phone_number",
+                        joinPhone(
+                          e.target.value,
+                          splitPhone(details.phone_number).number,
+                        ),
+                      );
+                    }}
+                    className="w-36 shrink-0 rounded-lg border border-vv-line bg-vv-bg-warm px-3 py-3 text-[15px] text-vv-ink outline-none focus:border-vv-accent"
+                  >
+                    {DIAL_CODE_OPTIONS.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
+                  <input
+                    id="bk-phone"
+                    type="tel"
+                    inputMode="tel"
+                    placeholder="1712 345678"
+                    value={splitPhone(details.phone_number).number}
+                    onChange={(e) =>
+                      setDetail(
+                        "phone_number",
+                        joinPhone(phoneCountry, e.target.value),
+                      )
+                    }
+                    className="flex-1 rounded-lg border border-vv-line bg-vv-bg-warm px-4 py-3 text-[15px] text-vv-ink outline-none focus:border-vv-accent"
+                  />
+                </div>
               </div>
               <div className="flex flex-col gap-1.5">
                 <label
@@ -629,13 +674,21 @@ export default function BookRoute() {
                 >
                   Country <span className="normal-case">(optional)</span>
                 </label>
-                <input
+                {/* Free text na — shared country list. Backend `country` ke
+                    string hisebe-i rakhe, tai naam-i value */}
+                <select
                   id="bk-country"
-                  type="text"
                   value={details.country}
                   onChange={(e) => setDetail("country", e.target.value)}
                   className="rounded-lg border border-vv-line bg-vv-bg-warm px-4 py-3 text-[15px] text-vv-ink outline-none focus:border-vv-accent"
-                />
+                >
+                  <option value="">Select your country</option>
+                  {COUNTRY_OPTIONS.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div className="flex flex-col gap-1.5 sm:col-span-2">
                 <label
