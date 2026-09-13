@@ -36,9 +36,14 @@ export function useTeachers(params: TeacherListParams = {}) {
   });
 }
 
-/** GET /administrator/teachers/:id/ — response-e `time_off` embed thake */
+/**
+ * GET /administrator/teachers/:id/ — bare object, `time_off` embed kora.
+ *
+ * ⚠️ List ar create `{ success, ... }` diye mode, kintu detail/update/replace
+ * bare teacher-i ferot dey. `docs/bruno/administrator/teacher detail.bru`.
+ */
 export function useTeacherDetails(id: string) {
-  return useFetchData<AdminTeacherResponse>({
+  return useFetchData<AdminTeacher>({
     url: `/administrator/teachers/${id}/`,
     querykey: [TEACHER_DETAILS_QUERY_KEY, id],
     options: { enabled: Boolean(id) },
@@ -73,9 +78,9 @@ export function useCreateTeacher() {
   });
 }
 
-/** PATCH /administrator/teachers/:id/ */
+/** PATCH /administrator/teachers/:id/ — bare teacher ferot ashe */
 export function useUpdateTeacher(id: string) {
-  return useMutationHandler<AdminTeacherResponse, TeacherPayload>({
+  return useMutationHandler<AdminTeacher, TeacherPayload>({
     mutationFn: (data) => request.patch(`/administrator/teachers/${id}/`, data),
     invalidateKeys: [
       [TEACHERS_QUERY_KEY],
@@ -97,10 +102,7 @@ export function useUpdateTeacher(id: string) {
  * behaviour ek rokom thake.
  */
 export function useToggleTeacherStatus() {
-  return useMutationHandler<
-    AdminTeacherResponse,
-    { id: string; active: boolean }
-  >({
+  return useMutationHandler<AdminTeacher, { id: string; active: boolean }>({
     mutationFn: ({ id, active }) =>
       request.patch(`/administrator/teachers/${id}/`, {
         active,

@@ -28,6 +28,15 @@ page-e. Shob koyta ekhon `async` + `await params`, ar
 `DynamicRouteIdParams` type-ta Promise kore deওয়া holo jate abar na ghote.
 Confirm-email page already await korto — shudhu type-ta thik kora holo.
 
+**Manual-testing fix 2 — teacher detail response shape.** Edit Teacher page-e
+spinner-er por faka screen ashto. `GET /administrator/teachers/:id/` **bare**
+teacher object dey (`teacher detail.bru` dekho), kintu hook-ta
+`{ success, teacher }` expect korto, tai `data?.teacher` hoto undefined.
+`PATCH`-o bare dey; shudhu `POST` create `{ success, teacher }` mode. Detail ar
+update/toggle hook ekhon `AdminTeacher` type kore. Baki shob admin detail hook
+doc-er shathe mile (admins/students/sessions wrapped, blogs/packages/
+testimonials bare) — check kora hoyeche.
+
 **Admin Step 2 — restriction column. Round 2 is complete, all 18 steps.**
 
 Round 2 covered backend `f7ccf8b` -> `63c01f5`:

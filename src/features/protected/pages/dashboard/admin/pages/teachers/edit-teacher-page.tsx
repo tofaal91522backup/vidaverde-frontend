@@ -30,10 +30,9 @@ function toFormValues(teacher: AdminTeacher): TeacherFormValues {
 }
 
 export default function EditTeacherPage({ id }: { id: string }) {
-  const { data, isLoading, isError } = useTeacherDetails(id);
+  // Detail endpoint bare teacher dey — `{ success, teacher }` na
+  const { data: teacher, isLoading, isError } = useTeacherDetails(id);
   const mutation = useUpdateTeacher(id);
-
-  const teacher = data?.teacher;
 
   return (
     <DashboardPageLayout
