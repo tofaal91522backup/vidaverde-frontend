@@ -3,10 +3,11 @@
 import DataTable from "@/components/shared/data-table";
 import { ReusableSelect } from "@/components/shared/form-related/reusable-select";
 import Pagination from "@/components/shared/pagination";
+import { TableCard } from "@/components/shared/table-card";
+import { TableSearchInput } from "@/components/shared/table-search-input";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
-import { Download, Search } from "lucide-react";
+import { Download } from "lucide-react";
 import { useState } from "react";
 import { useExportLeads, useLeads } from "../queries/use-leads";
 import { leadsColumns } from "./leads-column";
@@ -20,84 +21,115 @@ export function LeadsTable() {
   const [subscribed, setSubscribed] = useState<"true" | "">("");
   const [converted, setConverted] = useState<"true" | "">("");
 
-  const { data, isLoading, isError } = useLeads({
+  const { data, isLoading, isFetching, isError } = useLeads({
     page,
     search,
     subscribed,
     converted,
   });
 
-  const exportLeads = useExportLeads();
-
   const resetPage = () => setPage(1);
+  const filtering = Boolean(search || subscribed || converted);
+  const count = data?.count ?? 0;
 
   return (
-    <div className="space-y-4">
-      <div className="flex flex-wrap items-center gap-3">
-        <div className="relative min-w-45 max-w-sm flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input
+    <TableCard
+      toolbar={
+        <>
+          {/* Age bare `<Input>` chilo, debounce chhara — proti okkhore ekta
+              kore API call jeto */}
+          <TableSearchInput
             placeholder="Search by email..."
-            value={search}
-            onChange={(e) => {
-              setSearch(e.target.value);
+            loading={isFetching}
+            onSearch={(value) => {
+              setSearch(value);
               resetPage();
             }}
-            className="pl-9"
           />
-        </div>
 
-        <ReusableSelect
-          className="w-44"
-          value={subscribed}
-          options={SUBSCRIBED_OPTIONS}
-          placeholder="All subscriptions"
-          onChange={(e) => {
-            setSubscribed(e.target.value as "true" | "");
-            resetPage();
-          }}
-        />
+          <ReusableSelect
+            className="w-44 bg-background"
+            value={subscribed}
+            options={SUBSCRIBED_OPTIONS}
+            placeholder="All subscriptions"
+            onChange={(e) => {
+              setSubscribed(e.target.value as "true" | "");
+              resetPage();
+            }}
+          />
 
-        <ReusableSelect
-          className="w-44"
-          value={converted}
-          options={CONVERTED_OPTIONS}
-          placeholder="All leads"
-          onChange={(e) => {
-            setConverted(e.target.value as "true" | "");
-            resetPage();
-          }}
-        />
+          <ReusableSelect
+            className="w-44 bg-background"
+            value={converted}
+            options={CONVERTED_OPTIONS}
+            placeholder="All leads"
+            onChange={(e) => {
+              setConverted(e.target.value as "true" | "");
+              resetPage();
+            }}
+          />
 
-        <Button
-          variant="outline"
-          className="ml-auto gap-1.5"
-          disabled={exportLeads.isPending}
-          onClick={() => exportLeads.mutate()}
-        >
-          {exportLeads.isPending ? (
-            <Spinner className="h-4 w-4" />
-          ) : (
-            <Download className="h-4 w-4" />
+          {filtering && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => {
+                setSearch("");
+                setSubscribed("");
+                setConverted("");
+                resetPage();
+              }}
+            >
+              Clear
+            </Button>
           )}
-          Export CSV
-        </Button>
-      </div>
-
-      {/* Backend-e verify kora: leads export kono filter mane na */}
-      <p className="text-xs text-amber-600">
-        The CSV export always contains <strong>every</strong> lead — the filters
-        above are not applied to it.
-      </p>
-
+        </>
+      }
+      meta={
+        isLoading
+          ? "Loading…"
+          : `${count} ${count === 1 ? "lead" : "leads"}${
+              filtering ? " match" : ""
+            }`
+      }
+      footer={<Pagination page={page} total={count} onPageChange={setPage} />}
+    >
       <DataTable
+        embedded
         data={data?.results}
         columns={leadsColumns}
         loading={isLoading}
         error={isError ? "Failed to load leads." : ""}
       />
+    </TableCard>
+  );
+}
 
-      <Pagination page={page} total={data?.count ?? 0} onPageChange={setPage} />
-    </div>
+/**
+ * Export button — page-er header-e boshe.
+ *
+ * ⚠️ Button-er lekha **"Export all leads"**, "Export CSV" na. Backend-er
+ * `LeadExportView` kono query param **porei na** (source-e verify kora), tai
+ * filter kora thakleও puro list-i name. Age ei kotha ta table-er upore ekta
+ * amber line-e lekha chilo; label-er bhitore boshale oi warning-er dorkar-i
+ * pore na, ar admin bhul bujhbe na.
+ */
+export function ExportLeadsButton() {
+  const exportLeads = useExportLeads();
+
+  return (
+    <Button
+      variant="outline"
+      className="gap-1.5"
+      disabled={exportLeads.isPending}
+      onClick={() => exportLeads.mutate()}
+    >
+      {exportLeads.isPending ? (
+        <Spinner className="h-4 w-4" />
+      ) : (
+        <Download className="h-4 w-4" />
+      )}
+      Export all leads
+    </Button>
   );
 }
