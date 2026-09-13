@@ -2,6 +2,7 @@
 
 import AsyncStateWrapper from "@/components/shared/async-state-wrapper";
 import { Badge } from "@/components/ui/badge";
+import { Card, CardContent } from "@/components/ui/card";
 import DashboardPageLayout from "@/features/protected/pages/dashboard/shared/components/dashboard-page-layout";
 import { CalendarDays, FileText, Package } from "lucide-react";
 import Link from "next/link";
@@ -87,11 +88,10 @@ export default function StudentDashboardIndex() {
             {sections.map((section) => {
               const Icon = section.icon;
               return (
-                <Link
-                  key={section.href}
-                  href={section.href}
-                  className="group flex flex-col gap-4 rounded-xl border bg-card p-5 transition-shadow hover:shadow-md hover:border-primary/40"
-                >
+                // `Card` asChild support kore na, tai Link bahire
+                <Link key={section.href} href={section.href} className="group">
+                  <Card className="h-full transition-shadow group-hover:border-primary/40 group-hover:shadow-md">
+                    <CardContent className="flex flex-col gap-4">
                   <div className="flex items-center gap-3">
                     <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary group-hover:bg-primary/15 transition-colors">
                       <Icon className="h-5 w-5" />
@@ -114,6 +114,8 @@ export default function StudentDashboardIndex() {
                       </Badge>
                     ))}
                   </div>
+                    </CardContent>
+                  </Card>
                 </Link>
               );
             })}

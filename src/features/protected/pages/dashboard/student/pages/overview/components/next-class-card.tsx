@@ -2,6 +2,7 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import type { DashboardNextSession } from "@/features/protected/pages/dashboard/student/types/student.types";
 import {
   formatLocalDateTime,
@@ -19,7 +20,8 @@ export function NextClassCard({
 }) {
   if (!session) {
     return (
-      <div className="flex flex-col items-start gap-3 rounded-xl border border-dashed bg-card p-6">
+      <Card className="border-dashed">
+        <CardContent className="flex flex-col items-start gap-3">
         <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-muted text-muted-foreground">
           <CalendarPlus className="h-5 w-5" />
         </div>
@@ -30,15 +32,17 @@ export function NextClassCard({
             packages.
           </p>
         </div>
-        <Button asChild size="sm" variant="outline">
-          <Link href="/dashboard/student/my-packages">View my packages</Link>
-        </Button>
-      </div>
+          <Button asChild size="sm" variant="outline">
+            <Link href="/dashboard/student/my-packages">View my packages</Link>
+          </Button>
+        </CardContent>
+      </Card>
     );
   }
 
   return (
-    <div className="flex flex-col gap-4 rounded-xl border bg-card p-6">
+    <Card>
+      <CardContent className="flex flex-col gap-4">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center gap-2">
           <span className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
@@ -82,6 +86,7 @@ export function NextClassCard({
           </a>
         </Button>
       )}
-    </div>
+      </CardContent>
+    </Card>
   );
 }

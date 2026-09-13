@@ -2,6 +2,7 @@
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import type { StudentPackage } from "@/features/protected/pages/dashboard/student/types/student.types";
 import { formatLocalDate } from "@/features/protected/pages/dashboard/student/utils/format-local-datetime";
 import { cn } from "@/lib/utils";
@@ -59,12 +60,8 @@ export function PackageCard({ pkg }: { pkg: StudentPackage }) {
   const currency = pkg.invoice?.currency ?? "";
 
   return (
-    <div
-      className={cn(
-        "rounded-xl border bg-card p-5 flex flex-col gap-4",
-        !pkg.can_book && "opacity-60",
-      )}
-    >
+    <Card className={cn(!pkg.can_book && "opacity-60")}>
+      <CardContent className="flex flex-col gap-4">
       <div className="flex items-start justify-between gap-3">
         <div>
           <h3 className="font-semibold text-base leading-snug">
@@ -133,6 +130,7 @@ export function PackageCard({ pkg }: { pkg: StudentPackage }) {
           </Link>
         </Button>
       )}
-    </div>
+      </CardContent>
+    </Card>
   );
 }
