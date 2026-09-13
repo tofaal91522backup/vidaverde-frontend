@@ -8,6 +8,8 @@ import {
 } from "@/features/marketing/pages/courses/queries/use-public-packages";
 import { usePackageTeachers } from "@/features/marketing/pages/book/queries/use-package-teachers";
 import { Combobox } from "@/components/shared/form-related/combobox";
+import { readNavbarUser } from "@/features/auth/utils/session";
+import { useBookingPrefill } from "@/features/marketing/pages/book/queries/use-booking-prefill";
 import { SlotPicker } from "@/features/marketing/pages/book/components/SlotPicker";
 import { getPublicTimeZone } from "@/features/marketing/constants/public-api";
 import type {
@@ -34,7 +36,7 @@ import {
 import { cn } from "@/lib/utils";
 import { useLanguage } from "@/providers/language-provider";
 import { useSearchParams } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ChevronRight, UserRound } from "lucide-react";
 
 /**
@@ -172,6 +174,57 @@ export default function BookRoute() {
     () => splitPhone("").countryCode || DEFAULT_DIAL_COUNTRY,
   );
   const [detailErrors, setDetailErrors] = useState<string[]>([]);
+
+  /*
+    Logged-in student hole details step ta nijer theke bhore jay — jini already
+    account niye login kora, take abar naam-email type korano orthohin.
+
+    Session client theke pora hoy (server component-e cookies() dakle ei page
+    static thakto na), ar profile call ta **shudhu STUDENT hole** enable hoy:
+    logged-out obosthay 401 ele apiClient interceptor session destroy kore
+    visitor-ke bar kore dito.
+  */
+  const [sessionUser, setSessionUser] = useState<{ role?: string } | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    readNavbarUser().then((value) => {
+      if (!cancelled) setSessionUser(value ?? null);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const { data: prefillData } = useBookingPrefill(
+    sessionUser?.role === "STUDENT",
+  );
+  const prefillProfile = prefillData?.profile;
+
+  /** Ekbar-i bhore — er por user ja likheche ta ar chapa pore na. */
+  const [hasPrefilled, setHasPrefilled] = useState(false);
+
+  const applyPrefill = () => {
+    if (hasPrefilled || !prefillProfile) return;
+
+    const [firstName = "", ...rest] = (prefillProfile.name ?? "").split(" ");
+
+    setDetails((current) => ({
+      ...current,
+      first_name: current.first_name || firstName,
+      last_name: current.last_name || rest.join(" "),
+      email: current.email || prefillProfile.email || "",
+      phone_number: current.phone_number || prefillProfile.phone_number || "",
+      country: current.country || prefillProfile.country || "",
+      spanish_level:
+        prefillProfile.current_spanish_level ?? current.spanish_level,
+    }));
+    setPhoneCountry(
+      splitPhone(prefillProfile.phone_number ?? "").countryCode ||
+        DEFAULT_DIAL_COUNTRY,
+    );
+    setHasPrefilled(true);
+  };
   /** Confirmation screen backend-er ferot deওয়া data theke banano hoy. */
   const [result, setResult] = useState<PublicCheckoutResponse | null>(null);
 
@@ -826,7 +879,12 @@ export default function BookRoute() {
             <button
               type="button"
               disabled={!canAdvance()}
-              onClick={() => setStep((s) => s + 1)}
+              onClick={() => {
+                // Details step-e dhokar thik age — event handler-e, effect-e na,
+                // tai "setState in effect" er fandh-e pora lage na
+                if (step === 1) applyPrefill();
+                setStep((s) => s + 1);
+              }}
               className={cn(
                 "inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] leading-none py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px",
                 !canAdvance() && "opacity-40 cursor-not-allowed",
