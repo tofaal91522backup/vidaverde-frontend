@@ -7,6 +7,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Edit, Power } from "lucide-react";
 import Link from "next/link";
 import { useTogglePackageStatus } from "../queries/use-packages";
+import { PackageTeachersDialog } from "./package-teachers-dialog";
 
 function ToggleStatusButton({ pkg }: { pkg: AdminPackage }) {
   const { mutate, isPending } = useTogglePackageStatus();
@@ -69,24 +70,9 @@ export const packagesColumns: ColumnDef<AdminPackage>[] = [
   {
     id: "teachers",
     header: "Teachers",
-    cell: ({ row }) => {
-      // `teacher_names` read-only echo. **Khali = shob teacher**, keu na NA —
-      // tai khali obosthay "All" dekhano hoy, "0" ba "None" na.
-      const names = row.original.teacher_names ?? [];
-
-      if (names.length === 0) {
-        return (
-          <span className="text-sm text-muted-foreground">All teachers</span>
-        );
-      }
-
-      return (
-        // Naam gula title-e — column chhoto rakhte hobe, table already chowra
-        <Badge variant="outline" title={names.join(", ")}>
-          {names.length} {names.length === 1 ? "teacher" : "teachers"}
-        </Badge>
-      );
-    },
+    // Click korle kara, seta dialog-e dekhay — age naam gula `title=` attribute-e
+    // lukono chilo, hover chhara (mane touch-e kokhono) pora jeto na.
+    cell: ({ row }) => <PackageTeachersDialog pkg={row.original} />,
   },
   {
     accessorKey: "sort_order",

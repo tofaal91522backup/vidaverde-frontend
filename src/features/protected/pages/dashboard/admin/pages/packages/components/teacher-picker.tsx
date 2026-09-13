@@ -5,48 +5,11 @@ import { Badge } from "@/components/ui/badge";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { useTeachers } from "@/features/protected/pages/dashboard/admin/pages/teachers/queries/use-teachers";
-import type { AdminTeacher } from "@/features/protected/pages/dashboard/admin/types/admin.types";
 import { SCHOOL_TIMEZONE_LABEL } from "@/features/protected/pages/dashboard/admin/utils/format-school-datetime";
 import { toList } from "@/features/protected/pages/dashboard/admin/utils/to-list";
+import { availabilitySummary } from "@/features/protected/pages/dashboard/admin/utils/teacher-display";
 import { cn } from "@/lib/utils";
-
-/** Sort korar jonno — `availability` order-e ashe na. */
-const DAY_ORDER = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"] as const;
-
-function initials(name: string) {
-  return (
-    name
-      ?.split(" ")
-      .filter(Boolean)
-      .slice(0, 2)
-      .map((part) => part[0]?.toUpperCase())
-      .join("") || "?"
-  );
-}
-
-/**
- * Weekly rule gula ek line-e — "Mon–Fri · 08:00–16:00".
- *
- * Shob din-er time ek hole ekbar-i time dekhay; alada hole shudhu din-er
- * shonkha, karon proti din-er alada time ek line-e dhukbe na.
- */
-function availabilitySummary(availability: AdminTeacher["availability"]) {
-  const rules = availability ?? [];
-  if (rules.length === 0) return "No weekly hours set";
-
-  const days = [...new Set(rules.map((rule) => rule.day))].sort(
-    (a, b) => DAY_ORDER.indexOf(a) - DAY_ORDER.indexOf(b),
-  );
-  const label = days
-    .map((day) => day.charAt(0).toUpperCase() + day.slice(1))
-    .join(", ");
-
-  const windows = [...new Set(rules.map((rule) => `${rule.start}–${rule.end}`))];
-
-  return windows.length === 1
-    ? `${label} · ${windows[0]}`
-    : `${label} · ${windows.length} different windows`;
-}
+import { initials } from "@/utils/initials";
 
 /**
  * Kon teacher-der shathe package ta book kora jabe.

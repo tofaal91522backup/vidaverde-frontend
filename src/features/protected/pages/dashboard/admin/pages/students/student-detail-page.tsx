@@ -28,6 +28,7 @@ import {
 } from "@/features/protected/pages/dashboard/admin/utils/status-badge";
 import DashboardPageLayout from "@/features/protected/pages/dashboard/shared/components/dashboard-page-layout";
 import { cn } from "@/lib/utils";
+import { initials } from "@/utils/initials";
 import {
   CalendarDays,
   ChevronLeft,
@@ -55,17 +56,6 @@ function sumDecimalStrings(values: string[]) {
   }, 0);
 
   return `${Math.floor(cents / 100)}.${String(cents % 100).padStart(2, "0")}`;
-}
-
-function initials(name: string) {
-  return (
-    name
-      ?.split(" ")
-      .filter(Boolean)
-      .slice(0, 2)
-      .map((part) => part[0]?.toUpperCase())
-      .join("") || "?"
-  );
 }
 
 function Stat({
