@@ -2,6 +2,7 @@
 
 import { AppDialog } from "@/components/shared/app-dialog";
 import AsyncStateWrapper from "@/components/shared/async-state-wrapper";
+import { TableCard } from "@/components/shared/table-card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import type {
@@ -222,12 +223,18 @@ function MonthView({
     ...Array.from({ length: daysInMonth }, (_, i) => i + 1),
   ];
 
+  // Shesh week-tao bhorte hobe. Shudhu shurur khali ghor bhorle shesh row-e
+  // koyekta cell-i thake na — `divide` er line gula ordhek giye theme jay ar
+  // row-ta bhanga dekhay. (Admin calendar-eও ek-i bug chilo.)
+  while (cells.length % 7 !== 0) cells.push(null);
+
   const byDate = useMemo(() => groupByLocalDate(sessions), [sessions]);
   const todayIso = localIso(new Date());
 
   return (
-    <div className="rounded-lg border overflow-hidden">
-      <div className="grid grid-cols-7 bg-muted text-xs font-medium">
+    // Card-er bhitore boshe — nijer border dile border-er bhitore border hoto
+    <div className="overflow-hidden">
+      <div className="grid grid-cols-7 bg-muted/40 text-xs font-medium">
         {DAY_NAMES.map((d) => (
           <div key={d} className="py-2 text-center text-muted-foreground">{d}</div>
         ))}
@@ -279,8 +286,8 @@ function WeekView({
   const todayIso = localIso(new Date());
 
   return (
-    <div className="rounded-lg border overflow-hidden">
-      <div className="grid grid-cols-7 border-b bg-muted">
+    <div className="overflow-hidden">
+      <div className="grid grid-cols-7 border-b bg-muted/40">
         {days.map((d) => {
           const isToday = localIso(d) === todayIso;
           return (
@@ -360,58 +367,115 @@ export function StudentCalendar() {
       : `Week of ${weekStart.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}`;
 
   return (
-    <div className="space-y-4">
-      <div className="flex flex-wrap items-center gap-3">
-        <div className="flex items-center gap-1">
-          <Button variant="outline" size="icon" onClick={goBack}><ChevronLeft className="h-4 w-4" /></Button>
-          <Button variant="outline" size="sm" onClick={() => setCurrentDate(new Date())}>Today</Button>
-          <Button variant="outline" size="icon" onClick={goForward}><ChevronRight className="h-4 w-4" /></Button>
-        </div>
-
-        <span className="font-semibold text-base flex-1">{title}</span>
-
-        {tz && (
-          <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-            <MapPin className="h-3.5 w-3.5" />
-            <span>Times in <strong>{tz}</strong></span>
+    <TableCard
+      toolbar={
+        <div className="flex w-full flex-wrap items-center gap-3">
+          <div className="flex items-center gap-1">
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={goBack}
+              aria-label="Previous"
+              className="bg-background"
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="outline"
+              size="sm"
+              className="bg-background"
+              onClick={() => setCurrentDate(new Date())}
+            >
+              Today
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={goForward}
+              aria-label="Next"
+              className="bg-background"
+            >
+              <ChevronRight className="h-4 w-4" />
+            </Button>
           </div>
-        )}
 
-        <div className="flex rounded-md border overflow-hidden">
-          <Button variant={viewMode === "month" ? "default" : "ghost"} size="sm" className="rounded-none gap-1" onClick={() => setViewMode("month")}>
-            <LayoutGrid className="h-3.5 w-3.5" /> Month
-          </Button>
-          <Button variant={viewMode === "week" ? "default" : "ghost"} size="sm" className="rounded-none gap-1 border-l" onClick={() => setViewMode("week")}>
-            <Calendar className="h-3.5 w-3.5" /> Week
-          </Button>
+          <span className="flex-1 text-base font-semibold">{title}</span>
+
+          <div className="flex overflow-hidden rounded-md border bg-background">
+            <Button
+              variant={viewMode === "month" ? "default" : "ghost"}
+              size="sm"
+              className="gap-1 rounded-none"
+              onClick={() => setViewMode("month")}
+            >
+              <LayoutGrid className="h-3.5 w-3.5" /> Month
+            </Button>
+            <Button
+              variant={viewMode === "week" ? "default" : "ghost"}
+              size="sm"
+              className="gap-1 rounded-none border-l"
+              onClick={() => setViewMode("week")}
+            >
+              <Calendar className="h-3.5 w-3.5" /> Week
+            </Button>
+          </div>
         </div>
-      </div>
+      }
+      footer={
+        <div className="space-y-2">
+          <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+            <div className="flex flex-wrap gap-3 text-xs text-muted-foreground">
+              {(Object.keys(STATUS_COLORS) as SessionStatus[]).map((status) => (
+                <span
+                  key={status}
+                  className="flex items-center gap-1.5 capitalize"
+                >
+                  <span
+                    className={cn(
+                      "h-2.5 w-2.5 rounded-full",
+                      STATUS_COLORS[status],
+                    )}
+                  />
+                  {STATUS_LABELS[status]}
+                </span>
+              ))}
+            </div>
 
-      <div className="flex flex-wrap gap-3 text-xs text-muted-foreground">
-        {(Object.keys(STATUS_COLORS) as SessionStatus[]).map((status) => (
-          <span key={status} className="flex items-center gap-1.5 capitalize">
-            <span className={cn("h-2.5 w-2.5 rounded-full", STATUS_COLORS[status])} />
-            {STATUS_LABELS[status]}
-          </span>
-        ))}
-      </div>
+            {tz && (
+              <span className="flex shrink-0 items-center gap-1.5 text-xs text-muted-foreground">
+                <MapPin className="h-3.5 w-3.5" />
+                Times in <strong>{tz}</strong>
+              </span>
+            )}
+          </div>
 
-      {truncated && (
-        <p className="text-xs text-amber-600">
-          Showing the most recent {sessions.length} of {data?.count} sessions.
-        </p>
-      )}
-
+          {/* Count na — **warning**. Backend ei endpoint-e date-range filter dey
+              na, tai 200-e cap kora. Shudhu tokhon-i othe jokhon asholei data
+              kata porche; shoriye dile student bhabto puro list dekhche. */}
+          {truncated && (
+            <p className="text-xs text-amber-600">
+              Showing the most recent {sessions.length} of {data?.count}{" "}
+              sessions.
+            </p>
+          )}
+        </div>
+      }
+    >
       <AsyncStateWrapper
         loading={isLoading}
         error={isError ? "Failed to load your sessions." : null}
       >
         {viewMode === "month" ? (
-          <MonthView year={year} month={month} sessions={sessions} timezone={tz} />
+          <MonthView
+            year={year}
+            month={month}
+            sessions={sessions}
+            timezone={tz}
+          />
         ) : (
           <WeekView weekStart={weekStart} sessions={sessions} timezone={tz} />
         )}
       </AsyncStateWrapper>
-    </div>
+    </TableCard>
   );
 }

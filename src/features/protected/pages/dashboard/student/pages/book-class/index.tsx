@@ -1,5 +1,6 @@
 "use client";
 
+import { FormSection } from "@/components/shared/form-related/form-section";
 import { SubmitButton } from "@/components/shared/form-related/submit-button";
 import { SubmitErrorSummary } from "@/components/shared/form-related/submit-error-summary";
 import type { SubmitErrorItem } from "@/hooks/use-zod-tanstack-form";
@@ -8,7 +9,7 @@ import DashboardPageLayout from "@/features/protected/pages/dashboard/shared/com
 import { useMyPackages } from "@/features/protected/pages/dashboard/student/pages/my-packages/queries/use-my-packages";
 import { useStudentDashboard } from "@/features/protected/pages/dashboard/student/pages/overview/queries/use-student-dashboard";
 import { cn } from "@/lib/utils";
-import { ChevronRight } from "lucide-react";
+import { CalendarClock, ChevronRight, Package, UserRound } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import type { PublicPackageTeacher } from "@/features/marketing/types/public-api.types";
 import { useState } from "react";
@@ -18,7 +19,23 @@ import { StepTeacher } from "./components/step-teacher";
 import { useBookSession } from "./queries/use-book-session";
 import { BookSessionSchema } from "./schemas/book-session.schema";
 
-const STEPS = ["Choose package", "Choose teacher", "Pick a time"] as const;
+const STEPS = [
+  {
+    title: "Choose package",
+    description: "Only packages with classes left are shown.",
+    icon: Package,
+  },
+  {
+    title: "Choose teacher",
+    description: "Only the teachers this package can be booked with.",
+    icon: UserRound,
+  },
+  {
+    title: "Pick a time",
+    description: "Times are shown in your own timezone.",
+    icon: CalendarClock,
+  },
+] as const;
 
 const FIELD_LABELS: Record<string, string> = {
   student_package: "Package",
@@ -107,11 +124,11 @@ export default function BookClassIndex() {
       title="Book a class"
       subtitle="Use one of the classes remaining on your package."
     >
-      <div className="max-w-3xl space-y-6">
+      <div className="max-w-3xl space-y-5">
         <div className="flex flex-wrap gap-1">
-          {STEPS.map((label, index) => (
+          {STEPS.map((item, index) => (
             <button
-              key={label}
+              key={item.title}
               type="button"
               // Ager step-e fire jawa jay, shamner gula na
               disabled={index > step}
@@ -123,86 +140,94 @@ export default function BookClassIndex() {
                 index > step && "text-muted-foreground",
               )}
             >
-              <span>{index + 1}.</span> {label}
+              <span>{index + 1}.</span> {item.title}
             </button>
           ))}
         </div>
 
-        {step === 0 && (
-          <StepPackage
-            selectedId={packageId}
-            onSelect={(studentPackageId, catalogueId) => {
-              setPackageId(studentPackageId);
-              setCataloguePackageId(catalogueId);
-              // Package bodlale allowed teacher list-o bodlate pare
-              setTeacher(null);
-              setSlot(null);
-              setStep(1);
-            }}
-          />
-        )}
+        <FormSection
+          title={STEPS[step].title}
+          description={STEPS[step].description}
+          icon={STEPS[step].icon}
+        >
+          <div className="space-y-5">
+            {step === 0 && (
+              <StepPackage
+                selectedId={packageId}
+                onSelect={(studentPackageId, catalogueId) => {
+                  setPackageId(studentPackageId);
+                  setCataloguePackageId(catalogueId);
+                  // Package bodlale allowed teacher list-o bodlate pare
+                  setTeacher(null);
+                  setSlot(null);
+                  setStep(1);
+                }}
+              />
+            )}
 
-        {step === 1 && (
-          <StepTeacher
-            packageId={activeCataloguePackageId}
-            timezone={timezone}
-            fromDate={fromDate}
-            onFromDateChange={(date) => {
-              setFromDate(date);
-              // Date bodlale teacher list-o bodlay, tai purono bachai bad
-              setTeacher(null);
-              setSlot(null);
-            }}
-            selectedId={teacher?.id ?? null}
-            onSelect={(picked) => {
-              setTeacher(picked);
-              setSlot(null);
-              setStep(2);
-            }}
-          />
-        )}
+            {step === 1 && (
+              <StepTeacher
+                packageId={activeCataloguePackageId}
+                timezone={timezone}
+                fromDate={fromDate}
+                onFromDateChange={(date) => {
+                  setFromDate(date);
+                  // Date bodlale teacher list-o bodlay, tai purono bachai bad
+                  setTeacher(null);
+                  setSlot(null);
+                }}
+                selectedId={teacher?.id ?? null}
+                onSelect={(picked) => {
+                  setTeacher(picked);
+                  setSlot(null);
+                  setStep(2);
+                }}
+              />
+            )}
 
-        {step === 2 && teacher && (
-          <StepSlot
-            days={teacher.days}
-            timezone={timezone}
-            selectedSlot={slot}
-            onSelect={setSlot}
-          />
-        )}
+            {step === 2 && teacher && (
+              <StepSlot
+                days={teacher.days}
+                timezone={timezone}
+                selectedSlot={slot}
+                onSelect={setSlot}
+              />
+            )}
 
-        <SubmitErrorSummary errors={errors} />
+            <SubmitErrorSummary errors={errors} />
 
-        <div className="flex items-center justify-between gap-3 border-t pt-4">
-          <Button
-            variant="ghost"
-            disabled={step === 0 || bookSession.isPending}
-            onClick={() => setStep((current) => current - 1)}
-          >
-            Back
-          </Button>
+            <div className="flex items-center justify-between gap-3 border-t pt-4">
+              <Button
+                variant="ghost"
+                disabled={step === 0 || bookSession.isPending}
+                onClick={() => setStep((current) => current - 1)}
+              >
+                Back
+              </Button>
 
-          {step < 2 ? (
-            <Button
-              disabled={!canAdvance}
-              onClick={() => setStep((current) => current + 1)}
-              className="gap-1.5"
-            >
-              Continue
-              <ChevronRight className="h-4 w-4" />
-            </Button>
-          ) : (
-            <SubmitButton
-              type="button"
-              isLoading={bookSession.isPending}
-              loadingText="Booking..."
-              disabled={!slot}
-              onClick={handleConfirm}
-            >
-              Confirm booking
-            </SubmitButton>
-          )}
-        </div>
+              {step < 2 ? (
+                <Button
+                  disabled={!canAdvance}
+                  onClick={() => setStep((current) => current + 1)}
+                  className="gap-1.5"
+                >
+                  Continue
+                  <ChevronRight className="h-4 w-4" />
+                </Button>
+              ) : (
+                <SubmitButton
+                  type="button"
+                  isLoading={bookSession.isPending}
+                  loadingText="Booking..."
+                  disabled={!slot}
+                  onClick={handleConfirm}
+                >
+                  Confirm booking
+                </SubmitButton>
+              )}
+            </div>
+          </div>
+        </FormSection>
       </div>
     </DashboardPageLayout>
   );
