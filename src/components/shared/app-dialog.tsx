@@ -13,14 +13,20 @@ import { Button } from "../ui/button";
 import { Edit, Eye } from "lucide-react";
 import { ScrollArea } from "../ui/scroll-area";
 
-type DialogSize = "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "5xl" | "6xl" | "7xl";
+type DialogSize =
+  "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl" | "5xl" | "6xl" | "7xl";
 
 export interface AppDialogProps {
   open?: boolean;
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
 
-  trigger?: React.ReactNode;
+  /**
+   * `undefined` dile default button, `null` dile kono trigger-i na —
+   * tokhon `open` prop diye bahir theke kholte hobe (jemon dropdown
+   * menu item theke).
+   */
+  trigger?: React.ReactNode | null;
 
   title?: React.ReactNode;
   description?: React.ReactNode;
@@ -92,7 +98,9 @@ export function AppDialog({
 
   return (
     <Dialog open={open} defaultOpen={defaultOpen} onOpenChange={onOpenChange}>
-      <DialogTrigger asChild>{trigger ?? defaultTrigger}</DialogTrigger>
+      {trigger !== null && (
+        <DialogTrigger asChild>{trigger ?? defaultTrigger}</DialogTrigger>
+      )}
 
       <DialogContent
         className={cn(sizeClasses[size], "p-0", className, contentClassName)}
