@@ -21,9 +21,15 @@ export default function MyPackagesIndex() {
         loading={isLoading}
         error={isError ? "Failed to load your packages." : null}
       >
+        {/*
+          `<section>` na, `<div>` — globals.css-e marketing-er jonno
+          `section { padding: 96px 0 }` ache, ar oita bare element selector bole
+          dashboard-eও lagto (heading-er age 96px faka). `.dashboard-scope` diye
+          oita off kora ache, kintu ekhane semantic-e kono labh-o nai, tai div-i.
+        */}
         <div className="space-y-8">
           {active.length > 0 && (
-            <section>
+            <div>
               <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3">
                 Active
               </h2>
@@ -32,11 +38,11 @@ export default function MyPackagesIndex() {
                   <PackageCard key={pkg.id} pkg={pkg} />
                 ))}
               </div>
-            </section>
+            </div>
           )}
 
           {past.length > 0 && (
-            <section>
+            <div>
               <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3">
                 Past / Completed
               </h2>
@@ -45,7 +51,7 @@ export default function MyPackagesIndex() {
                   <PackageCard key={pkg.id} pkg={pkg} />
                 ))}
               </div>
-            </section>
+            </div>
           )}
 
           {packages.length === 0 && (
