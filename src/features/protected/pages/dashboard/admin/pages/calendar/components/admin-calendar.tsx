@@ -3,6 +3,7 @@
 import { AppDialog } from "@/components/shared/app-dialog";
 import AsyncStateWrapper from "@/components/shared/async-state-wrapper";
 import { ReusableSelect } from "@/components/shared/form-related/reusable-select";
+import { TableCard } from "@/components/shared/table-card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useTeachers } from "@/features/protected/pages/dashboard/admin/pages/teachers/queries/use-teachers";
@@ -174,8 +175,9 @@ function MonthView({
   const todayIso = localDateInput(new Date());
 
   return (
-    <div className="overflow-hidden rounded-lg border">
-      <div className="grid grid-cols-7 bg-muted text-xs font-medium">
+    // Card-er bhitore boshe — nijer border dile border-er bhitore border hoto
+    <div className="overflow-hidden">
+      <div className="grid grid-cols-7 bg-muted/40 text-xs font-medium">
         {DAY_NAMES.map((d) => (
           <div key={d} className="py-2 text-center text-muted-foreground">
             {d}
@@ -232,8 +234,8 @@ function WeekView({
   const todayIso = localDateInput(new Date());
 
   return (
-    <div className="overflow-hidden rounded-lg border">
-      <div className="grid grid-cols-7 border-b bg-muted">
+    <div className="overflow-hidden">
+      <div className="grid grid-cols-7 border-b bg-muted/40">
         {days.map((d) => {
           const isToday = localDateInput(d) === todayIso;
           return (
@@ -342,83 +344,120 @@ export function AdminCalendar() {
       ? `${MONTH_NAMES[month]} ${year}`
       : `Week of ${formatSchoolDate(weekStart.toISOString())}`;
 
+  const filtering = Boolean(teacher || status);
+
   return (
-    <div className="space-y-4">
-      <div className="flex flex-wrap items-center gap-3">
-        <div className="flex items-center gap-1">
-          <Button variant="outline" size="icon" onClick={goBack}>
-            <ChevronLeft className="h-4 w-4" />
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setCurrentDate(new Date())}
-          >
-            Today
-          </Button>
-          <Button variant="outline" size="icon" onClick={goForward}>
-            <ChevronRight className="h-4 w-4" />
-          </Button>
+    <TableCard
+      toolbar={
+        // Duita row: upore navigation + view toggle, niche filter.
+        // Ek row-e dile 6 ta control chepe jeto.
+        <div className="w-full space-y-3">
+          <div className="flex flex-wrap items-center gap-3">
+            <div className="flex items-center gap-1">
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={goBack}
+                aria-label="Previous"
+                className="bg-background"
+              >
+                <ChevronLeft className="h-4 w-4" />
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                className="bg-background"
+                onClick={() => setCurrentDate(new Date())}
+              >
+                Today
+              </Button>
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={goForward}
+                aria-label="Next"
+                className="bg-background"
+              >
+                <ChevronRight className="h-4 w-4" />
+              </Button>
+            </div>
+
+            <span className="flex-1 text-base font-semibold">{title}</span>
+
+            <div className="flex overflow-hidden rounded-md border bg-background">
+              <Button
+                variant={viewMode === "month" ? "default" : "ghost"}
+                size="sm"
+                className="gap-1 rounded-none"
+                onClick={() => setViewMode("month")}
+              >
+                <LayoutGrid className="h-3.5 w-3.5" /> Month
+              </Button>
+              <Button
+                variant={viewMode === "week" ? "default" : "ghost"}
+                size="sm"
+                className="gap-1 rounded-none border-l"
+                onClick={() => setViewMode("week")}
+              >
+                <Calendar className="h-3.5 w-3.5" /> Week
+              </Button>
+            </div>
+          </div>
+
+          <div className="flex flex-wrap items-center gap-3">
+            <ReusableSelect
+              className="w-48 bg-background"
+              value={teacher}
+              options={teacherOptions}
+              placeholder="All teachers"
+              onChange={(e) => setTeacher(e.target.value)}
+            />
+            <ReusableSelect
+              className="w-40 bg-background"
+              value={status}
+              options={STATUS_OPTIONS}
+              placeholder="All statuses"
+              onChange={(e) => setStatus(e.target.value as SessionStatus | "")}
+            />
+            {filtering && (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => {
+                  setTeacher("");
+                  setStatus("");
+                }}
+              >
+                Clear
+              </Button>
+            )}
+          </div>
         </div>
-
-        <span className="flex-1 text-base font-semibold">{title}</span>
-
-        <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+      }
+      meta={
+        <span className="flex items-center gap-1.5">
           <MapPin className="h-3.5 w-3.5" />
-          <span>Times in {SCHOOL_TIMEZONE_LABEL}</span>
-        </div>
-
-        <div className="flex overflow-hidden rounded-md border">
-          <Button
-            variant={viewMode === "month" ? "default" : "ghost"}
-            size="sm"
-            className="gap-1 rounded-none"
-            onClick={() => setViewMode("month")}
-          >
-            <LayoutGrid className="h-3.5 w-3.5" /> Month
-          </Button>
-          <Button
-            variant={viewMode === "week" ? "default" : "ghost"}
-            size="sm"
-            className="gap-1 rounded-none border-l"
-            onClick={() => setViewMode("week")}
-          >
-            <Calendar className="h-3.5 w-3.5" /> Week
-          </Button>
-        </div>
-      </div>
-
-      <div className="flex flex-wrap items-center gap-3">
-        <ReusableSelect
-          className="w-48"
-          value={teacher}
-          options={teacherOptions}
-          placeholder="All teachers"
-          onChange={(e) => setTeacher(e.target.value)}
-        />
-        <ReusableSelect
-          className="w-40"
-          value={status}
-          options={STATUS_OPTIONS}
-          placeholder="All statuses"
-          onChange={(e) => setStatus(e.target.value as SessionStatus | "")}
-        />
-      </div>
-
-      {legend.length > 0 && (
-        <div className="flex flex-wrap gap-3 text-xs text-muted-foreground">
-          {legend.map((item) => (
-            <span key={item.name} className="flex items-center gap-1.5">
-              <span
-                className="h-2.5 w-2.5 rounded-full"
-                style={{ backgroundColor: item.color }}
-              />
-              {item.name}
-            </span>
-          ))}
-        </div>
-      )}
-
+          Times in {SCHOOL_TIMEZONE_LABEL}
+        </span>
+      }
+      footer={
+        legend.length > 0 ? (
+          <div className="flex flex-wrap gap-3 text-xs text-muted-foreground">
+            {legend.map((item) => (
+              <span key={item.name} className="flex items-center gap-1.5">
+                {/* Rong backend-er `event.color` theke — ekhane hisheb kora hoy na,
+                    na hole filter korle teacher-er rong bodle jeto */}
+                <span
+                  className="h-2.5 w-2.5 rounded-full"
+                  style={{ backgroundColor: item.color }}
+                />
+                {item.name}
+              </span>
+            ))}
+          </div>
+        ) : undefined
+      }
+    >
       <AsyncStateWrapper
         loading={isLoading}
         error={isError ? "Failed to load the calendar." : null}
@@ -429,6 +468,6 @@ export function AdminCalendar() {
           <WeekView weekStart={weekStart} events={events} />
         )}
       </AsyncStateWrapper>
-    </div>
+    </TableCard>
   );
 }
