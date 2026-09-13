@@ -171,6 +171,11 @@ function MonthView({
     ...Array.from({ length: daysInMonth }, (_, i) => i + 1),
   ];
 
+  // Shesh week-tao bhorte hobe. Age shudhu shurur khali ghor bhorto, tai shesh
+  // row-e koyekta cell-i thakto na — `divide-x divide-y` er line gula ordhek
+  // giye theme jeto ar row-ta bhanga dekhato.
+  while (cells.length % 7 !== 0) cells.push(null);
+
   const byDate = useMemo(() => groupByDate(events), [events]);
   const todayIso = localDateInput(new Date());
 
@@ -434,14 +439,14 @@ export function AdminCalendar() {
           </div>
         </div>
       }
-      meta={
-        <span className="flex items-center gap-1.5">
-          <MapPin className="h-3.5 w-3.5" />
-          Times in {SCHOOL_TIMEZONE_LABEL}
-        </span>
-      }
+      /*
+        Timezone-ta `meta` te chilo, kintu toolbar ekhane `w-full` (duita row),
+        tai meta wrap kore Month/Week toggle-er niche giye jhulto — kono group-er
+        shathe mile na. Legend-er shathe footer-e rakha holo: duita-i "ei grid
+        ta kivabe porte hoy" jatiyo tottho, ar oikhane jayga-o ache.
+      */
       footer={
-        legend.length > 0 ? (
+        <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
           <div className="flex flex-wrap gap-3 text-xs text-muted-foreground">
             {legend.map((item) => (
               <span key={item.name} className="flex items-center gap-1.5">
@@ -455,7 +460,12 @@ export function AdminCalendar() {
               </span>
             ))}
           </div>
-        ) : undefined
+
+          <span className="flex items-center gap-1.5 text-xs text-muted-foreground">
+            <MapPin className="h-3.5 w-3.5 shrink-0" />
+            Times in {SCHOOL_TIMEZONE_LABEL}
+          </span>
+        </div>
       }
     >
       <AsyncStateWrapper
