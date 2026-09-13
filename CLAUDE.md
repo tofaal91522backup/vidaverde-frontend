@@ -64,7 +64,6 @@ all of it.
 ```tsx
 <TableCard
   toolbar={<><TableSearchInput onSearch={setSearch} /><ReusableSelect … /></>}
-  meta={`${count} teachers`}
   footer={<Pagination page={page} total={count} onPageChange={setPage} />}
 >
   <DataTable embedded data={rows} columns={teachersColumns} loading error />
@@ -72,8 +71,10 @@ all of it.
 ```
 
 - **`<TableCard>`** (`components/shared/table-card.tsx`) wraps filters + table +
-  pagination in one card. `toolbar` is the filters, `meta` the right-hand count,
-  `footer` the pagination. Omit `footer` when the endpoint is not paginated.
+  pagination in one card. `toolbar` is the filters, `footer` the pagination.
+  Omit `footer` when the endpoint is not paginated. There is also a `meta` slot
+  for right-hand text, but **do not put row counts in it** — the pagination
+  already says how many there are, and a count beside every filter was noise.
 - **`<DataTable embedded>`** inside a TableCard. Without `embedded` you get a
   border inside a border.
 - **`<TableSearchInput onSearch>`** for search, never a bare `<Input>`. It

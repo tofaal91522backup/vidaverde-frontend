@@ -122,14 +122,6 @@ export function SessionsTable() {
           </div>
         </>
       }
-      meta={
-        isFetching ? (
-          <span className="flex items-center gap-2">
-            <Loader2 className="size-4 animate-spin" />
-            Updating
-          </span>
-        ) : null
-      }
       footer={
         <Pagination
           page={page}

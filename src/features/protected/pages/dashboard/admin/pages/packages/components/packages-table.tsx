@@ -39,11 +39,6 @@ export function PackagesTable() {
           onSearch={setSearch}
         />
       }
-      meta={
-        search.trim()
-          ? `${packages.length} of ${all.length}`
-          : `${all.length} ${all.length === 1 ? "package" : "packages"}`
-      }
     >
       <DataTable
         embedded

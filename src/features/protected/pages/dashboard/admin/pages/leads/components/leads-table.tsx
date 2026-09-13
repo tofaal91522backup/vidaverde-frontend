@@ -85,13 +85,6 @@ export function LeadsTable() {
           )}
         </>
       }
-      meta={
-        isLoading
-          ? "Loading…"
-          : `${count} ${count === 1 ? "lead" : "leads"}${
-              filtering ? " match" : ""
-            }`
-      }
       footer={<Pagination page={page} total={count} onPageChange={setPage} />}
     >
       <DataTable

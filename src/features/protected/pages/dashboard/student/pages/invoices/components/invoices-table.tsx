@@ -1,8 +1,8 @@
 "use client";
 
 import DataTable from "@/components/shared/data-table";
-import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
+import { TableCard } from "@/components/shared/table-card";
+import { TableSearchInput } from "@/components/shared/table-search-input";
 import { useMemo, useState } from "react";
 import { useInvoices } from "../queries/use-invoices";
 import { invoicesColumns } from "./invoices-column";
@@ -27,23 +27,25 @@ export function InvoicesTable() {
   }, [data?.results, search]);
 
   return (
-    <div className="space-y-4">
-      <div className="relative max-w-sm">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-        <Input
+    <TableCard
+      toolbar={
+        // Debounce chhoto — filter client-side, kono request jay na
+        <TableSearchInput
           placeholder="Search by package or invoice no..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="pl-9"
+          delay={150}
+          onSearch={setSearch}
         />
-      </div>
-
+      }
+    >
       <DataTable
+        embedded
         data={invoices}
         columns={invoicesColumns}
         loading={isLoading}
         error={isError ? "Failed to load invoices." : ""}
       />
-    </div>
+
+      {/* Backend ei endpoint paginate kore na — tai <Pagination> nai */}
+    </TableCard>
   );
 }

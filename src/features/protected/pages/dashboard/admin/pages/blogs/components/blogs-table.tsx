@@ -66,13 +66,6 @@ export function BlogsTable() {
           )}
         </>
       }
-      meta={
-        isLoading
-          ? "Loading…"
-          : `${count} ${count === 1 ? "post" : "posts"}${
-              filtering ? " match" : ""
-            }`
-      }
       footer={
         <Pagination page={page} total={count} onPageChange={setPage} />
       }

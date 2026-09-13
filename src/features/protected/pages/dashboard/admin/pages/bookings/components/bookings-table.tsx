@@ -122,27 +122,6 @@ export function BookingsTable() {
           </div>
         </>
       }
-      meta={
-        <Button
-          variant="outline"
-          className="gap-1.5"
-          disabled={exportBookings.isPending}
-          onClick={() =>
-            exportBookings.mutate({
-              payment_status: paymentStatus,
-              from,
-              to,
-            })
-          }
-        >
-          {exportBookings.isPending ? (
-            <Spinner className="h-4 w-4" />
-          ) : (
-            <Download className="h-4 w-4" />
-          )}
-          Export CSV
-        </Button>
-      }
       footer={
         <Pagination
           page={page}

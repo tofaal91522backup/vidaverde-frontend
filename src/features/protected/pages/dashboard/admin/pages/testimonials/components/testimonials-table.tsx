@@ -38,11 +38,6 @@ export function TestimonialsTable() {
           onSearch={setSearch}
         />
       }
-      meta={
-        search.trim()
-          ? `${testimonials.length} of ${all.length}`
-          : `${all.length} ${all.length === 1 ? "testimonial" : "testimonials"}`
-      }
     >
       <DataTable
         embedded

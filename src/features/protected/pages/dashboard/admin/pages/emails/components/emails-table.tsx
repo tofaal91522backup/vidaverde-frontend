@@ -55,11 +55,6 @@ export function EmailsTable() {
           )}
         </>
       }
-      meta={
-        isLoading
-          ? "Loading…"
-          : `${count} ${count === 1 ? "email" : "emails"}${status ? " match" : ""}`
-      }
       footer={
         <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
           <Pagination page={page} total={count} onPageChange={setPage} />

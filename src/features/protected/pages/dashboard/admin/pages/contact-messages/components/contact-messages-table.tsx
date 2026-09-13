@@ -76,13 +76,6 @@ export function ContactMessagesTable() {
           )}
         </>
       }
-      meta={
-        isLoading
-          ? "Loading…"
-          : `${count} ${count === 1 ? "enquiry" : "enquiries"}${
-              filtering ? " match" : ""
-            }`
-      }
       footer={<Pagination page={page} total={count} onPageChange={setPage} />}
     >
       <DataTable
