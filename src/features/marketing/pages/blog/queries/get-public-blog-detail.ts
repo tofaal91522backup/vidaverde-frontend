@@ -1,4 +1,7 @@
-import type { PublicBlogDetail } from "@/features/marketing/types/public-api.types";
+import type {
+  PublicBlogDetail,
+  PublicBlogDetailResponse,
+} from "@/features/marketing/types/public-api.types";
 import { makeEndpoint } from "@/lib/http/make-endpoint";
 import { publicRequest } from "@/lib/http/request";
 import axios from "axios";
@@ -15,16 +18,23 @@ import axios from "axios";
  * @throws onnano network/server error — page tokhon error boundary-te jabe,
  *   karon "server down" ke "post nai" bole dekhano bhul hoto.
  *
- * docs/bruno/public/blogs.bru
+ * ⚠️ Response ta **envelope-e mora**: `{ success, post: {...} }` — list
+ * endpoint-er moto bare na. Age puro response-ta-i post hisebe fire deওয়া
+ * hocchilo, tai page-e title/body/reading_time shob `undefined` ashto ar
+ * article ta khali dekhato.
+ *
+ * docs/bruno/public/blog detail.bru
  */
 export async function getPublicBlogDetail(
   slug: string,
   lang: string,
 ): Promise<PublicBlogDetail | null> {
   try {
-    return await publicRequest.get<PublicBlogDetail>(
+    const response = await publicRequest.get<PublicBlogDetailResponse>(
       makeEndpoint(`/public/blogs/${encodeURIComponent(slug)}/`, { lang }),
     );
+
+    return response?.post ?? null;
   } catch (error) {
     if (axios.isAxiosError(error) && error.response?.status === 404) {
       return null;

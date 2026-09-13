@@ -175,6 +175,17 @@ export type PublicBlogDetail = PublicBlogListItem & {
   meta_description?: string;
 };
 
+/**
+ * `GET /public/blogs/:slug/` — ⚠️ **envelope-er bhitore**, list-er moto bare na.
+ *
+ * `{ success, post: {...} }`. List endpoint paginated object dey ar
+ * packages/teachers bare array — ei ek-i folder-e tin rokom shape, tai eta
+ * alada kore likha.
+ */
+export type PublicBlogDetailResponse = ApiResponse & {
+  post: PublicBlogDetail;
+};
+
 export type PublicBlogsResponse = PaginatedResponse<PublicBlogListItem>;
 
 /** GET /public/testimonials/ — bare array. */
