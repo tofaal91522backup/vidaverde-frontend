@@ -1,3 +1,4 @@
+import { SPANISH_LEVEL_VALUES } from "@/constants/spanish-levels";
 import { z } from "zod";
 
 /**
@@ -17,13 +18,7 @@ export const StudentProfileSchema = z.object({
   phone_number: z.string(),
   /** IANA name, e.g. "Europe/Berlin". Ochena zone hole backend 400 dey */
   timezone: z.string().min(1, "Timezone is required"),
-  current_spanish_level: z.enum([
-    "none",
-    "beginner",
-    "intermediate",
-    "upper_intermediate",
-    "advanced",
-  ]),
+  current_spanish_level: z.enum(SPANISH_LEVEL_VALUES),
   profile_img_url: z
     .string()
     .refine((value) => !value || /^https?:\/\//.test(value), {
@@ -33,10 +28,11 @@ export const StudentProfileSchema = z.object({
 
 export type StudentProfileValues = z.infer<typeof StudentProfileSchema>;
 
-export const SPANISH_LEVEL_OPTIONS = [
-  { value: "none", label: "No Spanish yet" },
-  { value: "beginner", label: "Beginner" },
-  { value: "intermediate", label: "Intermediate" },
-  { value: "upper_intermediate", label: "Upper intermediate" },
-  { value: "advanced", label: "Advanced" },
-] as const;
+/*
+  `SPANISH_LEVEL_OPTIONS` ekhan theke shorano hoyeche.
+
+  Ekta copy chilo `src/constants/spanish-levels.ts` e (registration ar public
+  checkout use kore) ar arekta ekhane — ar **label duita alada chilo**. Mane
+  student registration-e "Beginner. I know some basics" dekhto, ar nijer
+  profile-e "Beginner". Ekhon ek jayga.
+*/

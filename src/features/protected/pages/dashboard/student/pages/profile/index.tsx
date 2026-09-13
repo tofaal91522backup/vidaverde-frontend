@@ -12,16 +12,17 @@ export default function StudentProfileIndex() {
     <DashboardPageLayout
       title="My Profile"
       subtitle="Your details, and the timezone everything in the portal is shown in."
+      /* Form-ta xl:-e duita column-e bhage; Tailwind breakpoint viewport dhore
+         chole, container dhore na — chhoto container-e column duita chepe jeto */
+      maxWidth="max-w-6xl"
     >
-      <div className="max-w-2xl">
-        <AsyncStateWrapper
-          loading={isLoading}
-          error={isError ? "Could not load your profile." : null}
-        >
-          {/* Form ta data asar por-i mount hoy, jate defaultValues thik thake */}
-          {data?.profile && <ProfileForm profile={data.profile} />}
-        </AsyncStateWrapper>
-      </div>
+      <AsyncStateWrapper
+        loading={isLoading}
+        error={isError ? "Could not load your profile." : null}
+      >
+        {/* Form ta data asar por-i mount hoy, jate defaultValues thik thake */}
+        {data?.profile && <ProfileForm profile={data.profile} />}
+      </AsyncStateWrapper>
     </DashboardPageLayout>
   );
 }
