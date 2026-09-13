@@ -168,7 +168,20 @@ export type PublicBlogListItem = {
 };
 
 /** Detail-er `body` and `related_posts` Bruno spec-e documented. */
-export type PublicBlogDetail = PublicBlogListItem & {
+/**
+ * ⚠️ **Detail-e `thumbnail` nai — `image_urls` ache.**
+ *
+ * List (`blogs.bru`) proti item-e ekta `thumbnail` string dey; detail
+ * (`blog detail.bru`) puro `image_urls` array dey ar prothom ta-i thumbnail
+ * (admin form-eও ei niyom lekha). Tai `PublicBlogListItem` theke `thumbnail`
+ * `Omit` kora — na hole type bolto field ta ache, othocho render-e `undefined`
+ * ashto ar chhobi chup-chap uthe jeto.
+ *
+ * `related_posts` list item, tai oigula-te `thumbnail`-i thake.
+ */
+export type PublicBlogDetail = Omit<PublicBlogListItem, "thumbnail"> & {
+  /** Prothom ta hero/thumbnail. Khali hote pare. */
+  image_urls: string[];
   body: string;
   related_posts: PublicBlogListItem[];
   meta_title?: string;

@@ -25,6 +25,15 @@ export function PostDetail({ post }: { post: PublicBlogDetail }) {
   const body = sanitizeBlogHtml(post.body);
   // Backend already 3 tar beshi dey na, tobu UI-r dik theke cap
   const related = (post.related_posts ?? []).slice(0, 3);
+  /*
+    Detail response-e `thumbnail` nai — `image_urls` array ache, ar prothom ta-i
+    thumbnail (admin blog form-eও ei niyom lekha: "The first image is used as
+    the thumbnail on the blog index").
+
+    Age ekhane `post.thumbnail` pora hocchilo, ja detail-e kokhono thake na —
+    tai chhobi chup-chap uthe jeto, kono error chhara.
+  */
+  const heroImage = post.image_urls?.[0];
 
   return (
     <>
@@ -66,12 +75,12 @@ export function PostDetail({ post }: { post: PublicBlogDetail }) {
       >
         <Container>
           <div className="text-[16px] leading-[1.75] text-vv-ink-2">
-            {/* Thumbnail optional — khali hole figure-i dekhano hoy na */}
-            {post.thumbnail && (
+            {/* Chhobi optional — na thakle figure-i dekhano hoy na */}
+            {heroImage && (
               <figure className="float-right mb-6 ml-8 w-[44%] max-w-[27rem] overflow-hidden rounded-[22px] border border-vv-line bg-vv-bg-warm max-[760px]:float-none max-[760px]:mb-8 max-[760px]:ml-0 max-[760px]:w-full max-[760px]:max-w-none">
                 <div className="relative aspect-[4/3]">
                   <Image
-                    src={post.thumbnail}
+                    src={heroImage}
                     alt={post.title}
                     fill
                     sizes="(max-width: 760px) 100vw, 44vw"
