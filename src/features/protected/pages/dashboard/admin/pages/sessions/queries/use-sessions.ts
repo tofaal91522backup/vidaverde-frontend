@@ -5,6 +5,7 @@ import type {
   SessionStatus,
 } from "@/features/protected/pages/dashboard/admin/types/admin.types";
 import { useFetchData } from "@/hooks/use-fetch-data";
+import { keepPreviousData } from "@tanstack/react-query";
 import { useMutationHandler } from "@/hooks/use-mutation-handler";
 import { makeEndpoint } from "@/lib/http/make-endpoint";
 import { request } from "@/lib/http/request";
@@ -46,6 +47,9 @@ export function useSessions(params: SessionListParams = {}) {
   return useFetchData<AdminSessionsResponse>({
     url: makeEndpoint("/administrator/sessions/", query),
     querykey: [SESSIONS_QUERY_KEY, query],
+    // Tab ba filter bodlale purono row gula porde thake — na hole table-ta
+    // unmount hoye spinner boshto (dekho use-students)
+    options: { placeholderData: keepPreviousData },
   });
 }
 
