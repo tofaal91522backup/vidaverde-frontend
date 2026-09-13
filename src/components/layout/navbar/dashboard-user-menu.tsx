@@ -1,6 +1,6 @@
 "use client";
 
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import SignOut from "@/features/auth/components/sign-out";
+import { useStudentProfile } from "@/features/protected/pages/dashboard/student/pages/profile/queries/use-student-profile";
 import { initials } from "@/utils/initials";
 import { Home, LayoutDashboard, UserRound } from "lucide-react";
 import Link from "next/link";
@@ -50,6 +51,20 @@ export function DashboardUserMenu({
   const name = user?.name || "Account";
   const email = user?.email || "";
   const isStudent = user?.role === "STUDENT";
+
+  /*
+    Avatar-er chhobi `GET /student/me/` theke — session-e rakha hoy na.
+
+    Session ekta signed JWT; chhobi oikhane bosale student photo bodlanor por-o
+    next login porjonto purono chhobi-i dekhato. Ekhane profile query-r **ek-i
+    key** use kora hoy, tai profile save-er invalidate-e navbar-o shathe shathe
+    bodlay.
+
+    `enabled` shudhu STUDENT-e: eta authenticated endpoint, ar admin-er kono
+    `/student/me/` nai.
+  */
+  const { data: profileData } = useStudentProfile(isStudent);
+  const avatarUrl = profileData?.profile?.profile_img_url || undefined;
   const dashboardHref = isStudent
     ? "/dashboard/student"
     : user?.role === "ADMIN"
@@ -66,6 +81,7 @@ export function DashboardUserMenu({
           aria-label="Account menu"
         >
           <Avatar className="size-9">
+            <AvatarImage src={avatarUrl} alt={name} />
             <AvatarFallback className="text-xs font-medium">
               {initials(name)}
             </AvatarFallback>
@@ -77,6 +93,7 @@ export function DashboardUserMenu({
         <DropdownMenuLabel className="p-0 font-normal">
           <div className="flex items-center gap-2.5 px-1 py-1.5 text-left">
             <Avatar className="size-9">
+              <AvatarImage src={avatarUrl} alt={name} />
               <AvatarFallback className="text-xs font-medium">
                 {initials(name)}
               </AvatarFallback>

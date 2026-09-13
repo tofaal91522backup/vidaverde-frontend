@@ -13,12 +13,21 @@ export const STUDENT_PROFILE_QUERY_KEY = "student-profile";
 /**
  * GET /student/me/ — profile.
  *
+ * ⚠️ **Authenticated endpoint.** Logged-out obosthay dakle 401 ashe ar
+ * `apiClient`-er interceptor session destroy kore redirect kore dey. Tai
+ * jekhane user logged-in kina nishchit na (jemon marketing navbar), shekhane
+ * `enabled` diye gate korte hobe.
+ *
+ * Navbar-er avatar-o ei ek-i key use kore, tai profile save korle
+ * `useUpdateStudentProfile`-er invalidate-e navbar-er chhobi-o shathe shathe bodlay.
+ *
  * docs/bruno/student/me.bru
  */
-export function useStudentProfile() {
+export function useStudentProfile(enabled = true) {
   return useFetchData<StudentProfileResponse>({
     url: "/student/me/",
     querykey: [STUDENT_PROFILE_QUERY_KEY],
+    options: { enabled },
   });
 }
 
