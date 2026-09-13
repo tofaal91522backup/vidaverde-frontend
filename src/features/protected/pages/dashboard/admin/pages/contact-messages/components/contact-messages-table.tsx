@@ -3,10 +3,11 @@
 import DataTable from "@/components/shared/data-table";
 import { ReusableSelect } from "@/components/shared/form-related/reusable-select";
 import Pagination from "@/components/shared/pagination";
-import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
+import { TableCard } from "@/components/shared/table-card";
+import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useContactMessages } from "../queries/use-contact-messages";
+import { useContactSubjects } from "../queries/use-contact-subjects";
 import { contactMessagesColumns } from "./contact-messages-column";
 
 const HANDLED_OPTIONS = [
@@ -25,43 +26,72 @@ export function ContactMessagesTable() {
     subject,
   });
 
-  return (
-    <div className="space-y-4">
-      <div className="flex flex-wrap items-center gap-3">
-        <ReusableSelect
-          className="w-44"
-          value={handled}
-          options={HANDLED_OPTIONS}
-          placeholder="All enquiries"
-          onChange={(e) => {
-            setHandled(e.target.value as "true" | "false" | "");
-            setPage(1);
-          }}
-        />
+  // Age ekhane free-text `<Input>` chilo, debounce chhara — proti okkhore ekta
+  // kore API call jeto. Backend-e `subject` ekta enum, ar oi list-er jonno
+  // endpoint ache, tai select-i thik.
+  const { data: subjectData } = useContactSubjects();
+  const subjectOptions = subjectData?.subjects ?? [];
 
-        {/* Backend-e `subject` er valid value gula documented na, tai free text */}
-        <div className="relative max-w-xs flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input
-            placeholder="Filter by subject, e.g. immersion"
+  const filtering = Boolean(handled || subject);
+  const count = data?.count ?? 0;
+
+  return (
+    <TableCard
+      toolbar={
+        <>
+          <ReusableSelect
+            className="w-44 bg-background"
+            value={handled}
+            options={HANDLED_OPTIONS}
+            placeholder="All enquiries"
+            onChange={(e) => {
+              setHandled(e.target.value as "true" | "false" | "");
+              setPage(1);
+            }}
+          />
+
+          <ReusableSelect
+            className="w-56 bg-background"
             value={subject}
+            options={subjectOptions}
+            placeholder="All subjects"
             onChange={(e) => {
               setSubject(e.target.value);
               setPage(1);
             }}
-            className="pl-9"
           />
-        </div>
-      </div>
 
+          {filtering && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => {
+                setHandled("");
+                setSubject("");
+                setPage(1);
+              }}
+            >
+              Clear
+            </Button>
+          )}
+        </>
+      }
+      meta={
+        isLoading
+          ? "Loading…"
+          : `${count} ${count === 1 ? "enquiry" : "enquiries"}${
+              filtering ? " match" : ""
+            }`
+      }
+      footer={<Pagination page={page} total={count} onPageChange={setPage} />}
+    >
       <DataTable
+        embedded
         data={data?.results}
         columns={contactMessagesColumns}
         loading={isLoading}
         error={isError ? "Failed to load enquiries." : ""}
       />
-
-      <Pagination page={page} total={data?.count ?? 0} onPageChange={setPage} />
-    </div>
+    </TableCard>
   );
 }

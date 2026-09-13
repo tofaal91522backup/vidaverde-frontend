@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import type { AdminContactMessage } from "@/features/protected/pages/dashboard/admin/types/admin.types";
 import { formatSchoolDateTime } from "@/features/protected/pages/dashboard/admin/utils/format-school-datetime";
+import { cn } from "@/lib/utils";
 import { ColumnDef } from "@tanstack/react-table";
 import { Check, Mail, Undo2 } from "lucide-react";
 import { useState } from "react";
@@ -15,12 +16,24 @@ import { useUpdateContactMessage } from "../queries/use-contact-messages";
 function HandledButton({ message }: { message: AdminContactMessage }) {
   const { mutate, isPending } = useUpdateContactMessage();
 
+  /*
+    Duita obostha, duita rokom gurutto:
+    - Open enquiry-te "Mark handled" ei row-er **mul kaj**, tai primary.
+    - Handled obosthay "Reopen" ekta undo — dorkar hole peye jabe, kintu
+      chokhe pore thakar kono karon nai, tai muted amber.
+    Duitatei `outline` chilo, mane admin list dekhe bujhte parto na kon ta
+    tar attention chay.
+  */
   return (
     <Button
-      variant="outline"
+      variant={message.handled ? "outline" : "default"}
       size="sm"
       disabled={isPending}
-      className="gap-1"
+      className={cn(
+        "gap-1",
+        message.handled &&
+          "border-amber-300 text-amber-700 hover:bg-amber-50 hover:text-amber-800 dark:border-amber-800 dark:text-amber-500 dark:hover:bg-amber-950",
+      )}
       onClick={() => mutate({ id: message.id, handled: !message.handled })}
     >
       {message.handled ? (
@@ -53,8 +66,10 @@ function ViewMessageDialog({ message }: { message: AdminContactMessage }) {
         if (!next) setNotes(message.admin_notes ?? "");
       }}
       size="lg"
+      // Read destructive-o na, primary-o na — pashe-r "Mark handled" er cheye
+      // kom gurutto, kintu `ghost` e button-i mone hoto na
       trigger={
-        <Button variant="ghost" size="sm" className="gap-1">
+        <Button variant="outline" size="sm" className="gap-1">
           <Mail className="h-3.5 w-3.5" />
           Read
         </Button>
