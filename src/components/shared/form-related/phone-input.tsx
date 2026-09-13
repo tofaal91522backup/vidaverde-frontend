@@ -80,8 +80,10 @@ export function PhoneInput({
     // corner gula shoja. Dekhte ekta field, kintu bhitore duita control.
     <div className={cn("flex", className)}>
       <Combobox
-        className="w-36 shrink-0"
-        triggerClassName="rounded-r-none"
+        /* Shobcheye lomba dial code "+1684" (American Samoa) — 5 okkhor.
+           Tar cheye beshi jayga dile pashe khali jayga poira thake. */
+        className="w-24 shrink-0"
+        triggerClassName="rounded-r-none px-2.5"
         value={countryCode}
         options={DIAL_CODE_OPTIONS}
         triggerLabel={triggerLabel}

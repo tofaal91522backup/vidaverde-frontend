@@ -634,8 +634,8 @@ export default function BookRoute() {
                 {/* Duita control gaye lagano — majher border ekta */}
                 <div className="flex">
                   <Combobox
-                    className="w-32 shrink-0"
-                    triggerClassName="h-auto rounded-lg border-vv-line bg-vv-bg-warm px-4 py-3 text-[15px] text-vv-ink hover:bg-vv-bg-warm focus-visible:border-vv-accent rounded-r-none"
+                    className="w-24 shrink-0"
+                    triggerClassName="h-auto rounded-lg border-vv-line bg-vv-bg-warm px-2.5 py-3 text-[15px] text-vv-ink hover:bg-vv-bg-warm focus-visible:border-vv-accent rounded-r-none"
                     value={phoneCountry}
                     triggerLabel={dialCodeOf(phoneCountry) || "Code"}
                     options={DIAL_CODE_OPTIONS}

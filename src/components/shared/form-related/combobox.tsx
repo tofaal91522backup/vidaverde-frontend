@@ -112,7 +112,7 @@ export function Combobox({
             <span className="truncate">
               {triggerLabel ?? selected?.label ?? placeholder}
             </span>
-            <ChevronsUpDown className="ml-2 size-4 shrink-0 opacity-50" />
+            <ChevronsUpDown className="ml-1.5 size-4 shrink-0 opacity-50" />
           </Button>
         </PopoverTrigger>
 
