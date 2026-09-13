@@ -74,7 +74,13 @@ export function PostDetail({ post }: { post: PublicBlogDetail }) {
         data-screen-label="02 Post Body"
       >
         <Container>
-          <div className="text-[16px] leading-[1.75] text-vv-ink-2">
+          {/*
+            `after:*` gula clearfix. Chhobi-ta `float-right`, ar float parent-er
+            height-e gone na — tai chhoto body hole (jemon ek line) figure-ta
+            container theke ber hoye niche-r CTA box-er upor giye porto.
+            Clearfix parent-ke float-tuku porjonto lomba kore dey.
+          */}
+          <div className="text-[16px] leading-[1.75] text-vv-ink-2 after:block after:clear-both after:content-['']">
             {/* Chhobi optional — na thakle figure-i dekhano hoy na */}
             {heroImage && (
               <figure className="float-right mb-6 ml-8 w-[44%] max-w-[27rem] overflow-hidden rounded-[22px] border border-vv-line bg-vv-bg-warm max-[760px]:float-none max-[760px]:mb-8 max-[760px]:ml-0 max-[760px]:w-full max-[760px]:max-w-none">
@@ -98,8 +104,9 @@ export function PostDetail({ post }: { post: PublicBlogDetail }) {
             />
           </div>
 
-          {/* Lead capture inline */}
-          <div className="mt-12 rounded-xl border border-vv-accent bg-vv-accent/10 p-6">
+          {/* Lead capture inline — `clear-both` jate kono obosthatei float-er
+              pashe giye na boshe */}
+          <div className="mt-12 clear-both rounded-xl border border-vv-accent bg-vv-accent/10 p-6">
             <h3 className="text-[18px] font-semibold text-vv-ink mb-2">
               Ready to put this into practice?
             </h3>
