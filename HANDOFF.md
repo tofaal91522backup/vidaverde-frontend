@@ -16,9 +16,18 @@
 | **Section** | ✅ Round 2 complete — all 18 steps |
 | **Next step** | **Manual testing** — no code left to write. Order and checklist below |
 | **Backend commit** | `63c01f5` (see `.claude/api-sync.json`) |
-| **Last updated** | 2026-09-12 — Claude |
+| **Last updated** | 2026-09-13 — Claude |
 
 ### What was just done
+**Manual-testing fix — every `[id]` page rendered blank.** Next 16-e route-er
+`params` ekhon Promise, kintu `app/` wrapper gula `params.id` sync kore porto, tai
+`id` hoto `undefined` — query `enabled: false`-e boshe thakto ar page-e shudhu
+title chara kichui ashto na (spinner-o na, error-o na). Admin-er teachers edit
+page-e dhora pore; ek-i bug chilo blogs, packages, students ar testimonials edit
+page-e. Shob koyta ekhon `async` + `await params`, ar
+`DynamicRouteIdParams` type-ta Promise kore deওয়া holo jate abar na ghote.
+Confirm-email page already await korto — shudhu type-ta thik kora holo.
+
 **Admin Step 2 — restriction column. Round 2 is complete, all 18 steps.**
 
 Round 2 covered backend `f7ccf8b` -> `63c01f5`:

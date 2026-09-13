@@ -1,4 +1,5 @@
 import EditTestimonialPage from "@/features/protected/pages/dashboard/admin/pages/testimonials/edit-testimonial-page";
-export default ({ params }: { params: { id: string } }) => (
-  <EditTestimonialPage id={params.id} />
+import type { DynamicRouteIdParams } from "@/types/dynamic-route-id-params.type";
+export default async ({ params }: DynamicRouteIdParams) => (
+  <EditTestimonialPage id={(await params).id} />
 );

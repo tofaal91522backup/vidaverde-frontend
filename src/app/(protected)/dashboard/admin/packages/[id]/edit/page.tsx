@@ -1,4 +1,5 @@
 import EditPackagePage from "@/features/protected/pages/dashboard/admin/pages/packages/edit-package-page";
-export default ({ params }: { params: { id: string } }) => (
-  <EditPackagePage id={params.id} />
+import type { DynamicRouteIdParams } from "@/types/dynamic-route-id-params.type";
+export default async ({ params }: DynamicRouteIdParams) => (
+  <EditPackagePage id={(await params).id} />
 );
