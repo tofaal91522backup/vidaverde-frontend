@@ -19,6 +19,13 @@ type ChildProps<T> = {
   onChangeValue: (value: T) => void;
 };
 
+/** Kon field chara-o save kora jay — label-er pashe boshe */
+export function OptionalTag() {
+  return (
+    <span className="text-xs font-normal text-muted-foreground">Optional</span>
+  );
+}
+
 export function FormFieldWrapper<T>({
   field,
   label,

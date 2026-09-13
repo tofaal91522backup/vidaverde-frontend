@@ -1,7 +1,6 @@
 "use client";
 
 import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
 import { useTeachers } from "@/features/protected/pages/dashboard/admin/pages/teachers/queries/use-teachers";
 import { toList } from "@/features/protected/pages/dashboard/admin/utils/to-list";
 
@@ -37,61 +36,55 @@ export function TeacherPicker({
     );
   };
 
+  // Label ar border FormSection-i dey, tai ekhane shudhu bhitorer ongsho
   return (
-    <div className="flex flex-col gap-2">
-      <Label>Bookable with</Label>
-
-      <div className="rounded-lg border p-3">
-        <p className="mb-3 text-xs text-muted-foreground">
-          {value.length === 0 ? (
-            <>
-              <span className="font-medium text-foreground">
-                Every teacher can be booked
-              </span>{" "}
-              with this package. Tick teachers below only if you want to limit
-              it.
-            </>
-          ) : (
-            <>
-              Limited to{" "}
-              <span className="font-medium text-foreground">
-                {value.length} {value.length === 1 ? "teacher" : "teachers"}
-              </span>
-              . Untick them all to allow everyone again.
-            </>
-          )}
-        </p>
-
-        {isLoading && (
-          <p className="text-sm text-muted-foreground">Loading teachers…</p>
+    <div className="space-y-3">
+      <p className="rounded-lg border bg-muted/40 p-3 text-xs text-muted-foreground">
+        {value.length === 0 ? (
+          <>
+            <span className="font-medium text-foreground">
+              Every teacher can be booked
+            </span>{" "}
+            with this package. Tick teachers below only if you want to limit it.
+          </>
+        ) : (
+          <>
+            Limited to{" "}
+            <span className="font-medium text-foreground">
+              {value.length} {value.length === 1 ? "teacher" : "teachers"}
+            </span>
+            . Untick them all to allow everyone again.
+          </>
         )}
-        {isError && (
-          <p className="text-sm text-destructive">Could not load teachers.</p>
-        )}
+      </p>
 
-        {!isLoading && !isError && teachers.length === 0 && (
-          <p className="text-sm text-muted-foreground">
-            No active teachers yet.
-          </p>
-        )}
+      {isLoading && (
+        <p className="text-sm text-muted-foreground">Loading teachers…</p>
+      )}
+      {isError && (
+        <p className="text-sm text-destructive">Could not load teachers.</p>
+      )}
 
-        {teachers.length > 0 && (
-          <div className="grid gap-2 sm:grid-cols-2">
-            {teachers.map((teacher) => (
-              <label
-                key={teacher.id}
-                className="flex cursor-pointer items-center gap-2 text-sm"
-              >
-                <Checkbox
-                  checked={value.includes(teacher.id)}
-                  onCheckedChange={() => toggle(teacher.id)}
-                />
-                <span className="truncate">{teacher.name}</span>
-              </label>
-            ))}
-          </div>
-        )}
-      </div>
+      {!isLoading && !isError && teachers.length === 0 && (
+        <p className="text-sm text-muted-foreground">No active teachers yet.</p>
+      )}
+
+      {teachers.length > 0 && (
+        <div className="grid gap-1 sm:grid-cols-2">
+          {teachers.map((teacher) => (
+            <label
+              key={teacher.id}
+              className="flex cursor-pointer items-center gap-2 rounded-md p-2 text-sm transition-colors hover:bg-muted/50"
+            >
+              <Checkbox
+                checked={value.includes(teacher.id)}
+                onCheckedChange={() => toggle(teacher.id)}
+              />
+              <span className="truncate">{teacher.name}</span>
+            </label>
+          ))}
+        </div>
+      )}
     </div>
   );
 }

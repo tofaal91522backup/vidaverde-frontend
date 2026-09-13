@@ -1,15 +1,17 @@
 "use client";
 
-import { FormFieldWrapper } from "@/components/shared/form-related/form-field-wrapper";
+import {
+  FormFieldWrapper,
+  OptionalTag,
+} from "@/components/shared/form-related/form-field-wrapper";
 import { FormSection } from "@/components/shared/form-related/form-section";
 import SingleFileUploader from "@/components/shared/form-related/single-file-uploader";
 import { SubmitButton } from "@/components/shared/form-related/submit-button";
 import { SubmitErrorSummary } from "@/components/shared/form-related/submit-error-summary";
-import { Badge } from "@/components/ui/badge";
+import { ToggleRow } from "@/components/shared/form-related/toggle-row";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import {
   useZodTanstackForm,
@@ -38,54 +40,6 @@ interface TeacherFormProps {
   redirectTo?: string;
   /** Submit button-er lekha — create ar edit e ek na */
   submitLabel?: string;
-}
-
-/** Kon field chara-o save kora jay — label-er pashe boshe */
-function OptionalTag() {
-  return (
-    <span className="text-xs font-normal text-muted-foreground">Optional</span>
-  );
-}
-
-/**
- * Switch-er jonno ekta bordered row — shudhu label ar toggle-er cheye
- * porishkar, karon pashei bola thake off korle ki hobe.
- */
-function ToggleRow({
-  id,
-  checked,
-  onChange,
-  title,
-  description,
-  onLabel,
-  offLabel,
-}: {
-  id: string;
-  checked: boolean;
-  onChange: (checked: boolean) => void;
-  title: string;
-  description: string;
-  onLabel: string;
-  offLabel: string;
-}) {
-  return (
-    <div className="flex items-start justify-between gap-4 rounded-lg border p-4">
-      <div className="space-y-1.5">
-        <Label htmlFor={id} className="cursor-pointer text-sm font-medium">
-          {title}
-        </Label>
-        <p className="text-xs text-muted-foreground">{description}</p>
-        <Badge
-          variant={checked ? "secondary" : "outline"}
-          className="font-normal"
-        >
-          {checked ? onLabel : offLabel}
-        </Badge>
-      </div>
-
-      <Switch id={id} checked={checked} onCheckedChange={onChange} />
-    </div>
-  );
 }
 
 export function TeacherForm({

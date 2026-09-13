@@ -1,8 +1,14 @@
 "use client";
 
 import AsyncStateWrapper from "@/components/shared/async-state-wrapper";
-import DashboardPageLayout from "@/features/protected/pages/dashboard/shared/components/dashboard-page-layout";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import type { AdminPackage } from "@/features/protected/pages/dashboard/admin/types/admin.types";
+import DashboardPageLayout from "@/features/protected/pages/dashboard/shared/components/dashboard-page-layout";
+import { ArrowLeft } from "lucide-react";
+import Link from "next/link";
 import { PackageForm } from "./components/package-form";
 import { usePackageDetails, useUpdatePackage } from "./queries/use-packages";
 import type { PackageFormValues } from "./schemas/package.schema";
@@ -31,23 +37,87 @@ function toFormValues(pkg: AdminPackage): PackageFormValues {
   };
 }
 
+/** Spinner-er cheye form-er akar-er skeleton kom jhatka lage */
+function EditPackageSkeleton() {
+  return (
+    <div className="space-y-5">
+      {[0, 1, 2].map((i) => (
+        <Card key={i} className="py-0">
+          <CardContent className="space-y-4 p-5">
+            <Skeleton className="h-5 w-40" />
+            <Skeleton className="h-3 w-64" />
+            <div className="grid gap-4 sm:grid-cols-2">
+              <Skeleton className="h-9 w-full" />
+              <Skeleton className="h-9 w-full" />
+            </div>
+          </CardContent>
+        </Card>
+      ))}
+    </div>
+  );
+}
+
 export default function EditPackagePage({ id }: { id: string }) {
   const { data, isLoading, isError } = usePackageDetails(id);
   const mutation = useUpdatePackage(id);
 
   return (
     <DashboardPageLayout
+      maxWidth="max-w-6xl"
       title="Edit Package"
-      subtitle={data ? `Editing: ${data.title_en}` : undefined}
+      subtitle="Changes go live on the pricing page as soon as you save."
+      action={
+        <Button variant="outline" asChild>
+          <Link href="/dashboard/admin/packages">
+            <ArrowLeft className="size-4" />
+            All packages
+          </Link>
+        </Button>
+      }
     >
-      <div className="max-w-3xl">
+      <div className="space-y-5">
         <AsyncStateWrapper
           loading={isLoading}
           error={isError ? "Could not load this package." : null}
+          loaderFallback={<EditPackageSkeleton />}
         >
           {/* Data asar por-i mount, jate defaultValues thik thake */}
           {data && (
-            <PackageForm mutation={mutation} defaultValues={toFormValues(data)} />
+            <>
+              <Card className="py-0">
+                <CardContent className="flex flex-wrap items-center justify-between gap-3 p-5">
+                  <div className="min-w-0">
+                    <p className="truncate text-lg font-semibold">
+                      {data.title_en}
+                    </p>
+                    <p className="truncate text-sm text-muted-foreground">
+                      ${data.price} · {data.total_classes} classes ·{" "}
+                      {data.validity_days} days
+                    </p>
+                  </div>
+
+                  <div className="flex flex-wrap items-center gap-2">
+                    <Badge variant={data.active ? "secondary" : "outline"}>
+                      {data.active ? "Visible to students" : "Hidden"}
+                    </Badge>
+                    {data.is_first_lesson && (
+                      <Badge variant="secondary">First lesson package</Badge>
+                    )}
+                    <Badge variant="outline">
+                      {data.teachers?.length
+                        ? `${data.teachers.length} teacher${data.teachers.length === 1 ? "" : "s"} only`
+                        : "All teachers"}
+                    </Badge>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <PackageForm
+                mutation={mutation}
+                defaultValues={toFormValues(data)}
+                submitLabel="Save changes"
+              />
+            </>
           )}
         </AsyncStateWrapper>
       </div>

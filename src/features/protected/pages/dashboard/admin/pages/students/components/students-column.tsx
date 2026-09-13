@@ -19,7 +19,7 @@ const LEVEL_LABELS: Record<string, string> = {
 export const studentsColumns: ColumnDef<AdminStudent>[] = [
   {
     accessorKey: "profile_img_url",
-    header: "",
+    header: "Image",
     cell: ({ row }) =>
       row.original.profile_img_url ? (
         // eslint-disable-next-line @next/next/no-img-element
