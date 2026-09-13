@@ -9,7 +9,7 @@ export default async function StudentDashboardLayout({
 }) {
   const session = await getSession();
   return (
-    <DashboardShell sidebar={<StudentSidebar session={session} />}>
+    <DashboardShell user={session?.user} sidebar={<StudentSidebar />}>
       {children}
     </DashboardShell>
   );

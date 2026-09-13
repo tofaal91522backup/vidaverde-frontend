@@ -10,7 +10,7 @@ export default async function AdminDashboardLayout({
   const session = await getSession();
 
   return (
-    <DashboardShell sidebar={<AdminSidebar session={session} />}>
+    <DashboardShell user={session?.user} sidebar={<AdminSidebar session={session} />}>
       {children}
     </DashboardShell>
   );

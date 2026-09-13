@@ -3,16 +3,15 @@
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar";
-import { AppSidebarFooter } from "@/components/layout/sidebar/app-sidebar-footer";
 import { AppSidebarHeader } from "@/components/layout/sidebar/app-sidebar-header";
 import AppSidebarItems from "@/components/layout/sidebar/app-sidebar-items";
 import { StudentSidebarNavItems } from "./student-sidebar-nav-items";
 
-export function StudentSidebar({ session }: { session: any }) {
+// Footer shore jawar por ekhane ar session lage na — user menu ekhon navbar-e
+export function StudentSidebar() {
   return (
     <Sidebar collapsible="icon" variant="sidebar">
       <SidebarHeader>
@@ -31,15 +30,6 @@ export function StudentSidebar({ session }: { session: any }) {
 
       <SidebarRail />
 
-      <SidebarFooter>
-        <AppSidebarFooter
-          footerInfo={{
-            name: session?.user?.name || "Student",
-            email: session?.user?.email || "",
-            avatar: "/noImage.png",
-          }}
-        />
-      </SidebarFooter>
     </Sidebar>
   );
 }

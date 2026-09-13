@@ -45,7 +45,9 @@ const SignOut = ({
       className={cn("w-full items-center justify-start", className)}
     >
       {loading && <Spinner className="mr-2" />}
-      <LogOut className="text-white translate-y-0.1" size={16} />
+      {/* Rong inherit kore — age `text-white` hardcode chilo, tai ghost/outline
+          button-e ba light theme-e icon-ta dekha jeto na */}
+      <LogOut className="translate-y-0.1" size={16} />
       {label}
     </Button>
   );

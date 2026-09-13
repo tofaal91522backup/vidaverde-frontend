@@ -1,13 +1,17 @@
 import DashboardNavbar from "@/components/layout/navbar/dashboard-navbar";
+import type { DashboardUser } from "@/components/layout/navbar/dashboard-user-menu";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 
 
 export default function DashboardShell({
   sidebar,
-  navbar = <DashboardNavbar />,
+  /** Navbar-er account menu-te dekhabe. Layout-er `getSession()` theke ashe. */
+  user,
+  navbar,
   children,
 }: {
   sidebar: React.ReactNode;
+  user?: DashboardUser;
   navbar?: React.ReactNode;
   children: React.ReactNode;
 }) {
@@ -23,7 +27,7 @@ export default function DashboardShell({
       {sidebar}
 
       <SidebarInset className="bg-white dark:bg-[#020617] rounded-l-2xl overflow-hidden">
-        {navbar}
+        {navbar ?? <DashboardNavbar user={user} />}
         <div className="flex flex-1 flex-col">
           <div
             className={`@container/main flex flex-1 flex-col gap-2 bg-gray-50 dark:bg-[#020617]`}

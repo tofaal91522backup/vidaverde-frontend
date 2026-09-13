@@ -1,8 +1,10 @@
-// import { ModeToggle } from "@/components/ui/theme-toggle";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import SignOut from "@/features/auth/components/sign-out";
+import {
+  DashboardUserMenu,
+  type DashboardUser,
+} from "@/components/layout/navbar/dashboard-user-menu";
 
-const DashboardNavbar = () => {
+const DashboardNavbar = ({ user }: { user?: DashboardUser }) => {
   return (
     <header
       className="
@@ -15,14 +17,16 @@ const DashboardNavbar = () => {
         transition-[width,height,background-color]
         ease-linear
         group-has-data-[collapsible=icon]/sidebar-wrapper:h-(--header-height)
-       
       "
     >
-      {/* Left side: Sidebar Trigger + title */}
       <div className="flex items-center gap-3">
         <SidebarTrigger className="-ml-1" />
       </div>
-      <SignOut variant="outline" className="w-auto" label="Sign out" />
+
+      {/* Age ekhane khali ekta "Sign out" button chilo ar baki account-er kaj
+          sidebar footer-e chilo — duita jayga bhag kora chilo. Ekhon shob ek
+          menu-te. */}
+      <DashboardUserMenu user={user} />
     </header>
   );
 };
