@@ -8,6 +8,7 @@ import {
 } from "@tanstack/react-table";
 
 import AsyncStateWrapper from "@/components/shared/async-state-wrapper";
+import { cn } from "@/lib/utils";
 import {
   Table,
   TableBody,
@@ -49,15 +50,19 @@ export default function DataTable<TData>({
           }
         >
           <Table>
-            <TableHeader>
+            {/* Header-ta theme-er muted patti — TableCard-er toolbar ar
+                FormSection-er header-er ek-i rong. `hover:bg-transparent`
+                lage, na hole TableRow-er hover rule header-eo dhore. */}
+            <TableHeader className="bg-muted/40">
               {table.getHeaderGroups().map((headerGroup) => (
-                <TableRow key={headerGroup.id}>
+                <TableRow key={headerGroup.id} className="hover:bg-transparent">
                   {headerGroup.headers.map((header) => (
                     <TableHead
                       key={header.id}
-                      className={
-                        header.column.id === "actions" ? "text-right" : ""
-                      }
+                      className={cn(
+                        "h-11 font-semibold text-muted-foreground",
+                        header.column.id === "actions" && "text-right",
+                      )}
                     >
                       {header.isPlaceholder
                         ? null
