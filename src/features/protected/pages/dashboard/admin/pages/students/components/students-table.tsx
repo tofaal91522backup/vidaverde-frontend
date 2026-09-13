@@ -2,8 +2,8 @@
 
 import DataTable from "@/components/shared/data-table";
 import Pagination from "@/components/shared/pagination";
-import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
+import { TableCard } from "@/components/shared/table-card";
+import { TableSearchInput } from "@/components/shared/table-search-input";
 import { useState } from "react";
 import { useStudents } from "../queries/use-students";
 import { studentsColumns } from "./students-column";
@@ -12,31 +12,39 @@ export function StudentsTable() {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
 
-  const { data, isLoading, isError } = useStudents({ page, search });
+  const { data, isLoading, isError, isFetching } = useStudents({
+    page,
+    search,
+  });
 
   return (
-    <div className="space-y-4">
-      <div className="relative max-w-sm">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-        <Input
+    <TableCard
+      toolbar={
+        <TableSearchInput
           placeholder="Search by name or email..."
-          value={search}
-          onChange={(e) => {
-            setSearch(e.target.value);
+          loading={isFetching}
+          onSearch={(value) => {
+            setSearch(value);
+            // Notun search mane page 1 — na hole faka page-e giye porto
             setPage(1);
           }}
-          className="pl-9"
         />
-      </div>
-
+      }
+      footer={
+        <Pagination
+          page={page}
+          total={data?.count ?? 0}
+          onPageChange={setPage}
+        />
+      }
+    >
       <DataTable
+        embedded
         data={data?.results}
         columns={studentsColumns}
         loading={isLoading}
         error={isError ? "Failed to load students." : ""}
       />
-
-      <Pagination page={page} total={data?.count ?? 0} onPageChange={setPage} />
-    </div>
+    </TableCard>
   );
 }

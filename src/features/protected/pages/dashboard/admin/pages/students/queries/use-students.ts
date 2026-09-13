@@ -3,6 +3,7 @@ import type {
   AdminStudentsResponse,
 } from "@/features/protected/pages/dashboard/admin/types/admin.types";
 import { useFetchData } from "@/hooks/use-fetch-data";
+import { keepPreviousData } from "@tanstack/react-query";
 import { makeEndpoint } from "@/lib/http/make-endpoint";
 
 export const STUDENTS_QUERY_KEY = "admin-students";
@@ -27,6 +28,9 @@ export function useStudents(params: StudentListParams = {}) {
   return useFetchData<AdminStudentsResponse>({
     url: makeEndpoint("/administrator/students/", query),
     querykey: [STUDENTS_QUERY_KEY, query],
+    // Search ba page bodlale purono row gula porde thake — table ta
+    // unmount hoye spinner hoye jay na, tai laf-jhap kore na
+    options: { placeholderData: keepPreviousData },
   });
 }
 

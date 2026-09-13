@@ -65,10 +65,7 @@ export function useCreatePackage() {
 export function useUpdatePackage(id: string) {
   return useMutationHandler<AdminPackage, PackagePayload>({
     mutationFn: (data) => request.patch(`/administrator/packages/${id}/`, data),
-    invalidateKeys: [
-      [PACKAGES_QUERY_KEY],
-      [PACKAGE_DETAILS_QUERY_KEY, id],
-    ],
+    invalidateKeys: [[PACKAGES_QUERY_KEY], [PACKAGE_DETAILS_QUERY_KEY, id]],
     successMessage: "Package updated.",
     errorMessage: "Could not update the package.",
     debugLabel: "UpdatePackage",

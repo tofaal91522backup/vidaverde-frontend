@@ -53,10 +53,7 @@ export function useUpdateContactMessage() {
     mutationFn: ({ id, ...data }) =>
       request.patch(`/administrator/contact-messages/${id}/`, data),
     // Dashboard-e `contact_unhandled` count ache, tai oita-o bashi hoye jay
-    invalidateKeys: [
-      [CONTACT_MESSAGES_QUERY_KEY],
-      [ADMIN_DASHBOARD_QUERY_KEY],
-    ],
+    invalidateKeys: [[CONTACT_MESSAGES_QUERY_KEY], [ADMIN_DASHBOARD_QUERY_KEY]],
     successMessage: "Enquiry updated.",
     errorMessage: "Could not update the enquiry.",
     debugLabel: "UpdateContactMessage",

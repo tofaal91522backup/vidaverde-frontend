@@ -8,6 +8,7 @@ import { useFetchData } from "@/hooks/use-fetch-data";
 import { useMutationHandler } from "@/hooks/use-mutation-handler";
 import { makeEndpoint } from "@/lib/http/make-endpoint";
 import { request } from "@/lib/http/request";
+import { keepPreviousData } from "@tanstack/react-query";
 
 export const TEACHERS_QUERY_KEY = "admin-teachers";
 export const TEACHER_DETAILS_QUERY_KEY = "admin-teacher-details";
@@ -33,6 +34,8 @@ export function useTeachers(params: TeacherListParams = {}) {
   return useFetchData<AdminTeachersResponse>({
     url: makeEndpoint("/administrator/teachers/", query),
     querykey: [TEACHERS_QUERY_KEY, query],
+    // Filter bodlale purono row gula porde thake (dekho use-students)
+    options: { placeholderData: keepPreviousData },
   });
 }
 
