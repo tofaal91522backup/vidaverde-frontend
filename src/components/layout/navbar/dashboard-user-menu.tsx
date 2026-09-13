@@ -48,8 +48,6 @@ export function DashboardUserMenu({
   /** Navbar-e local state thakle sign out-er por reset korar jonno */
   onSignedOut?: () => void;
 }) {
-  const name = user?.name || "Account";
-  const email = user?.email || "";
   const isStudent = user?.role === "STUDENT";
 
   /*
@@ -64,7 +62,20 @@ export function DashboardUserMenu({
     `/student/me/` nai.
   */
   const { data: profileData } = useStudentProfile(isStudent);
-  const avatarUrl = profileData?.profile?.profile_img_url || undefined;
+  const profile = profileData?.profile;
+
+  /*
+    Naam ar email-o profile theke, session theke na.
+
+    Session ekta JWT — login-er shomoy ja chilo tai bosano. Student pore
+    profile-e naam bodlale menu-te **purono naam** jhulto (profile page-e ek
+    naam, navbar-e onno)। Chhobi-r shathe ek-i karon.
+
+    Profile na thakle (admin, ba ekhono load hoy nai) session-er value fallback.
+  */
+  const name = profile?.name || user?.name || "Account";
+  const email = profile?.email || user?.email || "";
+  const avatarUrl = profile?.profile_img_url || undefined;
   const dashboardHref = isStudent
     ? "/dashboard/student"
     : user?.role === "ADMIN"
