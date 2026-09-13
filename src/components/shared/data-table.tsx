@@ -27,6 +27,20 @@ interface DataTableProps<TData> {
   embedded?: boolean;
 }
 
+/**
+ * Ek-i khali array, module-e ekbar.
+ *
+ * ⚠️ Age ekhane inline `data ?? []` chilo — `data` undefined thakle **proti
+ * render-e notun array** toiri hoto. TanStack Table notun `data` reference
+ * dekhe row model abar banay -> setState -> abar render -> abar notun `[]`…
+ * mane **infinite loop**, page hang.
+ *
+ * Undefined thake thik oi shomoy jokhon filter bodlay: query key bodlale
+ * `useFetchData` loading obosthay `undefined` dey. Ei karonei "filter chaple
+ * hang kore".
+ */
+const EMPTY: never[] = [];
+
 export default function DataTable<TData>({
   data,
   columns,
@@ -36,8 +50,9 @@ export default function DataTable<TData>({
 }: DataTableProps<TData>) {
   // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable({
-    data: data ?? [], // ⬅️ key line: fallback to []
-    columns: columns ?? [], // (optional safety)
+    // Reference stable rakha **joruri** — upore-r note dekho
+    data: data ?? EMPTY,
+    columns,
     getCoreRowModel: getCoreRowModel(),
   });
 

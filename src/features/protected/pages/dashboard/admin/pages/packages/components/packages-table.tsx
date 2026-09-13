@@ -1,19 +1,9 @@
 "use client";
 
 import DataTable from "@/components/shared/data-table";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+import { TableCard } from "@/components/shared/table-card";
+import { TableSearchInput } from "@/components/shared/table-search-input";
 import { toList } from "@/features/protected/pages/dashboard/admin/utils/to-list";
-import { Plus, Search } from "lucide-react";
-import Link from "next/link";
 import { useMemo, useState } from "react";
 import { usePackages } from "../queries/use-packages";
 import { packagesColumns } from "./packages-column";
@@ -38,49 +28,32 @@ export function PackagesTable() {
     );
   }, [all, search]);
 
-  const filtering = search.trim().length > 0;
-
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>All packages</CardTitle>
-        <CardDescription>
-          {isLoading
-            ? "Loading…"
-            : filtering
-              ? `${packages.length} of ${all.length} shown`
-              : `${all.length} ${all.length === 1 ? "package" : "packages"}`}
-        </CardDescription>
-        <CardAction>
-          <Button asChild>
-            <Link href="/dashboard/admin/packages/create">
-              <Plus className="h-4 w-4 mr-1" />
-              New Package
-            </Link>
-          </Button>
-        </CardAction>
-      </CardHeader>
-
-      <CardContent className="space-y-4">
-        <div className="relative max-w-sm">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input
-            placeholder="Search packages..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="pl-9"
-          />
-        </div>
-
-        <DataTable
-          data={packages}
-          columns={packagesColumns}
-          loading={isLoading}
-          error={isError ? "Failed to load packages." : ""}
+    <TableCard
+      toolbar={
+        // Debounce chhoto — filter ta client-side, request jay na, tai opekkha
+        // korar kono karon nai. Onno table-e 400ms, karon oigula API dake.
+        <TableSearchInput
+          placeholder="Search packages..."
+          delay={150}
+          onSearch={setSearch}
         />
+      }
+      meta={
+        search.trim()
+          ? `${packages.length} of ${all.length}`
+          : `${all.length} ${all.length === 1 ? "package" : "packages"}`
+      }
+    >
+      <DataTable
+        embedded
+        data={packages}
+        columns={packagesColumns}
+        loading={isLoading}
+        error={isError ? "Failed to load packages." : ""}
+      />
 
-        {/* Backend doc: "Not paginated" — tai <Pagination> nai */}
-      </CardContent>
-    </Card>
+      {/* Backend doc: "Not paginated" — tai <Pagination> nai */}
+    </TableCard>
   );
 }
