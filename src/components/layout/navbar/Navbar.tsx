@@ -190,7 +190,13 @@ export default function Navbar() {
             </>
           )}
 
-          {user && <DashboardUserMenu user={user} inDashboard={false} />}
+          {user && (
+            <DashboardUserMenu
+              user={user}
+              inDashboard={false}
+              onSignedOut={() => setUser(null)}
+            />
+          )}
         </div>
 
         {/* Mobile hamburger */}
@@ -279,7 +285,11 @@ export default function Navbar() {
 
                 {user && (
                   <div className="flex justify-center">
-                    <DashboardUserMenu user={user} inDashboard={false} />
+                    <DashboardUserMenu
+                      user={user}
+                      inDashboard={false}
+                      onSignedOut={() => setUser(null)}
+                    />
                   </div>
                 )}
                 <div className="flex items-center gap-2">

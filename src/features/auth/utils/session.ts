@@ -50,10 +50,31 @@ export async function getSession() {
   }
 }
 
+/**
+ * Cookie muche `/` te pathiye dey.
+ *
+ * ⚠️ `redirect()` throw kore, tai **ei call-er por-er kono code chole na**.
+ * Client component theke dakle oita fandh — cache clear, local state reset,
+ * kichu-i hobe na. Client-er jonno `clearSession()` use korte hobe.
+ *
+ * Eta ekhon shudhu axios interceptor gulo dake, jekhane redirect-i chai.
+ */
 export async function destroySession(): Promise<void> {
   const cookieStore = await cookies();
   cookieStore.delete(SESSION_COOKIE_NAME);
   redirect("/");
+}
+
+/**
+ * Shudhu cookie muche — **redirect kore na**.
+ *
+ * Client theke sign out korar jonno eta. Redirect-ta caller kore, tai
+ * tar age React Query cache clear kora ar navbar-er local user state reset
+ * kora jay — `destroySession()` diye oigulor kono ta-i hoto na.
+ */
+export async function clearSession(): Promise<void> {
+  const cookieStore = await cookies();
+  cookieStore.delete(SESSION_COOKIE_NAME);
 }
 //
 export async function updateTokens({

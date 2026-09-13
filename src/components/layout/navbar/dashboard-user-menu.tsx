@@ -40,9 +40,12 @@ export function DashboardUserMenu({
    * shekhanei jawar link dekhanor mane nai.
    */
   inDashboard = true,
+  onSignedOut,
 }: {
   user?: DashboardUser;
   inDashboard?: boolean;
+  /** Navbar-e local state thakle sign out-er por reset korar jonno */
+  onSignedOut?: () => void;
 }) {
   const name = user?.name || "Account";
   const email = user?.email || "";
@@ -122,6 +125,7 @@ export function DashboardUserMenu({
 
         <div className="p-1">
           <SignOut
+            onSignedOut={onSignedOut}
             variant="ghost"
             className="h-9 justify-start gap-2 px-2 text-destructive hover:bg-destructive/10 hover:text-destructive"
           />
