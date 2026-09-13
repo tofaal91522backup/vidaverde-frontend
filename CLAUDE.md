@@ -58,11 +58,45 @@ Phase: Development
 
 ## Table Pattern
 
-- Library: TanStack React Table v8 via shared `<DataTable>` component
-- Columns defined as `ColumnDef<T>[]` in a separate `[name]-column.tsx` file
-- `<DataTable data columns loading error />`. Loading shows spinner, error shows message
-- `<Pagination page total onPageChange />`. `total` is item count (divided by 10 internally)
-- Search/filter state lives in the table component as `useState`; passed into the query hook's params object
+Every list screen is built the same way. Copy `admin/pages/teachers/` — it uses
+all of it.
+
+```tsx
+<TableCard
+  toolbar={<><TableSearchInput onSearch={setSearch} /><ReusableSelect … /></>}
+  meta={`${count} teachers`}
+  footer={<Pagination page={page} total={count} onPageChange={setPage} />}
+>
+  <DataTable embedded data={rows} columns={teachersColumns} loading error />
+</TableCard>
+```
+
+- **`<TableCard>`** (`components/shared/table-card.tsx`) wraps filters + table +
+  pagination in one card. `toolbar` is the filters, `meta` the right-hand count,
+  `footer` the pagination. Omit `footer` when the endpoint is not paginated.
+- **`<DataTable embedded>`** inside a TableCard. Without `embedded` you get a
+  border inside a border.
+- **`<TableSearchInput onSearch>`** for search, never a bare `<Input>`. It
+  debounces (400ms default), so typing does not fire a request per keystroke.
+  Pass `delay={150}` when the filter is client-side and no request is involved.
+- **`<ReusableSelect className="w-40 bg-background">`** for filter selects.
+  `bg-background` is needed because the toolbar strip is muted.
+- **Add/Create buttons go in the page's `action` prop**, not the toolbar — that
+  keeps room for filters. See `admin/pages/teachers/index.tsx`.
+- Offer a **Clear** button once any filter is set. Two selects with no reset
+  means picking "All" on each to get back.
+- Filter state is `useState` in the table component, passed to the query hook's
+  params object. Reset `page` to 1 whenever a filter changes.
+- `<Pagination page total onPageChange />` — `total` is the item **count**; it
+  divides by 10 internally, so the endpoint's `page_size` must be 10.
+- Columns live in a separate `[name]-column.tsx` exporting `ColumnDef<T>[]`.
+
+⚠️ **Never pass a fresh array into `<DataTable data>`.** `data={x ?? []}` builds a
+new array every render; TanStack rebuilds the row model, sets state, re-renders,
+and loops — the page hangs. Pass the query's `data?.results` straight through, or
+a `useMemo`'d value. DataTable itself handles `undefined`.
+
+---
 
 ---
 
@@ -119,6 +153,55 @@ src/
 **Pattern B. Server Actions + `useActionState`** (auth pages only. Signin, forgot-password, reset-password):
 - `"use server"` action validates with `validateForm(Schema, formData)`, calls API, creates session, returns `{ success, errors }`
 - Form uses `useActionState(MyAction, { errors: {} })` and binds `action={action}`
+
+### Layout of a long form
+
+Anything past a handful of fields is grouped into `<FormSection>` cards. Copy
+`admin/pages/blogs/components/blog-form.tsx` or `packages/components/package-form.tsx`.
+
+```tsx
+<form className="space-y-5">
+  <SubmitErrorSummary errors={submitErrors} />
+
+  <div className="grid items-start gap-5 xl:grid-cols-[minmax(0,1fr)_340px]">
+    <div className="space-y-5">
+      <FormSection title="Content" description="…" icon={FileText}>…</FormSection>
+      <FormSection title="Body" …>…</FormSection>
+    </div>
+
+    <div className="space-y-5 xl:sticky xl:top-4">
+      <FormSection title="Publishing" …>
+        … fields …
+        <SubmitButton isLoading={mutation.isPending} className="w-full">Save</SubmitButton>
+      </FormSection>
+      <FormSection title="SEO" …>…</FormSection>
+    </div>
+  </div>
+</form>
+```
+
+- **Left column** is the work: names, descriptions, rich text, images.
+  **Right column** is settings: status, category, SEO — plus the submit button,
+  so reaching Save does not depend on how long the body is.
+- `<FormSection title description icon>` (`components/shared/form-related/form-section.tsx`).
+  The description is where a backend rule goes, e.g. "Drafts stay hidden from the
+  public site."
+- ⚠️ **The page must pass `maxWidth="max-w-6xl"` to `<DashboardPageLayout>`** when
+  the form uses this two-column layout. Tailwind breakpoints read the **viewport,
+  not the container**, so `xl:` fires on a wide screen even inside a narrow
+  wrapper and squeezes both columns. Set the width in the page, once — never also
+  wrap the form in a `max-w-*` div.
+- Single-column forms (a handful of fields) skip the grid and just stack
+  `FormSection`s.
+
+### Detail pages
+
+Not a form — a read-only record (`admin/pages/students/student-detail-page.tsx`).
+Plain `<Card>` from `components/ui/card`, in this order: an identity card
+(avatar, name, status badges, key fields), a row of stat cards, then the related
+lists. `<CardAction>` holds a header-right button.
+
+---
 
 ---
 
