@@ -30,23 +30,25 @@ Round 2 covered backend `f7ccf8b` -> `63c01f5`:
 
 ### What the next session does
 **Do not start new features.** Nothing in Round 2 has been run in a browser, and
-the Public booking flow in particular was rewritten end to end. Test it, in this
-order, since each unblocks the next:
+the Public booking flow in particular was rewritten end to end.
 
-1. **Admin** — restrict a package to one or two teachers and save, then reopen it
-   and confirm the selection stuck. Everything below needs a restricted package
-   to exist; there are none in the seed data.
-2. **Public booking** — the largest change in Round 2. Walk it from both entry
-   points (a pricing card, and a teacher card), including a package with no
-   availability in the next 7 days and widening the window to 14 and 21. Check
-   the restricted package offers only its own teachers.
-3. **Student** — book-class from the sidebar and from the My Packages "Book a
-   class" shortcut (which passes `?package=`), plus reschedule. Confirm both
-   pickers respect the restriction.
-4. **Auth** — registration, verification and resend. **Phase J (token refresh)
-   is blocked**: with a 30-day access token it cannot be triggered, and with a
-   30-day refresh token it could not succeed anyway. It needs the backend setting
-   changed first (see below).
+`docs/plan/INTEGRATION_TEST.md` was updated for Round 2 on 2026-09-13: Phase D is
+rewritten for the new booking order, and Phases K (package teacher restriction),
+L (teacher-first entry) and M (registration and email verification) are new. Work
+through it top to bottom; the phases below map onto it:
+
+1. **Admin** — Phase A, then **Phase K1-K4**: restrict a package and confirm it
+   stuck. Everything restriction-related needs this; the seed data has none.
+2. **Public booking** — **Phases D, K5-K7, L**. The largest change in Round 2.
+   D10-D11 cover the empty-window case; L covers the teacher-first entry.
+3. **Student** — **Phases F, G, K8-K11**. Book-class from the sidebar and from
+   the My Packages "Book a class" shortcut (which passes `?package=`), plus
+   reschedule; both pickers must respect the restriction.
+4. **Auth** — **Phase M** (registration, verification, resend). Needs a fresh
+   email: seeded and guest-checkout accounts count as already verified.
+   **Phase J (token refresh) is blocked** — with a 30-day access token it cannot
+   be triggered, and with a 30-day refresh token it could not succeed anyway. It
+   needs the backend setting changed first (see below).
 
 ### Answered from the backend source (2026-09-12)
 

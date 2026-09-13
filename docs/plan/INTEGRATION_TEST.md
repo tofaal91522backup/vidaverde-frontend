@@ -7,6 +7,14 @@ jaygay dekhacche kina — sheta-i ei test-er mul uddeshyo.
 - **Field-by-field test na** — "ei section-e banalam, oi section-e dekhacche to?"
 - Fail hole `Result` column-e likhe rakho, thik korar por abar chalao.
 
+> **Round 2-er por update kora (2026-09-13).** Ja bodleche:
+> - **Phase D puro notun kore lekha** — booking flow-er order bodle geche
+>   (age teacher→package→slot, ekhon **package→teacher+time**), 5 step theke 4 step.
+> - **Notun phase K, L, M** — package teacher-restriction, teacher-first booking
+>   entry, ar registration/email-verification.
+> - **Phase J (token refresh) ekhon blocked** — backend setting na bodlale chalano jabe na.
+> - Purono "known limitation" table-e duita jinis **vul chilo**, thik kora holo.
+
 ---
 
 ## 0. Shuru korar age
@@ -40,7 +48,7 @@ pete shubidha hobe.
 | # | Route | Ki korbe | Ki dekhbe | ☐ | Result |
 |---|---|---|---|---|---|
 | A1 | `/dashboard/admin/teachers/create` | Teacher banau — naam, tag, bio (English), ar **weekly availability** (jemon Mon–Fri 08:00–16:00), Active + Accepting students on | Save-er por teacher list-e ashbe, "Weekly hours" column-e din-er shonkha dekhabe | ☐ | |
-| A2 | `/dashboard/admin/packages/create` | Package banau — English title, price (jemon `50.00`), classes `5`, validity `90`, Active on | Package list-e ashbe, price ar classes thik dekhabe | ☐ | |
+| A2 | `/dashboard/admin/packages/create` | Package banau — English title, price (jemon `50.00`), classes `5`, validity `90`, Active on. **"Bookable with" section-e kichu tick koro NA** | Package list-e ashbe. "Teachers" column-e **"All teachers"** lekha thakbe (khali = shobai, "keu na" **na**) | ☐ | |
 | A3 | `/dashboard/admin/testimonials/create` | Testimonial banau — student naam, country, outcome (English), rating 5, **Shown** on | List-e "Shown" badge shoho ashbe | ☐ | |
 | A4 | `/dashboard/admin/blogs/create` | Blog banau — English title + body, category select, status **Draft** | List-e "Draft" badge shoho ashbe | ☐ | |
 | A5 | `/dashboard/admin` | Dashboard kholo | Teachers/Students-er shonkha ar niche "Next classes" list dekhabe (ekhon khali thakte pare) | ☐ | |
@@ -78,19 +86,33 @@ pete shubidha hobe.
 
 ## Phase D — Public booking (checkout)
 
+> 🔁 **Ei phase Round 2-e puro bodle geche.** Booking ekhon **package age, tarpor
+> teacher** — backend-er documented order. Teacher ar somoy **ek-i screen-e**, karon
+> ek call-e duita-i ashe. 5 step theke **4 step**.
+
 | # | Route | Ki korbe | Ki dekhbe | ☐ | Result |
 |---|---|---|---|---|---|
-| D1 | `/online-classes/book` | Step 1 — **A1-er teacher** select koro | Step 2-e chole jabe | ☐ | |
-| D2 | — | Step 2 — **A2-er package** select koro | Step 3-e jabe | ☐ | |
-| D3 | — | Step 3 — date select koro | **A1-e je din/time set korechile** shei onujayi slot dekhabe. Niche timezone + lesson duration lekha thakbe | ☐ | |
-| D4 | — | Ekta slot select kore Continue | Step 4-e jabe | ☐ | |
-| D5 | — | Step 4 — first name + **notun ekta email** (ja age use koro nai) + Spanish level dao | Continue kaj korbe | ☐ | |
-| D6 | — | Step 5 — Review dekho | **Kono Card Number / CVC field NAI** (ichchhe kore shorano) | ☐ | |
-| D7 | — | **Confirm booking** click | Confirmation page: teacher, package, date/time, **invoice number**, amount, classes remaining, ar "Join on Google Meet" link | ☐ | |
-| D8 | — | Confirmation-e note dekho | Notun email diyechile bole **"We created your student account"** note thakbe | ☐ | |
+| D1 | `/courses` | Pricing card-e A2-er package dekho | Price-er niche **"N teachers available"** lekha (`teacher_count`) | ☐ | |
+| D2 | `/online-classes/book` | Step 1 — **A2-er package** select koro | Card select hobe, Continue enable | ☐ | |
+| D3 | — | Continue → Step 2 **"Teacher & Time"** | Upore "Show availability from" date + **"Window" dropdown (7/14/21 din)**. Niche **A1-er teacher** card-e **"Next available: <din> <time> · N slots"** | ☐ | |
+| D4 | — | Teacher card-e click koro | Ek-i screen-er **niche** slot gula khule jabe — **notun kono loading nai** (slot age theke-i eshe geche) | ☐ | |
+| D5 | — | Ekta slot select kore Continue | Step 3-e jabe | ☐ | |
+| D6 | — | Step 3 — first name + **notun ekta email** (ja age use koro nai) + Spanish level dao | Continue kaj korbe | ☐ | |
+| D7 | — | Step 4 — Review dekho | **Kono Card Number / CVC field NAI** (ichchhe kore shorano) | ☐ | |
+| D8 | — | **Confirm booking** click | Confirmation page: teacher, package, date/time, **invoice number**, amount, classes remaining, ar "Join on Google Meet" link | ☐ | |
+| D9 | — | Confirmation-e note dekho | Notun email diyechile bole **"We created your student account"** note thakbe | ☐ | |
 
-> **D5-er email ta likhe rakho** — Phase F-e ei account diye login korte hobe. Password
-> backend email kore.
+### Khali window-er behaviour — alada kore dekho
+
+| # | Route | Ki korbe | Ki dekhbe | ☐ | Result |
+|---|---|---|---|---|---|
+| D10 | `/online-classes/book` | Step 2-e date ta **onek dur-e** dao (jemon 3 mash pore, jekhane teacher-er availability nai) | Message: **"No one has a free slot in the next 7 days from this date"** + "this package is still available to book". ⚠️ **"No teachers" jeno NA bole** | ☐ | |
+| D11 | — | Window dropdown **14** ba **21** koro | List abar bodlabe (window barale teacher fire ashte pare) | ☐ | |
+
+> **Keno eta alada kore test korchi:** jei teacher-er oi window-e ekta-o slot nai,
+> backend take **list theke bad diye dey**. Tai khali list mane *"ei koy din-e keu
+> free nai"* — *"package-e teacher nai"* **na**. UI-te ei duita alada kore bola hoy;
+> na hole visitor bhabto package ta noshto.
 
 ---
 
@@ -172,32 +194,6 @@ Student email-e paওয়া password diye `/auth/signin` → tarpor URL-e `/d
 
 ---
 
-## Known limitation (bug hisebe report korar dorkar nai)
-
-| Jinis | Keno |
-|---|---|
-| Blog **detail** page shob shomoy English | Server component, bhasha client-side context-e — SEO-r jonno neওয়া trade-off |
-| Login-er por auto redirect nai | Ekhono lekha hoy ni |
-| Login chhara dashboard URL khole | `src/proxy.ts` khali stub, route guard nai |
-| Student invoice-e status column nai | Backend `payment_status` dey na |
-| Package card-e teacher naam nai | Backend package-e teacher bandhe na |
-| Booking-e card field nai | Phase 1-e dummy gateway; asol Stripe pore |
-| Admin calendar 200 session obdi | Backend date-range filter dey na |
-
----
-
-## Bug report format
-
-```
-Step:      E4
-Ki korlam: D-te booking korar por admin sessions Upcoming tab kholam
-Ki holo:   Class ta list-e nai
-Ki howa uchit: D-te book kora class ta thaka uchit
-Network:   GET /administrator/sessions/?filter=upcoming&p=1 → 200, results: []
-```
-
----
-
 ## Phase J — Session refresh (token expire)
 
 > Round 2 Auth Step 5-e joda holo. Ager code-e access token expire mane-i logout
@@ -226,3 +222,115 @@ Network:   GET /administrator/sessions/?filter=upcoming&p=1 → 200, results: []
 **Keno eta alada phase:** ei change-ta app-er **proti ta logged-in request**-er upor
 diye jay. Vul thakle hoy shobai logout hobe, na hoy refresh loop-e porbe — duitai
 onno kono test-e dhora porbe na.
+
+---
+
+## Phase K — Package-e teacher restriction 🔴 Round 2-er mul feature
+
+> Package ekhon nirdishto teacher-e **shimito** kora jay. Backend eta **tin
+> jaygay** enforce kore: public booking list, checkout, ar student portal-er booking.
+>
+> ⚠️ **Ei phase-er age ar kono restriction test kora jabe na** — seed data-y
+> **ekta-o restricted package nai**. K1-i oita banay.
+>
+> **Dorkar:** Phase A-r teacher (A1) + aro **ekta dwitiyo teacher** (K0-te banao).
+
+| # | Route | Ki korbe | Ki dekhbe | ☐ | Result |
+|---|---|---|---|---|---|
+| K0 | `/dashboard/admin/teachers/create` | **Dwitiyo ekta teacher** banau, availability shoho (A1-er moto) | List-e duijon teacher | ☐ | |
+| K1 | `/dashboard/admin/packages/<A2>/edit` | "Bookable with" section-e **shudhu A1-er teacher** tick koro → Save | Save hobe | ☐ | |
+| K2 | `/dashboard/admin/packages/<A2>/edit` | Page ta **abar kholo** | Tick ta **theke geche** (save sotti hoyeche) | ☐ | |
+| K3 | — | Helper text poro | **"Limited to 1 teacher. Untick them all to allow everyone again."** | ☐ | |
+| K4 | `/dashboard/admin/packages` | List-e dekho | "Teachers" column-e **"1 teacher"** badge; hover korle naam | ☐ | |
+| K5 | `/online-classes/book` | Step 1-e **A2** select → Step 2 | Ekta note: **"This package can be booked with the teachers below only."** ar **shudhu A1** ache — **K0-er teacher NAI** | ☐ | |
+| K6 | `/online-classes/book` | Step 1-e **onno ekta (unrestricted) package** select → Step 2 | **Duijon teacher-i** ache | ☐ | |
+| K7 | `/courses` | A2-er pricing card | **"1 teacher available"** (age "2 teachers" chilo) | ☐ | |
+| K8 | `/dashboard/student/book-class` | Restricted package (A2) select → teacher step | **Shudhu A1**, ar oi-i note ta | ☐ | |
+| K9 | `/dashboard/student/calendar` | A2-er ekta class-e **Reschedule** kholo | Teacher dropdown-e **shudhu A1** | ☐ | |
+| K10 | `/dashboard/admin/packages/<A2>/edit` | Shob tick **tule felo** → Save | Helper text abar **"Every teacher can be booked"**, list-e **"All teachers"** | ☐ | |
+| K11 | `/online-classes/book` | A2 select → Step 2 | **Duijon teacher-i fire eseche** | ☐ | |
+
+---
+
+## Phase L — Teacher-first booking entry (Round 2-e notun)
+
+> Mul flow package-first. Kintu keu teacher card theke shuru korle age jante hobe
+> **oi teacher-er shathe kon package kena jay** — tai teacher profile-e ekta
+> packages section eseche.
+
+| # | Route | Ki korbe | Ki dekhbe | ☐ | Result |
+|---|---|---|---|---|---|
+| L1 | `/online-classes` | Teacher card-e **"Book with <naam>"** click | **`/book` e jay NA** — teacher profile page-e `#packages` section-e niye jay | ☐ | |
+| L2 | — | Oi section dekho | "Choose your package" + **"Next available: <din> <time>"** (upore ekbar, proti card-e na) | ☐ | |
+| L3 | — | Package card gula dekho | Oi teacher-er shathe kena jay emon package. **Restricted package-e "Exclusive" badge** | ☐ | |
+| L4 | — | Ekta package card-e click | `/online-classes/book?package=…&teacher=…` e jabe, **package already select** | ☐ | |
+| L5 | — | Step 2-e jao | Oi teacher already select thakbe ba list-e thakbe | ☐ | |
+| L6 | `/` (homepage) | Homepage-er teacher card-e "Book with" | L1-er moto-i profile-er `#packages` e jabe | ☐ | |
+
+---
+
+## Phase M — Registration + email verification (Round 2-e notun)
+
+> Age registration page chilo kintu **backend endpoint chilo na**. Ekhon ache.
+>
+> ⚠️ **Notun email lago** — purono account diye ei phase test kora **jabe na**.
+> Backend-er niyom: shudhu registration-i `EmailAddress` row banay; seeded user ar
+> guest-checkout student **verified hisebe gonno hoy**, tai tara verify flow-e dhoke na.
+
+| # | Route | Ki korbe | Ki dekhbe | ☐ | Result |
+|---|---|---|---|---|---|
+| M1 | `/auth/registration` | Form dekho | **"Username" field NAI**. First name (required), last name, country, phone, Spanish level ache | ☐ | |
+| M2 | — | Password `12345` dao | **"at least 8 characters"** error (backend 8 chay) | ☐ | |
+| M3 | — | Shob thik kore **notun email** diye submit | `/auth/verify-email?email=…` e jabe, ar **oi email ta page-e dekhabe** | ☐ | |
+| M4 | — | Ekhon-i **`/auth/signin`** e oi account diye login korar cheshta koro | **Login hobe na** (403 — email confirm kora hoy nai) | ☐ | |
+| M5 | `/auth/verify-email` | **"Send a new link"** click | Message ashbe, ar button **30 second-er countdown**-e chole jabe | ☐ | |
+| M6 | — | Ekta **fake email** diye resend koro | **Ek-i rokom message** ashbe. ⚠️ **"email nai" jeno NA bole** (oita bolle ke registered ta faash hoye jeto) | ☐ | |
+| M7 | Email inbox | Confirmation link-e click | `/auth/email/confirm/<key>` e jabe | ☐ | |
+| M8 | — | Page ta dekho | **"Email confirmed"** + **"You're signed in"** + 3 second countdown. ⚠️ **"Go to Sign In" jeno NA bole** — verify korle backend nijei login kore dey | ☐ | |
+| M9 | — | Opekkha koro (ba button click) | Shoja **`/dashboard/student`** e dhukbe, **abar login korte hobe na** | ☐ | |
+| M10 | — | Sidebar-er niche naam dekho | **Asol naam** dekhabe, **email na** | ☐ | |
+| M11 | — | Ek-i confirm link **abar** kholo | "Confirmation failed" + **"Send me a new link"** button (key single-use) | ☐ | |
+| M12 | `/auth/registration` | **Login thaka obosthay** ei URL-e jao | Dashboard-e bounce kore dibe | ☐ | |
+| M13 | `/auth/signin` | Login thaka obosthay | Dashboard-e bounce | ☐ | |
+
+### M10 keno alada kore likha
+
+Ager code sidebar-e `username` dekhato, kintu backend **email-ke-i username hisebe
+rakhe** — tai naam-er jaygay email ar niche abar email dekhato. Ekhon `profile.name`
+pora hoy. Login ar registration duita path theke-i ek-i naam asha uchit.
+
+---
+
+## Known limitation (bug hisebe report korar dorkar nai)
+
+| Jinis | Keno |
+|---|---|
+| Blog **detail** page shob shomoy English | Server component, bhasha client-side context-e — SEO-r jonno neওয়া trade-off |
+| Student invoice-e status column nai | Backend `payment_status` dey na |
+| Booking-e card field nai | Phase 1-e dummy gateway; asol Stripe pore |
+| Admin calendar 200 session obdi | Backend date-range filter dey na |
+| Leads **Export** e filter kaj kore na | Backend `LeadExportView` query param **porei na** — shob shomoy puro list. UI-te amber warning ache. (Bookings export-e filter thik ache) |
+| Teacher URL-e UUID, slug na | Backend-e Teacher model-e `slug` field **nai** (shudhu Blog-e ache). SEO slug chaile backend-e add korte hobe |
+| `TEACHER` role-e login korle `/` e jay | Backend ei role fire dite pare, kintu teacher portal ekhono banano hoy ni |
+| Phase J (token refresh) chalano jay na | Backend `ACCESS_TOKEN_LIFETIME` 30 din — dekho Phase J-er note |
+| 20-class package-er price | $250.00 na $254.64 — ekhono product shidhanto hoy ni |
+
+### Age ei table-e ja lekha chilo, ar **ekhon vul**
+
+| Purono lekha | Asol obostha |
+|---|---|
+| ~~"Login-er por auto redirect nai"~~ | **Kaj kore.** `sign-in.form.tsx` `state.redirectTo` dhore role onujayi dashboard-e pathay |
+| ~~"Login chhara dashboard URL khole — `src/proxy.ts` khali stub, route guard nai"~~ | **Guard ache ar kaj kore.** Next 16-e `middleware.ts`-er notun naam `proxy.ts`. Logged-out → signin, vul role → nijer dashboard. Round 2-e register/forgot/verify page-o bounce kore |
+| ~~"Package card-e teacher naam nai"~~ | **Ekhon ache.** `teacher_count` pricing card-e, ar restriction Phase K-te |
+
+---
+
+## Bug report format
+
+```
+Step:      E4
+Ki korlam: D-te booking korar por admin sessions Upcoming tab kholam
+Ki holo:   Class ta list-e nai
+Ki howa uchit: D-te book kora class ta thaka uchit
+Network:   GET /administrator/sessions/?filter=upcoming&p=1 → 200, results: []
+```
