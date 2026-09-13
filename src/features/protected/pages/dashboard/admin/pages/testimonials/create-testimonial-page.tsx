@@ -10,10 +10,12 @@ export default function CreateTestimonialPage() {
     <DashboardPageLayout
       title="New Testimonial"
       subtitle="Add a student outcome for the public site."
+      /* Form-ta xl:-e duita column-e bhage, ar Tailwind breakpoint viewport
+         dhore chole — container dhore na. Chhoto container-e column duita
+         chepe jeto, tai package/teacher form-er moto 6xl. */
+      maxWidth="max-w-6xl"
     >
-      <div className="max-w-3xl">
-        <TestimonialForm mutation={mutation} />
-      </div>
+      <TestimonialForm mutation={mutation} />
     </DashboardPageLayout>
   );
 }

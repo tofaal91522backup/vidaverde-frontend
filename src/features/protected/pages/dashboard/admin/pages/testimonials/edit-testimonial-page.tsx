@@ -33,20 +33,20 @@ export default function EditTestimonialPage({ id }: { id: string }) {
     <DashboardPageLayout
       title="Edit Testimonial"
       subtitle={data ? `Editing: ${data.student_name}` : undefined}
+      /* Niche-r note create page-e — two-column form-er jonno 6xl lage */
+      maxWidth="max-w-6xl"
     >
-      <div className="max-w-3xl">
-        <AsyncStateWrapper
-          loading={isLoading}
-          error={isError ? "Could not load this testimonial." : null}
-        >
-          {data && (
-            <TestimonialForm
-              mutation={mutation}
-              defaultValues={toFormValues(data)}
-            />
-          )}
-        </AsyncStateWrapper>
-      </div>
+      <AsyncStateWrapper
+        loading={isLoading}
+        error={isError ? "Could not load this testimonial." : null}
+      >
+        {data && (
+          <TestimonialForm
+            mutation={mutation}
+            defaultValues={toFormValues(data)}
+          />
+        )}
+      </AsyncStateWrapper>
     </DashboardPageLayout>
   );
 }
