@@ -37,25 +37,25 @@ export default function EditBlogPage({ id }: { id: string }) {
     <DashboardPageLayout
       title="Edit Blog Post"
       subtitle={data ? `Editing: ${data.title_en}` : undefined}
+      /* Package/teacher form-er moto 6xl — niche-r note dekho create page-e */
+      maxWidth="max-w-6xl"
     >
-      <div className="max-w-3xl">
-        <AsyncStateWrapper
-          loading={isLoading}
-          error={isError ? "Could not load this post." : null}
-        >
-          {data && (
-            <div className="space-y-4">
-              {/* Backend-er computed field — edit kora jay na, kintu dekhale kaje lage */}
-              <div className="flex flex-wrap gap-4 rounded-lg border bg-muted/30 p-3 text-xs text-muted-foreground">
-                <span>Author: {data.author || "—"}</span>
-                <span>Reading time: {data.reading_time} min</span>
-              </div>
-
-              <BlogForm mutation={mutation} defaultValues={toFormValues(data)} />
+      <AsyncStateWrapper
+        loading={isLoading}
+        error={isError ? "Could not load this post." : null}
+      >
+        {data && (
+          <div className="space-y-5">
+            {/* Backend-er computed field — edit kora jay na, kintu dekhale kaje lage */}
+            <div className="flex flex-wrap gap-4 rounded-lg border bg-muted/30 p-3 text-xs text-muted-foreground">
+              <span>Author: {data.author || "—"}</span>
+              <span>Reading time: {data.reading_time} min</span>
             </div>
-          )}
-        </AsyncStateWrapper>
-      </div>
+
+            <BlogForm mutation={mutation} defaultValues={toFormValues(data)} />
+          </div>
+        )}
+      </AsyncStateWrapper>
     </DashboardPageLayout>
   );
 }

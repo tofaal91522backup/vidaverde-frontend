@@ -10,10 +10,12 @@ export default function CreateBlogPage() {
     <DashboardPageLayout
       title="New Blog Post"
       subtitle="Write and publish a new post to the blog."
+      /* Package/teacher form-er moto 6xl — form-ta xl:-e duita column-e bhage,
+         ar Tailwind breakpoint viewport dhore chole, container dhore na. Chhoto
+         container-e oi duita column chepe jeto. */
+      maxWidth="max-w-6xl"
     >
-      <div className="max-w-3xl">
-        <BlogForm mutation={mutation} />
-      </div>
+      <BlogForm mutation={mutation} />
     </DashboardPageLayout>
   );
 }
