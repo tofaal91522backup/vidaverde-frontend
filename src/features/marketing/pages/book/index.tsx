@@ -7,6 +7,7 @@ import {
   usePublicPackages,
 } from "@/features/marketing/pages/courses/queries/use-public-packages";
 import { usePackageTeachers } from "@/features/marketing/pages/book/queries/use-package-teachers";
+import { Combobox } from "@/components/shared/form-related/combobox";
 import { SlotPicker } from "@/features/marketing/pages/book/components/SlotPicker";
 import { getPublicTimeZone } from "@/features/marketing/constants/public-api";
 import type {
@@ -26,6 +27,7 @@ import {
   COUNTRY_OPTIONS,
   DEFAULT_DIAL_COUNTRY,
   DIAL_CODE_OPTIONS,
+  dialCodeOf,
   joinPhone,
   splitPhone,
 } from "@/constants/countries";
@@ -629,28 +631,24 @@ export default function BookRoute() {
                 >
                   Phone <span className="normal-case">(optional)</span>
                 </label>
-                <div className="flex gap-2">
-                  <select
-                    aria-label="Country dialling code"
+                {/* Duita control gaye lagano — majher border ekta */}
+                <div className="flex">
+                  <Combobox
+                    className="w-32 shrink-0"
+                    triggerClassName="h-auto rounded-lg border-vv-line bg-vv-bg-warm px-4 py-3 text-[15px] text-vv-ink hover:bg-vv-bg-warm focus-visible:border-vv-accent rounded-r-none"
                     value={phoneCountry}
-                    onChange={(e) => {
-                      setPhoneCountry(e.target.value);
+                    triggerLabel={dialCodeOf(phoneCountry) || "Code"}
+                    options={DIAL_CODE_OPTIONS}
+                    placeholder="Code"
+                    searchPlaceholder="Search country..."
+                    onChange={(next) => {
+                      setPhoneCountry(next);
                       setDetail(
                         "phone_number",
-                        joinPhone(
-                          e.target.value,
-                          splitPhone(details.phone_number).number,
-                        ),
+                        joinPhone(next, splitPhone(details.phone_number).number),
                       );
                     }}
-                    className="w-36 shrink-0 rounded-lg border border-vv-line bg-vv-bg-warm px-3 py-3 text-[15px] text-vv-ink outline-none focus:border-vv-accent"
-                  >
-                    {DIAL_CODE_OPTIONS.map((option) => (
-                      <option key={option.value} value={option.value}>
-                        {option.label}
-                      </option>
-                    ))}
-                  </select>
+                  />
                   <input
                     id="bk-phone"
                     type="tel"
@@ -663,7 +661,7 @@ export default function BookRoute() {
                         joinPhone(phoneCountry, e.target.value),
                       )
                     }
-                    className="flex-1 rounded-lg border border-vv-line bg-vv-bg-warm px-4 py-3 text-[15px] text-vv-ink outline-none focus:border-vv-accent"
+                    className="-ml-px flex-1 rounded-lg rounded-l-none border border-vv-line bg-vv-bg-warm px-4 py-3 text-[15px] text-vv-ink outline-none focus:border-vv-accent"
                   />
                 </div>
               </div>
@@ -676,19 +674,15 @@ export default function BookRoute() {
                 </label>
                 {/* Free text na — shared country list. Backend `country` ke
                     string hisebe-i rakhe, tai naam-i value */}
-                <select
+                <Combobox
                   id="bk-country"
                   value={details.country}
-                  onChange={(e) => setDetail("country", e.target.value)}
-                  className="rounded-lg border border-vv-line bg-vv-bg-warm px-4 py-3 text-[15px] text-vv-ink outline-none focus:border-vv-accent"
-                >
-                  <option value="">Select your country</option>
-                  {COUNTRY_OPTIONS.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
+                  onChange={(next) => setDetail("country", next)}
+                  options={COUNTRY_OPTIONS}
+                  placeholder="Select your country"
+                  searchPlaceholder="Search country..."
+                  triggerClassName="h-auto rounded-lg border-vv-line bg-vv-bg-warm px-4 py-3 text-[15px] text-vv-ink hover:bg-vv-bg-warm focus-visible:border-vv-accent"
+                />
               </div>
               <div className="flex flex-col gap-1.5 sm:col-span-2">
                 <label

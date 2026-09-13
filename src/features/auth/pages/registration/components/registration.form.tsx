@@ -7,13 +7,14 @@ import {
   NativeSelectOption,
 } from "@/components/ui/native-select";
 import { Spinner } from "@/components/ui/spinner";
+import { Combobox } from "@/components/shared/form-related/combobox";
 import { PhoneInput } from "@/components/shared/form-related/phone-input";
 import { COUNTRY_OPTIONS } from "@/constants/countries";
 import { SPANISH_LEVEL_OPTIONS } from "@/constants/spanish-levels";
 import { RegistrationAction } from "@/features/auth/pages/registration/actions/registration.action";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useActionState, useEffect, useRef } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 
 function Field({
@@ -46,6 +47,9 @@ function Field({
 export default function RegistrationForm() {
   const router = useRouter();
   const timezoneRef = useRef<HTMLInputElement>(null);
+
+  // Combobox controlled — value ta hidden input diye FormData-te jay
+  const [country, setCountry] = useState("");
 
   const [state, action, isPending] = useActionState(RegistrationAction, {
     success: false,
@@ -140,15 +144,15 @@ export default function RegistrationForm() {
       </Field>
 
       <Field label="Country" error={state.errors.country} optional>
-        {/* Native `<select name>` — FormData-te shoja chole jay */}
-        <NativeSelect name="country" defaultValue="">
-          <NativeSelectOption value="">Select your country</NativeSelectOption>
-          {COUNTRY_OPTIONS.map((option) => (
-            <NativeSelectOption key={option.value} value={option.value}>
-              {option.label}
-            </NativeSelectOption>
-          ))}
-        </NativeSelect>
+        {/* `name` dile bhitore hidden input boshe, tai FormData-te chole jay */}
+        <Combobox
+          name="country"
+          value={country}
+          onChange={setCountry}
+          options={COUNTRY_OPTIONS}
+          placeholder="Select your country"
+          searchPlaceholder="Search country..."
+        />
       </Field>
 
       <Field label="Phone" error={state.errors.phone_number} optional>

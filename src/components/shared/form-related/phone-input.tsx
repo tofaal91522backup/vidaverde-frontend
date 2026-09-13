@@ -1,10 +1,11 @@
 "use client";
 
-import { ReusableSelect } from "@/components/shared/form-related/reusable-select";
+import { Combobox } from "@/components/shared/form-related/combobox";
 import { Input } from "@/components/ui/input";
 import {
   DEFAULT_DIAL_COUNTRY,
   DIAL_CODE_OPTIONS,
+  dialCodeOf,
   joinPhone,
   splitPhone,
 } from "@/constants/countries";
@@ -66,18 +67,30 @@ export function PhoneInput({
     onChange?.(joinPhone(nextCountry, nextLocal));
   };
 
+  /*
+    Trigger-e shudhu dial code ("+880") dekhano hoy, puro naam na — ei ghor ta
+    chhoto, "Bangladesh (+880)" truncate hoye "Banglad…" hoye jeto ar **asol
+    kaj-er ongsho-ta-i** heriye jeto. Puro naam list-er bhitore ache, jekhane
+    khoja hoy.
+  */
+  const triggerLabel = dialCodeOf(countryCode) || "Code";
+
   return (
-    <div className={cn("flex gap-2", className)}>
-      <ReusableSelect
-        className="w-40 shrink-0"
+    // Duita control gaye lagano — majher border ekta (`-ml-px`), ar pashapashi
+    // corner gula shoja. Dekhte ekta field, kintu bhitore duita control.
+    <div className={cn("flex", className)}>
+      <Combobox
+        className="w-36 shrink-0"
+        triggerClassName="rounded-r-none"
         value={countryCode}
         options={DIAL_CODE_OPTIONS}
+        triggerLabel={triggerLabel}
         placeholder="Code"
+        searchPlaceholder="Search country..."
         disabled={disabled}
-        aria-label="Country dialling code"
-        onChange={(e) => {
-          setCountryCode(e.target.value);
-          emit(e.target.value, local);
+        onChange={(next) => {
+          setCountryCode(next);
+          emit(next, local);
         }}
       />
 
@@ -85,7 +98,7 @@ export function PhoneInput({
         id={id}
         type="tel"
         inputMode="tel"
-        className="flex-1"
+        className="-ml-px flex-1 rounded-l-none"
         placeholder={placeholder}
         value={local}
         disabled={disabled}

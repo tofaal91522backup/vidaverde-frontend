@@ -200,17 +200,25 @@ Anything past a handful of fields is grouped into `<FormSection>` cards. Copy
 Never a free-text input. `src/constants/countries.ts` wraps `countries.json`
 (242 entries, ISO code + dial code + name).
 
-- **Country** — a select over `COUNTRY_OPTIONS`. The value is the country *name*,
-  not the code, because the backend stores `country` as free text ("Spain").
+- **Country** — `<Combobox>` over `COUNTRY_OPTIONS`, never a plain select: 242
+  entries is too many to scroll, especially on a phone. The value is the country
+  *name*, not the code, because the backend stores `country` as free text ("Spain").
+- **`<Combobox>`** (`components/shared/form-related/combobox.tsx`) is Popover +
+  a filter input, not shadcn's Command — `cmdk` is not a dependency here and one
+  control does not justify adding it. `name` writes a hidden input for FormData;
+  `triggerClassName` lets the marketing forms pass their `vv-*` styling.
 - **Phone** — `<PhoneInput>` (`components/shared/form-related/phone-input.tsx`):
   a dial-code select plus the number, joined into the single string the backend
   expects ("+34 600 123 456"). Pass `value`/`onChange` in a TanStack form, or
   `name` in a Pattern B form and it writes a hidden input for FormData.
 - `DIAL_CODE_OPTIONS` is keyed by ISO code, not dial code — "+1" belongs to
   several countries and duplicate `<option value>`s break selection.
-- The marketing booking form builds the same two selects inline instead, because
-  its inputs use the `vv-*` styling rather than shadcn. It shares the data and
-  the `splitPhone`/`joinPhone` helpers.
+- The two phone controls are joined into one field (`rounded-r-none` on the
+  trigger, `-ml-px rounded-l-none` on the input), and the trigger shows only the
+  dial code — the full "Bangladesh (+880)" truncates to "Banglad…" in that width
+  and loses the part that matters. The name is in the list, where searching happens.
+- The marketing booking form uses the same Combobox with `triggerClassName` set
+  to its `vv-*` field styling, rather than shadcn's default look.
 
 ### Detail pages
 

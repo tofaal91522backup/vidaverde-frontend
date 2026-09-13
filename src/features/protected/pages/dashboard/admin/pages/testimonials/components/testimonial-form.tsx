@@ -1,8 +1,8 @@
 "use client";
 
 import { FormFieldWrapper } from "@/components/shared/form-related/form-field-wrapper";
+import { Combobox } from "@/components/shared/form-related/combobox";
 import { FormSection } from "@/components/shared/form-related/form-section";
-import { ReusableSelect } from "@/components/shared/form-related/reusable-select";
 import { COUNTRY_OPTIONS } from "@/constants/countries";
 import SingleFileUploader from "@/components/shared/form-related/single-file-uploader";
 import { SubmitButton } from "@/components/shared/form-related/submit-button";
@@ -101,15 +101,15 @@ export function TestimonialForm({
                 {(field) => (
                   <FormFieldWrapper<string> field={field} label="Country">
                     {(p) => (
-                      <ReusableSelect
+                      <Combobox
                         id={p.inputProps.id}
-                        name={p.inputProps.name}
                         value={p.inputProps.value}
                         onBlur={p.inputProps.onBlur}
-                        onChange={(e) => p.onChangeValue(e.target.value)}
+                        onChange={p.onChangeValue}
                         aria-invalid={p.inputProps["aria-invalid"]}
                         options={COUNTRY_OPTIONS}
                         placeholder="Select a country"
+                        searchPlaceholder="Search country..."
                       />
                     )}
                   </FormFieldWrapper>
