@@ -7,17 +7,9 @@ import type {
 } from "@/features/protected/pages/dashboard/admin/types/admin.types";
 import { formatSchoolDate } from "@/features/protected/pages/dashboard/admin/utils/format-school-datetime";
 import { cn } from "@/lib/utils";
+import { PAYMENT_STATUS_VARIANTS } from "@/features/protected/pages/dashboard/admin/utils/status-badge";
 import { ColumnDef } from "@tanstack/react-table";
 
-const PAYMENT_VARIANTS: Record<
-  PaymentStatus,
-  "default" | "secondary" | "destructive" | "outline"
-> = {
-  paid: "default",
-  pending: "secondary",
-  failed: "destructive",
-  refunded: "outline",
-};
 
 export const bookingsColumns: ColumnDef<AdminBooking>[] = [
   {
@@ -62,7 +54,7 @@ export const bookingsColumns: ColumnDef<AdminBooking>[] = [
     cell: ({ row }) => (
       <div className="flex flex-col items-start gap-1">
         <Badge
-          variant={PAYMENT_VARIANTS[row.original.payment_status] ?? "secondary"}
+          variant={PAYMENT_STATUS_VARIANTS[row.original.payment_status] ?? "secondary"}
           className="capitalize"
         >
           {row.original.payment_status}

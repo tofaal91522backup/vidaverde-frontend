@@ -19,6 +19,10 @@ import {
   formatSchoolDate,
   formatSchoolTime,
 } from "@/features/protected/pages/dashboard/admin/utils/format-school-datetime";
+import {
+  SESSION_STATUS_LABELS,
+  SESSION_STATUS_VARIANTS,
+} from "@/features/protected/pages/dashboard/admin/utils/status-badge";
 import { ColumnDef } from "@tanstack/react-table";
 import {
   Ban,
@@ -33,24 +37,6 @@ import Link from "next/link";
 import { useState } from "react";
 import { useUpdateSession } from "../queries/use-sessions";
 
-const STATUS_VARIANTS: Record<
-  SessionStatus,
-  "default" | "secondary" | "destructive" | "outline"
-> = {
-  scheduled: "default",
-  completed: "outline",
-  no_show: "destructive",
-  cancelled: "destructive",
-  rescheduled: "secondary",
-};
-
-const STATUS_LABELS: Record<SessionStatus, string> = {
-  scheduled: "scheduled",
-  completed: "completed",
-  no_show: "no show",
-  cancelled: "cancelled",
-  rescheduled: "rescheduled",
-};
 
 /** `scheduled` class-e admin je outcome boshate pare */
 const OUTCOME_ACTIONS: {
@@ -216,10 +202,10 @@ export const sessionsColumns: ColumnDef<AdminSession>[] = [
     header: "Status",
     cell: ({ row }) => (
       <Badge
-        variant={STATUS_VARIANTS[row.original.status]}
+        variant={SESSION_STATUS_VARIANTS[row.original.status]}
         className="capitalize"
       >
-        {STATUS_LABELS[row.original.status]}
+        {SESSION_STATUS_LABELS[row.original.status]}
       </Badge>
     ),
   },
