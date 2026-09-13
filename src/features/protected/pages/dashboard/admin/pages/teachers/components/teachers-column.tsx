@@ -101,7 +101,7 @@ export const teachersColumns: ColumnDef<AdminTeacher>[] = [
         </Badge>
         {row.original.active && !row.original.accepting_students && (
           <Badge variant="outline" className="text-[10px]">
-            Limited availability
+            Not accepting new students
           </Badge>
         )}
       </div>

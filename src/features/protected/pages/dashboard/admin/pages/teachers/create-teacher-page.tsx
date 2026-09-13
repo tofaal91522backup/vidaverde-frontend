@@ -12,6 +12,7 @@ export default function CreateTeacherPage() {
 
   return (
     <DashboardPageLayout
+      maxWidth="max-w-6xl"
       title="Add New Teacher"
       subtitle="Time off can be added once the teacher is saved."
       action={
@@ -23,7 +24,7 @@ export default function CreateTeacherPage() {
         </Button>
       }
     >
-      <div className="max-w-4xl">
+      <div>
         <TeacherForm mutation={mutation} submitLabel="Create teacher" />
       </div>
     </DashboardPageLayout>

@@ -7,7 +7,6 @@ import { SubmitButton } from "@/components/shared/form-related/submit-button";
 import { SubmitErrorSummary } from "@/components/shared/form-related/submit-error-summary";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
@@ -19,6 +18,7 @@ import {
 import {
   CalendarClock,
   Eye,
+  ImageIcon,
   MessagesSquare,
   UserRound,
   Video,
@@ -38,6 +38,13 @@ interface TeacherFormProps {
   redirectTo?: string;
   /** Submit button-er lekha — create ar edit e ek na */
   submitLabel?: string;
+}
+
+/** Kon field chara-o save kora jay — label-er pashe boshe */
+function OptionalTag() {
+  return (
+    <span className="text-xs font-normal text-muted-foreground">Optional</span>
+  );
 }
 
 /**
@@ -134,230 +141,258 @@ export function TeacherForm({
     >
       <SubmitErrorSummary errors={submitErrors} />
 
-      <FormSection
-        icon={UserRound}
-        title="Profile"
-        description="Shown on the public teacher card and the booking flow."
-      >
+      {/* Boro screen-e dan pashta faka pore chilo — photo, visibility ar
+          action ekhon oi rail-e; chhoto screen-e nichey stack hoye jay */}
+      <div className="grid items-start gap-5 xl:grid-cols-[minmax(0,1fr)_340px]">
         <div className="space-y-5">
-          <div className="grid gap-5 sm:grid-cols-2">
-            <form.Field name="name">
-              {(field) => (
-                <FormFieldWrapper<string> field={field} label="Full name">
-                  {(p) => (
-                    <Input
-                      {...p.inputProps}
-                      placeholder="e.g. Fernando Cordero"
-                    />
+          <FormSection
+            icon={UserRound}
+            title="Profile"
+            description="Shown on the public teacher card and the booking flow. Only the full name is required."
+          >
+            <div className="space-y-5">
+              <div className="grid gap-5 sm:grid-cols-2">
+                <form.Field name="name">
+                  {(field) => (
+                    <FormFieldWrapper<string>
+                      field={field}
+                      label="Full name"
+                      required
+                    >
+                      {(p) => (
+                        <Input
+                          {...p.inputProps}
+                          placeholder="e.g. Fernando Cordero"
+                        />
+                      )}
+                    </FormFieldWrapper>
                   )}
-                </FormFieldWrapper>
+                </form.Field>
+
+                <form.Field name="institute">
+                  {(field) => (
+                    <FormFieldWrapper<string>
+                      field={field}
+                      label="Institute"
+                      optional
+                    >
+                      {(p) => (
+                        <Input
+                          {...p.inputProps}
+                          placeholder="e.g. Universidad Central del Ecuador"
+                        />
+                      )}
+                    </FormFieldWrapper>
+                  )}
+                </form.Field>
+              </div>
+
+              <form.Field name="tags">
+                {(field) => (
+                  <div className="flex flex-col gap-1.5">
+                    <Label className="gap-1.5">
+                      Specialisations
+                      <OptionalTag />
+                    </Label>
+                    <p className="text-xs text-muted-foreground">
+                      Press Enter or comma to add one. These show as chips on
+                      the public profile.
+                    </p>
+                    <TagsInput
+                      value={field.state.value}
+                      onChange={field.handleChange}
+                    />
+                  </div>
+                )}
+              </form.Field>
+            </div>
+          </FormSection>
+
+          {/* Bilingual — public API ?lang= onujayi dey, na pele English e fallback */}
+          <FormSection
+            icon={MessagesSquare}
+            title="Bio"
+            description="Both optional — the public site falls back to English when Spanish is blank."
+          >
+            <div className="grid gap-5 lg:grid-cols-2">
+              <form.Field name="description_en">
+                {(field) => (
+                  <FormFieldWrapper<string>
+                    field={field}
+                    label="Bio (English)"
+                    optional
+                  >
+                    {(p) => (
+                      <Textarea
+                        id={p.inputProps.id}
+                        name={p.inputProps.name}
+                        value={p.inputProps.value}
+                        onBlur={p.inputProps.onBlur}
+                        onChange={(e) => p.onChangeValue(e.target.value)}
+                        aria-invalid={p.inputProps["aria-invalid"]}
+                        rows={6}
+                        placeholder="Teaching background and style..."
+                      />
+                    )}
+                  </FormFieldWrapper>
+                )}
+              </form.Field>
+
+              <form.Field name="description_es">
+                {(field) => (
+                  <FormFieldWrapper<string>
+                    field={field}
+                    label="Bio (Spanish)"
+                    optional
+                  >
+                    {(p) => (
+                      <Textarea
+                        id={p.inputProps.id}
+                        name={p.inputProps.name}
+                        value={p.inputProps.value}
+                        onBlur={p.inputProps.onBlur}
+                        onChange={(e) => p.onChangeValue(e.target.value)}
+                        aria-invalid={p.inputProps["aria-invalid"]}
+                        rows={6}
+                        placeholder="Leave blank to fall back to English"
+                      />
+                    )}
+                  </FormFieldWrapper>
+                )}
+              </form.Field>
+            </div>
+          </FormSection>
+
+          <FormSection
+            icon={CalendarClock}
+            title="Weekly availability"
+            description="Optional, but a teacher with no hours can never be booked."
+          >
+            <form.Field name="availability">
+              {(field) => (
+                <AvailabilityEditor
+                  value={field.state.value as AvailabilityRuleValue[]}
+                  onChange={field.handleChange}
+                />
               )}
             </form.Field>
+          </FormSection>
 
-            <form.Field name="institute">
+          <FormSection
+            icon={Video}
+            title="Calendar & meetings"
+            description="Optional. The fallback room is used when Google Calendar is unavailable, so a booking never fails because of Google."
+          >
+            <div className="grid gap-5 sm:grid-cols-2">
+              <form.Field name="google_calendar_id">
+                {(field) => (
+                  <FormFieldWrapper<string>
+                    field={field}
+                    label="Google Calendar ID"
+                    optional
+                  >
+                    {(p) => (
+                      <Input
+                        {...p.inputProps}
+                        placeholder="Leave blank to skip Calendar sync"
+                      />
+                    )}
+                  </FormFieldWrapper>
+                )}
+              </form.Field>
+
+              <form.Field name="meet_link">
+                {(field) => (
+                  <FormFieldWrapper<string>
+                    field={field}
+                    label="Fallback Meet link"
+                    optional
+                  >
+                    {(p) => (
+                      <Input
+                        {...p.inputProps}
+                        placeholder="https://meet.google.com/..."
+                      />
+                    )}
+                  </FormFieldWrapper>
+                )}
+              </form.Field>
+            </div>
+          </FormSection>
+        </div>
+
+        <div className="space-y-5">
+          <FormSection
+            icon={ImageIcon}
+            title="Profile photo"
+            description="Optional. Square images look best on the public card."
+          >
+            <form.Field name="profile_img_url">
               {(field) => (
-                <FormFieldWrapper<string> field={field} label="Institute">
-                  {(p) => (
-                    <Input
-                      {...p.inputProps}
-                      placeholder="e.g. Universidad Central del Ecuador"
-                    />
-                  )}
-                </FormFieldWrapper>
-              )}
-            </form.Field>
-          </div>
-
-          <form.Field name="profile_img_url">
-            {(field) => (
-              <div className="flex flex-col gap-1.5">
-                <Label>Profile photo</Label>
                 <SingleFileUploader
                   label=""
                   value={field.state.value}
                   onChange={field.handleChange}
                 />
-              </div>
-            )}
-          </form.Field>
+              )}
+            </form.Field>
+          </FormSection>
 
-          <form.Field name="tags">
-            {(field) => (
-              <div className="flex flex-col gap-1.5">
-                <Label>Specialisations</Label>
-                <p className="text-xs text-muted-foreground">
-                  Press Enter or comma to add one. These show as chips on the
-                  public profile.
-                </p>
-                <TagsInput
-                  value={field.state.value}
-                  onChange={field.handleChange}
-                />
-              </div>
-            )}
-          </form.Field>
-        </div>
-      </FormSection>
-
-      {/* Bilingual — public API ?lang= onujayi dey, na pele English e fallback */}
-      <FormSection
-        icon={MessagesSquare}
-        title="Bio"
-        description="Spanish is optional — the public site falls back to English when it is blank."
-      >
-        <div className="grid gap-5 lg:grid-cols-2">
-          <form.Field name="description_en">
-            {(field) => (
-              <FormFieldWrapper<string> field={field} label="Bio (English)">
-                {(p) => (
-                  <Textarea
-                    id={p.inputProps.id}
-                    name={p.inputProps.name}
-                    value={p.inputProps.value}
-                    onBlur={p.inputProps.onBlur}
-                    onChange={(e) => p.onChangeValue(e.target.value)}
-                    aria-invalid={p.inputProps["aria-invalid"]}
-                    rows={6}
-                    placeholder="Teaching background and style..."
+          <FormSection
+            icon={Eye}
+            title="Visibility"
+            description="Controls where this teacher appears for students."
+          >
+            <div className="space-y-4">
+              <form.Field name="accepting_students">
+                {(field) => (
+                  <ToggleRow
+                    id="accepting_students"
+                    checked={field.state.value}
+                    onChange={field.handleChange}
+                    title="Accepting new students"
+                    description="Turn off to keep existing classes but stop new students from picking this teacher."
+                    onLabel="Accepting new students"
+                    offLabel="Not accepting new students"
                   />
                 )}
-              </FormFieldWrapper>
-            )}
-          </form.Field>
+              </form.Field>
 
-          <form.Field name="description_es">
-            {(field) => (
-              <FormFieldWrapper<string> field={field} label="Bio (Spanish)">
-                {(p) => (
-                  <Textarea
-                    id={p.inputProps.id}
-                    name={p.inputProps.name}
-                    value={p.inputProps.value}
-                    onBlur={p.inputProps.onBlur}
-                    onChange={(e) => p.onChangeValue(e.target.value)}
-                    aria-invalid={p.inputProps["aria-invalid"]}
-                    rows={6}
-                    placeholder="Leave blank to fall back to English"
+              <form.Field name="active">
+                {(field) => (
+                  <ToggleRow
+                    id="active"
+                    checked={field.state.value}
+                    onChange={field.handleChange}
+                    title="Active"
+                    description="Inactive teachers are hidden from the public site and the booking flow entirely."
+                    onLabel="Active"
+                    offLabel="Inactive"
                   />
                 )}
-              </FormFieldWrapper>
-            )}
-          </form.Field>
-        </div>
-      </FormSection>
+              </form.Field>
+            </div>
+          </FormSection>
 
-      <FormSection
-        icon={CalendarClock}
-        title="Weekly availability"
-        description="The hours this teacher can be booked, day by day."
-      >
-        <form.Field name="availability">
-          {(field) => (
-            <AvailabilityEditor
-              value={field.state.value as AvailabilityRuleValue[]}
-              onChange={field.handleChange}
-            />
-          )}
-        </form.Field>
-      </FormSection>
-
-      <FormSection
-        icon={Video}
-        title="Calendar & meetings"
-        description="Optional. The fallback room is used when Google Calendar is unavailable, so a booking never fails because of Google."
-      >
-        <div className="grid gap-5 sm:grid-cols-2">
-          <form.Field name="google_calendar_id">
-            {(field) => (
-              <FormFieldWrapper<string>
-                field={field}
-                label="Google Calendar ID"
-              >
-                {(p) => (
-                  <Input
-                    {...p.inputProps}
-                    placeholder="Leave blank to skip Calendar sync"
-                  />
-                )}
-              </FormFieldWrapper>
-            )}
-          </form.Field>
-
-          <form.Field name="meet_link">
-            {(field) => (
-              <FormFieldWrapper<string>
-                field={field}
-                label="Fallback Meet link"
-              >
-                {(p) => (
-                  <Input
-                    {...p.inputProps}
-                    placeholder="https://meet.google.com/..."
-                  />
-                )}
-              </FormFieldWrapper>
-            )}
-          </form.Field>
-        </div>
-      </FormSection>
-
-      <FormSection
-        icon={Eye}
-        title="Visibility"
-        description="Controls where this teacher appears for students."
-      >
-        <div className="grid gap-4 sm:grid-cols-2">
-          <form.Field name="accepting_students">
-            {(field) => (
-              <ToggleRow
-                id="accepting_students"
-                checked={field.state.value}
-                onChange={field.handleChange}
-                title="Accepting new students"
-                description="Turn off to keep existing classes but stop new students from picking this teacher."
-                onLabel="Accepting new students"
-                offLabel="Limited availability"
-              />
-            )}
-          </form.Field>
-
-          <form.Field name="active">
-            {(field) => (
-              <ToggleRow
-                id="active"
-                checked={field.state.value}
-                onChange={field.handleChange}
-                title="Active"
-                description="Inactive teachers are hidden from the public site and the booking flow entirely."
-                onLabel="Active"
-                offLabel="Inactive"
-              />
-            )}
-          </form.Field>
-        </div>
-      </FormSection>
-
-      <Card className="py-0">
-        <CardContent className="flex flex-wrap items-center justify-between gap-3 p-4">
-          <p className="text-xs text-muted-foreground">
-            Only the full name is required — everything else can be filled in
-            later.
-          </p>
-
-          <div className="flex items-center gap-2">
+          <FormSection
+            title="Ready to save?"
+            description="Fields marked * are required. Everything else can be filled in later."
+            contentClassName="space-y-2 p-5"
+          >
+            <SubmitButton className="w-full" isLoading={mutation.isPending}>
+              {submitLabel}
+            </SubmitButton>
             <Button
               type="button"
               variant="outline"
+              className="w-full"
               onClick={() => router.push(redirectTo)}
             >
               Cancel
             </Button>
-            <SubmitButton isLoading={mutation.isPending}>
-              {submitLabel}
-            </SubmitButton>
-          </div>
-        </CardContent>
-      </Card>
+          </FormSection>
+        </div>
+      </div>
     </form>
   );
 }

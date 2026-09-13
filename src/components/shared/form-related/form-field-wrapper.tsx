@@ -23,10 +23,16 @@ export function FormFieldWrapper<T>({
   field,
   label,
   children,
+  required,
+  optional,
 }: {
   field: AnyFieldApi;
   label: string;
   children: (p: ChildProps<T>) => React.ReactNode;
+  /** Label-er pashe lal `*` */
+  required?: boolean;
+  /** Label-er pashe muted "Optional" — kon field chara-o save hoy bujhate */
+  optional?: boolean;
 }) {
   const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
 
@@ -42,7 +48,21 @@ export function FormFieldWrapper<T>({
 
   return (
     <Field data-invalid={isInvalid} className="flex flex-col gap-1">
-      <FieldLabel htmlFor={field.name}>{label}</FieldLabel>
+      <FieldLabel htmlFor={field.name}>
+        <span>
+          {label}
+          {required && (
+            <span aria-hidden className="ml-0.5 text-destructive">
+              *
+            </span>
+          )}
+        </span>
+        {optional && (
+          <span className="text-xs font-normal text-muted-foreground">
+            Optional
+          </span>
+        )}
+      </FieldLabel>
 
       {children({
         isInvalid,

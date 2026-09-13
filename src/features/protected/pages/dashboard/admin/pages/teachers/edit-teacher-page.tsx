@@ -62,6 +62,7 @@ export default function EditTeacherPage({ id }: { id: string }) {
 
   return (
     <DashboardPageLayout
+      maxWidth="max-w-6xl"
       title="Edit Teacher"
       subtitle={
         teacher
@@ -77,7 +78,7 @@ export default function EditTeacherPage({ id }: { id: string }) {
         </Button>
       }
     >
-      <div className="max-w-4xl space-y-5">
+      <div className="space-y-5">
         <AsyncStateWrapper
           loading={isLoading}
           error={isError ? "Could not load this teacher." : null}
@@ -110,7 +111,7 @@ export default function EditTeacherPage({ id }: { id: string }) {
                     >
                       {teacher.accepting_students
                         ? "Accepting new students"
-                        : "Limited availability"}
+                        : "Not accepting new students"}
                     </Badge>
                   </div>
                 </CardContent>
