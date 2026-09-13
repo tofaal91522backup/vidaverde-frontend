@@ -34,7 +34,7 @@ export function TableCard({
       {(toolbar || meta) && (
         <div className="flex flex-wrap items-center justify-between gap-3 bg-muted/40 p-4">
           {toolbar && (
-            <div className="flex flex-1 flex-wrap items-center gap-3">
+            <div className="flex flex-1 flex-wrap items-end gap-3">
               {toolbar}
             </div>
           )}

@@ -3,6 +3,7 @@ import type {
   PaymentStatus,
 } from "@/features/protected/pages/dashboard/admin/types/admin.types";
 import { useFetchData } from "@/hooks/use-fetch-data";
+import { keepPreviousData } from "@tanstack/react-query";
 import { useMutationHandler } from "@/hooks/use-mutation-handler";
 import { makeEndpoint } from "@/lib/http/make-endpoint";
 import { request } from "@/lib/http/request";
@@ -43,6 +44,8 @@ export function useBookings(params: BookingListParams = {}) {
   return useFetchData<AdminBookingsResponse>({
     url: makeEndpoint("/administrator/bookings/", query),
     querykey: [BOOKINGS_QUERY_KEY, query],
+    // Filter bodlale purono row gula porde thake (dekho use-students)
+    options: { placeholderData: keepPreviousData },
   });
 }
 
