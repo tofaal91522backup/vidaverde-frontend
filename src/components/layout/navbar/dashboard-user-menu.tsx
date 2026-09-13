@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import SignOut from "@/features/auth/components/sign-out";
 import { initials } from "@/utils/initials";
-import { CircleHelp, Home, KeyRound, UserRound } from "lucide-react";
+import { Home, UserRound } from "lucide-react";
 import Link from "next/link";
 
 export type DashboardUser = {
@@ -87,20 +87,6 @@ export function DashboardUserMenu({ user }: { user?: DashboardUser }) {
             </Link>
           </DropdownMenuItem>
         )}
-
-        <DropdownMenuItem asChild>
-          <Link href="/auth/forget-password" className="cursor-pointer gap-2">
-            <KeyRound className="size-4" />
-            Change password
-          </Link>
-        </DropdownMenuItem>
-
-        <DropdownMenuItem asChild>
-          <Link href="/contact" className="cursor-pointer gap-2">
-            <CircleHelp className="size-4" />
-            Help &amp; support
-          </Link>
-        </DropdownMenuItem>
 
         <DropdownMenuItem asChild>
           <Link href="/" className="cursor-pointer gap-2">
