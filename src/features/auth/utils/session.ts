@@ -80,3 +80,29 @@ export async function updateTokens({
 
   await CreateSession(newPayload);
 }
+
+/**
+ * Session-er user-tuku — **redirect na kore**.
+ *
+ * `getSession()` cookie verify fail korle `redirect("/")` kore. Protected
+ * layout-e seta thik, kintu marketing navbar-er jonno **bipojjonok**: "/" nijei
+ * ekta marketing page, mane noshto cookie thakle redirect loop hoto.
+ *
+ * Ar eta client theke daka hoy (navbar `"use client"`), tai puro session na
+ * diye shudhu ja dekhate lage seta-i fire deওয়া hoy — access/refresh token
+ * browser porjonto pathanor kono karon nai.
+ */
+export async function readNavbarUser(): Promise<Session["user"] | null> {
+  const cookieStore = await cookies();
+  const token = cookieStore.get(SESSION_COOKIE_NAME)?.value;
+  if (!token) return null;
+
+  try {
+    const { payload } = await jwtVerify<Session>(token, encodedKey, {
+      algorithms: ["HS256"],
+    });
+    return payload?.user ?? null;
+  } catch {
+    return null;
+  }
+}

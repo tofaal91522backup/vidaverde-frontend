@@ -9,6 +9,11 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { LangToggle } from "@/components/shared/lang-toggle";
+import {
+  DashboardUserMenu,
+  type DashboardUser,
+} from "@/components/layout/navbar/dashboard-user-menu";
+import { readNavbarUser } from "@/features/auth/utils/session";
 import { BrandMark } from "@/features/marketing/components/BrandMark";
 import { navItems } from "@/features/marketing/data/marketing.data";
 import { useLanguage, type TranslationKey } from "@/providers/language-provider";
@@ -16,10 +21,32 @@ import { ChevronDown, Menu } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function Navbar() {
   const pathname = usePathname();
   const { t } = useLanguage();
+
+  /*
+    Session client theke ana hoy, server component theke na — ana hole
+    `cookies()` er karone **proti ta marketing page dynamic hoye jeto** ar
+    static generation (SEO-r jonno joruri) chole jeto.
+
+    `undefined` mane "ekhono jana jay ni". Oi obosthay login/signup-o dekhano hoy
+    na, avatar-o na — na hole logged-in user ek polok "Login / Sign up" dekhto
+    ar tarpor oita bodle jeto.
+  */
+  const [user, setUser] = useState<DashboardUser | null | undefined>(undefined);
+
+  useEffect(() => {
+    let cancelled = false;
+    readNavbarUser().then((value) => {
+      if (!cancelled) setUser(value ?? null);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const navLabelByHref: Record<string, TranslationKey> = {
     "/online-classes": "nav.onlineClasses",
@@ -145,18 +172,25 @@ export default function Navbar() {
         {/* Desktop right side */}
         <div className="flex items-center gap-3 max-[1100px]:hidden">
           <LangToggle />
-          <Link
-            href="/auth/signin"
-            className="text-[13px] font-semibold text-vv-ink-2 transition hover:text-vv-ink"
-          >
-            Login
-          </Link>
-          <Link
-            href="/online-classes/book"
-            className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[13px] font-semibold tracking-[-0.005em] py-2.25 px-3.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px"
-          >
-            {t("cta.bookFirstLesson")}
-          </Link>
+
+          {user === null && (
+            <>
+              <Link
+                href="/auth/signin"
+                className="text-[13px] font-semibold text-vv-ink-2 transition hover:text-vv-ink"
+              >
+                Login
+              </Link>
+              <Link
+                href="/auth/registration"
+                className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[13px] font-semibold tracking-[-0.005em] py-2.25 px-3.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px"
+              >
+                Sign up
+              </Link>
+            </>
+          )}
+
+          {user && <DashboardUserMenu user={user} inDashboard={false} />}
         </div>
 
         {/* Mobile hamburger */}
@@ -222,22 +256,32 @@ export default function Navbar() {
                 })}
               </nav>
               <div className="mt-6 flex flex-col gap-4">
-                <SheetClose asChild>
-                  <Link
-                    href="/auth/signin"
-                    className="text-center text-[15px] font-semibold text-vv-ink"
-                  >
-                    Login
-                  </Link>
-                </SheetClose>
-                <SheetClose asChild>
-                  <Link
-                    href="/online-classes/book"
-                    className="flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi"
-                  >
-                    {t("cta.bookFirstLesson")}
-                  </Link>
-                </SheetClose>
+                {user === null && (
+                  <>
+                    <SheetClose asChild>
+                      <Link
+                        href="/auth/signin"
+                        className="text-center text-[15px] font-semibold text-vv-ink"
+                      >
+                        Login
+                      </Link>
+                    </SheetClose>
+                    <SheetClose asChild>
+                      <Link
+                        href="/auth/registration"
+                        className="flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi"
+                      >
+                        Sign up
+                      </Link>
+                    </SheetClose>
+                  </>
+                )}
+
+                {user && (
+                  <div className="flex justify-center">
+                    <DashboardUserMenu user={user} inDashboard={false} />
+                  </div>
+                )}
                 <div className="flex items-center gap-2">
                   <span className="text-[12px] text-vv-muted font-medium">
                     {t("language.label")}

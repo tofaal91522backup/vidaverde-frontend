@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import SignOut from "@/features/auth/components/sign-out";
 import { initials } from "@/utils/initials";
-import { Home, UserRound } from "lucide-react";
+import { Home, LayoutDashboard, UserRound } from "lucide-react";
 import Link from "next/link";
 
 export type DashboardUser = {
@@ -32,10 +32,26 @@ export type DashboardUser = {
  * (`profile_img_url` student-er nijer profile endpoint-e, session-e na). Tai
  * initials-i dekhano hoy — bhanga `<img>` er cheye bhalo.
  */
-export function DashboardUserMenu({ user }: { user?: DashboardUser }) {
+export function DashboardUserMenu({
+  user,
+  /**
+   * Dashboard-er bhitore naki public site-e. Ei ta dhore ekta link bodlay:
+   * dashboard-e "View website", site-e "Go to dashboard" — jekhane acho
+   * shekhanei jawar link dekhanor mane nai.
+   */
+  inDashboard = true,
+}: {
+  user?: DashboardUser;
+  inDashboard?: boolean;
+}) {
   const name = user?.name || "Account";
   const email = user?.email || "";
   const isStudent = user?.role === "STUDENT";
+  const dashboardHref = isStudent
+    ? "/dashboard/student"
+    : user?.role === "ADMIN"
+      ? "/dashboard/admin"
+      : "/";
 
   return (
     <DropdownMenu>
@@ -89,10 +105,17 @@ export function DashboardUserMenu({ user }: { user?: DashboardUser }) {
         )}
 
         <DropdownMenuItem asChild>
-          <Link href="/" className="cursor-pointer gap-2">
-            <Home className="size-4" />
-            View website
-          </Link>
+          {inDashboard ? (
+            <Link href="/" className="cursor-pointer gap-2">
+              <Home className="size-4" />
+              View website
+            </Link>
+          ) : (
+            <Link href={dashboardHref} className="cursor-pointer gap-2">
+              <LayoutDashboard className="size-4" />
+              Go to dashboard
+            </Link>
+          )}
         </DropdownMenuItem>
 
         <DropdownMenuSeparator />
