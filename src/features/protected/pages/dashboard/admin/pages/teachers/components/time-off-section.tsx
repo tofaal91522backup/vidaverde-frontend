@@ -3,6 +3,7 @@
 import AsyncStateWrapper from "@/components/shared/async-state-wrapper";
 import DeleteMutation from "@/components/shared/delete-mutation";
 import { FormFieldWrapper } from "@/components/shared/form-related/form-field-wrapper";
+import { FormSection } from "@/components/shared/form-related/form-section";
 import { SubmitButton } from "@/components/shared/form-related/submit-button";
 import { SubmitErrorSummary } from "@/components/shared/form-related/submit-error-summary";
 import { Input } from "@/components/ui/input";
@@ -13,7 +14,7 @@ import {
 } from "@/features/protected/pages/dashboard/admin/utils/format-school-datetime";
 import { toList } from "@/features/protected/pages/dashboard/admin/utils/to-list";
 import { useZodTanstackForm } from "@/hooks/use-zod-tanstack-form";
-import { Info } from "lucide-react";
+import { CalendarOff, Info, Plus } from "lucide-react";
 import {
   TIME_OFF_QUERY_KEY,
   useCreateTimeOff,
@@ -56,6 +57,11 @@ function AddTimeOffForm({ teacherId }: { teacherId: string }) {
       }}
       className="space-y-4 rounded-lg border bg-muted/30 p-4"
     >
+      <p className="flex items-center gap-2 text-sm font-medium">
+        <Plus className="size-4" />
+        Add a new window
+      </p>
+
       <SubmitErrorSummary errors={submitErrors} />
 
       <div className="grid gap-4 sm:grid-cols-2">
@@ -98,16 +104,12 @@ export function TimeOffSection({ teacherId }: { teacherId: string }) {
   const entries = toList(data);
 
   return (
-    <section className="space-y-4 rounded-xl border p-5">
-      <div>
-        <h2 className="font-semibold">Time off</h2>
-        <p className="text-sm text-muted-foreground">
-          Holidays and blackout windows. These override the weekly hours above —
-          any overlapping slot disappears from booking. Times are in{" "}
-          {SCHOOL_TIMEZONE_LABEL}.
-        </p>
-      </div>
-
+    <FormSection
+      icon={CalendarOff}
+      title="Time off"
+      description={`Holidays and blackout windows. These override the weekly hours above — any overlapping slot disappears from booking. Times are in ${SCHOOL_TIMEZONE_LABEL}.`}
+      contentClassName="space-y-4 p-5"
+    >
       {/* Backend doc sposhto bole: ei window already-booked class cancel kore na */}
       <div className="flex items-start gap-2 rounded-lg border border-amber-300 bg-amber-50 p-3 text-sm text-amber-900 dark:border-amber-900 dark:bg-amber-950 dark:text-amber-200">
         <Info className="mt-0.5 h-4 w-4 shrink-0" />
@@ -122,9 +124,13 @@ export function TimeOffSection({ teacherId }: { teacherId: string }) {
         error={isError ? "Could not load time off." : null}
       >
         {entries.length === 0 ? (
-          <p className="text-sm text-muted-foreground">
-            No time off recorded for this teacher.
-          </p>
+          <div className="rounded-lg border border-dashed p-6 text-center">
+            <CalendarOff className="mx-auto size-5 text-muted-foreground" />
+            <p className="mt-2 text-sm font-medium">No time off recorded</p>
+            <p className="text-xs text-muted-foreground">
+              The weekly hours above apply every week.
+            </p>
+          </div>
         ) : (
           <ul className="divide-y rounded-lg border">
             {entries.map((entry) => (
@@ -165,6 +171,6 @@ export function TimeOffSection({ teacherId }: { teacherId: string }) {
       </AsyncStateWrapper>
 
       <AddTimeOffForm teacherId={teacherId} />
-    </section>
+    </FormSection>
   );
 }

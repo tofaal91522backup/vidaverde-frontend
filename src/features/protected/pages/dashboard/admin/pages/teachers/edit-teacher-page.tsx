@@ -1,8 +1,14 @@
 "use client";
 
 import AsyncStateWrapper from "@/components/shared/async-state-wrapper";
-import DashboardPageLayout from "@/features/protected/pages/dashboard/shared/components/dashboard-page-layout";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import type { AdminTeacher } from "@/features/protected/pages/dashboard/admin/types/admin.types";
+import DashboardPageLayout from "@/features/protected/pages/dashboard/shared/components/dashboard-page-layout";
+import { ArrowLeft } from "lucide-react";
+import Link from "next/link";
 import { TeacherForm } from "./components/teacher-form";
 import { TimeOffSection } from "./components/time-off-section";
 import type { TeacherFormValues } from "./schemas/teacher.schema";
@@ -29,6 +35,26 @@ function toFormValues(teacher: AdminTeacher): TeacherFormValues {
   };
 }
 
+/** Spinner-er cheye form-er akar-er skeleton kom jhatka lage */
+function EditTeacherSkeleton() {
+  return (
+    <div className="space-y-5">
+      {[0, 1, 2].map((i) => (
+        <Card key={i} className="py-0">
+          <CardContent className="space-y-4 p-5">
+            <Skeleton className="h-5 w-40" />
+            <Skeleton className="h-3 w-64" />
+            <div className="grid gap-4 sm:grid-cols-2">
+              <Skeleton className="h-9 w-full" />
+              <Skeleton className="h-9 w-full" />
+            </div>
+          </CardContent>
+        </Card>
+      ))}
+    </div>
+  );
+}
+
 export default function EditTeacherPage({ id }: { id: string }) {
   // Detail endpoint bare teacher dey — `{ success, teacher }` na
   const { data: teacher, isLoading, isError } = useTeacherDetails(id);
@@ -37,22 +63,67 @@ export default function EditTeacherPage({ id }: { id: string }) {
   return (
     <DashboardPageLayout
       title="Edit Teacher"
-      subtitle={teacher ? `Editing: ${teacher.name}` : undefined}
+      subtitle={
+        teacher
+          ? `Changes go live on the public site as soon as you save.`
+          : undefined
+      }
+      action={
+        <Button variant="outline" asChild>
+          <Link href="/dashboard/admin/teachers">
+            <ArrowLeft className="size-4" />
+            All teachers
+          </Link>
+        </Button>
+      }
     >
-      <div className="max-w-3xl">
+      <div className="max-w-4xl space-y-5">
         <AsyncStateWrapper
           loading={isLoading}
           error={isError ? "Could not load this teacher." : null}
+          loaderFallback={<EditTeacherSkeleton />}
         >
           {/* Form data asar por-i mount hoy, jate defaultValues thik thake */}
           {teacher && (
-            <div className="space-y-8">
+            <>
+              <Card className="py-0">
+                <CardContent className="flex flex-wrap items-center justify-between gap-3 p-5">
+                  <div className="min-w-0">
+                    <p className="truncate text-lg font-semibold">
+                      {teacher.name}
+                    </p>
+                    {teacher.institute && (
+                      <p className="truncate text-sm text-muted-foreground">
+                        {teacher.institute}
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="flex flex-wrap items-center gap-2">
+                    <Badge variant={teacher.active ? "secondary" : "outline"}>
+                      {teacher.active ? "Active" : "Inactive"}
+                    </Badge>
+                    <Badge
+                      variant={
+                        teacher.accepting_students ? "secondary" : "outline"
+                      }
+                    >
+                      {teacher.accepting_students
+                        ? "Accepting new students"
+                        : "Limited availability"}
+                    </Badge>
+                  </div>
+                </CardContent>
+              </Card>
+
               <TeacherForm
                 mutation={mutation}
                 defaultValues={toFormValues(teacher)}
+                submitLabel="Save changes"
               />
+
               <TimeOffSection teacherId={id} />
-            </div>
+            </>
           )}
         </AsyncStateWrapper>
       </div>

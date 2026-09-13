@@ -84,7 +84,9 @@ export const teachersColumns: ColumnDef<AdminTeacher>[] = [
       const days = new Set((row.original.availability ?? []).map((r) => r.day));
       return (
         <span className="text-sm text-muted-foreground">
-          {days.size === 0 ? "—" : `${days.size} day${days.size === 1 ? "" : "s"}`}
+          {days.size === 0
+            ? "—"
+            : `${days.size} day${days.size === 1 ? "" : "s"}`}
         </span>
       );
     },

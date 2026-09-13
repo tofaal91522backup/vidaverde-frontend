@@ -28,6 +28,16 @@ page-e. Shob koyta ekhon `async` + `await params`, ar
 `DynamicRouteIdParams` type-ta Promise kore deওয়া holo jate abar na ghote.
 Confirm-email page already await korto — shudhu type-ta thik kora holo.
 
+**Teacher create/edit UI polish.** Form-ta ekhon card-e bhag kora —
+Profile / Bio / Weekly availability / Calendar & meetings / Visibility — notun
+`components/shared/form-related/form-section.tsx` diye (Card + icon header,
+onno form-eo reuse kora jabe). Availability editor-e per-day hour total,
+week total, "Mon–Fri 9–5" preset, Clear, ar inline start<end warning boshano
+holo. Switch duita ekhon description soho bordered row. Edit page-e summary
+card + status badge + skeleton loading, dui page-e "All teachers" back button
+ar Cancel. Time off block-o ek-i card style-e. **Shudhu presentation — kono
+payload ba query change hoy nai.**
+
 **Manual-testing fix 2 — teacher detail response shape.** Edit Teacher page-e
 spinner-er por faka screen ashto. `GET /administrator/teachers/:id/` **bare**
 teacher object dey (`teacher detail.bru` dekho), kintu hook-ta
