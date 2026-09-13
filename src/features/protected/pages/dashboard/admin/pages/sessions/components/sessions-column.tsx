@@ -7,7 +7,6 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Label } from "@/components/ui/label";
@@ -65,122 +64,99 @@ const OUTCOME_ACTIONS: {
   { status: "rescheduled", label: "Mark rescheduled", icon: CalendarClock },
 ];
 
-/**
- * Ekta row-er shob kaaj ek button-e — outcome boshano ar admin note.
- *
- * Age duita alada control chilo: ekta "Action" dropdown (shudhu `scheduled`
- * class-e dekhato) ar tar pashe ekta "Notes" button. Tai non-scheduled row-e
- * duitor uchota mile na, ar Actions column-ta bhora bhora lagto.
- *
- * `modal={false}` deওয়া — menu bondho ar dialog khola ek shathe hole Radix
- * body-te `pointer-events: none` rekhe dite pare, tate pura page atke jay.
- */
-function SessionRowActions({ session }: { session: AdminSession }) {
+function SessionActions({ session }: { session: AdminSession }) {
   const { mutate, isPending } = useUpdateSession();
 
-  const [notesOpen, setNotesOpen] = useState(false);
-  const [notes, setNotes] = useState(session.admin_notes ?? "");
-
-  const notesMutation = useUpdateSession();
-  const hasNotes = Boolean(session.admin_notes);
-
   // Outcome shudhu ekhono scheduled thaka class-e boshano jay
-  const canSetOutcome = session.status === "scheduled";
+  if (session.status !== "scheduled") return null;
 
   return (
-    <>
-      <DropdownMenu modal={false}>
-        <DropdownMenuTrigger asChild>
-          <Button
-            variant="outline"
-            size="sm"
-            disabled={isPending}
-            className="gap-1"
-          >
-            Actions
-            {hasNotes && (
-              <span
-                className="size-1.5 rounded-full bg-primary"
-                title="Has admin notes"
-              />
-            )}
-            <ChevronDown className="h-3.5 w-3.5" />
-          </Button>
-        </DropdownMenuTrigger>
-
-        <DropdownMenuContent align="end" className="w-52">
-          {canSetOutcome && (
-            <>
-              {OUTCOME_ACTIONS.map((action) => (
-                <DropdownMenuItem
-                  key={action.status}
-                  className="gap-2"
-                  onClick={() =>
-                    mutate({ id: session.id, status: action.status })
-                  }
-                >
-                  <action.icon className="size-4 text-muted-foreground" />
-                  {action.label}
-                </DropdownMenuItem>
-              ))}
-              <DropdownMenuSeparator />
-            </>
-          )}
-
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button
+          variant="outline"
+          size="sm"
+          disabled={isPending}
+          className="gap-1.5"
+        >
+          Action
+          <ChevronDown className="h-3.5 w-3.5" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        {OUTCOME_ACTIONS.map((action) => (
           <DropdownMenuItem
+            key={action.status}
             className="gap-2"
-            onSelect={() => {
-              // Bondho kore abar khulle server-er value-i dekhabe, half-edit na
-              setNotes(session.admin_notes ?? "");
-              setNotesOpen(true);
-            }}
+            onClick={() => mutate({ id: session.id, status: action.status })}
           >
-            <MessageSquare className="size-4 text-muted-foreground" />
-            {hasNotes ? "Edit notes" : "Add notes"}
-            {hasNotes && (
-              <span className="ml-auto size-1.5 rounded-full bg-primary" />
-            )}
+            <action.icon className="size-4 text-muted-foreground" />
+            {action.label}
           </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+        ))}
+      </DropdownMenuContent>
+    </DropdownMenu>
+  );
+}
 
-      <AppDialog
-        open={notesOpen}
-        onOpenChange={setNotesOpen}
-        trigger={null}
-        title="Admin notes"
-        description={`${session.student_name} · ${formatSchoolDate(session.start_datetime)}`}
-        size="md"
-        footer={
-          <div className="flex w-full justify-end gap-2">
-            <Button variant="outline" onClick={() => setNotesOpen(false)}>
-              Cancel
-            </Button>
-            <Button
-              disabled={notesMutation.isPending}
-              onClick={() =>
-                notesMutation.mutate(
-                  { id: session.id, admin_notes: notes },
-                  { onSuccess: () => setNotesOpen(false) },
-                )
-              }
-            >
-              {notesMutation.isPending ? "Saving..." : "Save notes"}
-            </Button>
-          </div>
-        }
-      >
-        <div className="space-y-2 py-2">
-          <Label>Internal note</Label>
-          <Textarea
-            value={notes}
-            onChange={(e) => setNotes(e.target.value)}
-            placeholder="Never shown to the student."
-            rows={5}
-          />
+function AdminNotesButton({ session }: { session: AdminSession }) {
+  const [open, setOpen] = useState(false);
+  const [notes, setNotes] = useState(session.admin_notes ?? "");
+
+  const mutation = useUpdateSession();
+
+  return (
+    <AppDialog
+      open={open}
+      onOpenChange={(next) => {
+        setOpen(next);
+        // Bondho kore abar khulle server-er value-i dekhabe, half-edit na
+        if (!next) setNotes(session.admin_notes ?? "");
+      }}
+      trigger={
+        <Button variant="outline" size="sm" className="gap-1.5">
+          <MessageSquare className="h-3.5 w-3.5" />
+          Notes
+          {session.admin_notes && (
+            <span
+              className="size-1.5 rounded-full bg-primary"
+              title="Has admin notes"
+            />
+          )}
+        </Button>
+      }
+      title="Admin notes"
+      description={`${session.student_name} · ${formatSchoolDate(session.start_datetime)}`}
+      size="md"
+      footer={
+        <div className="flex w-full justify-end gap-2">
+          <Button variant="outline" onClick={() => setOpen(false)}>
+            Cancel
+          </Button>
+          <Button
+            disabled={mutation.isPending}
+            onClick={() =>
+              mutation.mutate(
+                { id: session.id, admin_notes: notes },
+                { onSuccess: () => setOpen(false) },
+              )
+            }
+          >
+            {mutation.isPending ? "Saving..." : "Save notes"}
+          </Button>
         </div>
-      </AppDialog>
-    </>
+      }
+    >
+      <div className="space-y-2 py-2">
+        <Label>Internal note</Label>
+        <Textarea
+          value={notes}
+          onChange={(e) => setNotes(e.target.value)}
+          placeholder="Never shown to the student."
+          rows={5}
+        />
+      </div>
+    </AppDialog>
   );
 }
 
@@ -251,8 +227,9 @@ export const sessionsColumns: ColumnDef<AdminSession>[] = [
     id: "actions",
     header: "Actions",
     cell: ({ row }) => (
-      <div className="flex items-center justify-end">
-        <SessionRowActions session={row.original} />
+      <div className="flex items-center justify-end gap-2">
+        <SessionActions session={row.original} />
+        <AdminNotesButton session={row.original} />
       </div>
     ),
   },
