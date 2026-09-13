@@ -138,8 +138,22 @@
   body {
     @apply bg-background text-foreground;
   }
+  /*
+    Marketing page-er vertical rhythm.
+
+    ⚠️ Eta **bare `section`** e lage, mane app-er *jekono* `<section>` e — dashboard
+    shoho. Student "My Packages" page-e duita `<section>` chilo ar protyekta
+    96px upor-niche padding niye nichilo, tai heading-er age ekta boro faka
+    jayga uthto. Niche `.dashboard-scope` diye oita off kora hoyeche.
+  */
   section {
     padding: 96px 0;
+  }
+
+  /* Dashboard-e ei rhythm-er kono jayga nai — `<section>` ekhane shudhu
+     semantic grouping, spacing utility class diye hoy. */
+  .dashboard-scope section {
+    padding: 0;
   }
   @media (max-width: 720px) {
     section {
