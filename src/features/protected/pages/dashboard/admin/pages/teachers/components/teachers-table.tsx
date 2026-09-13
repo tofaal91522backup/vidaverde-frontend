@@ -1,12 +1,11 @@
 "use client";
 
 import DataTable from "@/components/shared/data-table";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { ReusableSelect } from "@/components/shared/form-related/reusable-select";
+import { TableCard } from "@/components/shared/table-card";
+import { Input } from "@/components/ui/input";
 import { toList } from "@/features/protected/pages/dashboard/admin/utils/to-list";
-import { Plus, Search } from "lucide-react";
-import Link from "next/link";
+import { Search } from "lucide-react";
 import { useState } from "react";
 import { useTeachers } from "../queries/use-teachers";
 import { teachersColumns } from "./teachers-column";
@@ -29,35 +28,36 @@ export function TeachersTable() {
   const teachers = toList(data);
 
   return (
-    <div className="space-y-4">
-      <div className="flex flex-wrap items-center gap-3">
-        <div className="relative min-w-45 flex-1 max-w-sm">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-          <Input
-            placeholder="Search by name or institute..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="pl-9"
+    <TableCard
+      toolbar={
+        <>
+          <div className="relative min-w-56 flex-1 sm:max-w-xs">
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <Input
+              placeholder="Search by name or institute..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="bg-background pl-9"
+            />
+          </div>
+
+          <ReusableSelect
+            className="w-40 bg-background"
+            value={active}
+            options={ACTIVE_OPTIONS}
+            placeholder="All statuses"
+            onChange={(e) => setActive(e.target.value)}
           />
-        </div>
-
-        <ReusableSelect
-          className="w-40"
-          value={active}
-          options={ACTIVE_OPTIONS}
-          placeholder="All statuses"
-          onChange={(e) => setActive(e.target.value)}
-        />
-
-        <Button asChild className="ml-auto">
-          <Link href="/dashboard/admin/teachers/create">
-            <Plus className="h-4 w-4 mr-1" />
-            Add Teacher
-          </Link>
-        </Button>
-      </div>
-
+        </>
+      }
+      meta={
+        isLoading
+          ? null
+          : `${teachers.length} ${teachers.length === 1 ? "teacher" : "teachers"}`
+      }
+    >
       <DataTable
+        embedded
         data={teachers}
         columns={teachersColumns}
         loading={isLoading}
@@ -65,6 +65,6 @@ export function TeachersTable() {
       />
 
       {/* Backend doc-e ei endpoint-e pagination-er ullekh nai, tai <Pagination> nai */}
-    </div>
+    </TableCard>
   );
 }

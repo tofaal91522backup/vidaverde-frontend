@@ -22,6 +22,8 @@ interface DataTableProps<TData> {
   columns: ColumnDef<TData>[];
   loading?: boolean;
   error?: string;
+  /** `<TableCard>`-er bhitore bosle nijer border/rounding lagbe na */
+  embedded?: boolean;
 }
 
 export default function DataTable<TData>({
@@ -29,6 +31,7 @@ export default function DataTable<TData>({
   columns,
   loading = false,
   error = "",
+  embedded = false,
 }: DataTableProps<TData>) {
   // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable({
@@ -39,8 +42,12 @@ export default function DataTable<TData>({
 
   return (
     <AsyncStateWrapper loading={loading} error={error}>
-      <div className="w-full ">
-        <div className="overflow-hidden rounded-md border bg-white">
+      <div className="w-full">
+        <div
+          className={
+            embedded ? "bg-card" : "overflow-hidden rounded-md border bg-card"
+          }
+        >
           <Table>
             <TableHeader>
               {table.getHeaderGroups().map((headerGroup) => (
@@ -87,9 +94,12 @@ export default function DataTable<TData>({
                 ))
               ) : (
                 <TableRow>
-                  <TableCell colSpan={columns.length} className=" text-center">
-                    Not found any data. Try to adjust your filters or add new
-                    data.
+                  <TableCell
+                    colSpan={columns.length}
+                    className="h-28 text-center text-sm text-muted-foreground"
+                  >
+                    Nothing found. Try adjusting the filters, or add something
+                    new.
                   </TableCell>
                 </TableRow>
               )}
