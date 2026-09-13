@@ -98,11 +98,12 @@ export function ProfileForm({ profile }: { profile: StudentProfile }) {
                     {(p) => (
                       // Upload `/administrator/upload/` e jay — path-e
                       // "administrator" thakleo route ta shob role-er jonno
+                      // `label` deওয়া hoy na — FormFieldWrapper already
+                      // "Profile photo" dekhacche, duita label boshto
                       <SingleFileUploader
-                        label="Upload photo"
+                        variant="avatar"
                         value={p.inputProps.value}
                         onChange={(url) => p.onChangeValue(url)}
-                        accept="image/*"
                       />
                     )}
                   </FormFieldWrapper>
