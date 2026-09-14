@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import SignOut from "@/features/auth/components/sign-out";
+import { dashboardHref } from "@/features/auth/utils/dashboard-href";
 import { useStudentProfile } from "@/features/protected/pages/dashboard/student/pages/profile/queries/use-student-profile";
 import { initials } from "@/utils/initials";
 import { Home, LayoutDashboard, UserRound } from "lucide-react";
@@ -76,11 +77,7 @@ export function DashboardUserMenu({
   const name = profile?.name || user?.name || "Account";
   const email = profile?.email || user?.email || "";
   const avatarUrl = profile?.profile_img_url || undefined;
-  const dashboardHref = isStudent
-    ? "/dashboard/student"
-    : user?.role === "ADMIN"
-      ? "/dashboard/admin"
-      : "/";
+  const href = dashboardHref(user) ?? "/";
 
   return (
     <DropdownMenu>
@@ -142,7 +139,7 @@ export function DashboardUserMenu({
               View website
             </Link>
           ) : (
-            <Link href={dashboardHref} className="cursor-pointer gap-2">
+            <Link href={href} className="cursor-pointer gap-2">
               <LayoutDashboard className="size-4" />
               Go to dashboard
             </Link>

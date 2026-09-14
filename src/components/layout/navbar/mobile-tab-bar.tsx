@@ -1,6 +1,7 @@
 "use client";
 
 import { useMarketingNav } from "@/components/layout/navbar/marketing-nav-provider";
+import { dashboardHref } from "@/features/auth/utils/dashboard-href";
 import { useLanguage, type TranslationKey } from "@/providers/language-provider";
 import {
   CalendarCheck,
@@ -44,12 +45,7 @@ export function MobileTabBar() {
   const { t } = useLanguage();
   const { user, setMenuOpen } = useMarketingNav();
 
-  const dashboardHref =
-    user?.role === "ADMIN"
-      ? "/dashboard/admin"
-      : user?.role === "STUDENT"
-        ? "/dashboard/student"
-        : null;
+  const href = dashboardHref(user);
 
   /*
     Login thakle Home-er pashei dashboard-e ferar rasta — ekjon student site-e
@@ -58,11 +54,11 @@ export function MobileTabBar() {
 
     Account-er menu (profile, sign out) tab bar-e na — sheta hamburger-e.
   */
-  const tabs: Tab[] = dashboardHref
+  const tabs: Tab[] = href
     ? [
         HOME_TAB,
         {
-          href: dashboardHref,
+          href,
           labelKey: "nav.dashboard",
           icon: LayoutDashboard,
         },

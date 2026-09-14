@@ -11,9 +11,10 @@ import {
 import { LangToggle } from "@/components/shared/lang-toggle";
 import { DashboardUserMenu } from "@/components/layout/navbar/dashboard-user-menu";
 import { useMarketingNav } from "@/components/layout/navbar/marketing-nav-provider";
+import { dashboardHref } from "@/features/auth/utils/dashboard-href";
 import { navItems } from "@/features/marketing/data/marketing.data";
 import { useLanguage, type TranslationKey } from "@/providers/language-provider";
-import { ChevronDown, Menu } from "lucide-react";
+import { ChevronDown, LayoutDashboard, Menu } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -28,6 +29,8 @@ export default function Navbar() {
     pore, ar tar "More" button ei sheet-ta-i khole.
   */
   const { user, clearUser, menuOpen, setMenuOpen } = useMarketingNav();
+
+  const desktopDashboardHref = dashboardHref(user);
 
   const navLabelByHref: Record<string, TranslationKey> = {
     "/online-classes": "nav.onlineClasses",
@@ -188,11 +191,28 @@ export default function Navbar() {
           )}
 
           {user && (
-            <DashboardUserMenu
-              user={user}
-              inDashboard={false}
-              onSignedOut={clearUser}
-            />
+            <>
+              {/*
+                Mobile tab bar-e dashboard-e ferar tab ache; desktop-e tab bar
+                nai, tai ei button-ta. Menu-r bhitore luki'ye rakhle student-ke
+                proti bar avatar khule khujte hoto.
+              */}
+              {desktopDashboardHref && (
+                <Link
+                  href={desktopDashboardHref}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-vv-line bg-vv-bg-warm px-3.5 py-2 text-[13px] font-semibold text-vv-ink transition-colors hover:bg-vv-line/40"
+                >
+                  <LayoutDashboard className="h-3.5 w-3.5" aria-hidden="true" />
+                  {t("nav.dashboard")}
+                </Link>
+              )}
+
+              <DashboardUserMenu
+                user={user}
+                inDashboard={false}
+                onSignedOut={clearUser}
+              />
+            </>
           )}
         </div>
 
