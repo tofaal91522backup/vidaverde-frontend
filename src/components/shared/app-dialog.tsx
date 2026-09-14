@@ -95,7 +95,14 @@ export function AppDialog({
       <DialogTrigger asChild>{trigger ?? defaultTrigger}</DialogTrigger>
 
       <DialogContent
-        className={cn(sizeClasses[size], "p-0", className, contentClassName)}
+        className={cn(
+          sizeClasses[size],
+          // `overflow-hidden` na dile lomba space-chhara text dialog-er baire
+          // giye overlay-er upor akte thake — rounded corner-o kete jay
+          "overflow-hidden p-0",
+          className,
+          contentClassName,
+        )}
       >
         {(title || description) && (
           <DialogHeader className="border-b  px-4 py-4">
@@ -113,7 +120,13 @@ export function AppDialog({
         )}
 
         {children && (
-          <ScrollArea className="max-h-[70vh]">
+          /*
+            Radix Viewport-er bhitorer wrapper-ta `display: table` — mane oita
+            content-er max-content width neye ney. Ekta unbroken string (paste
+            kora URL, note) thakle oi table dialog-er cheye chowra hoye jay.
+            `block` kore dile viewport-er width-i mane, ar text wrap kore.
+          */
+          <ScrollArea className="max-h-[70vh] [&>[data-slot=scroll-area-viewport]>div]:!block">
             <div className={cn("px-4 pb-4", bodyClassName)}>{children}</div>
           </ScrollArea>
         )}

@@ -65,7 +65,7 @@ function ViewMessageDialog({ message }: { message: AdminContactMessage }) {
         // Bondho korle half-edit kora note rekhe deওয়া jabe na
         if (!next) setNotes(message.admin_notes ?? "");
       }}
-      size="lg"
+      size="2xl"
       // Read destructive-o na, primary-o na — pashe-r "Mark handled" er cheye
       // kom gurutto, kintu `ghost` e button-i mone hoto na
       trigger={
@@ -114,7 +114,11 @@ function ViewMessageDialog({ message }: { message: AdminContactMessage }) {
         {/* Visitor ja likheche — read-only record */}
         <div>
           <p className="mb-1 text-xs text-muted-foreground">Message</p>
-          <p className="whitespace-pre-wrap rounded-lg border bg-muted/30 p-3">
+          {/*
+            `wrap-anywhere` — visitor space chhara ekta lomba string (URL, ba
+            keyboard-mash) pathale seta jate dialog-er width na bariye dey
+          */}
+          <p className="max-h-64 overflow-y-auto rounded-lg border bg-muted/30 p-3 whitespace-pre-wrap wrap-anywhere">
             {message.message}
           </p>
         </div>
@@ -126,6 +130,7 @@ function ViewMessageDialog({ message }: { message: AdminContactMessage }) {
             onChange={(e) => setNotes(e.target.value)}
             placeholder="e.g. Replied with November availability and the homestay rates."
             rows={4}
+            className="wrap-anywhere"
           />
         </div>
       </div>
