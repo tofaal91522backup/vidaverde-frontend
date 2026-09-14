@@ -42,11 +42,20 @@ export function DashboardUserMenu({
    */
   inDashboard = true,
   onSignedOut,
+  trigger,
+  side = "bottom",
 }: {
   user?: DashboardUser;
   inDashboard?: boolean;
   /** Navbar-e local state thakle sign out-er por reset korar jonno */
   onSignedOut?: () => void;
+  /**
+   * Default-e ekta gol avatar button. Mobile tab bar-e tab-er moto dekhate
+   * hoy (icon + label), tai shekhan theke nijer trigger pathano jay.
+   */
+  trigger?: React.ReactNode;
+  /** Tab bar niche boshe, tai menu-ta upor-e khulte hoy */
+  side?: "top" | "bottom";
 }) {
   const isStudent = user?.role === "STUDENT";
 
@@ -85,22 +94,29 @@ export function DashboardUserMenu({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button
-          variant="ghost"
-          size="icon"
-          className="size-9 rounded-full"
-          aria-label="Account menu"
-        >
-          <Avatar className="size-9">
-            <AvatarImage src={avatarUrl} alt={name} />
-            <AvatarFallback className="text-xs font-medium">
-              {initials(name)}
-            </AvatarFallback>
-          </Avatar>
-        </Button>
+        {trigger ?? (
+          <Button
+            variant="ghost"
+            size="icon"
+            className="size-9 rounded-full"
+            aria-label="Account menu"
+          >
+            <Avatar className="size-9">
+              <AvatarImage src={avatarUrl} alt={name} />
+              <AvatarFallback className="text-xs font-medium">
+                {initials(name)}
+              </AvatarFallback>
+            </Avatar>
+          </Button>
+        )}
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent align="end" sideOffset={8} className="w-64">
+      <DropdownMenuContent
+        align="end"
+        side={side}
+        sideOffset={8}
+        className="w-64"
+      >
         <DropdownMenuLabel className="p-0 font-normal">
           <div className="flex items-center gap-2.5 px-1 py-1.5 text-left">
             <Avatar className="size-9">

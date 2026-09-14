@@ -9,43 +9,25 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { LangToggle } from "@/components/shared/lang-toggle";
-import {
-  DashboardUserMenu,
-  type DashboardUser,
-} from "@/components/layout/navbar/dashboard-user-menu";
-import { readNavbarUser } from "@/features/auth/utils/session";
+import { DashboardUserMenu } from "@/components/layout/navbar/dashboard-user-menu";
+import { useMarketingNav } from "@/components/layout/navbar/marketing-nav-provider";
 import { navItems } from "@/features/marketing/data/marketing.data";
 import { useLanguage, type TranslationKey } from "@/providers/language-provider";
 import { ChevronDown, Menu } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function Navbar() {
   const pathname = usePathname();
   const { t } = useLanguage();
 
   /*
-    Session client theke ana hoy, server component theke na — ana hole
-    `cookies()` er karone **proti ta marketing page dynamic hoye jeto** ar
-    static generation (SEO-r jonno joruri) chole jeto.
-
-    `undefined` mane "ekhono jana jay ni". Oi obosthay login/signup-o dekhano hoy
-    na, avatar-o na — na hole logged-in user ek polok "Login / Sign up" dekhto
-    ar tarpor oita bodle jeto.
+    User ar menu-r obostha duita-i provider theke — MobileTabBar-o ek-i duita
+    pore, ar tar "More" button ei sheet-ta-i khole.
   */
-  const [user, setUser] = useState<DashboardUser | null | undefined>(undefined);
-
-  useEffect(() => {
-    let cancelled = false;
-    readNavbarUser().then((value) => {
-      if (!cancelled) setUser(value ?? null);
-    });
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+  const { user, clearUser, menuOpen, setMenuOpen } = useMarketingNav();
 
   const navLabelByHref: Record<string, TranslationKey> = {
     "/online-classes": "nav.onlineClasses",
@@ -209,13 +191,27 @@ export default function Navbar() {
             <DashboardUserMenu
               user={user}
               inDashboard={false}
-              onSignedOut={() => setUser(null)}
+              onSignedOut={clearUser}
             />
           )}
         </div>
 
+        {/*
+          Mobile-e auth-er ekta-i jaiga: logged out hole ekhane "Sign in".
+          Login thakle ekhane kichu thake na — tokhon account-ta bottom tab
+          bar-e. Duijaygay dile visitor bujhto na kon-ta asol.
+        */}
+        {user === null && (
+          <Link
+            href="/auth/signin"
+            className="ml-auto mr-2 hidden max-[1100px]:inline-flex items-center rounded-full border border-vv-line bg-vv-bg-warm px-3.5 py-2 text-[13px] font-semibold text-vv-ink"
+          >
+            Sign in
+          </Link>
+        )}
+
         {/* Mobile hamburger */}
-        <Sheet>
+        <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
           <SheetTrigger asChild>
             <button
               className="hidden max-[1100px]:inline-flex items-center justify-center bg-vv-bg-warm border border-vv-line rounded-[10px] h-10 w-10"
@@ -367,7 +363,7 @@ export default function Navbar() {
                     <DashboardUserMenu
                       user={user}
                       inDashboard={false}
-                      onSignedOut={() => setUser(null)}
+                      onSignedOut={clearUser}
                     />
                   </div>
                 )}
