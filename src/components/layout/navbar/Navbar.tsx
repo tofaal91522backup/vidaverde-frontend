@@ -197,18 +197,29 @@ export default function Navbar() {
         </div>
 
         {/*
-          Mobile-e auth-er ekta-i jaiga: logged out hole ekhane "Sign in".
-          Login thakle ekhane kichu thake na — tokhon account-ta bottom tab
-          bar-e. Duijaygay dile visitor bujhto na kon-ta asol.
+          Mobile-e auth-er ekta-i jaiga — hamburger-er pashe. Logged out hole
+          "Sign in", login thakle avatar menu (profile, dashboard, sign out).
+          Duijaygay dile visitor bujhto na kon-ta asol, tai menu-r bhitore ar
+          rakha hoy na.
         */}
-        {user === null && (
-          <Link
-            href="/auth/signin"
-            className="ml-auto mr-2 hidden max-[1100px]:inline-flex items-center rounded-full border border-vv-line bg-vv-bg-warm px-3.5 py-2 text-[13px] font-semibold text-vv-ink"
-          >
-            Sign in
-          </Link>
-        )}
+        <div className="ml-auto mr-2 hidden max-[1100px]:flex items-center">
+          {user === null && (
+            <Link
+              href="/auth/signin"
+              className="inline-flex items-center rounded-full border border-vv-line bg-vv-bg-warm px-3.5 py-2 text-[13px] font-semibold text-vv-ink"
+            >
+              Sign in
+            </Link>
+          )}
+
+          {user && (
+            <DashboardUserMenu
+              user={user}
+              inDashboard={false}
+              onSignedOut={clearUser}
+            />
+          )}
+        </div>
 
         {/* Mobile hamburger */}
         <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
@@ -356,16 +367,6 @@ export default function Navbar() {
                       </Link>
                     </SheetClose>
                   </>
-                )}
-
-                {user && (
-                  <div className="flex justify-center">
-                    <DashboardUserMenu
-                      user={user}
-                      inDashboard={false}
-                      onSignedOut={clearUser}
-                    />
-                  </div>
                 )}
 
                 <div className="flex items-center gap-2">
