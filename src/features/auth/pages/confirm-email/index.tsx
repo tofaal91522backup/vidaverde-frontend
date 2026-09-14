@@ -71,7 +71,7 @@ export default function ConfirmEmailPage({ token }: { token: string }) {
   const isError = status === "error";
 
   return (
-    <Card className="w-full max-w-md border-vv-line bg-white/95 text-center shadow-lg">
+    <Card className="w-full max-w-md vv-auth-card text-center">
       <CardHeader className="items-center">
         <div className="flex size-16 items-center justify-center rounded-full bg-primary/10 text-primary">
           {isLoading && <Loader2 className="animate-spin" />}

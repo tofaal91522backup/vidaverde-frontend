@@ -503,3 +503,17 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
   border-top: 1px solid var(--color-vv-line, currentColor);
   margin: 2rem 0;
 }
+
+/* Auth page-er card. Megher background-er upor boshe, tai sada solid na —
+   halka scha ar blur, jate pichoner akash-ta ektu dekha jay.
+   `bg-white/95` chhilo age, tar niche kono background-i bojha jeto na. */
+.vv-auth-card {
+  background: color-mix(in oklab, var(--color-vv-bg, #fff) 78%, transparent);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  border: 1px solid rgb(255 255 255 / 0.65);
+  border-radius: 1.5rem;
+  box-shadow:
+    0 24px 60px -18px rgb(23 60 92 / 0.28),
+    0 2px 6px rgb(23 60 92 / 0.06);
+}

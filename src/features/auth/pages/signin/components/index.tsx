@@ -10,7 +10,7 @@ import SignInForm from "./sign-in.form";
 
 export default function SignInIndex() {
   return (
-    <Card className="w-full max-w-md border-vv-line bg-white/95 shadow-lg">
+    <Card className="w-full max-w-md vv-auth-card">
       <CardHeader>
         <CardTitle className="text-2xl text-vv-ink">Welcome back</CardTitle>
         <CardDescription>

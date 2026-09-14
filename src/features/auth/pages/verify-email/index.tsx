@@ -19,7 +19,7 @@ import Link from "next/link";
  */
 const VerifyEmailIndex = ({ email }: { email?: string }) => {
   return (
-    <Card className="w-full max-w-md border-vv-line bg-white/95 text-center shadow-lg">
+    <Card className="w-full max-w-md vv-auth-card text-center">
       <CardHeader className="items-center">
         <div className="flex size-14 items-center justify-center rounded-full bg-primary/10 text-primary">
           <MailCheck />

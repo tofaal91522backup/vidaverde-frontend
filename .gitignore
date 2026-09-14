@@ -50,3 +50,7 @@ desktop.ini
 # Google OAuth client secrets — never commit these
 client_secret*.json
 *client_secret*.json
+
+# Design references / source images kept locally — not site assets
+/public/images/image 5.png
+/public/images/original-*.webp
