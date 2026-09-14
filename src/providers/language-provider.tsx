@@ -34,7 +34,7 @@ export type TranslationKey =
   | "nav.classesShort"
   | "nav.quitoShort"
   | "nav.bookShort"
-  | "nav.account"
+  | "nav.dashboard"
   | "nav.more"
   | "cta.bookFirstLesson"
   | "language.label"
@@ -73,7 +73,7 @@ const translations: Record<LanguageCode, Record<TranslationKey, string>> = {
     "nav.classesShort": "Classes",
     "nav.quitoShort": "Quito",
     "nav.bookShort": "Book",
-    "nav.account": "Account",
+    "nav.dashboard": "Dashboard",
     "nav.more": "More",
     "cta.bookFirstLesson": "Book Your First Lesson",
     "language.label": "Language",
@@ -112,7 +112,7 @@ const translations: Record<LanguageCode, Record<TranslationKey, string>> = {
     "nav.classesShort": "Clases",
     "nav.quitoShort": "Quito",
     "nav.bookShort": "Reservar",
-    "nav.account": "Cuenta",
+    "nav.dashboard": "Panel",
     "nav.more": "Más",
     "cta.bookFirstLesson": "Reserva tu Primera Clase",
     "language.label": "Idioma",
