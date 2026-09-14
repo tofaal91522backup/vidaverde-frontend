@@ -81,6 +81,12 @@ export default function RegistrationForm() {
       return;
     }
 
+    /*
+      Ekhane session-ta already toiri (verification off thakle action-i
+      baniyeche). `refresh()` chhara layout gula purono logged-out RSC cache
+      theke render hoto — navbar-e "Sign in" jhulto ar sidebar-e naam asto na.
+    */
+    router.refresh();
     router.push(state.redirectTo || "/dashboard/student");
   }, [state, router]);
 

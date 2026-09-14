@@ -1,6 +1,7 @@
 "use client";
 
 import { GoogleSignInAction } from "@/features/auth/actions/google-sign-in.action";
+import { Spinner } from "@/components/ui/spinner";
 import { env } from "@/lib/env";
 import { useRouter } from "next/navigation";
 import Script from "next/script";
@@ -64,18 +65,24 @@ export function GoogleSignInButton({
     async (response: GoogleCredentialResponse) => {
       setPending(true);
       const result = await GoogleSignInAction(response.credential ?? "");
-      setPending(false);
 
       if (!result.success) {
-        toast.error(
-          result.errors?.formError?.[0] ?? "Google sign-in failed.",
-        );
+        setPending(false);
+        toast.error(result.errors?.formError?.[0] ?? "Google sign-in failed.");
         return;
       }
 
       toast.success("Login successful!");
-      router.replace(result.redirectTo ?? "/");
+
+      /*
+        ⚠️ `refresh()` age, navigate por-e. Ulto dile refresh-ta cholti
+        route-take refetch kore pending navigation-ta bati kore dey.
+
+        `pending` ekhane ar `false` kora hoy na — navigation shuru hoye geche,
+        tai redirect na howa porjonto loading-i thaka uchit.
+      */
       router.refresh();
+      router.replace(result.redirectTo ?? "/");
     },
     [router],
   );
@@ -121,8 +128,17 @@ export function GoogleSignInButton({
         <span className="h-px flex-1 bg-vv-line" />
       </div>
 
-      <div className="flex justify-center">
+      <div className="relative flex justify-center">
         <div ref={holder} aria-busy={pending} />
+
+        {/* GIS button-ta nijer iframe-e ake, tai oitar bhitore kichu bosano
+            jay na — upore ekta layer diye dhaka hoy */}
+        {pending && (
+          <div className="absolute inset-0 flex items-center justify-center gap-2 rounded-full bg-background/85 text-sm text-muted-foreground">
+            <Spinner className="size-4" />
+            Signing you in…
+          </div>
+        )}
       </div>
     </div>
   );
