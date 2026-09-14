@@ -46,3 +46,7 @@ desktop.ini
 # ── Misc ──────────────────────────────────────────────────────────────────────
 *.pem
 .vercel
+
+# Google OAuth client secrets — never commit these
+client_secret*.json
+*client_secret*.json

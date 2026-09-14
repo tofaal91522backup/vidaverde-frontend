@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { GoogleSignInButton } from "@/features/auth/components/google-sign-in-button";
 import { Input } from "@/components/ui/input";
 import {
   NativeSelect,
@@ -164,6 +165,8 @@ export default function RegistrationForm() {
         {isPending && <Spinner className="mr-2" />}
         Create Account
       </Button>
+
+      <GoogleSignInButton text="signup_with" />
 
       {state.errors.timezone && (
         <p className="text-xs text-destructive">{state.errors.timezone}</p>

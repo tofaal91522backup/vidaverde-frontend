@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useActionState, useEffect } from "react";
 import { toast } from "sonner";
+import { GoogleSignInButton } from "@/features/auth/components/google-sign-in-button";
 import { SignInAction } from "../actions/sign-in.action";
 
 export default function SignInForm() {
@@ -64,6 +65,8 @@ export default function SignInForm() {
         {isPending && <Spinner className="mr-2" />}
         Sign In
       </Button>
+
+      <GoogleSignInButton text="signin_with" />
 
       {state?.errors?.formError && (
         <p className="rounded-lg border border-destructive/20 bg-destructive/10 px-3 py-2 text-sm text-destructive">
