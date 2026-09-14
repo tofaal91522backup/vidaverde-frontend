@@ -9,6 +9,8 @@ import {
 } from "@/components/ui/native-select";
 import { Spinner } from "@/components/ui/spinner";
 import { Combobox } from "@/components/shared/form-related/combobox";
+import { PasswordInput } from "@/components/shared/form-related/password-input";
+import { PasswordRequirements } from "@/components/shared/form-related/password-requirements";
 import { PhoneInput } from "@/components/shared/form-related/phone-input";
 import { COUNTRY_OPTIONS } from "@/constants/countries";
 import { SPANISH_LEVEL_OPTIONS } from "@/constants/spanish-levels";
@@ -51,6 +53,10 @@ export default function RegistrationForm() {
 
   // Combobox controlled — value ta hidden input diye FormData-te jay
   const [country, setCountry] = useState("");
+
+  /* Checklist-ta live dekhate hoy, tai ei ekta field controlled. Baki gula
+     uncontrolled-i thake — form-ta FormData diye submit hoy (Pattern B). */
+  const [password, setPassword] = useState("");
 
   const [state, action, isPending] = useActionState(RegistrationAction, {
     success: false,
@@ -116,26 +122,31 @@ export default function RegistrationForm() {
 
       <div className="grid gap-4 sm:grid-cols-2">
         <Field label="Password" error={state.errors.password1}>
-          <Input
+          <PasswordInput
             name="password1"
-            type="password"
             required
             minLength={8}
             autoComplete="new-password"
             placeholder="At least 8 characters"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
         </Field>
 
         <Field label="Confirm password" error={state.errors.password2}>
-          <Input
+          <PasswordInput
             name="password2"
-            type="password"
             required
             autoComplete="new-password"
             placeholder="Confirm your password"
           />
         </Field>
       </div>
+
+      {/* Backend ki ki chay — probe kore ber kora asol niyom. Na dile keu
+          8-er kom ba shudhu-number password diye submit korto ar server-er
+          error-e giye thamto. */}
+      <PasswordRequirements value={password} />
 
       <Field
         label="Your Spanish level"
@@ -150,22 +161,26 @@ export default function RegistrationForm() {
         </NativeSelect>
       </Field>
 
-      <Field label="Country" error={state.errors.country} optional>
-        {/* `name` dile bhitore hidden input boshe, tai FormData-te chole jay */}
-        <Combobox
-          name="country"
-          value={country}
-          onChange={setCountry}
-          options={COUNTRY_OPTIONS}
-          placeholder="Select your country"
-          searchPlaceholder="Search country..."
-        />
-      </Field>
+      {/* Age Country ar Phone alada duita row chhilo, tai card-ta ekta lomba
+          patti hoye jeto. Duita-i chhoto field, pashapashi-i thik. */}
+      <div className="grid gap-4 sm:grid-cols-2">
+        <Field label="Country" error={state.errors.country} optional>
+          {/* `name` dile bhitore hidden input boshe, tai FormData-te chole jay */}
+          <Combobox
+            name="country"
+            value={country}
+            onChange={setCountry}
+            options={COUNTRY_OPTIONS}
+            placeholder="Select your country"
+            searchPlaceholder="Search country..."
+          />
+        </Field>
 
-      <Field label="Phone" error={state.errors.phone_number} optional>
-        {/* `name` dile bhitore ekta hidden input-e jora number ta bose */}
-        <PhoneInput name="phone_number" />
-      </Field>
+        <Field label="Phone" error={state.errors.phone_number} optional>
+          {/* `name` dile bhitore ekta hidden input-e jora number ta bose */}
+          <PhoneInput name="phone_number" />
+        </Field>
+      </div>
 
       <Button type="submit" disabled={isPending} className="w-full">
         {isPending && <Spinner className="mr-2" />}

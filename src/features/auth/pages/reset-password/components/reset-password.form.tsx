@@ -8,6 +8,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { PasswordInput } from "@/components/shared/form-related/password-input";
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
 import { ResetPasswordAction } from "@/features/auth/pages/reset-password/actions/reset-password.action";
@@ -46,10 +47,10 @@ const ResetPasswordForm = ({ uid, token }: { uid: string; token: string }) => {
             <label className="text-sm font-medium text-vv-ink">
               New password
             </label>
-            <Input
-              type="password"
+            <PasswordInput
               required
               name="new_password1"
+              autoComplete="new-password"
               placeholder="Enter your new password"
             />
             {state.errors.new_password1 && (
@@ -63,10 +64,10 @@ const ResetPasswordForm = ({ uid, token }: { uid: string; token: string }) => {
             <label className="text-sm font-medium text-vv-ink">
               Confirm password
             </label>
-            <Input
-              type="password"
+            <PasswordInput
               required
               name="new_password2"
+              autoComplete="new-password"
               placeholder="Confirm your new password"
             />
             {state.errors.new_password2 && (

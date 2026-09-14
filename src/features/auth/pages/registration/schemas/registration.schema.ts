@@ -21,10 +21,20 @@ export const RegistrationSchema = z
       .min(1, "please enter a valid email")
       .email("please enter a valid email"),
 
-    // Backend minimum 8, ar Django AUTH_PASSWORD_VALIDATORS-o chalay (email-er
-    // shathe mil, common password, shudhu number — shob reject hobe). Oi gulo
-    // shudhu server-e dhora porbe, tai error map-e `password1` dhorte hobe.
-    password1: z.string().min(8, "Password must be at least 8 characters"),
+    /*
+      Live API-te probe kora asol niyom:
+        < 8 okkhor   -> "Ensure this field has at least 8 characters."
+        shudhu digit -> "This password is entirely numeric."
+        common       -> "This password is too common."
+
+      Prothom duita ekhane-i dhora jay, tai server-e jawar age-i bola hoy.
+      "Common password" er list-ta Django-r bhitore, sheta shudhu server-e
+      dhora porbe — `PasswordRequirements` shekhane khali jaaniye rakhe.
+    */
+    password1: z
+      .string()
+      .min(8, "Password must be at least 8 characters")
+      .refine((v) => !/^\d+$/.test(v), "Password cannot be only numbers"),
     password2: z.string().min(1, "Please confirm your password"),
 
     first_name: z.string().min(1, "please enter your first name"),

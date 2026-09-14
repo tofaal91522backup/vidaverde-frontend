@@ -1,6 +1,7 @@
 ﻿"use client";
 
 import { Button } from "@/components/ui/button";
+import { PasswordInput } from "@/components/shared/form-related/password-input";
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
 import Link from "next/link";
@@ -76,10 +77,10 @@ export default function SignInForm() {
             Forgot password?
           </Link>
         </div>
-        <Input
+        <PasswordInput
           name="password"
-          type="password"
           required
+          autoComplete="current-password"
           placeholder="Enter your password"
         />
         {state?.errors?.password && (

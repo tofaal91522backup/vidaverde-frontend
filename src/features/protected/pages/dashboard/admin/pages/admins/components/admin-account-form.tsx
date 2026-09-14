@@ -4,6 +4,7 @@ import { FormFieldWrapper } from "@/components/shared/form-related/form-field-wr
 import { ReusableSelect } from "@/components/shared/form-related/reusable-select";
 import { SubmitButton } from "@/components/shared/form-related/submit-button";
 import { SubmitErrorSummary } from "@/components/shared/form-related/submit-error-summary";
+import { PasswordInput } from "@/components/shared/form-related/password-input";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
@@ -115,9 +116,8 @@ export function AdminAccountForm({
               label={isCreate ? "Password" : "Reset password"}
             >
               {(p) => (
-                <Input
+                <PasswordInput
                   {...p.inputProps}
-                  type="password"
                   autoComplete="new-password"
                   placeholder={isCreate ? "At least 6 characters" : "Leave blank to keep current password"}
                 />
