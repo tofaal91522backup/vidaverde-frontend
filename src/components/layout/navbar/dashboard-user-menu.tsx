@@ -1,6 +1,6 @@
 "use client";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -15,7 +15,55 @@ import { dashboardHref } from "@/features/auth/utils/dashboard-href";
 import { useStudentProfile } from "@/features/protected/pages/dashboard/student/pages/profile/queries/use-student-profile";
 import { initials } from "@/utils/initials";
 import { Home, LayoutDashboard, UserRound } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
+
+/**
+ * Avatar-er chhobi-ta `next/image` diye ase, kacha `<img>` diye na.
+ *
+ * Google login-e `profile_img_url` hoy `lh3.googleusercontent.com/...` — oi URL
+ * server theke thik-i 200 dey, kintu browser-e chhobi-ta ashto na: ad/privacy
+ * blocker ar shield gula `googleusercontent.com` ke third-party hisebe atke
+ * dey, ar tokhon navbar-e initials ar profile-e bhanga icon-i thakto.
+ *
+ * `next/image` chhobi-ta **amader nijer origin** theke dey (`/_next/image`),
+ * tai cross-origin blocking-er proshno-i othe na. Shathe webp ar joto-ta
+ * dorkar tototai — 96px-er chhobi 36px-er ghor-e purota namato.
+ *
+ * Load fail korle chhobi-ta shore jay ar nicher `AvatarFallback` (initials)
+ * beriye ase.
+ */
+function ProfileAvatar({
+  src,
+  name,
+  className,
+}: {
+  src?: string;
+  name: string;
+  className?: string;
+}) {
+  const [failed, setFailed] = useState(false);
+
+  return (
+    <Avatar className={className}>
+      <AvatarFallback className="text-xs font-medium">
+        {initials(name)}
+      </AvatarFallback>
+
+      {src && !failed && (
+        <Image
+          src={src}
+          alt={name}
+          fill
+          sizes="36px"
+          className="object-cover"
+          onError={() => setFailed(true)}
+        />
+      )}
+    </Avatar>
+  );
+}
 
 export type DashboardUser = {
   name?: string;
@@ -88,24 +136,14 @@ export function DashboardUserMenu({
           className="size-9 rounded-full"
           aria-label="Account menu"
         >
-          <Avatar className="size-9">
-            <AvatarImage src={avatarUrl} alt={name} />
-            <AvatarFallback className="text-xs font-medium">
-              {initials(name)}
-            </AvatarFallback>
-          </Avatar>
+          <ProfileAvatar src={avatarUrl} name={name} className="size-9" />
         </Button>
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="end" sideOffset={8} className="w-64">
         <DropdownMenuLabel className="p-0 font-normal">
           <div className="flex items-center gap-2.5 px-1 py-1.5 text-left">
-            <Avatar className="size-9">
-              <AvatarImage src={avatarUrl} alt={name} />
-              <AvatarFallback className="text-xs font-medium">
-                {initials(name)}
-              </AvatarFallback>
-            </Avatar>
+            <ProfileAvatar src={avatarUrl} name={name} className="size-9" />
             <div className="grid min-w-0 flex-1 leading-tight">
               <span className="truncate text-sm font-medium">{name}</span>
               {email && (

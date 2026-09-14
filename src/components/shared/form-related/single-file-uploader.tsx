@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { uploadSingleFile } from "@/services/upload-file.service";
 import { ImageIcon, Trash2, Upload, UserRound } from "lucide-react";
+import Image from "next/image";
 import { useRef, useState } from "react";
 import { toast } from "sonner";
 
@@ -97,14 +98,12 @@ export default function SingleFileUploader({
       <div className="flex items-center gap-4">
         {fileInput}
 
-        <div className="grid size-16 shrink-0 place-items-center overflow-hidden rounded-full border bg-muted text-muted-foreground">
+        {/* `next/image` — kacha `<img>` e Google-er chhobi (lh3.googleusercontent.com)
+            blocker gulor hate atke jeto. Ekhon chhobi-ta amader nijer origin
+            theke ase. */}
+        <div className="relative grid size-16 shrink-0 place-items-center overflow-hidden rounded-full border bg-muted text-muted-foreground">
           {value ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={value}
-              alt=""
-              className="size-full object-cover"
-            />
+            <Image src={value} alt="" fill sizes="64px" className="object-cover" />
           ) : (
             <UserRound className="size-6" />
           )}
@@ -126,12 +125,13 @@ export default function SingleFileUploader({
 
       {value ? (
         <div className="space-y-2">
-          <div className="overflow-hidden rounded-lg border bg-muted">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+          <div className="relative h-40 w-full max-w-sm overflow-hidden rounded-lg border bg-muted">
+            <Image
               src={value}
               alt=""
-              className="h-40 w-full max-w-sm object-cover"
+              fill
+              sizes="(max-width: 640px) 100vw, 384px"
+              className="object-cover"
             />
           </div>
           <div className="flex flex-wrap items-center gap-1.5">
