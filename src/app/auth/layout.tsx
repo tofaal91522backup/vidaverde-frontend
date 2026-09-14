@@ -19,14 +19,23 @@ export default function AuthLayout({
       {/* Akash. Upore ghono neel, nichey megh-er shathe mesha halka */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 -z-20 bg-[linear-gradient(to_bottom,#6fb4e4_0%,#a9d3ef_38%,#d9ebf8_68%,#f2f8fd_100%)]"
+        className="absolute inset-0 -z-20 bg-[linear-gradient(to_bottom,#a1d1ee_0%,#bcdff3_18%,#d4ebf7_38%,#e8f3fa_58%,#f1f7fb_78%,#f7fafc_100%)]"
       />
 
-      {/* Megh. Uporer dhar-ta mask diye milie dewa hoy — na hole chhobir
-          nijer akash ar gradient-er majhe ekta shoja line dekha jeto. */}
+      {/*
+        Megh. Kacha photo-ta boshale hoy na — ref design-e megh gula prai sada
+        (#e6f0f8 er kachakachi), ar ei chhobir megh #c9c3c0, onek gaaro ar
+        halka holdeta. Tai `saturate` komiye, `brightness` bariye, ar opacity
+        diye gradient-er shathe mishiye dewa hoy — chhobi na, ekta narom
+        megher abhas.
+
+        Mask duidik-e: uporer dhar na milale chhobir nijer akash ar gradient-er
+        majhe shoja line dekha jeto, ar nicher dhar na katle chhobir shesh
+        row-er gaaro potti-ta (#898a9c) niche ekta kalo daag hoye boshto.
+      */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-[65vh] min-h-72"
+        className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-[68vh] min-h-72"
       >
         <Image
           src="/images/auth-sky.webp"
@@ -34,14 +43,23 @@ export default function AuthLayout({
           fill
           priority
           sizes="100vw"
-          className="object-cover object-bottom"
+          className="object-cover object-bottom opacity-50"
           style={{
-            maskImage: "linear-gradient(to bottom, transparent 0%, #000 42%)",
+            filter: "saturate(0.35) brightness(1.05)",
+            maskImage:
+              "linear-gradient(to bottom, transparent 0%, #000 45%, #000 86%, transparent 100%)",
             WebkitMaskImage:
-              "linear-gradient(to bottom, transparent 0%, #000 42%)",
+              "linear-gradient(to bottom, transparent 0%, #000 45%, #000 86%, transparent 100%)",
           }}
         />
       </div>
+
+      {/* Megh-ta filter-er por-o ektu neutral thake; ei patla neel prolep-ta
+          ref-er thanda ronger dike niye jay */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-[68vh] min-h-72 bg-[linear-gradient(to_bottom,transparent_0%,#dcecf8_55%,#eff6fb_100%)] opacity-45"
+      />
 
       {/* Logo-ta-i home-e ferar link — alada "Back to Home" button-er cheye
           porishkar, ar brand-ta protita auth page-e thake */}
