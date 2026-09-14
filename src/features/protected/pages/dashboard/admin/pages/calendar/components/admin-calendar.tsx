@@ -18,6 +18,7 @@ import {
   schoolDateKey,
 } from "@/features/protected/pages/dashboard/admin/utils/format-school-datetime";
 import { toList } from "@/features/protected/pages/dashboard/admin/utils/to-list";
+import { MonthDayCell } from "@/features/protected/pages/dashboard/shared/components/month-day-cell";
 import { cn } from "@/lib/utils";
 import { localDateInput } from "@/utils/iso-datetime";
 import {
@@ -196,26 +197,13 @@ function MonthView({
           const dateStr = `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
           const dayEvents = byDate[dateStr] ?? [];
           return (
-            <div key={day} className="min-h-24 p-1">
-              <span
-                className={cn(
-                  "inline-flex h-6 w-6 items-center justify-center rounded-full text-xs font-medium",
-                  dateStr === todayIso && "bg-primary text-primary-foreground",
-                )}
-              >
-                {day}
-              </span>
-              <div className="mt-0.5 max-h-16 space-y-0.5 overflow-hidden">
-                {dayEvents.slice(0, 3).map((event) => (
-                  <EventChip key={event.id} event={event} />
-                ))}
-                {dayEvents.length > 3 && (
-                  <p className="pl-1 text-[10px] text-muted-foreground">
-                    +{dayEvents.length - 3} more
-                  </p>
-                )}
-              </div>
-            </div>
+            <MonthDayCell
+              key={day}
+              day={day}
+              isToday={dateStr === todayIso}
+              items={dayEvents}
+              renderItem={(event) => <EventChip key={event.id} event={event} />}
+            />
           );
         })}
       </div>

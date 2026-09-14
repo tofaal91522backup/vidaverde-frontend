@@ -13,6 +13,7 @@ import {
   formatLocalTime,
   localDateKey,
 } from "@/features/protected/pages/dashboard/student/utils/format-local-datetime";
+import { MonthDayCell } from "@/features/protected/pages/dashboard/shared/components/month-day-cell";
 import { cn } from "@/lib/utils";
 import {
   Calendar,
@@ -246,19 +247,15 @@ function MonthView({
           const daySessions = byDate[dateStr] ?? [];
           const isToday = dateStr === todayIso;
           return (
-            <div key={day} className="min-h-24 p-1">
-              <span className={cn("inline-flex h-6 w-6 items-center justify-center rounded-full text-xs font-medium", isToday && "bg-primary text-primary-foreground")}>
-                {day}
-              </span>
-              <div className="mt-0.5 space-y-0.5 overflow-hidden max-h-16">
-                {daySessions.slice(0, 3).map((s) => (
-                  <SessionDot key={s.id} session={s} timezone={timezone} />
-                ))}
-                {daySessions.length > 3 && (
-                  <p className="text-[10px] text-muted-foreground pl-1">+{daySessions.length - 3} more</p>
-                )}
-              </div>
-            </div>
+            <MonthDayCell
+              key={day}
+              day={day}
+              isToday={isToday}
+              items={daySessions}
+              renderItem={(s) => (
+                <SessionDot key={s.id} session={s} timezone={timezone} />
+              )}
+            />
           );
         })}
       </div>
