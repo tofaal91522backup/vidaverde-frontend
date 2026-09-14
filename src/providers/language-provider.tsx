@@ -29,6 +29,11 @@ export type TranslationKey =
   | "nav.quitoImmersion"
   | "nav.travellingClassroom"
   | "nav.puertoLopez"
+  | "nav.tabBar"
+  | "nav.home"
+  | "nav.classesShort"
+  | "nav.quitoShort"
+  | "nav.bookShort"
   | "cta.bookFirstLesson"
   | "language.label"
   | "footer.description"
@@ -60,6 +65,12 @@ const translations: Record<LanguageCode, Record<TranslationKey, string>> = {
     "nav.quitoImmersion": "Quito Immersion Program",
     "nav.travellingClassroom": "Travelling Classroom",
     "nav.puertoLopez": "Puerto López",
+    "nav.tabBar": "Quick navigation",
+    "nav.home": "Home",
+    // Tab-er niche ek shobde dhukte hobe — "Online Classes" wrap kore jay
+    "nav.classesShort": "Classes",
+    "nav.quitoShort": "Quito",
+    "nav.bookShort": "Book",
     "cta.bookFirstLesson": "Book Your First Lesson",
     "language.label": "Language",
     "footer.description":
@@ -92,6 +103,11 @@ const translations: Record<LanguageCode, Record<TranslationKey, string>> = {
     "nav.quitoImmersion": "Programa de Inmersión en Quito",
     "nav.travellingClassroom": "Aula Viajera",
     "nav.puertoLopez": "Puerto López",
+    "nav.tabBar": "Navegación rápida",
+    "nav.home": "Inicio",
+    "nav.classesShort": "Clases",
+    "nav.quitoShort": "Quito",
+    "nav.bookShort": "Reservar",
     "cta.bookFirstLesson": "Reserva tu Primera Clase",
     "language.label": "Idioma",
     "footer.description":

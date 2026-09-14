@@ -14,7 +14,6 @@ import {
   type DashboardUser,
 } from "@/components/layout/navbar/dashboard-user-menu";
 import { readNavbarUser } from "@/features/auth/utils/session";
-import { BrandMark } from "@/features/marketing/components/BrandMark";
 import { navItems } from "@/features/marketing/data/marketing.data";
 import { useLanguage, type TranslationKey } from "@/providers/language-provider";
 import { ChevronDown, Menu } from "lucide-react";
@@ -238,7 +237,19 @@ export default function Navbar() {
           >
             <SheetHeader className="shrink-0 border-b border-vv-line p-4">
               <SheetTitle className="flex items-center gap-2.5">
-                <BrandMark />
+                {/*
+                  Age ekhane `<BrandMark />` chhilo — ekta generic sobuj pin,
+                  asol logo na. Upor-er bar ar menu-te duijaygay ek-i chhobi
+                  thakle-i brand-ta chena jay.
+                */}
+                <Image
+                  src="/images/logo.png"
+                  alt="Vida Verde logo"
+                  width={82}
+                  height={82}
+                  className="h-11 w-auto"
+                  unoptimized
+                />
                 <div className="flex flex-col">
                   <span className="text-[16px] font-bold tracking-[-0.02em] leading-tight text-vv-ink">
                     Vida Verde
@@ -289,7 +300,11 @@ export default function Navbar() {
                           }
                           aria-expanded={isOpen}
                           aria-label={`${label} submenu`}
-                          className="-mr-2 flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-vv-ink-2 transition-colors hover:bg-vv-bg-warm hover:text-vv-ink"
+                          className={`-mr-2 flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-vv-accent-deep transition-colors ${
+                            isOpen
+                              ? "bg-vv-accent"
+                              : "bg-vv-accent/20 hover:bg-vv-accent/35"
+                          }`}
                         >
                           <ChevronDown
                             className={`h-5 w-5 transition-transform duration-200 ${
