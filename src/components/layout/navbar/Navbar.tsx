@@ -62,6 +62,16 @@ export default function Navbar() {
     "/study-in-quito/puerto-lopez": "nav.puertoLopez",
   };
 
+  /*
+    Mobile menu-te je group-e sub-item ache seta collapsible. `undefined` mane
+    user ekhono kichu tap kore nai — tokhon **cholti page-er group ta** khola
+    thake. Ekta effect diye korle `set-state-in-effect` lint-e atkato, tai
+    derived value.
+  */
+  const [openGroup, setOpenGroup] = useState<string | null | undefined>(
+    undefined,
+  );
+
   const getHrefPath = (href: string) => href.split("#")[0];
 
   const isHrefActive = (href: string) => {
@@ -79,6 +89,12 @@ export default function Navbar() {
   const isItemActive = (item: (typeof navItems)[number]) =>
     isHrefActive(item.href) ||
     item.children?.some((child) => isHrefActive(child.href));
+
+  const activeGroupHref =
+    navItems.find((item) => item.children?.length && isItemActive(item))?.href ??
+    null;
+
+  const expandedGroup = openGroup === undefined ? activeGroupHref : openGroup;
 
   return (
     <header className="sticky top-0 z-50 animate-nav-enter backdrop-blur-[14px] backdrop-saturate-140 bg-vv-nav-bg border-b border-b-vv-nav-border">
@@ -210,8 +226,17 @@ export default function Navbar() {
               <Menu aria-hidden="true" />
             </button>
           </SheetTrigger>
-          <SheetContent side="right" className="bg-vv-bg">
-            <SheetHeader>
+          {/*
+            Age puro menu-ta `SheetHeader`-er bhitore chhilo. SheetHeader scroll
+            kore na, tai item beshi hole nicher gula dhora-i jeto na — mobile-e
+            Contact-er por ar kichu pounchano jeto na. Ekhon tin-ta layer:
+            brand (fixed) · nav (scroll) · login/language (fixed).
+          */}
+          <SheetContent
+            side="right"
+            className="flex flex-col gap-0 bg-vv-bg p-0"
+          >
+            <SheetHeader className="shrink-0 border-b border-vv-line p-4">
               <SheetTitle className="flex items-center gap-2.5">
                 <BrandMark />
                 <div className="flex flex-col">
@@ -223,45 +248,84 @@ export default function Navbar() {
                   </span>
                 </div>
               </SheetTitle>
-              <nav className="mt-8 flex flex-col gap-1">
-                {navItems.map((item) => {
-                  const isActive = isItemActive(item);
+            </SheetHeader>
 
-                  return (
-                    <div key={item.href} className="border-b border-vv-line">
+            {/* `overscroll-contain` — menu-r sesh-e pouchhe pichoner page ta
+                scroll hoye jaoa bondho kore */}
+            <nav
+              className="flex-1 overflow-y-auto overscroll-contain px-4 py-2"
+              aria-label={t("nav.primary")}
+            >
+              {navItems.map((item) => {
+                const isActive = isItemActive(item);
+                const label = getItemLabel(item.href, item.label);
+                const hasChildren = Boolean(item.children?.length);
+                const isOpen = expandedGroup === item.href;
+
+                return (
+                  <div key={item.href} className="border-b border-vv-line">
+                    <div className="flex items-center gap-1">
                       <SheetClose asChild>
                         <Link
                           href={item.href}
-                          className={`block py-4 text-2xl font-semibold tracking-[-0.02em] ${
+                          className={`flex-1 py-4 text-2xl font-semibold tracking-[-0.02em] ${
                             isActive ? "text-vv-accent-deep" : "text-vv-ink"
                           }`}
                         >
-                          {getItemLabel(item.href, item.label)}
+                          {label}
                         </Link>
                       </SheetClose>
-                      {item.children?.length ? (
-                        <div className="-mt-1 mb-4 flex flex-col gap-1 pl-4">
-                          {item.children.map((child) => (
-                            <SheetClose asChild key={child.href}>
-                              <Link
-                                href={child.href}
-                                className={`rounded-[10px] px-3 py-2 text-[15px] font-medium ${
-                                  isHrefActive(child.href)
-                                    ? "bg-vv-bg-warm text-vv-ink"
-                                    : "text-vv-ink-2"
-                                }`}
-                              >
-                                {getItemLabel(child.href, child.label)}
-                              </Link>
-                            </SheetClose>
-                          ))}
-                        </div>
-                      ) : null}
+
+                      {/*
+                        Label-e tap korle page-e jay, chevron-e tap korle sudhu
+                        khole — duita alada kaj, tai duita alada target. Sob
+                        item-e chevron dewa hoy na, sudhu jar sub-item ache.
+                      */}
+                      {hasChildren && (
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setOpenGroup(isOpen ? null : item.href)
+                          }
+                          aria-expanded={isOpen}
+                          aria-label={`${label} submenu`}
+                          className="-mr-2 flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-vv-ink-2 transition-colors hover:bg-vv-bg-warm hover:text-vv-ink"
+                        >
+                          <ChevronDown
+                            className={`h-5 w-5 transition-transform duration-200 ${
+                              isOpen ? "rotate-180" : ""
+                            }`}
+                            aria-hidden="true"
+                          />
+                        </button>
+                      )}
                     </div>
-                  );
-                })}
-              </nav>
-              <div className="mt-6 flex flex-col gap-4">
+
+                    {hasChildren && isOpen ? (
+                      <div className="-mt-1 mb-4 flex flex-col gap-1 pl-4">
+                        {item.children?.map((child) => (
+                          <SheetClose asChild key={child.href}>
+                            <Link
+                              href={child.href}
+                              className={`rounded-[10px] px-3 py-2.5 text-[15px] font-medium ${
+                                isHrefActive(child.href)
+                                  ? "bg-vv-bg-warm text-vv-ink"
+                                  : "text-vv-ink-2"
+                              }`}
+                            >
+                              {getItemLabel(child.href, child.label)}
+                            </Link>
+                          </SheetClose>
+                        ))}
+                      </div>
+                    ) : null}
+                  </div>
+                );
+              })}
+            </nav>
+
+            <div className="shrink-0 border-t border-vv-line p-4">
+              <div className="flex flex-col gap-4">
                 {user === null && (
                   <>
                     <SheetClose asChild>
@@ -292,6 +356,7 @@ export default function Navbar() {
                     />
                   </div>
                 )}
+
                 <div className="flex items-center gap-2">
                   <span className="text-[12px] text-vv-muted font-medium">
                     {t("language.label")}
@@ -299,7 +364,7 @@ export default function Navbar() {
                   <LangToggle />
                 </div>
               </div>
-            </SheetHeader>
+            </div>
           </SheetContent>
         </Sheet>
       </div>
