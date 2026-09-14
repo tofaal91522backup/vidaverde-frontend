@@ -47,23 +47,34 @@ export function PhoneInput({
   onBlur?: () => void;
 }) {
   /*
-    Number-ta `value` theke **derive** kora hoy, copy kore state-e rakha hoy na —
-    tai prop ar UI kokhono alada hote pare na.
+    Duita mode, ar number-ta kothay thake sheta tar upor nirbhor kore.
 
-    Kintu dial country-ta state, ar seta ichchha kore: `joinPhone` number khali
-    hole khali string dey (khali "+880" pathanor mane nai), tai number muche
-    fellei derive kora country default-e fire jeto — user Germany beche
+    - **Controlled** (`onChange` ache) — number `value` theke derive hoy, copy
+      kore rakha hoy na, tai prop ar UI kokhono alada hote pare na.
+    - **FormData** (`name` ache, `onChange` nai) — value-ta bahir theke ashe na,
+      tai number ta nijer state-e rakhte hoy. Age rakha hoto na: `value`
+      chirokal "" thakto, `<Input value={local}>` "" e atke thakto ar **kichu
+      type-i kora jeto na** (registration form-e ei bug tai chhilo).
+
+    Dial country duita mode-e-i state, ar seta ichchha kore: `joinPhone` number
+    khali hole khali string dey (khali "+880" pathanor mane nai), tai number
+    muche fellei derive kora country default-e fire jeto — user Germany beche
     number muchle select Ecuador hoye jeto.
 
     Mount-er shomoy ekbar `value` theke newa hoy. Edit form gula data asar
     **por-e** mount hoy (`{data && <Form defaultValues={…} />}`), tai oita jotheshto.
   */
-  const local = splitPhone(value).number;
+  const controlled = onChange !== undefined;
+
+  const [innerLocal, setInnerLocal] = useState(() => splitPhone(value).number);
   const [countryCode, setCountryCode] = useState(
     () => splitPhone(value).countryCode || DEFAULT_DIAL_COUNTRY,
   );
 
+  const local = controlled ? splitPhone(value).number : innerLocal;
+
   const emit = (nextCountry: string, nextLocal: string) => {
+    if (!controlled) setInnerLocal(nextLocal);
     onChange?.(joinPhone(nextCountry, nextLocal));
   };
 
