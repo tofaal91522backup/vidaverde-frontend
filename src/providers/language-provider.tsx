@@ -6,7 +6,7 @@ import {
   useCallback,
   useContext,
   useMemo,
-  useState,
+  useSyncExternalStore,
 } from "react";
 import {
   DEFAULT_PUBLIC_LANGUAGE,
@@ -144,18 +144,66 @@ type LanguageContextValue = {
 
 const LanguageContext = createContext<LanguageContextValue | null>(null);
 
-function readStoredLanguage(): LanguageCode {
+/**
+ * Visitor-er asol pochhondo, localStorage theke. Server-e (ba storage bondho
+ * thakle) default.
+ *
+ * Export kora karon Google Translate-er setup-o eta pore — provider-er
+ * `language` hydration-er prothom render-e ichchha kore "en" thake (niche dekho),
+ * tai oi mount-er muhurte seta asol pochhondo na.
+ */
+export function getStoredLanguage(): LanguageCode {
   if (typeof window === "undefined") return DEFAULT_PUBLIC_LANGUAGE;
-  const stored = window.localStorage.getItem(STORAGE_KEY);
-  return stored === "en" || stored === "es" ? stored : DEFAULT_PUBLIC_LANGUAGE;
+  try {
+    const stored = window.localStorage.getItem(STORAGE_KEY);
+    return stored === "en" || stored === "es" ? stored : DEFAULT_PUBLIC_LANGUAGE;
+  } catch {
+    return DEFAULT_PUBLIC_LANGUAGE;
+  }
 }
 
+/*
+  Age `useState(readStoredLanguage)` chhilo — client-er PROTHOM render-ei
+  localStorage pore "es" dito, kintu server localStorage dekhte pay na tai
+  "en" render korto. Dui render mele na -> hydration error (navbar-er
+  aria-label "Primary navigation" vs "Navegación principal").
+
+  `useSyncExternalStore` ei jinish-tai shamlay: hydration-er shomoy server
+  snapshot ("en") diye render kore, tar por client-er asol value diye abar.
+  Effect-e setState-o lage na.
+
+  Dam: Spanish-e thaka visitor ek polok English dekhe — localStorage-e rakhle
+  eta erano jay na, karon server age thekei jane na.
+*/
+const listeners = new Set<() => void>();
+
+function subscribe(onChange: () => void) {
+  listeners.add(onChange);
+  // Onno tab-e bhasha bodlale ekhaneo
+  window.addEventListener("storage", onChange);
+  return () => {
+    listeners.delete(onChange);
+    window.removeEventListener("storage", onChange);
+  };
+}
+
+const getServerLanguage = (): LanguageCode => DEFAULT_PUBLIC_LANGUAGE;
+
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [language, setLanguageState] = useState<LanguageCode>(readStoredLanguage);
+  const language = useSyncExternalStore(
+    subscribe,
+    getStoredLanguage,
+    getServerLanguage,
+  );
 
   const setLanguage = useCallback((code: LanguageCode) => {
-    setLanguageState(code);
-    window.localStorage.setItem(STORAGE_KEY, code);
+    try {
+      window.localStorage.setItem(STORAGE_KEY, code);
+    } catch {
+      // Private mode ba storage bondho — bhasha tobu-o ei page-e bodlabe na,
+      // karon snapshot localStorage theke-i ashe. Kichu korar nai.
+    }
+    listeners.forEach((notify) => notify());
   }, []);
 
   const t = useCallback(

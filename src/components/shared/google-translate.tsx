@@ -1,6 +1,9 @@
 "use client";
 
-import { useLanguage, type LanguageCode } from "@/providers/language-provider";
+import {
+  getStoredLanguage,
+  type LanguageCode,
+} from "@/providers/language-provider";
 import { useEffect } from "react";
 
 /*
@@ -119,9 +122,15 @@ type TranslateWindow = Window & {
  * English-i thake.
  */
 export function GoogleTranslate() {
-  const { language } = useLanguage();
-
   useEffect(() => {
+    /*
+      `useLanguage()` na — hydration-er prothom commit-e provider ichchha kore
+      "en" dey, ar ei effect oi commit-er por-i chole. Oita pore cookie milale
+      Spanish-e thaka visitor-er cookie muche jeto. Tai asol pochhondo shoja
+      storage theke.
+    */
+    const language = getStoredLanguage();
+
     /*
       Provider (localStorage) asol obostha. Cookie-ta tar sathe milie, TAR POR
       script load — Google init-er shomoy cookie pore, tai ulto order-e dile
@@ -152,9 +161,7 @@ export function GoogleTranslate() {
       "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
     script.async = true;
     document.body.appendChild(script);
-    // Ichchha kore language dependency-te na: script ekbar-i load hobe, ar
-    // porer bodol gula `switchSiteLanguage()` shamlay
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // Script ekbar-i load hobe; porer bodol gula `switchSiteLanguage()` shamlay
   }, []);
 
   // Google-er nijer dropdown ekhane boshe; CSS diye lukano
