@@ -6,19 +6,74 @@ import Link from "next/link";
 import { ChevronRight, Heart, Star, type LucideIcon } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { useLanguage, type LanguageCode } from "@/providers/language-provider";
 
-const TYPEWRITER_WORDS = [
-  { text: "Learn Spanish Online", accent: true },
-  { text: "One-on-One", accent: true },
-];
+/*
+  Hero-ta Google Translate-er hate chhara hoy na (`translate="no"`), hate lekha
+  EN/ES. Karon typewriter-ta proti 110ms-e lekha bodlay — Google tal rakhte pare
+  na, ar ES-e-o "One-on-O" English-e atke thakto. Ar site-er prothom ja chokhe
+  pore, sheta machine Spanish-e na thakai bhalo.
 
-function TypewriterCycle() {
+  ⚠️ Spanish-ta draft — school-er keu (Rosa/Mateo) ekbar dekhe nile bhalo.
+*/
+type HeroCopy = {
+  words: { text: string; accent: boolean }[];
+  tagline: string;
+  sub: string;
+  book: string;
+  from: string;
+  explore: string;
+  trust: { label: string; sub: string }[];
+};
+
+const COPY: Record<LanguageCode, HeroCopy> = {
+  en: {
+    words: [
+      { text: "Learn Spanish Online", accent: true },
+      { text: "One-on-One", accent: true },
+    ],
+    tagline: "With a Real Teacher",
+    sub: "Expert Ecuadorian teachers, personalised lessons, flexible scheduling. Join from anywhere in the world.",
+    book: "Book Your First Lesson",
+    from: "From $12",
+    explore: "Explore all programs",
+    trust: [
+      { label: "Est. 1999", sub: "25+ years of teaching" },
+      { label: "4,700+ Students", sub: "From over 50 countries" },
+      { label: "All Levels Welcome", sub: "A1 beginners to C1 advanced" },
+      { label: "Classes via Google Meet", sub: "Join from anywhere" },
+    ],
+  },
+  es: {
+    words: [
+      { text: "Aprende español en línea", accent: true },
+      { text: "Clases uno a uno", accent: true },
+    ],
+    tagline: "Con un profesor de verdad",
+    sub: "Profesores ecuatorianos expertos, clases personalizadas y horarios flexibles. Únete desde cualquier parte del mundo.",
+    book: "Reserva tu primera clase",
+    from: "Desde $12",
+    explore: "Ver todos los programas",
+    trust: [
+      { label: "Desde 1999", sub: "Más de 25 años enseñando" },
+      // Ecuador-e hajar-er ghore point: 4.700
+      { label: "Más de 4.700 estudiantes", sub: "De más de 50 países" },
+      { label: "Todos los niveles", sub: "De principiante A1 a avanzado C1" },
+      {
+        label: "Clases por Google Meet",
+        sub: "Conéctate desde cualquier lugar",
+      },
+    ],
+  },
+};
+
+function TypewriterCycle({ words }: { words: HeroCopy["words"] }) {
   const [wordIdx, setWordIdx] = useState(0);
   const [displayed, setDisplayed] = useState("");
   const [phase, setPhase] = useState<"typing" | "pause" | "deleting">("typing");
 
   useEffect(() => {
-    const word = TYPEWRITER_WORDS[wordIdx].text;
+    const word = words[wordIdx].text;
     let timer: ReturnType<typeof setTimeout>;
 
     if (phase === "typing") {
@@ -37,16 +92,16 @@ function TypewriterCycle() {
         timer = setTimeout(() => setDisplayed(displayed.slice(0, -1)), 65);
       } else {
         timer = setTimeout(() => {
-          setWordIdx((i) => (i + 1) % TYPEWRITER_WORDS.length);
+          setWordIdx((i) => (i + 1) % words.length);
           setPhase("typing");
         }, 0);
       }
     }
 
     return () => clearTimeout(timer);
-  }, [displayed, phase, wordIdx]);
+  }, [displayed, phase, wordIdx, words]);
 
-  const isAccent = TYPEWRITER_WORDS[wordIdx].accent;
+  const isAccent = words[wordIdx].accent;
 
   return (
     <span className={isAccent ? "text-vv-accent" : "text-white"}>
@@ -57,6 +112,10 @@ function TypewriterCycle() {
 }
 
 export function AnimatedBookButton() {
+  // Online Classes page-er hero-teo boshe, tai nijei bhasha pore
+  const { language } = useLanguage();
+  const copy = COPY[language];
+
   return (
     <>
       <style>{`
@@ -69,6 +128,7 @@ export function AnimatedBookButton() {
       `}</style>
       <Link
         href="/online-classes/book"
+        translate="no"
         className="inline-flex items-center justify-center border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] leading-none py-3.5 px-5.5 bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px transition-[transform,background,border-color] duration-200 sm:w-auto overflow-hidden"
       >
         <span className="block overflow-hidden" style={{ height: "1.25em" }}>
@@ -77,19 +137,19 @@ export function AnimatedBookButton() {
               className="flex items-center justify-center"
               style={{ height: "1.25em" }}
             >
-              Book Your First Lesson
+              {copy.book}
             </span>
             <span
               className="flex items-center justify-center"
               style={{ height: "1.25em" }}
             >
-              From $12
+              {copy.from}
             </span>
             <span
               className="flex items-center justify-center"
               style={{ height: "1.25em" }}
             >
-              Book Your First Lesson
+              {copy.book}
             </span>
           </span>
         </span>
@@ -99,20 +159,12 @@ export function AnimatedBookButton() {
 }
 
 /** `icon` icon-o hote pare, chhoto text-o ("A1", "G") */
-const trustItems: { icon: LucideIcon | string; label: string; sub: string }[] =
-  [
-    { icon: Star, label: "Est. 1999", sub: "25+ years of teaching" },
-    { icon: Heart, label: "4,700+ Students", sub: "From over 50 countries" },
-    {
-      icon: "A1",
-      label: "All Levels Welcome",
-      sub: "A1 beginners to C1 advanced",
-    },
-    { icon: "G", label: "Classes via Google Meet", sub: "Join from anywhere" },
-  ];
+const TRUST_ICONS: (LucideIcon | string)[] = [Star, Heart, "A1", "G"];
 
 export function HeroSection() {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const { language } = useLanguage();
+  const copy = COPY[language];
 
   useEffect(() => {
     const video = videoRef.current;
@@ -127,6 +179,7 @@ export function HeroSection() {
     <section
       className="relative overflow-hidden min-h-svh flex flex-col"
       data-screen-label="01 Hero"
+      translate="no"
     >
       {/* Video background */}
       <div className="absolute inset-0 z-0">
@@ -156,17 +209,18 @@ export function HeroSection() {
             {/* Headline */}
             <h1 className="text-[clamp(38px,4vw,58px)] font-semibold tracking-[-0.03em] leading-[1.12] m-0 animate-[hero-rise_0.5s_0.1s_ease_both]">
               <span className="block min-h-[1.2em]">
-                <TypewriterCycle />
+                {/* `key` — bhasha bodlale adha-type kora English shobdo theke
+                    shuru na kore notun kore type hoy */}
+                <TypewriterCycle key={language} words={copy.words} />
               </span>
               <span className="block text-white/65 font-normal">
-                With a Real Teacher
+                {copy.tagline}
               </span>
             </h1>
 
             {/* Subheadline */}
             <p className="text-white/72 text-[clamp(17px,1.3vw,18px)] leading-relaxed m-0 max-w-[50ch] text-pretty animate-[hero-rise_0.55s_0.3s_ease_both]">
-              Expert Ecuadorian teachers, personalised lessons, flexible
-              scheduling. Join from anywhere in the world.
+              {copy.sub}
             </p>
 
             {/* CTAs */}
@@ -177,7 +231,7 @@ export function HeroSection() {
                 tone="ghost"
                 className="border-white/40 text-white hover:bg-white hover:border-white hover:text-vv-ink justify-center sm:w-auto"
               >
-                Explore all programs{" "}
+                {copy.explore}{" "}
                 <ChevronRight className="h-4 w-4 shrink-0 translate-y-0.5 translate-y-0.5" />
               </MarketingButton>
             </div>
@@ -185,31 +239,34 @@ export function HeroSection() {
 
           {/* Right. Trust bar card */}
           <div className="flex flex-col gap-1 min-w-72 rounded-2xl border border-white/14 bg-white/10 px-8 py-7 backdrop-blur-md shadow-[0_8px_32px_-8px_rgba(0,0,0,0.4)] animate-[hero-rise_0.6s_0.5s_ease_both] max-[900px]:hidden">
-            {trustItems.map((item) => (
-              <div
-                key={item.label}
-                className="flex items-start gap-4 py-3.5 border-b border-white/10 last:border-0"
-              >
-                <span
-                  className="text-vv-accent text-[17px] leading-none shrink-0 mt-0.5"
-                  aria-hidden="true"
+            {copy.trust.map((item, i) => {
+              const Icon = TRUST_ICONS[i];
+              return (
+                <div
+                  key={item.label}
+                  className="flex items-start gap-4 py-3.5 border-b border-white/10 last:border-0"
                 >
-                  {typeof item.icon === "string" ? (
-                    item.icon
-                  ) : (
-                    <item.icon className="size-[17px] fill-current" />
-                  )}
-                </span>
-                <div>
-                  <div className="text-white text-[14px] font-semibold leading-tight">
-                    {item.label}
-                  </div>
-                  <div className="text-white/55 text-[12px] mt-0.5">
-                    {item.sub}
+                  <span
+                    className="text-vv-accent text-[17px] leading-none shrink-0 mt-0.5"
+                    aria-hidden="true"
+                  >
+                    {typeof Icon === "string" ? (
+                      Icon
+                    ) : (
+                      <Icon className="size-[17px] fill-current" />
+                    )}
+                  </span>
+                  <div>
+                    <div className="text-white text-[14px] font-semibold leading-tight">
+                      {item.label}
+                    </div>
+                    <div className="text-white/55 text-[12px] mt-0.5">
+                      {item.sub}
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </Container>
