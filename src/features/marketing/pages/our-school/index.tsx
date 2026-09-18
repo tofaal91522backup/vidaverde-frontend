@@ -520,7 +520,7 @@ export default function OurSchoolRoute() {
                 <div className="flex flex-col gap-3 p-6">
                   <div>
                     <h3 className="text-[20px] font-semibold leading-tight tracking-[-0.02em] text-vv-ink">
-                      {teacher.name}
+                      <span translate="no">{teacher.name}</span>
                     </h3>
                     <div className="mt-1 text-[12px] text-vv-ink-2">
                       {teacher.credentials} · {teacher.experience}

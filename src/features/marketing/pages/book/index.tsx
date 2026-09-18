@@ -580,7 +580,7 @@ export default function BookRoute() {
                       </div>
                       <div className="min-w-0">
                         <div className="font-semibold text-vv-ink text-[15px]">
-                          {teacher.name}
+                          <span translate="no">{teacher.name}</span>
                         </div>
                         {/* Backend puro window-er prothom khali slot diye dey —
                             tai eta hisheb kore ber korte hoy na */}

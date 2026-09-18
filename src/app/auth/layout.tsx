@@ -77,7 +77,7 @@ export default function AuthLayout({
             className="h-10 w-auto"
             unoptimized
           />
-          <span className="text-[17px] font-bold tracking-[-0.02em] text-vv-ink">
+          <span translate="no" className="text-[17px] font-bold tracking-[-0.02em] text-vv-ink">
             Vida Verde
           </span>
         </Link>

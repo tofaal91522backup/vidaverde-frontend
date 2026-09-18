@@ -1,6 +1,7 @@
 import Footer from "@/components/layout/footer/Footer";
 import { MarketingNavProvider } from "@/components/layout/navbar/marketing-nav-provider";
 import { MobileTabBar } from "@/components/layout/navbar/mobile-tab-bar";
+import { GoogleTranslate } from "@/components/shared/google-translate";
 import Navbar from "@/components/layout/navbar/Navbar";
 import { ScrollAnimations } from "@/features/marketing/components/ScrollAnimations";
 import { WhatsAppFloat } from "@/features/marketing/components/WhatsAppFloat";
@@ -21,6 +22,8 @@ export default function MarketingLayout({
       <div className="hidden h-16 max-[640px]:block" aria-hidden="true" />
       <MobileTabBar />
       <WhatsAppFloat />
+      {/* Navbar-er EN/ES — Google Translate. Shudhu marketing site-e */}
+      <GoogleTranslate />
     </MarketingNavProvider>
   );
 }

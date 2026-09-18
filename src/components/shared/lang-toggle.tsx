@@ -1,5 +1,6 @@
 "use client";
 
+import { switchSiteLanguage } from "@/components/shared/google-translate";
 import {
   type LanguageCode,
   useLanguage,
@@ -17,6 +18,7 @@ export function LangToggle({ className = "" }: { className?: string }) {
     <div
       className={`inline-flex items-center rounded-full border border-vv-line bg-vv-bg p-1 ${className}`}
       aria-label="Select language"
+      translate="no"
     >
       {options.map((option) => {
         const isActive = language === option.code;
@@ -26,7 +28,16 @@ export function LangToggle({ className = "" }: { className?: string }) {
             key={option.code}
             type="button"
             aria-pressed={isActive}
-            onClick={() => setLanguage(option.code)}
+            onClick={() => {
+              if (isActive) return;
+              /*
+                Duita-i: provider (API teacher/package gula school-er nijer
+                lekha Spanish-e ane, navbar-er t() o) ar Google (baki page).
+                Hate lekha Spanish jekhane ache sheta-i thake, baki machine.
+              */
+              setLanguage(option.code);
+              switchSiteLanguage(option.code);
+            }}
             className={`h-8 min-w-10 rounded-full px-3 text-[12px] font-semibold transition-[background,color] ${
               isActive
                 ? "bg-vv-ink text-vv-bg"

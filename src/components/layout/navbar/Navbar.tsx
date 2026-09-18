@@ -94,7 +94,7 @@ export default function Navbar() {
           />
           <div className="flex flex-col min-w-0">
             <span className="text-[16px] font-bold tracking-[-0.02em] leading-tight text-vv-ink">
-              Vida Verde
+              <span translate="no">Vida Verde</span>
             </span>
             <span className="text-[11px] font-medium text-vv-muted leading-tight max-[640px]:hidden">
               Centro de Español
@@ -279,7 +279,7 @@ export default function Navbar() {
                 />
                 <div className="flex flex-col">
                   <span className="text-[16px] font-bold tracking-[-0.02em] leading-tight text-vv-ink">
-                    Vida Verde
+                    <span translate="no">Vida Verde</span>
                   </span>
                   <span className="text-[11px] font-medium text-vv-muted leading-tight">
                     Centro de Español

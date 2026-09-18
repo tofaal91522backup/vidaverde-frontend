@@ -517,3 +517,28 @@ input[type="date"]::-webkit-calendar-picker-indicator:hover {
     0 24px 60px -18px rgb(23 60 92 / 0.28),
     0 2px 6px rgb(23 60 92 / 0.06);
 }
+
+/* Google Translate — navbar-er nijer EN/ES button chalay, tai Google-er
+   dropdown, upore-r banner ar hover tooltip lukano. Banner ta `body`-ke
+   `top: 40px` e thele dey, tai sheta-o ferano. */
+#google_translate_element,
+.goog-te-banner-frame,
+iframe.skiptranslate,
+body > .skiptranslate,
+#goog-gt-tt,
+.goog-te-balloon-frame,
+.goog-tooltip,
+.goog-te-spinner-pos,
+.VIpgJd-ZVi9od-ORHb-OEVmcd,
+.VIpgJd-yAWNEb-L7lbkb {
+  display: none !important;
+}
+
+body {
+  top: 0 !important;
+}
+
+.goog-text-highlight {
+  background: none !important;
+  box-shadow: none !important;
+}

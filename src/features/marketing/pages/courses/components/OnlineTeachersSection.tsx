@@ -83,7 +83,7 @@ function OnlineTeacherCard({ teacher }: { teacher: PublicTeacher }) {
             Teacher
           </div>
           <h3 className="text-[22px] font-semibold leading-tight tracking-[-0.02em] text-vv-ink m-0">
-            {teacher.name}
+            <span translate="no">{teacher.name}</span>
           </h3>
           <div className="mt-1 text-[12px] text-vv-ink-2">{teacher.institute}</div>
         </div>

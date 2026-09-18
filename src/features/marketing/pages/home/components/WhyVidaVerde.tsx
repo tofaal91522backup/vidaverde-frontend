@@ -30,7 +30,7 @@ const WhyVidaVerde = () => {
               <h2 className="mt-4 text-balance text-[clamp(34px,4.6vw,64px)] font-semibold leading-[1.02] tracking-[-0.035em] text-vv-ink">
                 Why{" "}
                 <span className="rounded-sm bg-vv-accent px-2 text-vv-accent-deep">
-                  Vida Verde
+                  <span translate="no">Vida Verde</span>
                 </span>
               </h2>
               <h3 className="mt-5 max-w-[18ch] text-[clamp(22px,2vw,30px)] font-semibold leading-[1.12] tracking-[-0.025em] text-vv-ink">
