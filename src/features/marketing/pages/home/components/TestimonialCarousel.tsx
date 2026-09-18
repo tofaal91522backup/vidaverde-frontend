@@ -92,7 +92,7 @@ function TestimonialCard({
       <article className="flex h-full flex-col gap-4 rounded-[22px] border border-vv-line bg-vv-bg p-7 max-[640px]:p-5">
         <Rating rating={testimonial.rating} />
         <blockquote className="flex-1 text-[16px] tracking-[-0.01em] leading-relaxed m-0 text-pretty text-vv-ink">
-          “{testimonial.outcome}”
+          <span translate="no">“{testimonial.outcome}”</span>
         </blockquote>
 
         <div className="flex items-center gap-3 border-t border-vv-line pt-4">

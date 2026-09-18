@@ -88,7 +88,7 @@ function OnlineTeacherCard({ teacher }: { teacher: PublicTeacher }) {
           <div className="mt-1 text-[12px] text-vv-ink-2">{teacher.institute}</div>
         </div>
         <p className="text-[14px] leading-[1.6] text-vv-ink-2 flex-1 m-0">
-          {teacher.description}
+          <span translate="no">{teacher.description}</span>
         </p>
         {teacher.tags.length > 0 && (
           <div className="flex flex-wrap gap-1.5">

@@ -76,7 +76,8 @@ export function BlogGrid() {
                   : "border-vv-line bg-vv-bg-warm text-vv-ink-2 hover:border-vv-ink",
               )}
             >
-              {pill.label}
+              {/* "All" amader lekha, Google anubad koruk; baki gula API-r */}
+              <span translate={pill.value ? "no" : undefined}>{pill.label}</span>
             </button>
           );
         })}
@@ -119,7 +120,7 @@ export function BlogGrid() {
                 <div className="flex flex-1 flex-col gap-3 p-6">
                   <div className="flex items-center gap-3">
                     <span className="rounded-full bg-vv-accent/20 px-2.5 py-0.5 text-[11px] font-semibold text-vv-accent-deep">
-                      {post.category_label}
+                      <span translate="no">{post.category_label}</span>
                     </span>
                     <span className="text-[11px] text-vv-ink-2">
                       {post.reading_time} min read
@@ -127,11 +128,11 @@ export function BlogGrid() {
                   </div>
 
                   <h2 className="text-[18px] font-semibold leading-tight tracking-[-0.01em] text-vv-ink">
-                    {post.title}
+                    <span translate="no">{post.title}</span>
                   </h2>
 
                   <p className="flex-1 text-[13px] leading-[1.6] text-vv-ink-2">
-                    {post.excerpt}
+                    <span translate="no">{post.excerpt}</span>
                   </p>
 
                   <div className="mt-2 flex items-center justify-between">

@@ -429,14 +429,14 @@ export default function BookRoute() {
                     )}
                     <div className="flex justify-between items-start gap-2">
                       <span className="font-semibold text-vv-ink text-[15px]">
-                        {pkg.title}
+                        <span translate="no">{pkg.title}</span>
                       </span>
                       <span className="text-[18px] font-bold text-vv-ink shrink-0">
                         ${pkg.price}
                       </span>
                     </div>
                     <p className="text-[13px] text-vv-ink-2">
-                      {pkg.description}
+                      <span translate="no">{pkg.description}</span>
                     </p>
                     <span className="text-[12px] text-vv-muted">
                       {pkg.total_classes}{" "}
@@ -465,7 +465,8 @@ export default function BookRoute() {
               Choose Your Teacher &amp; Time
             </h2>
             <p className="text-[13px] text-vv-ink-2 mb-6">
-              Real availability for {selectedPackage?.title ?? "your package"},
+              Real availability for{" "}
+              <span translate="no">{selectedPackage?.title ?? "your package"}</span>,
               shown in your own timezone.
             </p>
 
@@ -793,7 +794,14 @@ export default function BookRoute() {
                 ].map(([label, value]) => (
                   <div key={label} className="flex justify-between">
                     <dt className="text-vv-ink-2">{label}</dt>
-                    <dd className="font-medium text-vv-ink">{value}</dd>
+                    {/* Teacher-er naam, package-er (school-er lekha) naam ar
+                        "Google Meet" — Google-er hate na; tarikh-ta hok */}
+                    <dd
+                      className="font-medium text-vv-ink"
+                      translate={label === "Date" ? undefined : "no"}
+                    >
+                      {value}
+                    </dd>
                   </div>
                 ))}
                 <div className="flex justify-between border-t border-vv-line pt-3 mt-1 text-[16px] font-bold">

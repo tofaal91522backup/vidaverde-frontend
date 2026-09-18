@@ -113,7 +113,7 @@ export function PricingSection() {
                         featured ? "text-vv-accent-deep" : "text-vv-ink-2",
                       )}
                     >
-                      {pkg.title}
+                      <span translate="no">{pkg.title}</span>
                     </div>
                     <div className="flex items-end gap-1">
                       <span className="text-[36px] font-bold leading-none tracking-tight">
@@ -147,7 +147,7 @@ export function PricingSection() {
                       featured ? "text-vv-accent-deep" : "text-vv-ink-2",
                     )}
                   >
-                    {pkg.description}
+                    <span translate="no">{pkg.description}</span>
                   </p>
 
                   <ul className="flex flex-col gap-2 flex-1 list-none p-0 m-0">

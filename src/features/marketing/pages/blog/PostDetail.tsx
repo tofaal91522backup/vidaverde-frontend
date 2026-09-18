@@ -19,7 +19,23 @@ function formatPublishedAt(value: string, lang: string) {
   });
 }
 
-export function PostDetail({ post }: { post: PublicBlogDetail }) {
+type HandWritten = { title: boolean; excerpt: boolean; body: boolean };
+
+/**
+ * `handWritten` — kon field admin nije Spanish-e likheche. Oigulo Google
+ * Translate chhoy na (`translate="no"`); baki gula (English fallback) Google
+ * anubad kore. English version-e dewa hoy na.
+ */
+export function PostDetail({
+  post,
+  handWritten,
+}: {
+  post: PublicBlogDetail;
+  handWritten?: HandWritten;
+}) {
+  const keep = (field: keyof HandWritten) =>
+    handWritten?.[field] ? ("no" as const) : undefined;
+
   const lang = post.lang ?? DEFAULT_PUBLIC_LANGUAGE;
   // Server component — sanitize ekhanei hoy, browser kacha HTML pay na
   const body = sanitizeBlogHtml(post.body);
@@ -60,10 +76,16 @@ export function PostDetail({ post }: { post: PublicBlogDetail }) {
               {formatPublishedAt(post.published_at, lang)}
             </span>
           </div>
-          <h1 className="text-[clamp(36px,5vw,68px)] font-semibold tracking-[-0.03em] leading-none m-0 mt-4 mb-5">
+          <h1
+            translate={keep("title")}
+            className="text-[clamp(36px,5vw,68px)] font-semibold tracking-[-0.03em] leading-none m-0 mt-4 mb-5"
+          >
             {post.title}
           </h1>
-          <p className="text-vv-ink-2 text-[clamp(17px,1.4vw,20px)] leading-normal max-w-[52ch] text-pretty m-0">
+          <p
+            translate={keep("excerpt")}
+            className="text-vv-ink-2 text-[clamp(17px,1.4vw,20px)] leading-normal max-w-[52ch] text-pretty m-0"
+          >
             {post.excerpt}
           </p>
         </Container>
@@ -98,6 +120,7 @@ export function PostDetail({ post }: { post: PublicBlogDetail }) {
             )}
 
             <div
+              translate={keep("body")}
               className="vv-prose"
               // `body` upore sanitizeBlogHtml() diye allowlist-e chhenke newa
               dangerouslySetInnerHTML={{ __html: body }}

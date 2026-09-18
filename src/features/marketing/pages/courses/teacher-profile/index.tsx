@@ -147,7 +147,7 @@ export default function TeacherProfilePage({ id }: { id: string }) {
                 Meet {teacherFirstName}
               </h2>
               <p className="mt-5 text-[17px] leading-[1.75] text-vv-ink-2">
-                {teacher.description}
+                <span translate="no">{teacher.description}</span>
               </p>
             </div>
 

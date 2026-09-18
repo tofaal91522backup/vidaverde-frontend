@@ -95,7 +95,7 @@ function TeacherCard({ teacher }: { teacher: PublicTeacher }) {
         </div>
 
         <p className="flex-1 text-[14px] leading-[1.6] text-vv-ink-2 m-0">
-          {teacher.description}
+          <span translate="no">{teacher.description}</span>
         </p>
 
         {teacher.tags.length > 0 && (
