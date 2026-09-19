@@ -4,6 +4,7 @@ import { usePublicTestimonials } from "@/features/marketing/pages/home/queries/u
 import type { PublicTestimonial } from "@/features/marketing/types/public-api.types";
 import { cn } from "@/lib/utils";
 import { Star } from "lucide-react";
+import { useMemo } from "react";
 import { useLanguage } from "@/providers/language-provider";
 import { initials } from "@/utils/initials";
 
@@ -29,6 +30,17 @@ export function TestimonialCarousel() {
   const { data, isLoading, isError } = usePublicTestimonials({
     lang: language,
   });
+  /*
+    Admin shob testimonial-er Spanish lekhe na; na thakle backend `?lang=es`-eo
+    English pathay. Oita `translate="no"` hole ES-e English-i theke jay. Tai
+    English-ta-o ani (EN-e eki query, alada request na) ar shudhu je quote
+    English theke alada, shetakei Google theke bachai — blog-er moto.
+  */
+  const { data: english } = usePublicTestimonials({ lang: "en" });
+  const englishOutcome = useMemo(
+    () => new Map(english?.map((t) => [t.id, t.outcome])),
+    [english],
+  );
   const testimonials = data ?? [];
   const marqueeTestimonials = [...testimonials, ...testimonials];
 
@@ -69,6 +81,9 @@ export function TestimonialCarousel() {
           <TestimonialCard
             key={`${testimonial.id}-${index}`}
             testimonial={testimonial}
+            ownTranslation={
+              testimonial.outcome !== englishOutcome.get(testimonial.id)
+            }
             aria-hidden={index >= testimonials.length}
           />
         ))}
@@ -79,9 +94,12 @@ export function TestimonialCarousel() {
 
 function TestimonialCard({
   testimonial,
+  ownTranslation,
   "aria-hidden": ariaHidden,
 }: {
   testimonial: PublicTestimonial;
+  /** School-er nijer lekha Spanish — Google jeno na chhoy */
+  ownTranslation: boolean;
   "aria-hidden"?: boolean;
 }) {
   return (
@@ -92,11 +110,17 @@ function TestimonialCard({
       <article className="flex h-full flex-col gap-4 rounded-[22px] border border-vv-line bg-vv-bg p-7 max-[640px]:p-5">
         <Rating rating={testimonial.rating} />
         <blockquote className="flex-1 text-[16px] tracking-[-0.01em] leading-relaxed m-0 text-pretty text-vv-ink">
-          <span translate="no">“{testimonial.outcome}”</span>
+          <span translate={ownTranslation ? "no" : undefined}>
+            “{testimonial.outcome}”
+          </span>
         </blockquote>
 
         <div className="flex items-center gap-3 border-t border-vv-line pt-4">
-          <div className="grid h-10 w-10 shrink-0 place-items-center overflow-hidden rounded-full bg-vv-accent text-[14px] font-bold text-vv-accent-deep">
+          {/* Naam ar initials Google-er na: "Sophie" -> "Sofía", "EM" -> "mi" */}
+          <div
+            translate="no"
+            className="grid h-10 w-10 shrink-0 place-items-center overflow-hidden rounded-full bg-vv-accent text-[14px] font-bold text-vv-accent-deep"
+          >
             {testimonial.photo_url ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img
@@ -109,7 +133,10 @@ function TestimonialCard({
             )}
           </div>
           <div>
-            <div className="text-[14px] font-semibold text-vv-ink">
+            <div
+              translate="no"
+              className="text-[14px] font-semibold text-vv-ink"
+            >
               {testimonial.student_name}
             </div>
             <div className="text-vv-muted text-[11px] mt-0.5">

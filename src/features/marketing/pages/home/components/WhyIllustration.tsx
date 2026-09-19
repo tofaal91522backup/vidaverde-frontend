@@ -1,7 +1,17 @@
+"use client";
+
 import { GraduationCap } from "lucide-react";
 import Image from "next/image";
+import { useLanguage } from "@/providers/language-provider";
 
+/*
+  Badge-er shonkhya gula `translate="no"`. Ekla "50+" pele Google prosongo
+  jane na — "Más de 50 años" banay, jodio label "Países". "25+" hoy "Más de 25
+  años", nicher "Años"-er shathe dui bar. Label gula Google-er hatei thake.
+*/
 function WhyIllustration() {
+  const { language } = useLanguage();
+
   return (
     <div
       className="relative flex items-center justify-center py-10 lg:py-0 min-h-100"
@@ -52,7 +62,10 @@ function WhyIllustration() {
 
         {/* Top */}
         <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-vv-bg rounded-2xl border border-vv-line px-4 py-3 shadow-sm text-center min-w-20.5">
-          <div className="text-[22px] font-bold text-vv-ink tracking-tight leading-none">
+          <div
+            className="text-[22px] font-bold text-vv-ink tracking-tight leading-none"
+            translate="no"
+          >
             1999
           </div>
           <div className="font-code text-[9px] text-vv-muted uppercase tracking-widest mt-1">
@@ -62,8 +75,11 @@ function WhyIllustration() {
 
         {/* Right */}
         <div className="absolute -right-7 top-1/2 -translate-y-1/2 bg-vv-bg-deep rounded-2xl px-4 py-3 shadow-sm text-center min-w-20.5">
-          <div className="text-[22px] font-bold text-vv-bg tracking-tight leading-none">
-            4,700+
+          <div
+            className="text-[22px] font-bold text-vv-bg tracking-tight leading-none"
+            translate="no"
+          >
+            {language === "es" ? "4.700+" : "4,700+"}
           </div>
           <div className="font-code text-[9px] text-vv-bg/55 uppercase tracking-widest mt-1">
             Students
@@ -72,7 +88,10 @@ function WhyIllustration() {
 
         {/* Bottom */}
         <div className="absolute -bottom-5 left-1/2 -translate-x-1/2 bg-vv-accent rounded-2xl px-4 py-3 shadow-sm text-center min-w-20.5">
-          <div className="font-code text-[13px] font-bold text-vv-accent-deep tracking-wider">
+          <div
+            className="font-code text-[13px] font-bold text-vv-accent-deep tracking-wider"
+            translate="no"
+          >
             25+
           </div>
           <div className="font-code text-[9px] text-vv-accent-deep/65 uppercase tracking-widest mt-1">
@@ -82,7 +101,10 @@ function WhyIllustration() {
 
         {/* Left */}
         <div className="absolute -left-7 top-1/2 -translate-y-1/2 bg-vv-bg rounded-2xl border border-vv-line px-4 py-3 shadow-sm text-center min-w-19">
-          <div className="text-[22px] font-bold text-vv-ink tracking-tight leading-none">
+          <div
+            className="text-[22px] font-bold text-vv-ink tracking-tight leading-none"
+            translate="no"
+          >
             50+
           </div>
           <div className="font-code text-[9px] text-vv-muted uppercase tracking-widest mt-1">
