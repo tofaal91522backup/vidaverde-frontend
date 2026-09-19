@@ -1,7 +1,16 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useLanguage, type LanguageCode } from "@/providers/language-provider";
 
+/*
+  `translate="no"` — hero-r typewriter-er moto eta-o 1.6s dhore proti frame-e
+  lekha bodlay. Google majhpothe text node-ta dhore anubad kore bosiye dey
+  ("4.687+"), tarpor React-er update puron node-e jay, tai shonkhya shekhanei
+  atke thake. Ar "25+"-ke Google "Más de 25 años" banay, jeta label-er shathe
+  dui bar "años" hoy. Tai shonkhya Google-er hate na, nijerai format kori:
+  ES-e hazar-er vag "." (4.700+), EN-e "," (4,700+).
+*/
 function parse(raw: string) {
   const m = raw.match(/^([^0-9]*)([0-9,]+)([^0-9]*)$/);
   if (!m) return null;
@@ -9,8 +18,11 @@ function parse(raw: string) {
   return isNaN(num) ? null : { num, pre: m[1], suf: m[3], hasComma: m[2].includes(",") };
 }
 
-function fmt(n: number, hasComma: boolean) {
-  return hasComma ? n.toLocaleString("en-US") : String(n);
+function fmt(n: number, hasComma: boolean, language: LanguageCode) {
+  if (!hasComma) return String(n);
+  // es-ES 4 ongker shonkhya group kore na ("4700"), tai haate "." boshai
+  const grouped = n.toLocaleString("en-US");
+  return language === "es" ? grouped.replace(/,/g, ".") : grouped;
 }
 
 export function CountUpStat({
@@ -20,12 +32,11 @@ export function CountUpStat({
   value: string;
   className?: string;
 }) {
+  const { language } = useLanguage();
   const parsed = parse(value);
   const ref = useRef<HTMLSpanElement>(null);
   const started = useRef(false);
-  const [display, setDisplay] = useState(
-    parsed ? `${parsed.pre}0${parsed.suf}` : value
-  );
+  const [current, setCurrent] = useState(0);
 
   useEffect(() => {
     if (!parsed || !ref.current) return;
@@ -42,9 +53,7 @@ export function CountUpStat({
         function tick(now: number) {
           const p = Math.min((now - t0) / duration, 1);
           const eased = 1 - Math.pow(1 - p, 3);
-          setDisplay(
-            `${parsed!.pre}${fmt(Math.round(eased * target), parsed!.hasComma)}${parsed!.suf}`
-          );
+          setCurrent(Math.round(eased * target));
           if (p < 1) requestAnimationFrame(tick);
         }
 
@@ -57,8 +66,12 @@ export function CountUpStat({
     return () => observer.disconnect();
   }, []);
 
+  const display = parsed
+    ? `${parsed.pre}${fmt(current, parsed.hasComma, language)}${parsed.suf}`
+    : value;
+
   return (
-    <span ref={ref} className={className}>
+    <span ref={ref} translate="no" className={className}>
       {display}
     </span>
   );
