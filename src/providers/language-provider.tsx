@@ -36,6 +36,9 @@ export type TranslationKey =
   | "nav.bookShort"
   | "nav.dashboard"
   | "nav.more"
+  | "nav.login"
+  | "nav.signup"
+  | "nav.signin"
   | "cta.bookFirstLesson"
   | "language.label"
   | "footer.description"
@@ -75,6 +78,9 @@ const translations: Record<LanguageCode, Record<TranslationKey, string>> = {
     "nav.bookShort": "Book",
     "nav.dashboard": "Dashboard",
     "nav.more": "More",
+    "nav.login": "Login",
+    "nav.signup": "Sign up",
+    "nav.signin": "Sign in",
     "cta.bookFirstLesson": "Book Your First Lesson",
     "language.label": "Language",
     "footer.description":
@@ -114,6 +120,10 @@ const translations: Record<LanguageCode, Record<TranslationKey, string>> = {
     "nav.bookShort": "Reservar",
     "nav.dashboard": "Panel",
     "nav.more": "Más",
+    // Google "Acceso" / "Inscribirse" likhto, ar deri-te ashle English-i rakhto
+    "nav.login": "Iniciar sesión",
+    "nav.signup": "Registrarse",
+    "nav.signin": "Iniciar sesión",
     "cta.bookFirstLesson": "Reserva tu Primera Clase",
     "language.label": "Idioma",
     "footer.description":

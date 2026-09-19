@@ -4,10 +4,12 @@ import { Container } from "@/components/shared/Container";
 import { ArrowLeft, PartyPopper, Star } from "lucide-react";
 import {
   orderPublicPackages,
+  useOwnPackageCopy,
   usePublicPackages,
 } from "@/features/marketing/pages/courses/queries/use-public-packages";
 import { usePackageTeachers } from "@/features/marketing/pages/book/queries/use-package-teachers";
 import { Combobox } from "@/components/shared/form-related/combobox";
+import { HandTranslated } from "@/components/shared/by-language";
 import { readNavbarUser } from "@/features/auth/utils/session";
 import { useBookingPrefill } from "@/features/marketing/pages/book/queries/use-booking-prefill";
 import { SlotPicker } from "@/features/marketing/pages/book/components/SlotPicker";
@@ -34,6 +36,7 @@ import {
   splitPhone,
 } from "@/constants/countries";
 import { cn } from "@/lib/utils";
+import { TeacherRoleLabel } from "@/features/marketing/components/teacher-i18n";
 import { useLanguage } from "@/providers/language-provider";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
@@ -55,6 +58,11 @@ const STEPS = [
   "Payment",
 ] as const;
 
+/* Google "Profesor y tiempo" dito — "tiempo" mane somoy-er poriman/abhawa, shidule na */
+const STEP_LABEL_ES: Partial<Record<(typeof STEPS)[number], string>> = {
+  "Teacher & Time": "Profesor y horario",
+};
+
 const LAST_STEP = STEPS.length - 1;
 
 /** Slot na pele visitor nijei window barate pare. */
@@ -69,10 +77,10 @@ function todayInput() {
 }
 
 /** Teacher card-er "Next available" badge — chhoto kore, shudhu din. */
-function formatSlotDay(isoLocal: string) {
+function formatSlotDay(isoLocal: string, locale = "en-GB") {
   const date = new Date(isoLocal?.slice(0, 19) ?? "");
   if (Number.isNaN(date.getTime())) return "";
-  return date.toLocaleDateString("en-GB", {
+  return date.toLocaleDateString(locale, {
     weekday: "short",
     day: "numeric",
     month: "short",
@@ -113,6 +121,7 @@ export default function BookRoute() {
     () => orderPublicPackages(packageData ?? []),
     [packageData],
   );
+  const ownCopy = useOwnPackageCopy();
   const [step, setStep] = useState(0);
   const [selectedTeacherId, setSelectedTeacherId] = useState<string | null>(
     preselectedTeacher,
@@ -340,15 +349,6 @@ export default function BookRoute() {
             </dl>
           </div>
 
-          <a
-            href={booking.meet_link || "#"}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] leading-none py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px mt-6"
-          >
-            Join on Google Meet{" "}
-            <ChevronRight className="h-4 w-4 shrink-0 translate-y-0.5" />
-          </a>
         </Container>
       </section>
     );
@@ -379,7 +379,12 @@ export default function BookRoute() {
                       : "text-vv-ink-2",
                 )}
               >
-                <span>{i + 1}.</span> {label}
+                <span>{i + 1}.</span>{" "}
+                {language === "es" && STEP_LABEL_ES[label] ? (
+                  <span translate="no">{STEP_LABEL_ES[label]}</span>
+                ) : (
+                  label
+                )}
               </div>
             ))}
           </div>
@@ -429,14 +434,24 @@ export default function BookRoute() {
                     )}
                     <div className="flex justify-between items-start gap-2">
                       <span className="font-semibold text-vv-ink text-[15px]">
-                        <span translate="no">{pkg.title}</span>
+                        <span
+                          translate={ownCopy(pkg, "title") ? "no" : undefined}
+                        >
+                          {pkg.title}
+                        </span>
                       </span>
                       <span className="text-[18px] font-bold text-vv-ink shrink-0">
                         ${pkg.price}
                       </span>
                     </div>
                     <p className="text-[13px] text-vv-ink-2">
-                      <span translate="no">{pkg.description}</span>
+                      <span
+                        translate={
+                          ownCopy(pkg, "description") ? "no" : undefined
+                        }
+                      >
+                        {pkg.description}
+                      </span>
                     </p>
                     <span className="text-[12px] text-vv-muted">
                       {pkg.total_classes}{" "}
@@ -466,7 +481,14 @@ export default function BookRoute() {
             </h2>
             <p className="text-[13px] text-vv-ink-2 mb-6">
               Real availability for{" "}
-              <span translate="no">{selectedPackage?.title ?? "your package"}</span>,
+              <span
+                translate={
+                  ownCopy(selectedPackage, "title") ? "no" : undefined
+                }
+              >
+                {selectedPackage?.title ?? "your package"}
+              </span>
+              ,
               shown in your own timezone.
             </p>
 
@@ -494,7 +516,10 @@ export default function BookRoute() {
                   htmlFor="book-window"
                   className="text-[12px] font-medium uppercase tracking-wide text-vv-ink-2"
                 >
-                  Window
+                  {/* Google "Ventana" — ashol jinish-ta koto din-er */}
+                  <span translate="no">
+                    {language === "es" ? "Periodo" : "Window"}
+                  </span>
                 </label>
                 <select
                   id="book-window"
@@ -586,11 +611,20 @@ export default function BookRoute() {
                         {/* Backend puro window-er prothom khali slot diye dey —
                             tai eta hisheb kore ber korte hoy na */}
                         {teacher.next_available ? (
-                          <div className="text-[12px] text-vv-ink-2">
-                            Next available:{" "}
-                            {formatSlotDay(teacher.next_available.start_local)}{" "}
+                          /* ES hate lekha: Google "slots"-ke "plazas" (ashon)
+                             banay, ar tarikh-er por "," boshay */
+                          <div
+                            className="text-[12px] text-vv-ink-2"
+                            translate={language === "es" ? "no" : undefined}
+                          >
+                            {language === "es" ? "Próximo: " : "Next available: "}
+                            {formatSlotDay(
+                              teacher.next_available.start_local,
+                              language === "es" ? "es-ES" : "en-GB",
+                            )}{" "}
                             {teacher.next_available.label} ·{" "}
-                            {teacher.slot_count} slots
+                            {teacher.slot_count}{" "}
+                            {language === "es" ? "horarios" : "slots"}
                           </div>
                         ) : (
                           <div className="text-[12px] text-vv-ink-2">
@@ -733,7 +767,13 @@ export default function BookRoute() {
                   value={details.country}
                   onChange={(next) => setDetail("country", next)}
                   options={COUNTRY_OPTIONS}
-                  placeholder="Select your country"
+                  // Google "Seleccione su país" (usted); baki flow "tú"
+                  placeholder={
+                    <HandTranslated
+                      en="Select your country"
+                      es="Selecciona tu país"
+                    />
+                  }
                   searchPlaceholder="Search country..."
                   triggerClassName="h-auto rounded-lg border-vv-line bg-vv-bg-warm px-4 py-3 text-[15px] text-vv-ink hover:bg-vv-bg-warm focus-visible:border-vv-accent"
                 />
@@ -787,18 +827,33 @@ export default function BookRoute() {
               <h3 className="font-semibold text-vv-ink mb-3">Order Summary</h3>
               <dl className="flex flex-col gap-2 text-[14px]">
                 {[
-                  ["Teacher", selectedTeacher?.name],
-                  ["Package", selectedPackage?.title],
-                  ["Date", `${slotDateLabel} at ${selectedSlot?.label ?? ""}`],
-                  ["Platform", "Google Meet"],
-                ].map(([label, value]) => (
-                  <div key={label} className="flex justify-between">
-                    <dt className="text-vv-ink-2">{label}</dt>
-                    {/* Teacher-er naam, package-er (school-er lekha) naam ar
+                  [
+                    "Teacher",
+                    selectedTeacher?.name,
+                    true,
+                  ],
+                  [
+                    "Package",
+                    selectedPackage?.title,
+                    ownCopy(selectedPackage, "title"),
+                  ],
+                  [
+                    "Date",
+                    `${slotDateLabel} at ${selectedSlot?.label ?? ""}`,
+                    false,
+                  ],
+                  ["Platform", "Google Meet", true],
+                ].map(([label, value, keep]) => (
+                  <div key={String(label)} className="flex justify-between">
+                    <dt className="text-vv-ink-2">
+                      {/* Google "Maestro" — Docente dui lingei chole */}
+                      {label === "Teacher" ? <TeacherRoleLabel /> : label}
+                    </dt>
+                    {/* Teacher-er naam, school-er nijer lekha package naam ar
                         "Google Meet" — Google-er hate na; tarikh-ta hok */}
                     <dd
                       className="font-medium text-vv-ink"
-                      translate={label === "Date" ? undefined : "no"}
+                      translate={keep ? "no" : undefined}
                     >
                       {value}
                     </dd>

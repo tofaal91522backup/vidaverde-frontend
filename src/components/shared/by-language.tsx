@@ -20,3 +20,16 @@ export function ByLanguage({
   const { language } = useLanguage();
   return <>{language === "es" ? es : en}</>;
 }
+
+/**
+ * Hate lekha Spanish, Google Translate-er bahire. Jekhane Google eka tukro
+ * prosongo chhara bhul kore ("From" -> "De", "usted" mishe jay) sheikhane.
+ * EN-e English-i dekhay.
+ */
+export function HandTranslated({ en, es }: { en: string; es: string }) {
+  return (
+    <span translate="no">
+      <ByLanguage en={en} es={es} />
+    </span>
+  );
+}

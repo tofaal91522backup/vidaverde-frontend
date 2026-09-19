@@ -1,6 +1,7 @@
 import DashboardNavbar from "@/components/layout/navbar/dashboard-navbar";
 import type { DashboardUser } from "@/components/layout/navbar/dashboard-user-menu";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
+import { NoTranslateDocument } from "@/components/shared/no-translate-document";
 
 
 export default function DashboardShell({
@@ -24,6 +25,8 @@ export default function DashboardShell({
     //   } as React.CSSProperties
     // }
     >
+      {/* Dashboard English-i — Spanish site theke ashleo Google anubad korbe na */}
+      <NoTranslateDocument />
       {sidebar}
 
       {/* `dashboard-scope` — globals.css-er `section { padding: 96px 0 }` marketing-er

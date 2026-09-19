@@ -2,12 +2,15 @@ import { cn } from "@/lib/utils";
 import type { Activity } from "@/features/marketing/types";
 import { ArrowUpRight } from "lucide-react";
 import Image from "next/image";
+import { ByLanguage } from "@/components/shared/by-language";
+import { Es, priceEs } from "./es";
 
 type ActivityCardProps = {
   activity: Activity;
 };
 
 export function ActivityCard({ activity }: ActivityCardProps) {
+  const pricePair = priceEs(activity.price, activity.priceNote);
   return (
     <article
       className={cn(
@@ -27,9 +30,11 @@ export function ActivityCard({ activity }: ActivityCardProps) {
       <div className="absolute inset-x-0 bottom-0 flex flex-col gap-2.5 p-5 max-[640px]:p-4">
         <div className="flex items-center gap-2.5">
           <span className="font-code text-[10px] font-semibold uppercase tracking-widest text-vv-accent">
-            {activity.tag}
+            <Es text={activity.tag} />
           </span>
-          <span className="font-code text-white/55 text-[11px]">{activity.duration}</span>
+          <span className="font-code text-white/55 text-[11px]">
+            <Es text={activity.duration} />
+          </span>
         </div>
         <h3 className="text-white text-[20px] font-semibold tracking-[-0.01em] leading-tight m-0 max-[640px]:text-[17px]">
           {activity.title}
@@ -39,10 +44,35 @@ export function ActivityCard({ activity }: ActivityCardProps) {
         </p>
         <div className="flex items-center justify-between mt-1">
           <div className={cn("text-[15px] font-semibold", activity.included ? "text-vv-accent" : "text-white")}>
-            <b>{activity.price}</b>
-            {activity.priceNote ? (
-              <span className="font-normal text-[13px] ml-1 text-white/60">{activity.priceNote}</span>
-            ) : null}
+            {pricePair ? (
+              <span translate="no">
+                <ByLanguage
+                  en={
+                    <>
+                      <b>{activity.price}</b>
+                      <span className="font-normal text-[13px] ml-1 text-white/60">
+                        {activity.priceNote}
+                      </span>
+                    </>
+                  }
+                  es={
+                    <>
+                      <b>{pricePair[0]}</b>
+                      <span className="font-normal text-[13px] ml-1 text-white/60">
+                        {pricePair[1]}
+                      </span>
+                    </>
+                  }
+                />
+              </span>
+            ) : (
+              <>
+                <b>{activity.price}</b>
+                {activity.priceNote ? (
+                  <span className="font-normal text-[13px] ml-1 text-white/60">{activity.priceNote}</span>
+                ) : null}
+              </>
+            )}
           </div>
           <div className="grid h-9 w-9 place-items-center rounded-full border border-white/24 bg-white/10 backdrop-blur-sm text-white">
             <ArrowUpRight className="h-4 w-4" aria-hidden="true" />

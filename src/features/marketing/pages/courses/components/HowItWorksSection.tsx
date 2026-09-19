@@ -4,6 +4,7 @@ import { Container } from "@/components/shared/Container";
 import { cn } from "@/lib/utils";
 import { ArrowRight } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useLanguage } from "@/providers/language-provider";
 import { howItWorksSteps } from "../data/online-classes.data";
 
 const STEP_DURATION = 2500;
@@ -11,6 +12,7 @@ const STEP_DURATION = 2500;
 export function HowItWorksSection() {
   const [activeStep, setActiveStep] = useState(0);
   const [paused, setPaused] = useState(false);
+  const { language } = useLanguage();
 
   useEffect(() => {
     if (paused) return;
@@ -79,7 +81,9 @@ export function HowItWorksSection() {
 
                 <div className="flex flex-col gap-2 mt-auto">
                   <h3 className="text-[18px] font-semibold leading-snug tracking-[-0.02em] text-vv-ink m-0">
-                    {step.label}
+                    <span translate="no">
+                      {language === "es" ? step.labelEs : step.label}
+                    </span>
                   </h3>
                   <p className="text-[14px] leading-[1.65] text-vv-ink-2 m-0">
                     {step.description}

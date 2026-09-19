@@ -4,6 +4,8 @@ import { weeklySchedule } from "./data/marketing.data";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
+import { ByLanguage } from "@/components/shared/by-language";
+import { Es } from "./components/es";
 
 const btnPrimary =
   "inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] leading-none py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px";
@@ -20,10 +22,27 @@ export default function ActivitiesRoute() {
           <div className="font-code text-vv-muted text-[12px] tracking-[0.06em] mb-6">
             Home <span className="mx-1 text-vv-line-2">/</span> Activities
           </div>
-          <h1 className="text-[clamp(36px,5vw,68px)] font-semibold tracking-[-0.03em] leading-none m-0 mb-5">
-            Cultural <em className="not-italic text-vv-accent">Spanish</em>
-            <br />
-            activities.
+          {/* Google "actividades culturales españolas" (= Spain-er) likhto */}
+          <h1
+            className="text-[clamp(36px,5vw,68px)] font-semibold tracking-[-0.03em] leading-none m-0 mb-5"
+            translate="no"
+          >
+            <ByLanguage
+              en={
+                <>
+                  Cultural <em className="not-italic text-vv-accent">Spanish</em>
+                  <br />
+                  activities.
+                </>
+              }
+              es={
+                <>
+                  Actividades culturales
+                  <br />
+                  <em className="not-italic text-vv-accent">en español</em>.
+                </>
+              }
+            />
           </h1>
           <p className="text-vv-ink-2 text-[clamp(17px,1.4vw,20px)] leading-normal max-w-[52ch] text-pretty m-0">
             Over more than 20 years of helping students learn Spanish in Quito,
@@ -57,7 +76,9 @@ export default function ActivitiesRoute() {
             {/* Header row */}
             <div className="grid grid-cols-[80px_110px_1fr_100px] bg-vv-ink text-vv-bg px-6 py-3 text-[11px] font-code font-semibold tracking-widest uppercase max-[640px]:grid-cols-[60px_1fr_80px]">
               <div>Day</div>
-              <div className="max-[640px]:hidden">Time</div>
+              <div className="max-[640px]:hidden">
+                <Es text="Time" />
+              </div>
               <div>Activity</div>
               <div>Type</div>
             </div>
@@ -70,10 +91,10 @@ export default function ActivitiesRoute() {
                 )}
               >
                 <div className="font-code font-semibold text-[12px] text-vv-muted uppercase tracking-[0.08em]">
-                  {item.day}
+                  <Es text={item.day} />
                 </div>
                 <div className="text-vv-ink-2 text-[13px] font-code max-[640px]:hidden">
-                  {item.time}
+                  <Es text={item.time} />
                 </div>
                 <div className="text-vv-ink">
                   <b className="font-semibold">{item.title}</b>
@@ -116,7 +137,7 @@ export default function ActivitiesRoute() {
               cultural Spanish classes around 1:30 pm.
             </p>
             <Link href="/#book" className={btnPrimary}>
-              Plan a custom track{" "}
+              <Es text="Plan a custom track" />{" "}
               <ChevronRight className="h-4 w-4 shrink-0 translate-y-0.5" />
             </Link>
           </div>

@@ -3,6 +3,12 @@
 import { Container } from "@/components/shared/Container";
 import { usePublicTeachers } from "@/features/marketing/pages/courses/queries/use-public-teachers";
 import type { PublicTeacher } from "@/features/marketing/types/public-api.types";
+import {
+  BookWithLabel,
+  TeacherRoleLabel,
+  TeacherTag,
+  useOwnSpanishBio,
+} from "@/features/marketing/components/teacher-i18n";
 import { useLanguage } from "@/providers/language-provider";
 import { ChevronRight, UserRound } from "lucide-react";
 import Link from "next/link";
@@ -67,6 +73,7 @@ export function TeachersSection() {
 
 function TeacherCard({ teacher }: { teacher: PublicTeacher }) {
   const teacherFirstName = firstName(teacher.name);
+  const ownBio = useOwnSpanishBio()(teacher.id, teacher.description);
 
   return (
     <article className="group grid overflow-hidden rounded-[22px] border border-vv-line bg-vv-bg transition duration-200 hover:-translate-y-0.5 hover:border-vv-accent md:grid-cols-[220px_1fr]">
@@ -86,16 +93,21 @@ function TeacherCard({ teacher }: { teacher: PublicTeacher }) {
       <div className="flex min-h-70 flex-col gap-3 p-6 md:p-7">
         <div>
           <div className="font-code text-vv-muted text-[11px] font-medium tracking-[0.14em] uppercase mb-1">
-            Teacher
+            <TeacherRoleLabel />
           </div>
           <h3 className="text-[22px] font-semibold leading-[1.1] tracking-[-0.02em] text-vv-ink m-0">
             <span translate="no">{teacher.name}</span>
           </h3>
-          <div className="mt-1 text-[12px] text-vv-ink-2">{teacher.institute}</div>
+          {/* Proshthaner naam — Google chhoto hater kore dito */}
+          <div translate="no" className="mt-1 text-[12px] text-vv-ink-2">
+            {teacher.institute}
+          </div>
         </div>
 
         <p className="flex-1 text-[14px] leading-[1.6] text-vv-ink-2 m-0">
-          <span translate="no">{teacher.description}</span>
+          <span translate={ownBio ? "no" : undefined}>
+            {teacher.description}
+          </span>
         </p>
 
         {teacher.tags.length > 0 && (
@@ -105,7 +117,7 @@ function TeacherCard({ teacher }: { teacher: PublicTeacher }) {
                 key={tag}
                 className="rounded-full border border-vv-line bg-vv-bg-warm px-2.5 py-0.5 text-[11px] font-medium text-vv-ink-2"
               >
-                {tag}
+                <TeacherTag tag={tag} />
               </span>
             ))}
           </div>
@@ -129,7 +141,7 @@ function TeacherCard({ teacher }: { teacher: PublicTeacher }) {
             href={`/online-classes/teachers/${encodeURIComponent(teacher.id)}#packages`}
             className="flex-1 inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[13px] font-semibold tracking-[-0.005em] leading-none py-2.25 px-3.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px text-center"
           >
-            Book with {teacherFirstName}
+            <BookWithLabel name={teacherFirstName} />
             <ChevronRight className="h-4 w-4 shrink-0 translate-y-0.5" />
           </Link>
           <Link

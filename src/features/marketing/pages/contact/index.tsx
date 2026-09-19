@@ -4,11 +4,15 @@ import { Container } from "@/components/shared/Container";
 import { ChevronRight, Mail, MapPin, MessageCircle } from "lucide-react";
 import Link from "next/link";
 import { ContactForm } from "./components/contact-form";
+import { useLanguage } from "@/providers/language-provider";
 
 const WHATSAPP_HREF =
   "https://wa.me/593998037473?text=Hi%2C+I%27d+like+to+find+out+more+about+Vida+Verde%27s+Spanish+classes.";
 
 export default function ContactRoute({ programme }: { programme?: string }) {
+  const { language } = useLanguage();
+  // SVG-r <text> Google anubad kore na — card-er lekha hate
+  const svgText = (en: string, es: string) => (language === "es" ? es : en);
 
   return (
     <>
@@ -135,7 +139,7 @@ export default function ContactRoute({ programme }: { programme?: string }) {
                   fontWeight="600"
                   fill="#1f3d1a"
                 >
-                  Replies fast
+                  {svgText("Replies fast", "Muy rápido")}
                 </text>
 
                 {/* Card 2. Email */}
@@ -177,7 +181,7 @@ export default function ContactRoute({ programme }: { programme?: string }) {
                   fontWeight="700"
                   fill="#1f3d1a"
                 >
-                  Email
+                  {svgText("Email", "Correo")}
                 </text>
                 <text
                   x="153"
@@ -201,7 +205,7 @@ export default function ContactRoute({ programme }: { programme?: string }) {
                   fontWeight="600"
                   fill="white"
                 >
-                  24hr response
+                  {svgText("24hr response", "En 24 horas")}
                 </text>
 
                 {/* Card 3. Location */}
@@ -229,7 +233,7 @@ export default function ContactRoute({ programme }: { programme?: string }) {
                   fontWeight="700"
                   fill="white"
                 >
-                  Location
+                  {svgText("Location", "Ubicación")}
                 </text>
                 <text
                   x="262"
@@ -264,7 +268,7 @@ export default function ContactRoute({ programme }: { programme?: string }) {
                   fontWeight="600"
                   fill="#1f3d1a"
                 >
-                  Online classes
+                  {svgText("Online classes", "Clases en línea")}
                 </text>
 
                 {/* Scattered dots */}

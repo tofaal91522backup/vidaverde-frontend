@@ -1,5 +1,6 @@
 "use client";
 
+import { HandTranslated } from "@/components/shared/by-language";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -62,7 +63,10 @@ const ResetPasswordForm = ({ uid, token }: { uid: string; token: string }) => {
 
           <div className="flex flex-col gap-2">
             <label className="text-sm font-medium text-vv-ink">
-              Confirm password
+              <HandTranslated
+                en="Confirm password"
+                es="Confirmar contraseña"
+              />
             </label>
             <PasswordInput
               required

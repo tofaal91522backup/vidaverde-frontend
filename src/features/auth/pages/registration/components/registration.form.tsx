@@ -1,5 +1,6 @@
 "use client";
 
+import { HandTranslated } from "@/components/shared/by-language";
 import { Button } from "@/components/ui/button";
 import { GoogleSignInButton } from "@/features/auth/components/google-sign-in-button";
 import { Input } from "@/components/ui/input";
@@ -26,7 +27,8 @@ function Field({
   optional,
   children,
 }: {
-  label: string;
+  /** Node — kichu label hate lekha Spanish (`HandTranslated`) */
+  label: React.ReactNode;
   error?: string[];
   optional?: boolean;
   children: React.ReactNode;
@@ -101,7 +103,11 @@ export default function RegistrationForm() {
       <input ref={timezoneRef} type="hidden" name="timezone" />
 
       <div className="grid gap-4 sm:grid-cols-2">
-        <Field label="First name" error={state.errors.first_name}>
+        {/* Google "Nombre de pila" likhto */}
+        <Field
+          label={<HandTranslated en="First name" es="Nombre" />}
+          error={state.errors.first_name}
+        >
           <Input name="first_name" type="text" required placeholder="Nueva" />
         </Field>
 
@@ -133,7 +139,12 @@ export default function RegistrationForm() {
           />
         </Field>
 
-        <Field label="Confirm password" error={state.errors.password2}>
+        <Field
+          label={
+            <HandTranslated en="Confirm password" es="Confirmar contraseña" />
+          }
+          error={state.errors.password2}
+        >
           <PasswordInput
             name="password2"
             required
@@ -171,7 +182,13 @@ export default function RegistrationForm() {
             value={country}
             onChange={setCountry}
             options={COUNTRY_OPTIONS}
-            placeholder="Select your country"
+            // Google "Seleccione su país" (usted); baki form "tú"
+            placeholder={
+              <HandTranslated
+                en="Select your country"
+                es="Selecciona tu país"
+              />
+            }
             searchPlaceholder="Search country..."
           />
         </Field>

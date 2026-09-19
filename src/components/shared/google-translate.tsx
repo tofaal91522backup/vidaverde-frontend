@@ -4,7 +4,8 @@ import {
   getStoredLanguage,
   type LanguageCode,
 } from "@/providers/language-provider";
-import { useEffect } from "react";
+import { usePathname } from "next/navigation";
+import { useEffect, useLayoutEffect } from "react";
 
 /*
   Site-er EN/ES switch — purono vidaverde.com (WordPress) jemon korto, Google
@@ -104,6 +105,134 @@ export function switchSiteLanguage(code: LanguageCode) {
   combo.dispatchEvent(new Event("change"));
 }
 
+// ── re-scan nudge ────────────────────────────────────────────────────────────
+/*
+  Booking-e "Continue" chaple notun step English-ei theke jeto — Google-er
+  MutationObserver cholche (hat diye bosano notun node anubad kore), kintu
+  React-er kichu insert se dhore na; kono karone batch-ta badh pore. Porer
+  je kono DOM bodol-e se abar puro page scan kore, tokhon oi step-o anubad hoy.
+
+  Tai: Spanish chalu thakle React-er bodol dekhle ektu por body-te ekta khali
+  span dhukiye shoriye dei — oituku-i Google-ke abar scan korte bole. Nijer
+  nudge, Google-er nijer <font>, ar `translate="no"`-er bhetorer bodol
+  (typewriter, count-up) dhora hoy na, na hole eta thamto na.
+*/
+const NUDGE_ATTR = "data-vv-translate-nudge";
+const NUDGE_DELAY = 300;
+
+function isReactChange(record: MutationRecord) {
+  const el =
+    record.target.nodeType === Node.ELEMENT_NODE
+      ? (record.target as Element)
+      : record.target.parentElement;
+  if (!el) return false;
+  if (el.closest(`[translate="no"], font, .skiptranslate, #${ELEMENT_ID}`)) {
+    return false;
+  }
+  if (record.type === "characterData") return true;
+
+  return Array.from(record.addedNodes).some((node) => {
+    if (node.nodeType === Node.TEXT_NODE) return !!node.textContent?.trim();
+    if (node.nodeType !== Node.ELEMENT_NODE) return false;
+    const added = node as Element;
+    return added.nodeName !== "FONT" && !added.hasAttribute(NUDGE_ATTR);
+  });
+}
+
+/** Body-te khali span dhukiye shoriye dei — Google puro page abar scan kore */
+function nudgeGoogle() {
+  const nudge = document.createElement("span");
+  nudge.setAttribute(NUDGE_ATTR, "");
+  document.body.appendChild(nudge);
+  nudge.remove();
+}
+
+function watchForMissedTranslations() {
+  let timer: number | undefined;
+
+  const observer = new MutationObserver((records) => {
+    if (timer !== undefined) return;
+    if (!document.documentElement.classList.contains("translated-ltr")) return;
+    if (!records.some(isReactChange)) return;
+
+    // Throttle, debounce na — typewriter-er moto chhoto bodol thamle-i na,
+    // proti 300ms-e ekbar
+    timer = window.setTimeout(() => {
+      timer = undefined;
+      nudgeGoogle();
+    }, NUDGE_DELAY);
+  });
+
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true,
+    characterData: true,
+  });
+
+  return () => {
+    observer.disconnect();
+    window.clearTimeout(timer);
+  };
+}
+
+// ── curtain: English jhilik na dekhano ──────────────────────────────────────
+/*
+  Server shob shomoy English pathay, Google browser-e pore anubad kore — tai
+  Spanish visitor notun page-e ~0.5–1s English dekhto (full load), link-e
+  click-e ~0.2s. Tai Spanish hole anubad shesh na howa porjonto page lukano:
+  - full load: root layout-er <head> script `vv-translating` boshay (paint-er
+    agei); ekhane shorai. Oi script-er nijer 2.5s failsafe ache.
+  - link click: `vv-translating-main` — shudhu <main>, navbar age-i anubad kora.
+
+  "Shesh" mane: Google `translated-ltr` boshiyeche, ar <font> dhukano 250ms
+  dhore themeche. Kono <font>-i na ashle (sob lekha `translate="no"` ba cache)
+  ektu por khule dei. Google block/offline hole failsafe-e English dekhay —
+  khali page kokhono na.
+*/
+const CURTAIN_CLASSES = ["vv-translating", "vv-translating-main"];
+// Google anubad batch-e pathay (viewport age, baki pore) — 120ms-e majh-khane
+// khule jeto, /blog-e heading English dekha jeto
+const SETTLE_MS = 250;
+const NO_FONT_MS = 600;
+
+function revealWhenTranslated(maxWait: number) {
+  const root = document.documentElement;
+  const start = performance.now();
+  let lastFont = 0;
+  // `translated-ltr` Google <font> dhokanor AGE boshay — "kichu-i anubad nai"
+  // sheta theke gunte hoy, page load theke na, na hole shuru-r agei khule jay
+  let translatedAt = 0;
+
+  const fontObserver = new MutationObserver((records) => {
+    for (const record of records) {
+      for (const node of Array.from(record.addedNodes)) {
+        if (node.nodeName === "FONT") lastFont = performance.now();
+      }
+    }
+  });
+  fontObserver.observe(document.body, { childList: true, subtree: true });
+
+  const reveal = () => {
+    fontObserver.disconnect();
+    window.clearInterval(poll);
+    root.classList.remove(...CURTAIN_CLASSES);
+  };
+
+  const poll = window.setInterval(() => {
+    const now = performance.now();
+    const translated = root.classList.contains("translated-ltr");
+    if (translated && !translatedAt) translatedAt = now;
+    const settled = lastFont > 0 && now - lastFont > SETTLE_MS;
+    const nothingToTranslate =
+      lastFont === 0 && translatedAt > 0 && now - translatedAt > NO_FONT_MS;
+    if ((translated && (settled || nothingToTranslate)) || now - start > maxWait) {
+      reveal();
+    }
+  }, 40);
+
+  return reveal;
+}
+
 // ── widget ───────────────────────────────────────────────────────────────────
 type TranslateWindow = Window & {
   googleTranslateElementInit?: () => void;
@@ -122,6 +251,30 @@ type TranslateWindow = Window & {
  * English-i thake.
  */
 export function GoogleTranslate() {
+  const pathname = usePathname();
+
+  useEffect(() => watchForMissedTranslations(), []);
+
+  /*
+    Layout effect — notun page paint howar AGE chole, tai English ekbaro dekha
+    jay na. Full load-e class head script age-i boshiyeche; link click-e
+    (Google age thekei chalu, `translated-ltr` ache) ekhane boshai.
+  */
+  useLayoutEffect(() => {
+    if (getStoredLanguage() !== "es") return;
+    const root = document.documentElement;
+    const fullLoad = root.classList.contains("vv-translating");
+
+    if (!fullLoad) {
+      if (!root.classList.contains("translated-ltr")) return;
+      root.classList.add("vv-translating-main");
+      nudgeGoogle();
+    }
+
+    const reveal = revealWhenTranslated(fullLoad ? 2500 : 1500);
+    return reveal;
+  }, [pathname]);
+
   useEffect(() => {
     /*
       `useLanguage()` na — hydration-er prothom commit-e provider ichchha kore

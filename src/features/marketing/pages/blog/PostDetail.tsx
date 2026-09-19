@@ -1,3 +1,4 @@
+import { ByLanguage } from "@/components/shared/by-language";
 import { Container } from "@/components/shared/Container";
 import { DEFAULT_PUBLIC_LANGUAGE } from "@/features/marketing/constants/public-api";
 import type { PublicBlogDetail } from "@/features/marketing/types/public-api.types";
@@ -6,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { sanitizeBlogHtml } from "./utils/sanitize-blog-html";
+import { BLOG_CATEGORY_ES } from "./utils/blog-category-es";
 
 function formatPublishedAt(value: string, lang: string) {
   if (!value) return "";
@@ -37,6 +39,11 @@ export function PostDetail({
     handWritten?.[field] ? ("no" as const) : undefined;
 
   const lang = post.lang ?? DEFAULT_PUBLIC_LANGUAGE;
+  // Spanish version (`handWritten` ache) — category hate lekha, BlogGrid-er sathe mile
+  const category = (value: string, label: string) => {
+    const es = handWritten && BLOG_CATEGORY_ES[value];
+    return es ? <span translate="no">{es}</span> : label;
+  };
   // Server component — sanitize ekhanei hoy, browser kacha HTML pay na
   const body = sanitizeBlogHtml(post.body);
   // Backend already 3 tar beshi dey na, tobu UI-r dik theke cap
@@ -63,11 +70,12 @@ export function PostDetail({
             <Link href="/blog" className="hover:text-vv-ink">
               Blog
             </Link>{" "}
-            <span className="mx-1 text-vv-line-2">/</span> {post.category_label}
+            <span className="mx-1 text-vv-line-2">/</span>{" "}
+            {category(post.category, post.category_label)}
           </div>
           <div className="mt-4 flex items-center gap-3">
             <span className="rounded-full bg-vv-accent/20 px-2.5 py-0.5 text-[11px] font-semibold text-vv-accent-deep">
-              {post.category_label}
+              {category(post.category, post.category_label)}
             </span>
             <span className="text-[12px] text-vv-ink-2">
               {post.reading_time} min read
@@ -141,7 +149,13 @@ export function PostDetail({
               href="/online-classes/book"
               className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] leading-none py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px"
             >
-              Book My First Lesson{" "}
+              {/* Google "Reserva mi primera lección" — baki site "clase" */}
+              <span translate="no">
+                <ByLanguage
+                  en="Book My First Lesson"
+                  es="Reserva tu primera clase"
+                />
+              </span>{" "}
               <ChevronRight className="h-4 w-4 shrink-0 translate-y-0.5" />
             </Link>
           </div>
@@ -177,7 +191,7 @@ export function PostDetail({
                   </div>
                   <div className="flex flex-col gap-2 p-5 flex-1">
                     <span className="text-[11px] font-semibold text-vv-accent-deep">
-                      {item.category_label}
+                      {category(item.category, item.category_label)}
                     </span>
                     <h3 className="text-[16px] font-semibold text-vv-ink flex-1">
                       {item.title}

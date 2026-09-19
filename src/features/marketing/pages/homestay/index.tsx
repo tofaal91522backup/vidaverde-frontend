@@ -1,4 +1,5 @@
 import { Container } from "@/components/shared/Container";
+import { HandTranslated } from "@/components/shared/by-language";
 import { Check } from "lucide-react";
 import {
   faqs,
@@ -18,6 +19,9 @@ import {
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { ChevronRight, ShieldCheck, UsersRound } from "lucide-react";
+
+const LAUNDRY = "Laundry support is available in the home.";
+const TWENTY_HOURS = "20 hours Spanish class";
 
 export default function HomestayRoute() {
   return (
@@ -76,7 +80,12 @@ export default function HomestayRoute() {
                     className="rounded-[18px] border border-vv-line bg-vv-bg-warm p-4"
                   >
                     <div className="font-code text-[10px] font-medium uppercase tracking-[0.14em] text-vv-muted">
-                      {label}
+                      {/* Google "From" -> "De" (= of) likhto */}
+                      {label === "From" ? (
+                        <HandTranslated en="From" es="Desde" />
+                      ) : (
+                        label
+                      )}
                     </div>
                     <div className="mt-2 text-[28px] font-semibold leading-none tracking-[-0.03em] text-vv-ink">
                       {value}
@@ -102,7 +111,9 @@ export default function HomestayRoute() {
           <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16 items-start">
             <div>
               <span className="font-code text-vv-muted text-[11px] font-medium tracking-[0.14em] uppercase">
-                {"// What is a homestay?"}
+                {/* "//" alada — Google puro label pele "//" fele dito */}
+                <span translate="no">{"// "}</span>
+                What is a homestay?
               </span>
               <div className="h-4" />
               <h2 className="text-[clamp(28px,3vw,44px)] font-semibold tracking-[-0.02em] leading-[1.08] m-0 text-balance">
@@ -167,7 +178,15 @@ export default function HomestayRoute() {
                     {item.title}
                   </h4>
                   <p className="mt-1 text-[14px] leading-[1.6] text-vv-ink-2 m-0">
-                    {item.description}
+                    {/* Google "Laundry support…" -> "lavandería a domicilio" (delivery) */}
+                    {item.description === LAUNDRY ? (
+                      <HandTranslated
+                        en={LAUNDRY}
+                        es="La casa cuenta con servicio de lavandería."
+                      />
+                    ) : (
+                      item.description
+                    )}
                   </p>
                 </div>
               </article>
@@ -257,7 +276,15 @@ export default function HomestayRoute() {
                             : "text-vv-ink-2"
                         }
                       >
-                        {feature}
+                        {/* Google "Clase de español de 20 horas" — ekta 20 ghontar class */}
+                        {feature === TWENTY_HOURS ? (
+                          <HandTranslated
+                            en={TWENTY_HOURS}
+                            es="20 horas de clases de español"
+                          />
+                        ) : (
+                          feature
+                        )}
                       </span>
                     </li>
                   ))}
@@ -299,7 +326,11 @@ export default function HomestayRoute() {
                 {"// Safety"}
               </span>
               <h2 className="mt-3 text-[clamp(26px,2.7vw,40px)] font-semibold tracking-[-0.02em] leading-[1.08] text-vv-ink">
-                Your Safety Is Our Priority
+                {/* Google "Su" (usted); baki site "tú" */}
+                <HandTranslated
+                  en="Your Safety Is Our Priority"
+                  es="Tu seguridad es nuestra prioridad"
+                />
               </h2>
               <p className="mt-4 max-w-[70ch] text-[15px] leading-[1.7] text-vv-ink-2">
                 Every Vida Verde host family is personally vetted by our team.
@@ -325,7 +356,10 @@ export default function HomestayRoute() {
                 {"// Host Families"}
               </span>
               <h2 className="mt-4 text-[clamp(28px,3vw,44px)] font-semibold tracking-[-0.02em] leading-[1.08] text-vv-ink">
-                Meet Some of Our Host Families
+                <HandTranslated
+                  en="Meet Some of Our Host Families"
+                  es="Conoce a algunas de nuestras familias anfitrionas"
+                />
               </h2>
               <p className="mt-4 text-[15px] leading-[1.7] text-vv-ink-2">
                 Real host family profiles will be added here once Vida Verde has

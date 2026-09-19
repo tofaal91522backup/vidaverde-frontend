@@ -6,6 +6,8 @@ import Link from "next/link";
 import { ArrowLeft, Check } from "lucide-react";
 import { ChevronRight } from "lucide-react";
 import { TestimonialCarousel } from "../home/components/TestimonialCarousel";
+import { Es, ProgramName } from "./es";
+import { HandTranslated } from "@/components/shared/by-language";
 
 export function ProgramDetail({ program }: { program: Program }) {
   return (
@@ -34,10 +36,11 @@ export function ProgramDetail({ program }: { program: Program }) {
             >
               Study in Quito
             </Link>{" "}
-            <span className="mx-1">/</span> {program.title}
+            <span className="mx-1">/</span>{" "}
+            <ProgramName en={program.title} es={program.titleEs} />
           </div>
           <h1 className="text-[clamp(36px,5vw,68px)] font-semibold tracking-[-0.03em] leading-none m-0 mb-5 max-w-[18ch] text-white [text-shadow:0_2px_12px_rgba(0,0,0,0.4)]">
-            {program.detailTitle}
+            <ProgramName en={program.detailTitle} es={program.detailTitleEs} />
           </h1>
           <p className="text-[clamp(17px,1.4vw,20px)] leading-normal max-w-[52ch] text-pretty m-0 text-white/85 [text-shadow:0_1px_6px_rgba(0,0,0,0.4)]">
             {program.detailSubheadline}
@@ -75,7 +78,16 @@ export function ProgramDetail({ program }: { program: Program }) {
               </span>
               <div className="h-4" />
               <h2 className="text-[clamp(28px,3vw,44px)] font-semibold tracking-[-0.02em] leading-[1.08] m-0 mb-5 text-balance">
-                What is the {program.title}?
+                {/* Naam alada span-e thakle Google "¿Qué es el?" baniye naam-ta
+                    bahire fele dito — tai hate-lekha naam thakle puro prosno hate */}
+                {program.titleEs ? (
+                  <HandTranslated
+                    en={`What is the ${program.title}?`}
+                    es={`¿Qué es el ${program.titleEs}?`}
+                  />
+                ) : (
+                  <>What is the {program.title}?</>
+                )}
               </h2>
               <p className="text-[15px] leading-[1.7] text-vv-ink-2">
                 {program.description}
@@ -96,7 +108,7 @@ export function ProgramDetail({ program }: { program: Program }) {
                       strokeWidth={3}
                       aria-hidden="true"
                     />
-                    {item}
+                    <Es text={item} />
                   </li>
                 ))}
               </ul>
@@ -145,11 +157,11 @@ export function ProgramDetail({ program }: { program: Program }) {
                       {row.day}
                     </td>
                     <td className="py-3.5 pr-6 text-vv-ink-2">
-                      {row.activity}
+                      <Es text={row.activity} />
                     </td>
                     <td className="py-3.5">
                       <span className="rounded-full border border-vv-line bg-vv-bg px-2.5 py-0.5 text-[11px] font-medium text-vv-ink-2">
-                        {row.type}
+                        <Es text={row.type} />
                       </span>
                     </td>
                   </tr>

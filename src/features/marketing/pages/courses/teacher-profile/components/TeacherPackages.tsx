@@ -3,6 +3,7 @@
 import { Container } from "@/components/shared/Container";
 import { getPublicTimeZone } from "@/features/marketing/constants/public-api";
 import { useTeacherPackages } from "@/features/marketing/pages/book/queries/use-teacher-packages";
+import { useOwnPackageCopy } from "@/features/marketing/pages/courses/queries/use-public-packages";
 import { useLanguage } from "@/providers/language-provider";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
@@ -35,6 +36,7 @@ export default function TeacherPackages({
   teacherFirstName: string;
 }) {
   const { language } = useLanguage();
+  const ownCopy = useOwnPackageCopy();
   const timeZone = useMemo(() => getPublicTimeZone(), []);
 
   const { data, isLoading, isError } = useTeacherPackages({
@@ -102,7 +104,10 @@ export default function TeacherPackages({
                 )}
 
                 <div className="flex items-start justify-between gap-2">
-                  <span className="text-[15px] font-semibold text-vv-ink">
+                  <span
+                    className="text-[15px] font-semibold text-vv-ink"
+                    translate={ownCopy(pkg, "title") ? "no" : undefined}
+                  >
                     {pkg.title}
                   </span>
                   <span className="shrink-0 text-[18px] font-bold text-vv-ink">
@@ -110,7 +115,12 @@ export default function TeacherPackages({
                   </span>
                 </div>
 
-                <p className="text-[13px] text-vv-ink-2">{pkg.description}</p>
+                <p
+                  className="text-[13px] text-vv-ink-2"
+                  translate={ownCopy(pkg, "description") ? "no" : undefined}
+                >
+                  {pkg.description}
+                </p>
 
                 <span className="mt-auto pt-2 text-[12px] text-vv-muted">
                   {pkg.total_classes}{" "}
@@ -119,7 +129,10 @@ export default function TeacherPackages({
                 </span>
 
                 <span className="inline-flex items-center gap-1 text-[13px] font-semibold text-vv-accent-deep">
-                  Book this
+                  {/* Google "Reserva esto" dito */}
+                  <span translate="no">
+                    {language === "es" ? "Reservar este paquete" : "Book this"}
+                  </span>
                   <ChevronRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" />
                 </span>
               </Link>

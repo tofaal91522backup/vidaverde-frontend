@@ -1,5 +1,6 @@
 "use client";
 
+import { HandTranslated } from "@/components/shared/by-language";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -52,7 +53,11 @@ const ForgotPasswordForm = () => {
 
           <Button type="submit" disabled={isPending} className="w-full">
             {isPending && <Spinner className="mr-2" />}
-            Send Reset Link
+            {/* Google "enlace de reinicio" (reboot-er reset) likhto */}
+            <HandTranslated
+              en="Send Reset Link"
+              es="Enviar enlace para restablecer"
+            />
           </Button>
 
           {state.errors.formError && (

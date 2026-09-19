@@ -50,7 +50,8 @@ export function Combobox({
   value?: string;
   onChange?: (value: string) => void;
   options: ReadonlyArray<ComboboxOption>;
-  placeholder?: string;
+  /** Node-o — marketing/auth form hate lekha Spanish pathay */
+  placeholder?: React.ReactNode;
   searchPlaceholder?: string;
   emptyText?: string;
   /** Dile hidden input render hoy — FormData-r jonno */

@@ -2,6 +2,7 @@ import { Container } from "@/components/shared/Container";
 import WorldMap from "@/components/ui/world-map";
 import { ChevronRight, Star } from "lucide-react";
 import Link from "next/link";
+import { ByLanguage } from "@/components/shared/by-language";
 
 const TRAVEL_DOTS = [
   {
@@ -43,6 +44,8 @@ const reviews = [
       "I did five days with Laura before flying to Guayaquil. I was nervous about speaking to anyone. By day three I was ordering food, asking for directions, and chatting with strangers on the bus.",
     name: "Sarah K.",
     meta: "USA · Solo traveller",
+    // Google "Viajero solitario" (purush) — Sarah
+    metaEs: "EE. UU. · Viajera en solitario",
     initials: "SK",
   },
   {
@@ -50,6 +53,7 @@ const reviews = [
       "We booked a week of classes for our family before a two-week tour of Ecuador. The kids loved it. The teacher tailored everything to travel situations and it made such a difference.",
     name: "James & Amy",
     meta: "UK · Family trip",
+    metaEs: "Reino Unido · Viaje en familia",
     initials: "JA",
   },
   {
@@ -57,6 +61,7 @@ const reviews = [
       "I had two weeks before a volunteer project in Esmeraldas. Ximena prepared me for exactly the conversations I'd need. I felt confident from day one in the field.",
     name: "Franziska D.",
     meta: "Germany · Volunteer",
+    metaEs: "Alemania · Voluntaria",
     initials: "FD",
   },
 ];
@@ -71,7 +76,11 @@ export default function TravelSpanishRoute() {
       >
         <Container>
           <div className="font-code text-vv-muted text-[12px] tracking-[0.06em] mb-6">
-            Home <span className="mx-1 text-vv-line-2">/</span> Travel Spanish
+            Home <span className="mx-1 text-vv-line-2">/</span>{" "}
+            {/* Google "Viajes en español" (= Spanish-e bhromon) likhto */}
+            <span translate="no">
+              <ByLanguage en="Travel Spanish" es="Español para viajar" />
+            </span>
           </div>
           <div className="grid lg:grid-cols-[0.8fr_1.2fr]  gap-10 max-[900px]:grid-cols-1">
             <div className="flex flex-col gap-5">
@@ -92,7 +101,13 @@ export default function TravelSpanishRoute() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] leading-none py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px"
                 >
-                  Plan My Travel Spanish. WhatsApp Us
+                  {/* Google "Planifica tu viaje a España" — Spain! School Ecuador-e */}
+                  <span translate="no">
+                    <ByLanguage
+                      en="Plan My Travel Spanish. WhatsApp Us"
+                      es="Planifica tus clases: escríbenos por WhatsApp"
+                    />
+                  </span>
                 </Link>
                 <Link
                   href="/contact"
@@ -123,7 +138,9 @@ export default function TravelSpanishRoute() {
           <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-20 items-start">
             <div className="flex flex-col gap-5">
               <span className="font-code text-vv-muted text-[11px] font-medium tracking-[0.14em] uppercase">
-                {"// Spanish for Travellers"}
+                {/* "//" alada — Google puro label ek shathe pele "//" fele dito */}
+                <span translate="no">{"// "}</span>
+                Spanish for Travellers
               </span>
               <h2 className="text-[clamp(28px,3vw,44px)] font-semibold tracking-[-0.02em] leading-[1.08] m-0 text-balance">
                 Spanish for Travellers
@@ -152,11 +169,24 @@ export default function TravelSpanishRoute() {
               <div className="font-code text-vv-muted text-[11px] font-medium tracking-[0.14em] uppercase">
                 {"// Pricing"}
               </div>
-              <p className="text-[15px] leading-[1.7] text-vv-ink-2 m-0">
-                There&apos;s no fixed price for travel Spanish. It depends on
-                how many classes you want, whether you&apos;d like online or
-                in-person, and whether you&apos;re adding a homestay. Contact us
-                and we&apos;ll put together a custom quote.
+              {/* Google ekhane "usted"-e chole jeto (desee, Contáctenos, le
+                  prepararemos); baki page "tú" */}
+              <p
+                className="text-[15px] leading-[1.7] text-vv-ink-2 m-0"
+                translate="no"
+              >
+                <ByLanguage
+                  en={
+                    <>
+                      There&apos;s no fixed price for travel Spanish. It
+                      depends on how many classes you want, whether you&apos;d
+                      like online or in-person, and whether you&apos;re adding a
+                      homestay. Contact us and we&apos;ll put together a custom
+                      quote.
+                    </>
+                  }
+                  es="No hay un precio fijo para el español de viaje. Depende de cuántas clases quieras, de si las prefieres en línea o presenciales y de si añades alojamiento con una familia. Escríbenos y te preparamos un presupuesto a tu medida."
+                />
               </p>
               <div className="flex flex-col gap-2.5 pt-2">
                 <Link
@@ -165,7 +195,13 @@ export default function TravelSpanishRoute() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[14px] font-semibold tracking-[-0.005em] leading-none py-3 px-5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px text-center"
                 >
-                  Plan My Travel Spanish. WhatsApp Us
+                  {/* Google "Planifica tu viaje a España" — Spain! School Ecuador-e */}
+                  <span translate="no">
+                    <ByLanguage
+                      en="Plan My Travel Spanish. WhatsApp Us"
+                      es="Planifica tus clases: escríbenos por WhatsApp"
+                    />
+                  </span>
                 </Link>
                 <Link
                   href="/contact"
@@ -257,7 +293,9 @@ export default function TravelSpanishRoute() {
                       {review.name}
                     </div>
                     <div className="text-[11px] text-vv-muted mt-0.5">
-                      {review.meta}
+                      <span translate="no">
+                        <ByLanguage en={review.meta} es={review.metaEs} />
+                      </span>
                     </div>
                   </div>
                 </div>

@@ -1,5 +1,7 @@
 import { Container } from "@/components/shared/Container";
 import { programs } from "./data/programs.data";
+import { ProgramName } from "./es";
+import { HandTranslated } from "@/components/shared/by-language";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowDown } from "lucide-react";
@@ -314,11 +316,16 @@ export default function StudyInQuitoRoute() {
                 <div className="flex flex-col gap-3 p-6 flex-1">
                   <div>
                     <h3 className="text-[20px] font-semibold leading-tight tracking-[-0.02em] text-vv-ink m-0">
-                      {program.title}
+                      <ProgramName en={program.title} es={program.titleEs} />
                     </h3>
                     <div className="mt-1 text-[13px] text-vv-ink-2">
-                      From{" "}
-                      <strong className="text-vv-ink font-semibold">
+                      {/* Google "From" -> "De" (= of) likhto */}
+                      <HandTranslated en="From" es="Desde" />{" "}
+                      {/* Google kokhono "$740" -> "740 dólares" likhto, "$140" rakhto */}
+                      <strong
+                        className="text-vv-ink font-semibold"
+                        translate="no"
+                      >
                         {program.priceFrom}
                       </strong>
                       {program.pricePeriod}
@@ -396,7 +403,7 @@ export default function StudyInQuitoRoute() {
                   Meals, conversation, local insight, and a warm home base, all
                   from{" "}
                   <strong className="text-vv-ink font-semibold">
-                    $26/night
+                    <span translate="no">$26</span>/night
                   </strong>
                   . Included in the Quito Immersion Program or bookable as an
                   add-on to any programme.
@@ -411,8 +418,11 @@ export default function StudyInQuitoRoute() {
                     <ChevronRight className="h-4 w-4 shrink-0 translate-y-0.5" />
                   </Link>
                   <div className="rounded-full border border-vv-line bg-vv-bg px-4 py-3 text-[13px] font-medium text-vv-ink-2">
-                    From{" "}
-                    <span className="text-[18px] font-semibold tracking-[-0.02em] text-vv-ink">
+                    <HandTranslated en="From" es="Desde" />{" "}
+                    <span
+                      className="text-[18px] font-semibold tracking-[-0.02em] text-vv-ink"
+                      translate="no"
+                    >
                       $26
                     </span>{" "}
                     / night
@@ -458,7 +468,9 @@ export default function StudyInQuitoRoute() {
       >
         <Container className="text-center">
           <span className="font-code text-vv-muted text-[11px] font-medium tracking-[0.14em] uppercase">
-            {"// Need help choosing?"}
+            {/* "//" alada — Google puro label pele "//" fele dito */}
+            <span translate="no">{"// "}</span>
+            Need help choosing?
           </span>
           <div className="h-4" />
           <h2 className="text-[clamp(28px,3vw,44px)] font-semibold tracking-[-0.02em] leading-[1.08] m-0 text-balance">

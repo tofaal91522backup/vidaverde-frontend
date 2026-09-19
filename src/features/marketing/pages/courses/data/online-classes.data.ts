@@ -3,6 +3,8 @@ import type { FaqItem } from "@/features/marketing/types";
 export type HowItWorksStep = {
   step: number;
   label: string;
+  /** Hate lekha — Google eka shironam pele kokhono "Lograr…" (infinitive) dey, baki gula "Reserva/Conoce" (tú) */
+  labelEs: string;
   description: string;
 };
 
@@ -10,24 +12,28 @@ export const howItWorksSteps: HowItWorksStep[] = [
   {
     step: 1,
     label: "Book Your First Lesson",
+    labelEs: "Reserva tu primera clase",
     description:
       "Choose a teacher, pick a time that suits you, and pay your discounted first lesson fee. Done in under 5 minutes.",
   },
   {
     step: 2,
     label: "Meet Your Teacher",
+    labelEs: "Conoce a tu profesor",
     description:
       "Join via Google Meet at your scheduled time. Your teacher will assess your current level and learn about your goals.",
   },
   {
     step: 3,
     label: "Get Your Personalised Plan",
+    labelEs: "Recibe tu plan personalizado",
     description:
       "After the session, your teacher recommends the package that fits your goals and timeline. With no obligation to continue.",
   },
   {
     step: 4,
     label: "Make Real Progress",
+    labelEs: "Progresa de verdad",
     description:
       "Regular lessons, structured feedback, and access to learning resources between classes. Real progress, not just app streaks.",
   },

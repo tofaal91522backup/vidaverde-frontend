@@ -1,7 +1,10 @@
 export type Program = {
   slug: string;
   title: string;
+  /** Hate lekha ES naam — navbar "Aula Viajera"; na thakle Google */
+  titleEs?: string;
   detailTitle: string;
+  detailTitleEs?: string;
   detailSubheadline: string;
   tagline: string;
   description: string;
@@ -97,7 +100,9 @@ export const programs: Program[] = [
   {
     slug: "travelling-classroom",
     title: "Travelling Classroom",
+    titleEs: "Aula Viajera",
     detailTitle: "The Travelling Classroom",
+    detailTitleEs: "El Aula Viajera",
     detailSubheadline:
       "Learn Spanish while you explore Ecuador. Morning classes with your teacher, afternoon adventures. From the Andes to the Amazon to the Pacific coast.",
     tagline:

@@ -1,5 +1,6 @@
 "use client";
 
+import { ByLanguage } from "@/components/shared/by-language";
 import { Container } from "@/components/shared/Container";
 import { Check, PartyPopper } from "lucide-react";
 import { SubmitErrorSummary } from "@/components/shared/form-related/submit-error-summary";
@@ -133,7 +134,10 @@ export function LeadCaptureSection() {
                         htmlFor="lead-name"
                         className="text-[12px] font-medium uppercase tracking-wide text-vv-ink-2"
                       >
-                        First Name
+                        {/* Google "Nombre de pila" — shoja "Nombre" */}
+                        <span translate="no">
+                          <ByLanguage en="First Name" es="Nombre" />
+                        </span>
                       </label>
                       <input
                         id="lead-name"

@@ -7,6 +7,7 @@ import { Check, ChevronRight, PackageOpen } from "lucide-react";
 import Link from "next/link";
 import {
   orderPublicPackages,
+  useOwnPackageCopy,
   usePublicPackages,
 } from "../queries/use-public-packages";
 
@@ -23,6 +24,7 @@ export function PricingSection() {
   const { language } = useLanguage();
   const { data, isLoading, isError } = usePublicPackages({ lang: language });
   const packages = orderPublicPackages(data ?? []);
+  const ownCopy = useOwnPackageCopy();
 
   return (
     <section
@@ -64,6 +66,8 @@ export function PricingSection() {
         {packages.length > 0 && (
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-4">
             {packages.map((pkg) => {
+              const ownTitle = ownCopy(pkg, "title");
+              const ownDescription = ownCopy(pkg, "description");
               const featured = pkg.is_first_lesson;
               const badge = pkg.is_first_lesson ? "Best way to start" : null;
 
@@ -113,7 +117,7 @@ export function PricingSection() {
                         featured ? "text-vv-accent-deep" : "text-vv-ink-2",
                       )}
                     >
-                      <span translate="no">{pkg.title}</span>
+                      <span translate={ownTitle ? "no" : undefined}>{pkg.title}</span>
                     </div>
                     <div className="flex items-end gap-1">
                       <span className="text-[36px] font-bold leading-none tracking-tight">
@@ -147,7 +151,9 @@ export function PricingSection() {
                       featured ? "text-vv-accent-deep" : "text-vv-ink-2",
                     )}
                   >
-                    <span translate="no">{pkg.description}</span>
+                    <span translate={ownDescription ? "no" : undefined}>
+                      {pkg.description}
+                    </span>
                   </p>
 
                   <ul className="flex flex-col gap-2 flex-1 list-none p-0 m-0">
@@ -188,7 +194,16 @@ export function PricingSection() {
                         : "border-vv-line-2 bg-transparent text-vv-ink hover:bg-vv-ink hover:border-vv-ink hover:text-vv-bg",
                     )}
                   >
-                    {featured ? "Book your first lesson" : "Choose package"}
+                    {/* Hate lekha: Google "Seleccione" (usted) ar "lección." (dari soho) dito */}
+                    <span translate="no">
+                      {language === "es"
+                        ? featured
+                          ? "Reserva tu primera clase"
+                          : "Elige el paquete"
+                        : featured
+                          ? "Book your first lesson"
+                          : "Choose package"}
+                    </span>
                     <ChevronRight className="h-4 w-4 shrink-0 translate-y-0.5" />
                   </Link>
                 </article>

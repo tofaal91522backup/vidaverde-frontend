@@ -3,6 +3,7 @@ import { ChevronRight } from "lucide-react";
 import { MarketingButton } from "@/features/marketing/components/MarketingButton";
 import { SectionHeader } from "./SectionHeader";
 import Image from "next/image";
+import { ByLanguage } from "@/components/shared/by-language";
 
 /* ── Inline SVG illustrations ───────────────────────────────────────────── */
 
@@ -293,6 +294,12 @@ function BookIllustration({ className }: { className?: string }) {
 
 /* ── Programs data ───────────────────────────────────────────────────────── */
 
+/*
+  `badgeEs`/`ctaEs` — Google eka "Most Popular" pele card-ta ekta bole bujhe
+  na, "Más populares" (bohubochon) lekhe; "Get Started"-ke "Comience" (usted),
+  jekhane baki page "tú" (Empieza, Únete). Egula hate lekha, Google-er bahire.
+*/
+
 const programs = [
   {
     label: "Online Classes",
@@ -301,9 +308,11 @@ const programs = [
     price: "From $12",
     priceSub: "Book Your First Lesson",
     cta: "Get Started",
+    ctaEs: "Empieza",
     href: "/online-classes",
     Illustration: LaptopIllustration,
     badge: "Most Popular",
+    badgeEs: "Más popular",
     tone: "accent" as const,
   },
   {
@@ -387,6 +396,7 @@ export function CourseSelectorSection() {
                   />
                   {prog.badge && (
                     <span
+                      translate="no"
                       className={[
                         "absolute top-5 right-5 rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-wider font-code",
                         isAccent
@@ -394,7 +404,7 @@ export function CourseSelectorSection() {
                           : "bg-vv-ink/10 text-vv-ink",
                       ].join(" ")}
                     >
-                      {prog.badge}
+                      <ByLanguage en={prog.badge} es={prog.badgeEs} />
                     </span>
                   )}
                 </div>
@@ -460,7 +470,13 @@ export function CourseSelectorSection() {
                       href={prog.href}
                       tone={isAccent ? "dark" : isDark ? "primary" : "ghost"}
                     >
-                      {prog.cta}{" "}
+                      {prog.ctaEs ? (
+                        <span translate="no">
+                          <ByLanguage en={prog.cta} es={prog.ctaEs} />
+                        </span>
+                      ) : (
+                        prog.cta
+                      )}{" "}
                       <ChevronRight className="h-4 w-4 shrink-0 translate-y-0.5" />
                     </MarketingButton>
                   </div>

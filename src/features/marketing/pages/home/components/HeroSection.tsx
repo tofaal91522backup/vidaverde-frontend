@@ -56,8 +56,8 @@ const COPY: Record<LanguageCode, HeroCopy> = {
     explore: "Ver todos los programas",
     trust: [
       { label: "Desde 1999", sub: "Más de 25 años enseñando" },
-      // Ecuador-e hajar-er ghore point: 4.700
-      { label: "Más de 4.700 estudiantes", sub: "De más de 50 países" },
+      // RAE: 4 ongker shonkhya alada hoy na — 4700 (baki page-er sathe mile)
+      { label: "Más de 4700 estudiantes", sub: "De más de 50 países" },
       { label: "Todos los niveles", sub: "De principiante A1 a avanzado C1" },
       {
         label: "Clases por Google Meet",

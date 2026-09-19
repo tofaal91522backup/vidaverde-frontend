@@ -3,6 +3,7 @@
 import { activities, activityTabs } from "../data/marketing.data";
 import type { ActivityCategory } from "@/features/marketing/types";
 import { ActivityCard } from "./ActivityCard";
+import { Es } from "./es";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 
@@ -28,7 +29,7 @@ export function ActivityTabs() {
             )}
             onClick={() => setActive(tab.value)}
           >
-            {tab.label}
+            <Es text={tab.label} />
           </button>
         ))}
       </div>

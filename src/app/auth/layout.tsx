@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { GoogleTranslate } from "@/components/shared/google-translate";
 
 /**
  * Auth page gular shared background.
@@ -86,6 +87,9 @@ export default function AuthLayout({
       <main className="relative z-10 flex flex-1 items-center justify-center px-4 pb-16 pt-2">
         {children}
       </main>
+      {/* Visitor Spanish bachhai korle sign-in/sign-up-o Spanish — age shudhu
+          link-e click kore ashle hoto, reload korle English */}
+      <GoogleTranslate />
     </div>
   );
 }

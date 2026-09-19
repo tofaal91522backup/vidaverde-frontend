@@ -9,7 +9,8 @@ import { useLanguage, type LanguageCode } from "@/providers/language-provider";
   ("4.687+"), tarpor React-er update puron node-e jay, tai shonkhya shekhanei
   atke thake. Ar "25+"-ke Google "Más de 25 años" banay, jeta label-er shathe
   dui bar "años" hoy. Tai shonkhya Google-er hate na, nijerai format kori:
-  ES-e hazar-er vag "." (4.700+), EN-e "," (4,700+).
+  ES-e RAE-r niyom: 4 ongko alada hoy na (4700+), 5 ongko theke "." (13.800);
+  EN-e "," (4,700+).
 */
 function parse(raw: string) {
   const m = raw.match(/^([^0-9]*)([0-9,]+)([^0-9]*)$/);
@@ -20,9 +21,8 @@ function parse(raw: string) {
 
 function fmt(n: number, hasComma: boolean, language: LanguageCode) {
   if (!hasComma) return String(n);
-  // es-ES 4 ongker shonkhya group kore na ("4700"), tai haate "." boshai
-  const grouped = n.toLocaleString("en-US");
-  return language === "es" ? grouped.replace(/,/g, ".") : grouped;
+  // es-ES nijei RAE mane: 4700, 13.800
+  return n.toLocaleString(language === "es" ? "es-ES" : "en-US");
 }
 
 export function CountUpStat({

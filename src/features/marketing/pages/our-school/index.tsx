@@ -2,6 +2,8 @@ import { Container } from "@/components/shared/Container";
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
+import { ByLanguage } from "@/components/shared/by-language";
+import { TeacherTag } from "@/features/marketing/components/teacher-i18n";
 import {
   Accordion,
   AccordionContent,
@@ -131,7 +133,8 @@ export default function OurSchoolRoute() {
               </div>
             </div>
 
-            {/* Heritage illustration */}
+            {/* Heritage illustration. SVG-r <text> Google anubad-i kore na —
+                tai ES hate lekha */}
             <div className="max-[900px]:hidden shrink-0">
               <svg
                 viewBox="0 0 292 252"
@@ -200,7 +203,7 @@ export default function OurSchoolRoute() {
                   fill="#7a8a6a"
                   letterSpacing="0.18em"
                 >
-                  EST.
+                  <ByLanguage en="EST." es="DESDE" />
                 </text>
 
                 {/* 1999 */}
@@ -272,7 +275,7 @@ export default function OurSchoolRoute() {
                   fontWeight="700"
                   fill="#1f3d1a"
                 >
-                  25+ Yrs
+                  <ByLanguage en="25+ Yrs" es="25+ años" />
                 </text>
 
                 {/* Stat badge 1. 25+ Years */}
@@ -305,7 +308,7 @@ export default function OurSchoolRoute() {
                   fontSize="10"
                   fill="#7a8a6a"
                 >
-                  Years teaching
+                  <ByLanguage en="Years teaching" es="Años enseñando" />
                 </text>
 
                 {/* Stat badge 2. 4,700+ Students */}
@@ -326,7 +329,7 @@ export default function OurSchoolRoute() {
                   fontWeight="800"
                   fill="#a3d635"
                 >
-                  4,700+
+                  <ByLanguage en="4,700+" es="4700+" />
                 </text>
                 <text
                   x="234"
@@ -337,7 +340,7 @@ export default function OurSchoolRoute() {
                   fill="white"
                   opacity="0.7"
                 >
-                  Students taught
+                  <ByLanguage en="Students taught" es="Estudiantes" />
                 </text>
 
                 {/* Stat badge 3. 50+ Countries */}
@@ -370,7 +373,7 @@ export default function OurSchoolRoute() {
                   fontSize="10"
                   fill="#7a8a6a"
                 >
-                  Countries
+                  <ByLanguage en="Countries" es="Países" />
                 </text>
 
                 {/* Decorative dots */}
@@ -492,7 +495,10 @@ export default function OurSchoolRoute() {
                 {"// Our Teachers"}
               </span>
               <h2 className="text-[clamp(28px,3vw,44px)] font-semibold tracking-[-0.02em] leading-[1.08] m-0 text-balance">
-                Meet the Team
+                {/* Google "Conozca" (usted); baki site "tú" */}
+                <span translate="no">
+                  <ByLanguage en="Meet the Team" es="Conoce al equipo" />
+                </span>
               </h2>
             </div>
             <p className="text-vv-ink-2 text-[clamp(17px,1.4vw,20px)] leading-normal max-w-[44ch] text-pretty m-0">
@@ -523,7 +529,15 @@ export default function OurSchoolRoute() {
                       <span translate="no">{teacher.name}</span>
                     </h3>
                     <div className="mt-1 text-[12px] text-vv-ink-2">
-                      {teacher.credentials} · {teacher.experience}
+                      {teacher.credentials} ·{" "}
+                      {/* Google eki shonkhya kokhono "13+ años", kokhono
+                          "Más de 10 años" likhto */}
+                      <span translate="no">
+                        <ByLanguage
+                          en={teacher.experience}
+                          es={teacher.experience.replace("years", "años")}
+                        />
+                      </span>
                     </div>
                   </div>
                   <p className="flex-1 text-[13px] leading-[1.6] text-vv-ink-2">
@@ -535,7 +549,7 @@ export default function OurSchoolRoute() {
                         key={s}
                         className="rounded-full border border-vv-line bg-vv-bg-warm px-2 py-0.5 text-[11px] text-vv-ink-2"
                       >
-                        {s}
+                        <TeacherTag tag={s} />
                       </span>
                     ))}
                   </div>
@@ -547,7 +561,12 @@ export default function OurSchoolRoute() {
                 href="/online-classes/book"
                 className="inline-flex items-center justify-center gap-2.5 border border-vv-accent rounded-full cursor-pointer text-[15px] font-semibold tracking-[-0.005em] leading-none py-3.5 px-5.5 transition-[transform,background,color,border-color] duration-200 whitespace-nowrap bg-vv-accent text-vv-accent-deep hover:bg-vv-accent-hi hover:-translate-y-px"
               >
-                Start Learning with Us{" "}
+                <span translate="no">
+                  <ByLanguage
+                    en="Start Learning with Us"
+                    es="Comienza a aprender con nosotros"
+                  />
+                </span>{" "}
                 <ChevronRight className="h-4 w-4 shrink-0 translate-y-0.5" />
               </Link>
             </div>

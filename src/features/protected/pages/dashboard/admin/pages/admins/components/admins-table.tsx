@@ -1,57 +1,100 @@
 "use client";
 
 import DataTable from "@/components/shared/data-table";
+import { ReusableSelect } from "@/components/shared/form-related/reusable-select";
+import { TableCard } from "@/components/shared/table-card";
+import { TableSearchInput } from "@/components/shared/table-search-input";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { toList } from "@/features/protected/pages/dashboard/admin/utils/to-list";
-import { Plus, Search } from "lucide-react";
-import Link from "next/link";
 import { useMemo, useState } from "react";
 import { useAdmins } from "../queries/use-admins";
 import { adminsColumns } from "./admins-column";
 
-export function AdminsTable() {
+const STATUS_OPTIONS = [
+  { value: "active", label: "Active only" },
+  { value: "inactive", label: "Inactive only" },
+];
+
+const ROLE_OPTIONS = [
+  { value: "master", label: "Masters" },
+  { value: "manager", label: "Managers" },
+];
+
+/**
+ * Endpoint paginated na, filter-o ney na — "a school has a handful of staff".
+ * Tai shob ekbar-e ene browser-e filter; search-e tai delay 150.
+ */
+export function AdminsTable({ currentEmail }: { currentEmail: string }) {
   const [search, setSearch] = useState("");
+  const [status, setStatus] = useState("");
+  const [role, setRole] = useState("");
   const { data, isLoading, isError } = useAdmins();
 
+  const columns = useMemo(() => adminsColumns(currentEmail), [currentEmail]);
+
+  // useMemo — DataTable-e proti render-e notun array dile loop hoy
   const accounts = useMemo(() => {
     const query = search.trim().toLowerCase();
-    const all = toList(data);
-    if (!query) return all;
-
-    return all.filter(
+    return toList(data).filter(
       (account) =>
-        account.name.toLowerCase().includes(query) ||
-        account.email.toLowerCase().includes(query),
+        (!query ||
+          account.name.toLowerCase().includes(query) ||
+          account.email.toLowerCase().includes(query)) &&
+        (!status || account.active === (status === "active")) &&
+        (!role || account.role === role),
     );
-  }, [data, search]);
+  }, [data, search, status, role]);
+
+  const filtering = Boolean(status || role);
 
   return (
-    <div className="space-y-4">
-      <div className="flex flex-wrap items-center gap-3">
-        <div className="relative max-w-sm flex-1">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-          <Input
-            value={search}
-            onChange={(event) => setSearch(event.target.value)}
+    <TableCard
+      toolbar={
+        <>
+          <TableSearchInput
             placeholder="Search name or email..."
-            className="pl-9"
+            delay={150}
+            onSearch={setSearch}
           />
-        </div>
-        <Button asChild className="ml-auto">
-          <Link href="/dashboard/admin/admins/create">
-            <Plus className="mr-1 h-4 w-4" />
-            New admin
-          </Link>
-        </Button>
-      </div>
 
+          <ReusableSelect
+            className="w-40 bg-background"
+            value={status}
+            options={STATUS_OPTIONS}
+            placeholder="All statuses"
+            onChange={(e) => setStatus(e.target.value)}
+          />
+
+          <ReusableSelect
+            className="w-40 bg-background"
+            value={role}
+            options={ROLE_OPTIONS}
+            placeholder="All roles"
+            onChange={(e) => setRole(e.target.value)}
+          />
+
+          {filtering && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => {
+                setStatus("");
+                setRole("");
+              }}
+            >
+              Clear
+            </Button>
+          )}
+        </>
+      }
+    >
       <DataTable
+        embedded
         data={accounts}
-        columns={adminsColumns}
+        columns={columns}
         loading={isLoading}
         error={isError ? "Failed to load admin accounts." : ""}
       />
-    </div>
+    </TableCard>
   );
 }

@@ -16,6 +16,37 @@ import { getErrorMessage } from "@/utils/get-error-message";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+import { useLanguage } from "@/providers/language-provider";
+
+/*
+  Form-er je tukro Google bhul kore, sheta hate: label-e "Su nombre" (usted)
+  ar "Tu mensaje" (tú) mishe jeto; placeholder "you@example.com" hoye jeto
+  "tú@ejemplo.com" (accent soho, bhul thikana); subject "Travel Spanish" ->
+  "Viajes en español" (Spanish-e bhromon).
+*/
+const COPY = {
+  en: {
+    name: "Your name",
+    namePlaceholder: "Your full name",
+    email: "Your email address",
+    emailPlaceholder: "you@example.com",
+    subject: "What's this about?",
+    fixErrors: "Please fix the following:",
+  },
+  es: {
+    name: "Tu nombre",
+    namePlaceholder: "Tu nombre completo",
+    email: "Tu correo electrónico",
+    emailPlaceholder: "tu@ejemplo.com",
+    subject: "¿Sobre qué es tu consulta?",
+    fixErrors: "Revisa lo siguiente:",
+  },
+} as const;
+
+/** Backend subject label English-e pathay; baki gula Google thik-i kore */
+const SUBJECT_ES: Record<string, string> = {
+  travel_spanish: "Español para viajar",
+};
 
 export function ContactForm({ programme = "" }: { programme?: string }) {
   const [response, setResponse] =
@@ -44,6 +75,8 @@ export function ContactForm({ programme = "" }: { programme?: string }) {
     },
   });
   const subjects = subjectData?.subjects ?? [];
+  const { language } = useLanguage();
+  const copy = COPY[language];
 
   if (response) {
     return (
@@ -93,7 +126,10 @@ export function ContactForm({ programme = "" }: { programme?: string }) {
         </p>
       </div>
 
-      <SubmitErrorSummary errors={submitErrors} />
+      <SubmitErrorSummary
+        errors={submitErrors}
+        title={<span translate="no">{copy.fixErrors}</span>}
+      />
       {mutation.isError && (
         <p className="text-sm text-red-600" role="alert">
           {getErrorMessage(mutation.error)}
@@ -107,7 +143,7 @@ export function ContactForm({ programme = "" }: { programme?: string }) {
               htmlFor="contact-name"
               className="text-[12px] font-medium uppercase tracking-wide text-vv-ink-2"
             >
-              Your name
+              <span translate="no">{copy.name}</span>
             </label>
             <input
               id="contact-name"
@@ -118,7 +154,8 @@ export function ContactForm({ programme = "" }: { programme?: string }) {
               aria-invalid={
                 field.state.meta.isTouched && !field.state.meta.isValid
               }
-              placeholder="Your full name"
+              placeholder={copy.namePlaceholder}
+              translate="no"
               className="rounded-lg border border-vv-line bg-vv-bg px-4 py-3 text-[15px] text-vv-ink outline-none placeholder:text-vv-ink-2/50 focus:border-vv-accent transition-colors"
             />
           </div>
@@ -132,7 +169,7 @@ export function ContactForm({ programme = "" }: { programme?: string }) {
               htmlFor="contact-email"
               className="text-[12px] font-medium uppercase tracking-wide text-vv-ink-2"
             >
-              Your email address
+              <span translate="no">{copy.email}</span>
             </label>
             <input
               id="contact-email"
@@ -143,7 +180,8 @@ export function ContactForm({ programme = "" }: { programme?: string }) {
               aria-invalid={
                 field.state.meta.isTouched && !field.state.meta.isValid
               }
-              placeholder="you@example.com"
+              placeholder={copy.emailPlaceholder}
+              translate="no"
               className="rounded-lg border border-vv-line bg-vv-bg px-4 py-3 text-[15px] text-vv-ink outline-none placeholder:text-vv-ink-2/50 focus:border-vv-accent transition-colors"
             />
           </div>
@@ -157,7 +195,7 @@ export function ContactForm({ programme = "" }: { programme?: string }) {
               htmlFor="contact-subject"
               className="text-[12px] font-medium uppercase tracking-wide text-vv-ink-2"
             >
-              What&apos;s this about?
+              <span translate="no">{copy.subject}</span>
             </label>
             <select
               id="contact-subject"
@@ -177,8 +215,17 @@ export function ContactForm({ programme = "" }: { programme?: string }) {
               {subjectsLoading && <option>Loading subjects…</option>}
               {subjectsError && <option>Subjects unavailable</option>}
               {subjects.map((subject) => (
-                <option key={subject.value} value={subject.value}>
-                  {subject.label}
+                <option
+                  key={subject.value}
+                  value={subject.value}
+                  translate={
+                    language === "es" && SUBJECT_ES[subject.value]
+                      ? "no"
+                      : undefined
+                  }
+                >
+                  {(language === "es" && SUBJECT_ES[subject.value]) ||
+                    subject.label}
                 </option>
               ))}
             </select>

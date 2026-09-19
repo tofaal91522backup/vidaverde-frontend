@@ -1,45 +1,18 @@
-"use client";
-
-import AsyncStateWrapper from "@/components/shared/async-state-wrapper";
+import { getSession } from "@/features/auth/utils/session";
 import DashboardPageLayout from "@/features/protected/pages/dashboard/shared/components/dashboard-page-layout";
-import type { AdminAccount } from "@/features/protected/pages/dashboard/admin/types/admin.types";
-import { AdminAccountForm } from "./components/admin-account-form";
-import { useAdminDetails, useUpdateAdmin } from "./queries/use-admins";
+import { EditAdminContent } from "./components/edit-admin-content";
 
-function toFormValues(account: AdminAccount) {
-  return {
-    email: account.email,
-    name: account.name,
-    password: "",
-    role: account.role,
-    active: account.active,
-  };
-}
-
-export default function EditAdminPage({ id }: { id: string }) {
-  const { data, isLoading, isError } = useAdminDetails(id);
-  const mutation = useUpdateAdmin(id);
-  const account = data?.admin;
+/** Server-e session pora hoy — nijer account chinte (role/active lock) */
+export default async function EditAdminPage({ id }: { id: string }) {
+  const session = await getSession();
 
   return (
     <DashboardPageLayout
       title="Edit Admin"
-      subtitle={account ? `Editing ${account.name}` : undefined}
+      subtitle="Change the name, role or password, or deactivate the account."
+      maxWidth="max-w-3xl"
     >
-      <div className="max-w-2xl">
-        <AsyncStateWrapper
-          loading={isLoading}
-          error={isError ? "Could not load this admin account." : null}
-        >
-          {account && (
-            <AdminAccountForm
-              mutation={mutation}
-              defaultValues={toFormValues(account)}
-              mode="edit"
-            />
-          )}
-        </AsyncStateWrapper>
-      </div>
+      <EditAdminContent id={id} currentEmail={session?.user.email ?? ""} />
     </DashboardPageLayout>
   );
 }

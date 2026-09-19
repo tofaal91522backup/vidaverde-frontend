@@ -1,5 +1,6 @@
 ﻿"use client";
 
+import { HandTranslated } from "@/components/shared/by-language";
 import { Button } from "@/components/ui/button";
 import { PasswordInput } from "@/components/shared/form-related/password-input";
 import { Input } from "@/components/ui/input";
@@ -107,7 +108,8 @@ export default function SignInForm() {
           href="/auth/registration"
           className="font-medium text-vv-accent-deep hover:text-vv-ink"
         >
-          Create an account
+          {/* Google link-er shesh-e "." boshay */}
+          <HandTranslated en="Create an account" es="Crea una cuenta" />
         </Link>
       </p>
     </form>

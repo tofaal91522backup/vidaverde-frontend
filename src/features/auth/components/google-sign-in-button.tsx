@@ -5,7 +5,11 @@ import { Spinner } from "@/components/ui/spinner";
 import { env } from "@/lib/env";
 import { useRouter } from "next/navigation";
 import Script from "next/script";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  getStoredLanguage,
+  useLanguage,
+} from "@/providers/language-provider";
 import { toast } from "sonner";
 
 /*
@@ -37,6 +41,8 @@ type GoogleIdApi = {
           shape?: "rectangular" | "pill";
           width?: number;
           logo_alignment?: "left" | "center";
+          /** Button-er bhasha — na dile browser-er bhasha */
+          locale?: string;
         },
       ) => void;
     };
@@ -87,25 +93,47 @@ export function GoogleSignInButton({
     [router],
   );
 
-  const initialise = useCallback(() => {
-    if (!clientId || !window.google || !holder.current) return;
+  // Button Google-er iframe-e — browser-er bhasha nito (Bengali browser-e Bengali)
+  const { language } = useLanguage();
 
-    window.google.accounts.id.initialize({
+  const initialise = useCallback(() => {
+    /*
+      `window.google` thaklei hobe na — Google Translate-o `window.google`
+      banay (`.translate`), tokhon `.accounts` nai. Spanish site theke link-e
+      ashle ei effect oi obosthay chole "reading 'id'" crash korto.
+    */
+    const gsi = window.google?.accounts?.id;
+    if (!clientId || !gsi || !holder.current) return;
+
+    gsi.initialize({
       client_id: clientId,
       callback: handleCredential,
     });
 
-    window.google.accounts.id.renderButton(holder.current, {
+    gsi.renderButton(holder.current, {
       theme: "outline",
       size: "large",
       shape: "pill",
       text,
       logo_alignment: "center",
+      locale: language,
       // GIS nijer iframe-e button ta ake, tai CSS diye chowra kora jay na —
       // pixel-e bolte hoy. Card-er bhitorer prostho-ta ei 360.
       width: 360,
     });
-  }, [clientId, handleCredential, text]);
+  }, [clientId, handleCredential, text, language]);
+
+  /*
+    `<Script onReady>` prothom render-er callback-tai dhore rakhe — tokhon
+    bhasha ekhono "en" (hydration), tai Spanish visitor-o English button pet.
+    Ref-e shob shomoy sheshe-r ta; ar bhasha bodlale script age-i load thakle
+    button abar aki.
+  */
+  const initialiseRef = useRef(initialise);
+  useEffect(() => {
+    initialiseRef.current = initialise;
+    initialise();
+  }, [initialise]);
 
   /*
     Client id na thakle kichu-i render hoy na. Ekta mora "Sign in with Google"
@@ -117,9 +145,14 @@ export function GoogleSignInButton({
   return (
     <div className="flex flex-col gap-3">
       <Script
-        src="https://accounts.google.com/gsi/client"
+        /*
+          `hl` na dile Google button-er lekha location dekhe bachhe — Bangladesh
+          theke English/Spanish duitai Bengali ashto. Storage theke pori, provider
+          na: hydration-e provider "en" dey, ar script ekbar-i load hoy.
+        */
+        src={`https://accounts.google.com/gsi/client?hl=${getStoredLanguage()}`}
         strategy="afterInteractive"
-        onReady={initialise}
+        onReady={() => initialiseRef.current()}
       />
 
       <div className="flex items-center gap-3">

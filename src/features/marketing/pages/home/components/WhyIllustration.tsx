@@ -79,7 +79,7 @@ function WhyIllustration() {
             className="text-[22px] font-bold text-vv-bg tracking-tight leading-none"
             translate="no"
           >
-            {language === "es" ? "4.700+" : "4,700+"}
+            {language === "es" ? "4700+" : "4,700+"}
           </div>
           <div className="font-code text-[9px] text-vv-bg/55 uppercase tracking-widest mt-1">
             Students

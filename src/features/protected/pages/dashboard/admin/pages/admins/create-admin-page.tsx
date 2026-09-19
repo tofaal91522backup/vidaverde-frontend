@@ -10,11 +10,10 @@ export default function CreateAdminPage() {
   return (
     <DashboardPageLayout
       title="New Admin"
-      subtitle="Choose Manager for normal access. Only Masters can manage administrator accounts."
+      subtitle="Give them a password here and share it with them directly."
+      maxWidth="max-w-3xl"
     >
-      <div className="max-w-2xl">
-        <AdminAccountForm mutation={mutation} mode="create" />
-      </div>
+      <AdminAccountForm mutation={mutation} mode="create" />
     </DashboardPageLayout>
   );
 }

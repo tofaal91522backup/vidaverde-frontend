@@ -7,7 +7,8 @@ export function SubmitErrorSummary({
   title = "Please fix the following:",
 }: {
   errors: SubmitErrorItem[];
-  title?: string;
+  /** Node — marketing form hate lekha Spanish `translate="no"` soho pathay */
+  title?: React.ReactNode;
 }) {
   if (!errors?.length) return null;
 

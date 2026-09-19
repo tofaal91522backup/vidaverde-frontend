@@ -1,4 +1,5 @@
 "use client";
+import { ByLanguage } from "@/components/shared/by-language";
 import { PartyPopper } from "lucide-react";
 
 import { Container } from "@/components/shared/Container";
@@ -91,7 +92,10 @@ export function NewsletterSignup() {
                           htmlFor="newsletter-name"
                           className="text-[12px] font-medium uppercase tracking-wide text-vv-ink-2"
                         >
-                          First Name
+                          {/* Google "Nombre de pila" — shoja "Nombre" */}
+                          <span translate="no">
+                            <ByLanguage en="First Name" es="Nombre" />
+                          </span>
                         </label>
                         <input
                           id="newsletter-name"
@@ -182,7 +186,10 @@ export function NewsletterSignup() {
                     "Subscribing…"
                   ) : (
                     <>
-                      Subscribe
+                      {/* Google "Suscribir" (infinitive) */}
+                      <span translate="no">
+                        <ByLanguage en="Subscribe" es="Suscríbete" />
+                      </span>
                       <ChevronRight className="h-4 w-4 shrink-0 translate-y-0.5" />
                     </>
                   )}

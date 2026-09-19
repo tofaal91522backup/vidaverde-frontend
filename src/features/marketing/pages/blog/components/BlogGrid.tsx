@@ -7,12 +7,13 @@ import {
   usePublicBlogs,
 } from "@/features/marketing/pages/blog/queries/use-public-blogs";
 import type { PublicBlogCategory } from "@/features/marketing/types/public-api.types";
+import { BLOG_CATEGORY_ES } from "@/features/marketing/pages/blog/utils/blog-category-es";
 import { cn } from "@/lib/utils";
 import { useLanguage } from "@/providers/language-provider";
 import { ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 function formatPublishedAt(value: string, language: string) {
   if (!value) return "";
@@ -43,6 +44,29 @@ export function BlogGrid() {
 
   const posts = data?.results ?? [];
 
+  /*
+    Post-er Spanish admin na likhle `?lang=es` English pathay; shob shomoy
+    `translate="no"` dile ES-e English-i theke jeto (Daniel, Otavalo…). Eki
+    page-er English ene mile — shudhu school-er nijer Spanish Google theke
+    bachai. EN-e eki query.
+  */
+  const { data: englishData } = usePublicBlogs({
+    lang: "en",
+    p: page,
+    page_size: PUBLIC_BLOGS_PAGE_SIZE,
+    category: category || undefined,
+  });
+  const englishPost = useMemo(
+    () => new Map(englishData?.results.map((post) => [post.slug, post])),
+    [englishData],
+  );
+  const own = (
+    post: (typeof posts)[number],
+    field: "title" | "excerpt",
+  ) => post[field] !== englishPost.get(post.slug)?.[field];
+  const categoryLabel = (value: string, label: string) =>
+    (language === "es" && BLOG_CATEGORY_ES[value]) || label;
+
   /** Category bodlale prothom page-e fire jete hobe. */
   const selectCategory = (next: PublicBlogCategory | "") => {
     setCategory(next);
@@ -51,7 +75,10 @@ export function BlogGrid() {
 
   const pills: { value: PublicBlogCategory | ""; label: string }[] = [
     { value: "", label: "All" },
-    ...categories.map((item) => ({ value: item.value, label: item.label })),
+    ...categories.map((item) => ({
+      value: item.value,
+      label: categoryLabel(item.value, item.label),
+    })),
   ];
 
   return (
@@ -76,7 +103,7 @@ export function BlogGrid() {
                   : "border-vv-line bg-vv-bg-warm text-vv-ink-2 hover:border-vv-ink",
               )}
             >
-              {/* "All" amader lekha, Google anubad koruk; baki gula API-r */}
+              {/* "All" amader lekha, Google anubad koruk; baki gula upore hate */}
               <span translate={pill.value ? "no" : undefined}>{pill.label}</span>
             </button>
           );
@@ -120,7 +147,9 @@ export function BlogGrid() {
                 <div className="flex flex-1 flex-col gap-3 p-6">
                   <div className="flex items-center gap-3">
                     <span className="rounded-full bg-vv-accent/20 px-2.5 py-0.5 text-[11px] font-semibold text-vv-accent-deep">
-                      <span translate="no">{post.category_label}</span>
+                      <span translate="no">
+                        {categoryLabel(post.category, post.category_label)}
+                      </span>
                     </span>
                     <span className="text-[11px] text-vv-ink-2">
                       {post.reading_time} min read
@@ -128,11 +157,15 @@ export function BlogGrid() {
                   </div>
 
                   <h2 className="text-[18px] font-semibold leading-tight tracking-[-0.01em] text-vv-ink">
-                    <span translate="no">{post.title}</span>
+                    <span translate={own(post, "title") ? "no" : undefined}>
+                      {post.title}
+                    </span>
                   </h2>
 
                   <p className="flex-1 text-[13px] leading-[1.6] text-vv-ink-2">
-                    <span translate="no">{post.excerpt}</span>
+                    <span translate={own(post, "excerpt") ? "no" : undefined}>
+                      {post.excerpt}
+                    </span>
                   </p>
 
                   <div className="mt-2 flex items-center justify-between">
