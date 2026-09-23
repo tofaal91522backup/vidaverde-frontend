@@ -16,9 +16,17 @@
 | **Section** | ✅ Round 2 complete — all 18 steps |
 | **Next step** | **Manual testing** — no code left to write. Order and checklist below |
 | **Backend commit** | `63c01f5` (see `.claude/api-sync.json`) |
-| **Last updated** | 2026-09-13 — Claude |
+| **Last updated** | 2026-09-23 — Codex |
 
 ### What was just done
+**Workflow draft artifact.** `Vida Verde Workflow Draft.html` now maps the
+actual current routes in a plain, editable HTML diagram: sign-in role redirects,
+Student portal routes, public package-to-checkout flow, where the created
+booking/session/package/invoice surface after checkout, shared Admin routes,
+and the Master-only Admin Accounts branch. It is a planning artifact only; no
+application behaviour changed. The earlier untracked `Tasker Auth Map.html`
+was left untouched.
+
 **Manual-testing fix — every `[id]` page rendered blank.** Next 16-e route-er
 `params` ekhon Promise, kintu `app/` wrapper gula `params.id` sync kore porto, tai
 `id` hoto `undefined` — query `enabled: false`-e boshe thakto ar page-e shudhu

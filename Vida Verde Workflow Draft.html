@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Vida Verde — Workflow Draft</title>
+    <style>
+      :root {
+        --ink: #15212b;
+        --muted: #586674;
+        --line: #cbd5dc;
+        --paper: #ffffff;
+        --ground: #f5f7f8;
+        --student: #0b7a83;
+        --admin: #3c70b0;
+        --master: #6b4fb8;
+        --public: #a86a12;
+      }
+
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: var(--ground);
+        color: var(--ink);
+        font: 15px/1.5 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+      main { max-width: 1440px; margin: 0 auto; padding: 40px 24px 80px; }
+      h1, h2, h3, p { margin: 0; }
+      h1 { font-size: clamp(28px, 4vw, 42px); line-height: 1.15; }
+      h2 { font-size: 21px; line-height: 1.25; }
+      .intro { margin-top: 10px; color: var(--muted); max-width: 76ch; }
+      .note { margin-top: 18px; border-left: 3px solid var(--line); padding: 10px 14px; color: var(--muted); }
+      section { margin-top: 48px; }
+      .section-copy { margin-top: 6px; color: var(--muted); }
+      .flow {
+        display: flex;
+        align-items: stretch;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 20px;
+      }
+      .flow + .flow { margin-top: 14px; }
+      .arrow {
+        align-self: center;
+        color: var(--muted);
+        font-size: 22px;
+        line-height: 1;
+        padding: 0 2px;
+      }
+      .branch {
+        width: 100%;
+        display: flex;
+        align-items: stretch;
+        flex-wrap: wrap;
+        gap: 12px;
+        padding-left: 38px;
+      }
+      .branch-label {
+        width: 100%;
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: .08em;
+        text-transform: uppercase;
+      }
+      .card {
+        width: min(278px, 100%);
+        min-height: 128px;
+        padding: 14px;
+        background: var(--paper);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+      }
+      .card .route {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--muted);
+        font: 12px/1.25 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        overflow-wrap: anywhere;
+      }
+      .card h3 { font-size: 16px; line-height: 1.25; }
+      .card p { margin-top: 6px; color: var(--muted); font-size: 13px; }
+      .student { border-color: var(--student); }
+      .admin { border-color: var(--admin); }
+      .master { border-color: var(--master); }
+      .public { border-color: var(--public); }
+      .outcome { border-style: dashed; }
+      .small { min-height: 96px; }
+      .role-tag {
+        display: inline-block;
+        margin-bottom: 7px;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: .07em;
+        text-transform: uppercase;
+      }
+      .student .role-tag { color: var(--student); }
+      .admin .role-tag { color: var(--admin); }
+      .master .role-tag { color: var(--master); }
+      .public .role-tag { color: var(--public); }
+      .legend { display: flex; flex-wrap: wrap; gap: 12px 22px; margin-top: 16px; color: var(--muted); font-size: 13px; }
+      .dot { display: inline-block; width: 10px; height: 10px; border: 1px solid currentColor; margin-right: 6px; }
+      .teacher-gap { border-style: dashed; color: var(--muted); }
+      @media (max-width: 720px) {
+        main { padding: 28px 16px 60px; }
+        .flow, .branch { flex-direction: column; align-items: stretch; }
+        .branch { padding-left: 20px; }
+        .arrow { transform: rotate(90deg); align-self: flex-start; margin-left: 26px; }
+        .card { width: 100%; }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Vida Verde — workflow draft</h1>
+      <p class="intro">
+        Plain route map from the current codebase. Every separate square has the route, page title, and what it does. There is no large box around an entire flow.
+      </p>
+      <div class="legend">
+        <span style="color: var(--public)"><i class="dot"></i>Public / booking</span>
+        <span style="color: var(--student)"><i class="dot"></i>Student</span>
+        <span style="color: var(--admin)"><i class="dot"></i>Shared Admin</span>
+        <span style="color: var(--master)"><i class="dot"></i>Master-only</span>
+      </div>
+
+      <section>
+        <h2>1. Authentication → role redirect</h2>
+        <p class="section-copy">Everyone enters through auth. The destination is decided by the role returned after successful sign-in.</p>
+        <div class="flow">
+          <article class="card public small">
+            <span class="role-tag">Public</span>
+            <span class="route">/auth/signin</span>
+            <h3>Sign in</h3>
+            <p>Email/password or Google sign-in. A session is created after success.</p>
+          </article>
+          <div class="arrow">→</div>
+          <article class="card small">
+            <span class="route">role decision</span>
+            <h3>Where should this user go?</h3>
+            <p>Student and Admin have dashboards. Admin subtype decides the extra account-management permission.</p>
+          </article>
+        </div>
+        <div class="branch">
+          <div class="branch-label">Student role</div>
+          <article class="card student small">
+            <span class="role-tag">Student</span>
+            <span class="route">/dashboard/student</span>
+            <h3>Student Portal</h3>
+            <p>Redirect destination after a student signs in.</p>
+          </article>
+          <div class="branch-label">Admin role — manager or master</div>
+          <article class="card admin small">
+            <span class="role-tag">Admin</span>
+            <span class="route">/dashboard/admin</span>
+            <h3>Admin Dashboard</h3>
+            <p>Redirect destination for both Admin Managers and Master Admins.</p>
+          </article>
+          <div class="branch-label">Teacher role — current gap</div>
+          <article class="card teacher-gap small">
+            <span class="route">/</span>
+            <h3>No teacher portal yet</h3>
+            <p>The backend can return TEACHER, but the frontend currently redirects that user to the public home page.</p>
+          </article>
+        </div>
+      </section>
+
+      <section>
+        <h2>2. Student dashboard → student pages</h2>
+        <p class="section-copy">The dashboard is the entry point. Arrows show the main lesson-management path; the other cards are the student’s account tools.</p>
+        <div class="flow">
+          <article class="card student">
+            <span class="role-tag">Student</span>
+            <span class="route">/dashboard/student</span>
+            <h3>Student Portal</h3>
+            <p>Shows next class, purchased packages, and recent invoices.</p>
+          </article>
+          <div class="arrow">→</div>
+          <article class="card student">
+            <span class="route">/dashboard/student/my-packages</span>
+            <h3>My Packages</h3>
+            <p>Shows each purchased package, remaining class balance, and the Book a class shortcut.</p>
+          </article>
+          <div class="arrow">→</div>
+          <article class="card student">
+            <span class="route">/dashboard/student/book-class</span>
+            <h3>Book a Class</h3>
+            <p>Choose eligible package → allowed teacher → available time → create session.</p>
+          </article>
+          <div class="arrow">→</div>
+          <article class="card student outcome">
+            <span class="route">/dashboard/student/calendar</span>
+            <h3>My Calendar</h3>
+            <p>The completed class booking appears here. Student can view details, join, or reschedule.</p>
+          </article>
+        </div>
+        <div class="flow">
+          <article class="card student small">
+            <span class="route">/dashboard/student/invoices</span>
+            <h3>My Invoices</h3>
+            <p>Lists payment records and lets the student download invoice PDFs.</p>
+          </article>
+          <article class="card student small">
+            <span class="route">/dashboard/student/profile</span>
+            <h3>My Profile</h3>
+            <p>Updates personal details, country, timezone, and learning information.</p>
+          </article>
+        </div>
+      </section>
+
+      <section>
+        <h2>3. Public section → complete booking flow</h2>
+        <p class="section-copy">A visitor can begin from online classes, a teacher profile, or a direct booking link. Checkout is one backend transaction: it validates the slot, charges the dummy gateway, creates the purchase/session/invoice, and creates an account only when needed.</p>
+        <div class="flow">
+          <article class="card public small">
+            <span class="role-tag">Public</span>
+            <span class="route">/online-classes<br>/online-classes/teachers/:id</span>
+            <h3>Online Classes / Teacher profile</h3>
+            <p>Visitor explores packages or chooses a teacher before booking.</p>
+          </article>
+          <div class="arrow">→</div>
+          <article class="card public">
+            <span class="route">/online-classes/book</span>
+            <h3>1. Choose Your Package</h3>
+            <p>Select an available lesson package.</p>
+          </article>
+          <div class="arrow">→</div>
+          <article class="card public">
+            <span class="route">/online-classes/book</span>
+            <h3>2. Teacher &amp; Time</h3>
+            <p>Select one teacher allowed for the package and one real open slot.</p>
+          </article>
+          <div class="arrow">→</div>
+          <article class="card public">
+            <span class="route">/online-classes/book</span>
+            <h3>3. Your Details</h3>
+            <p>Enter contact details and Spanish level. Signed-in students are prefilled.</p>
+          </article>
+          <div class="arrow">→</div>
+          <article class="card public">
+            <span class="route">/online-classes/book</span>
+            <h3>4. Payment</h3>
+            <p>Submit checkout. The current app uses a documented dummy payment method; it does not collect card details.</p>
+          </article>
+          <div class="arrow">→</div>
+          <article class="card public outcome">
+            <span class="route">/online-classes/book (success state)</span>
+            <h3>You’re booked!</h3>
+            <p>Shows teacher, package, date/time, invoice number, amount paid, and classes remaining.</p>
+          </article>
+        </div>
+        <div class="flow">
+          <article class="card public outcome small">
+            <span class="route">checkout outcome</span>
+            <h3>Student account</h3>
+            <p>If this was a new visitor, the backend creates an account and the page tells them to check email for a password.</p>
+          </article>
+          <article class="card public outcome small">
+            <span class="route">checkout outcome</span>
+            <h3>Session + package + invoice</h3>
+            <p>One lesson session, student package balance, payment record, invoice, and meeting link are created together.</p>
+          </article>
+        </div>
+      </section>
+
+      <section>
+        <h2>4. After public booking → where the result appears</h2>
+        <div class="flow">
+          <article class="card student outcome">
+            <span class="role-tag">Student — after sign in</span>
+            <span class="route">/dashboard/student</span>
+            <h3>Student Portal</h3>
+            <p>Package and next-session overview is visible here.</p>
+          </article>
+          <article class="card student outcome">
+            <span class="route">/dashboard/student/my-packages</span>
+            <h3>My Packages</h3>
+            <p>The purchased package and its remaining-class balance appear here.</p>
+          </article>
+          <article class="card student outcome">
+            <span class="route">/dashboard/student/calendar</span>
+            <h3>My Calendar</h3>
+            <p>The public booking’s session appears here with the meeting details.</p>
+          </article>
+          <article class="card student outcome">
+            <span class="route">/dashboard/student/invoices</span>
+            <h3>My Invoices</h3>
+            <p>The checkout invoice becomes downloadable here.</p>
+          </article>
+        </div>
+        <div class="flow">
+          <article class="card admin outcome">
+            <span class="role-tag">Shared Admin</span>
+            <span class="route">/dashboard/admin/bookings</span>
+            <h3>Manage Bookings</h3>
+            <p>Admins can view and export the new booking.</p>
+          </article>
+          <article class="card admin outcome">
+            <span class="route">/dashboard/admin/sessions</span>
+            <h3>Manage Sessions</h3>
+            <p>Admins can manage the created lesson session and its status.</p>
+          </article>
+          <article class="card admin outcome">
+            <span class="route">/dashboard/admin/calendar</span>
+            <h3>Admin Calendar</h3>
+            <p>The booked session is visible in the school-wide calendar.</p>
+          </article>
+          <article class="card admin outcome">
+            <span class="route">/dashboard/admin/students</span>
+            <h3>Students</h3>
+            <p>The student record can be found and its detail page shows packages and session history.</p>
+          </article>
+        </div>
+      </section>
+
+      <section>
+        <h2>5. Admin Manager and Master Admin</h2>
+        <p class="section-copy">These users share the same Admin Dashboard. Master Admin is one additional protected branch, not a second duplicate dashboard.</p>
+        <div class="flow">
+          <article class="card admin">
+            <span class="role-tag">Manager + Master</span>
+            <span class="route">/dashboard/admin</span>
+            <h3>Admin Dashboard</h3>
+            <p>Shared entry point for teachers, students, bookings, sessions, packages, blogs, calendar, testimonials, enquiries, leads, and emails.</p>
+          </article>
+          <div class="arrow">→</div>
+          <article class="card master">
+            <span class="role-tag">Master only</span>
+            <span class="route">/dashboard/admin/admins</span>
+            <h3>Admin Accounts</h3>
+            <p>List and manage the people allowed to sign in to the Admin Dashboard.</p>
+          </article>
+          <div class="arrow">→</div>
+          <article class="card master small">
+            <span class="route">/dashboard/admin/admins/create</span>
+            <h3>New Admin</h3>
+            <p>Create a Master or Manager account.</p>
+          </article>
+          <div class="arrow">→</div>
+          <article class="card master small">
+            <span class="route">/dashboard/admin/admins/:id/edit</span>
+            <h3>Edit Admin</h3>
+            <p>Change name, role, password, or active status.</p>
+          </article>
+        </div>
+        <div class="note">Manager direct navigation to <code>/dashboard/admin/admins</code> is redirected back to <code>/dashboard/admin</code>. The backend also rejects that API access.</div>
+      </section>
+    </main>
+  </body>
+</html>
