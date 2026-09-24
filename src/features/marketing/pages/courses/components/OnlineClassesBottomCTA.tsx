@@ -2,6 +2,7 @@ import { Container } from "@/components/shared/Container";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import { ByLanguage } from "@/components/shared/by-language";
+import { LowestPrice } from "@/features/marketing/components/lowest-package-price";
 
 export function OnlineClassesBottomCTA() {
   return (
@@ -18,8 +19,8 @@ export function OnlineClassesBottomCTA() {
           Ready to Start?
         </h2>
         <p className="text-vv-bg/70 text-[clamp(17px,1.4vw,20px)] leading-normal mt-3 max-w-[52ch] mx-auto m-0">
-          Your first lesson is just $12. Meet your teacher, find your level,
-          and leave with a plan — no commitment required.
+          Lessons start at just <LowestPrice />. Meet your teacher, find your
+          level, and leave with a plan — no commitment required.
         </p>
         <div className="mt-8 flex justify-center">
           <Link

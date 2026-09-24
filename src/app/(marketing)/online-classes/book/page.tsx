@@ -1,12 +1,18 @@
 import { Suspense } from "react";
 import BookRoute from "@/features/marketing/pages/book";
 import { Spinner } from "@/components/ui/spinner";
+import { getLowestPackagePrice } from "@/features/marketing/queries/get-lowest-package-price";
 
-export const metadata = {
-  title: "Book Your Spanish Lesson | Vida Verde",
-  description:
-    "Book your first one-on-one Spanish lesson with a Vida Verde teacher. Assessment + first lesson from $12. Choose your teacher, pick a time, pay securely.",
-};
+// Metadata-r dam `/public/packages/` theke; ghontay ekbar notun kore
+export const revalidate = 3600;
+
+export async function generateMetadata() {
+  const price = await getLowestPackagePrice();
+  return {
+    title: "Book Your Spanish Lesson | Vida Verde",
+    description: `Book your first one-on-one Spanish lesson with a Vida Verde teacher.${price ? ` Lessons from ${price}.` : ""} Choose your teacher, pick a time, pay securely.`,
+  };
+}
 
 export default function OnlineClassesBookPage() {
   return (

@@ -7,6 +7,7 @@ import { ChevronRight, Heart, Star, type LucideIcon } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useLanguage, type LanguageCode } from "@/providers/language-provider";
+import { FromLowestPrice } from "@/features/marketing/components/lowest-package-price";
 
 /*
   Hero-ta Google Translate-er hate chhara hoy na (`translate="no"`), hate lekha
@@ -21,7 +22,6 @@ type HeroCopy = {
   tagline: string;
   sub: string;
   book: string;
-  from: string;
   explore: string;
   trust: { label: string; sub: string }[];
 };
@@ -35,7 +35,6 @@ const COPY: Record<LanguageCode, HeroCopy> = {
     tagline: "With a Real Teacher",
     sub: "Expert Ecuadorian teachers, personalised lessons, flexible scheduling. Join from anywhere in the world.",
     book: "Book Your First Lesson",
-    from: "From $12",
     explore: "Explore all programs",
     trust: [
       { label: "Est. 1999", sub: "25+ years of teaching" },
@@ -52,7 +51,6 @@ const COPY: Record<LanguageCode, HeroCopy> = {
     tagline: "Con un profesor de verdad",
     sub: "Profesores ecuatorianos expertos, clases personalizadas y horarios flexibles. Únete desde cualquier parte del mundo.",
     book: "Reserva tu primera clase",
-    from: "Desde $12",
     explore: "Ver todos los programas",
     trust: [
       { label: "Desde 1999", sub: "Más de 25 años enseñando" },
@@ -143,7 +141,7 @@ export function AnimatedBookButton() {
               className="flex items-center justify-center"
               style={{ height: "1.25em" }}
             >
-              {copy.from}
+              <FromLowestPrice />
             </span>
             <span
               className="flex items-center justify-center"

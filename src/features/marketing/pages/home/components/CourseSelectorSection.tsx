@@ -4,6 +4,7 @@ import { MarketingButton } from "@/features/marketing/components/MarketingButton
 import { SectionHeader } from "./SectionHeader";
 import Image from "next/image";
 import { ByLanguage } from "@/components/shared/by-language";
+import { FromLowestPrice } from "@/features/marketing/components/lowest-package-price";
 
 /* ── Inline SVG illustrations ───────────────────────────────────────────── */
 
@@ -305,7 +306,8 @@ const programs = [
     label: "Online Classes",
     description:
       "One-on-one lessons with a native teacher via Google Meet. Flexible scheduling, all levels. Start today.",
-    price: "From $12",
+    // Active package-er shobcheye kom dam, API theke
+    price: <FromLowestPrice />,
     priceSub: "Book Your First Lesson",
     cta: "Get Started",
     ctaEs: "Empieza",

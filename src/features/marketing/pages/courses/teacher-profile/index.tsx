@@ -12,12 +12,26 @@ import {
   Video,
 } from "lucide-react";
 import Link from "next/link";
+import type { MouseEvent } from "react";
 import TeacherPackages from "./components/TeacherPackages";
 import {
   TeacherTag,
   useOwnSpanishBio,
 } from "@/features/marketing/components/teacher-i18n";
 import { usePublicTeacher } from "../queries/use-public-teachers";
+
+/*
+  `<Link href="#packages">` URL-e age thekei `#packages` thakle (teacher card
+  theke ashle thake) kichu-i kore na — hash bodlay na, tai scroll-o hoy na.
+  Tai click-e shoja section-e scroll.
+*/
+function scrollToPackages(event: MouseEvent<HTMLAnchorElement>) {
+  const target = document.getElementById("packages");
+  if (!target) return;
+  event.preventDefault();
+  target.scrollIntoView({ behavior: "smooth", block: "start" });
+  history.replaceState(null, "", "#packages");
+}
 
 function firstName(name: string) {
   return name.trim().split(/\s+/)[0] || name;
@@ -150,13 +164,14 @@ export default function TeacherProfilePage({ id }: { id: string }) {
               )}
 
               <div className="mt-8">
-                <Link
+                <a
                   href="#packages"
+                  onClick={scrollToPackages}
                   className="inline-flex items-center justify-center gap-2.5 rounded-full border border-vv-accent bg-vv-accent px-5.5 py-3.5 text-[15px] font-semibold tracking-[-0.005em] text-vv-accent-deep transition hover:-translate-y-px hover:bg-vv-accent-hi"
                 >
                   {bookFirstWith("Book Your First Lesson with")}
                   <ChevronRight className="h-4 w-4 shrink-0 translate-y-0.5" />
-                </Link>
+                </a>
               </div>
             </div>
           </div>
@@ -271,8 +286,9 @@ export default function TeacherProfilePage({ id }: { id: string }) {
             {bookFirstWith("Book your first lesson with")}
           </h2>
           <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <Link
+            <a
               href="#packages"
+              onClick={scrollToPackages}
               className="inline-flex items-center justify-center gap-2.5 rounded-full border border-vv-accent bg-vv-accent px-5.5 py-3.5 text-[15px] font-semibold tracking-[-0.005em] text-vv-accent-deep transition hover:-translate-y-px hover:bg-vv-accent-hi"
             >
               {/* Google "lección"; baki site "clase" */}
@@ -282,7 +298,7 @@ export default function TeacherProfilePage({ id }: { id: string }) {
                   : "Book Your First Lesson"}
               </span>
               <ChevronRight className="h-4 w-4 shrink-0 translate-y-0.5" />
-            </Link>
+            </a>
             <Link
               href="/online-classes#teachers"
               className="inline-flex items-center justify-center gap-2.5 rounded-full border border-vv-line bg-vv-bg px-5.5 py-3.5 text-[15px] font-semibold tracking-[-0.005em] text-vv-ink-2 transition hover:border-vv-ink hover:text-vv-ink"

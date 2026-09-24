@@ -55,7 +55,7 @@ export default function TeacherPackages({
   return (
     <section
       id="packages"
-      className="border-b border-vv-line bg-vv-bg py-16"
+      className="scroll-mt-20 border-b border-vv-line bg-vv-bg py-16"
       data-screen-label="Teacher Packages"
     >
       <Container>

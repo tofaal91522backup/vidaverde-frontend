@@ -3,60 +3,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import { ByLanguage } from "@/components/shared/by-language";
-import { TeacherTag } from "@/features/marketing/components/teacher-i18n";
+import { OurSchoolTeachers } from "@/features/marketing/pages/our-school/components/our-school-teachers";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-
-const teachers = [
-  {
-    name: "Ximena Argüello",
-    image: "/images/teachers/2.jpg",
-    credentials: "Universidad Central del Ecuador. Linguistics",
-    experience: "13+ years",
-    bio: "Students say class hours with Ximena pass by in a flash. She has been teaching Spanish since 2011 and is fluent in English, making her especially effective with beginners and those coming from an English-speaking background.",
-    specialisations: [
-      "Beginner-friendly",
-      "Conversational Spanish",
-      "DELE Preparation",
-    ],
-  },
-  {
-    name: "Lucía Rivadeneira",
-    image: "/images/teachers/3.jpg",
-    credentials: "PUCE Quito. Modern Languages",
-    experience: "10+ years",
-    bio: "Lucía is a language nerd who loves to teach the nuts and bolts of Spanish. She excels at helping students understand grammar intuitively and speaks at a clear, easy-to-follow pace that students find ideal for building accuracy.",
-    specialisations: [
-      "Grammar Focus",
-      "Intermediate to Advanced",
-      "Business Spanish",
-    ],
-  },
-  {
-    name: "Fernando Báez Guzmán",
-    image: "/images/teachers/4.jpg",
-    credentials: "Universidad de Cuenca. Spanish Literature",
-    experience: "20+ years",
-    bio: "Fernando is our Academic Director and master teacher. He brings structure, warmth, and deep expertise to every lesson. Students consistently rate him as the most effective and inspiring teacher they have encountered.",
-    specialisations: [
-      "All Levels",
-      "Academic Spanish",
-      "Advanced Conversation",
-    ],
-  },
-  {
-    name: "Rosa Laura García Caiza",
-    image: "/images/teachers/5.jpg",
-    credentials: "Universidad Central del Ecuador. Education",
-    experience: "33+ years",
-    bio: "Laura has taught Spanish since 1991. She has a deep passion for sharing Ecuadorian culture with her students and considers herself not just a teacher but an ambassador of her culture and her language. Her warmth and enthusiasm are immediately apparent in every session.",
-    specialisations: ["Culture & Language", "Beginners", "Travel Spanish"],
-  },
-];
 
 const schoolGallery = [
   {
@@ -508,54 +461,7 @@ export default function OurSchoolRoute() {
             </p>
           </div>
           <div className="grid gap-6 lg:grid-cols-2">
-            {teachers.map((teacher) => (
-              <article
-                key={teacher.name}
-                className="grid overflow-hidden rounded-[22px] border border-vv-line bg-vv-bg md:grid-cols-[180px_1fr]"
-              >
-                <div className="relative aspect-4/3 overflow-hidden bg-vv-bg-warm md:aspect-auto md:min-h-60">
-                  <Image
-                    src={teacher.image}
-                    alt={teacher.name}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 180px"
-                    className="object-cover"
-                    unoptimized
-                  />
-                </div>
-                <div className="flex flex-col gap-3 p-6">
-                  <div>
-                    <h3 className="text-[20px] font-semibold leading-tight tracking-[-0.02em] text-vv-ink">
-                      <span translate="no">{teacher.name}</span>
-                    </h3>
-                    <div className="mt-1 text-[12px] text-vv-ink-2">
-                      {teacher.credentials} ·{" "}
-                      {/* Google eki shonkhya kokhono "13+ años", kokhono
-                          "Más de 10 años" likhto */}
-                      <span translate="no">
-                        <ByLanguage
-                          en={teacher.experience}
-                          es={teacher.experience.replace("years", "años")}
-                        />
-                      </span>
-                    </div>
-                  </div>
-                  <p className="flex-1 text-[13px] leading-[1.6] text-vv-ink-2">
-                    {teacher.bio}
-                  </p>
-                  <div className="flex flex-wrap gap-1.5">
-                    {teacher.specialisations.map((s) => (
-                      <span
-                        key={s}
-                        className="rounded-full border border-vv-line bg-vv-bg-warm px-2 py-0.5 text-[11px] text-vv-ink-2"
-                      >
-                        <TeacherTag tag={s} />
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </article>
-            ))}
+            <OurSchoolTeachers />
             <div className="col-span-full flex justify-center mt-10">
               <Link
                 href="/online-classes/book"

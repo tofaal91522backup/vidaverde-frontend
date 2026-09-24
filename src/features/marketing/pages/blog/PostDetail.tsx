@@ -1,4 +1,5 @@
 import { ByLanguage } from "@/components/shared/by-language";
+import { LowestPrice } from "@/features/marketing/components/lowest-package-price";
 import { Container } from "@/components/shared/Container";
 import { DEFAULT_PUBLIC_LANGUAGE } from "@/features/marketing/constants/public-api";
 import type { PublicBlogDetail } from "@/features/marketing/types/public-api.types";
@@ -142,8 +143,9 @@ export function PostDetail({
               Ready to put this into practice?
             </h3>
             <p className="text-[14px] text-vv-ink-2 mb-4">
-              Book your first lesson with a Vida Verde teacher for just $12.
-              includes a level assessment and personalised learning plan.
+              Book your first lesson with a Vida Verde teacher, from just{" "}
+              <LowestPrice />. Includes a level assessment and personalised
+              learning plan.
             </p>
             <Link
               href="/online-classes/book"
