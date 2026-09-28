@@ -13,12 +13,19 @@
 | | |
 |---|---|
 | **Active plan** | [docs/plan/ROUND2_INDEX.md](docs/plan/ROUND2_INDEX.md) |
-| **Section** | ✅ Round 2 complete — marketing hamburger account follow-up complete |
-| **Next step** | **Manual testing** — include signed-out and signed-in mobile hamburger states |
+| **Section** | ✅ Round 2 complete — mobile navbar auth fallback complete |
+| **Next step** | **Manual testing** — include the mobile navbar before/after session resolution, plus signed-out and signed-in hamburger states |
 | **Backend commit** | `63c01f5` (see `.claude/api-sync.json`) |
 | **Last updated** | 2026-09-28 — Codex |
 
 ### What was just done
+**Mobile navbar Sign in fallback.** The header-side mobile Sign in control had
+been removed when account actions moved into the hamburger, so it could never
+appear below the 1100px breakpoint. It is restored beside the hamburger for
+signed-out visitors and while the async session lookup is pending. If that
+lookup fails, the provider now safely becomes signed-out rather than remaining
+`undefined` and hiding every auth action. `npx tsc --noEmit` passes.
+
 **Marketing hamburger auth/account section.** Signed-out visitors now have both
 Sign in and Sign up actions in the mobile hamburger. After sign-in or
 registration, that same menu instead shows an Account card with the person’s

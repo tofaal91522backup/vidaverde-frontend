@@ -54,6 +54,10 @@ export function MarketingNavProvider({
     let cancelled = false;
     readNavbarUser().then((value) => {
       if (!cancelled) setUser(value ?? null);
+    }).catch(() => {
+      // Session check fail korleo public navigation atke thakbe na. Logged-out
+      // state-i safe fallback; protected page-e proxy abar nijer guard chalabe.
+      if (!cancelled) setUser(null);
     });
     return () => {
       cancelled = true;

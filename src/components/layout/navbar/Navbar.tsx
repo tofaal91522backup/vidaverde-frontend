@@ -221,6 +221,23 @@ export default function Navbar() {
           )}
         </div>
 
+        {/*
+          Mobile navbar-e Sign in always reachable. `user` prothome undefined
+          thake, session check shesh howar opekkhay; tai `!user` diye loading
+          state-o CTA dekhi. Signed-in hole result ashlei CTA shore jay, ar
+          tar account controls hamburger-er bhitore thake.
+        */}
+        <div className="ml-auto mr-2 hidden max-[1100px]:flex items-center">
+          {!user && (
+            <Link
+              href="/auth/signin"
+              className="inline-flex items-center rounded-full border border-vv-line bg-vv-bg-warm px-3.5 py-2 text-[13px] font-semibold text-vv-ink transition-colors hover:bg-vv-line/40"
+            >
+              <span translate="no">{t("nav.signin")}</span>
+            </Link>
+          )}
+        </div>
+
         {/* Mobile hamburger */}
         <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
           <SheetTrigger asChild>
