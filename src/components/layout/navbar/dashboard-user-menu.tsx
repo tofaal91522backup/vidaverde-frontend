@@ -34,7 +34,7 @@ import { useState } from "react";
  * Load fail korle chhobi-ta shore jay ar nicher `AvatarFallback` (initials)
  * beriye ase.
  */
-function ProfileAvatar({
+export function ProfileAvatar({
   src,
   name,
   className,
@@ -70,6 +70,84 @@ export type DashboardUser = {
   email?: string;
   role?: string;
 };
+
+type MobileMenuAccountSectionProps = {
+  user: DashboardUser;
+  onSignedOut?: () => void;
+  onNavigate?: () => void;
+  labels: {
+    account: string;
+    profile: string;
+    dashboard: string;
+    signOut: string;
+  };
+};
+
+/**
+ * Marketing site-er hamburger-er account block.
+ *
+ * Mobile-e avatar dropdown-ta header-er pashe chhilo, tai user-er account
+ * options menu-te thakar expectation-er shathe milto na. Ei section-ta sheet-er
+ * footer-e account-er porichoy ar shob primary action ekjaygay rakhe.
+ */
+export function MobileMenuAccountSection({
+  user,
+  onSignedOut,
+  onNavigate,
+  labels,
+}: MobileMenuAccountSectionProps) {
+  const isStudent = user.role === "STUDENT";
+  const { data: profileData } = useStudentProfile(isStudent);
+  const profile = profileData?.profile;
+  const name = profile?.name || user.name || "Account";
+  const email = profile?.email || user.email || "";
+  const avatarUrl = profile?.profile_img_url || undefined;
+  const href = dashboardHref(user) ?? "/";
+
+  return (
+    <section
+      aria-label={labels.account}
+      className="rounded-[18px] border border-vv-line bg-vv-bg-warm p-3"
+    >
+      <div className="flex items-center gap-3 px-1 pb-3">
+        <ProfileAvatar src={avatarUrl} name={name} className="size-11" />
+        <div className="min-w-0">
+          <p className="truncate text-sm font-semibold text-vv-ink">{name}</p>
+          {email && (
+            <p className="truncate text-xs text-vv-muted">{email}</p>
+          )}
+        </div>
+      </div>
+
+      <div className="border-t border-vv-line pt-2">
+        {isStudent && (
+          <Link
+            href="/dashboard/student/profile"
+            onClick={onNavigate}
+            className="flex h-10 items-center gap-2 rounded-[10px] px-2 text-sm font-medium text-vv-ink transition-colors hover:bg-vv-line/40"
+          >
+            <UserRound className="size-4" aria-hidden="true" />
+            {labels.profile}
+          </Link>
+        )}
+        <Link
+          href={href}
+          onClick={onNavigate}
+          className="flex h-10 items-center gap-2 rounded-[10px] px-2 text-sm font-medium text-vv-ink transition-colors hover:bg-vv-line/40"
+        >
+          <LayoutDashboard className="size-4" aria-hidden="true" />
+          {labels.dashboard}
+        </Link>
+        <SignOut
+          label={labels.signOut}
+          onSignedOut={onSignedOut}
+          variant="ghost"
+          className="h-10 gap-2 rounded-[10px] px-2 text-destructive hover:bg-destructive/10 hover:text-destructive"
+        />
+      </div>
+    </section>
+  );
+}
 
 /**
  * Navbar-er dan pashe user menu.

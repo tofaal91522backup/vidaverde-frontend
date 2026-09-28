@@ -39,6 +39,9 @@ export type TranslationKey =
   | "nav.login"
   | "nav.signup"
   | "nav.signin"
+  | "nav.account"
+  | "nav.profile"
+  | "nav.signout"
   | "cta.bookFirstLesson"
   | "language.label"
   | "footer.description"
@@ -81,6 +84,9 @@ const translations: Record<LanguageCode, Record<TranslationKey, string>> = {
     "nav.login": "Login",
     "nav.signup": "Sign up",
     "nav.signin": "Sign in",
+    "nav.account": "Account",
+    "nav.profile": "My profile",
+    "nav.signout": "Sign out",
     "cta.bookFirstLesson": "Book Your First Lesson",
     "language.label": "Language",
     "footer.description":
@@ -124,6 +130,9 @@ const translations: Record<LanguageCode, Record<TranslationKey, string>> = {
     "nav.login": "Iniciar sesión",
     "nav.signup": "Registrarse",
     "nav.signin": "Iniciar sesión",
+    "nav.account": "Cuenta",
+    "nav.profile": "Mi perfil",
+    "nav.signout": "Cerrar sesión",
     "cta.bookFirstLesson": "Reserva tu Primera Clase",
     "language.label": "Idioma",
     "footer.description":

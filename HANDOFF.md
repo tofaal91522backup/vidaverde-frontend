@@ -13,12 +13,20 @@
 | | |
 |---|---|
 | **Active plan** | [docs/plan/ROUND2_INDEX.md](docs/plan/ROUND2_INDEX.md) |
-| **Section** | ✅ Round 2 complete — all 18 steps |
-| **Next step** | **Manual testing** — no code left to write. Order and checklist below |
+| **Section** | ✅ Round 2 complete — marketing hamburger account follow-up complete |
+| **Next step** | **Manual testing** — include signed-out and signed-in mobile hamburger states |
 | **Backend commit** | `63c01f5` (see `.claude/api-sync.json`) |
-| **Last updated** | 2026-09-23 — Codex |
+| **Last updated** | 2026-09-28 — Codex |
 
 ### What was just done
+**Marketing hamburger auth/account section.** Signed-out visitors now have both
+Sign in and Sign up actions in the mobile hamburger. After sign-in or
+registration, that same menu instead shows an Account card with the person’s
+name and email, My profile (students), Dashboard, and Sign out. The small
+header-side mobile avatar/sign-in control was removed so the hamburger is the
+single, predictable place for mobile account actions. English and Spanish
+labels were added; `npx tsc --noEmit` passes.
+
 **Workflow draft artifact.** `Vida Verde Workflow Draft.html` now maps the
 actual current routes in a plain, editable HTML diagram: sign-in role redirects,
 Student portal routes, public package-to-checkout flow, where the created
