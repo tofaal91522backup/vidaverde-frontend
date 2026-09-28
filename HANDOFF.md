@@ -13,12 +13,18 @@
 | | |
 |---|---|
 | **Active plan** | [docs/plan/ROUND2_INDEX.md](docs/plan/ROUND2_INDEX.md) |
-| **Section** | ✅ Round 2 complete — mobile navbar auth fallback complete |
-| **Next step** | **Manual testing** — include the mobile navbar before/after session resolution, plus signed-out and signed-in hamburger states |
+| **Section** | ✅ Round 2 complete — mobile navbar account control follow-up complete |
+| **Next step** | **Manual testing** — include a refresh while signed in, plus signed-out and signed-in navbar/hamburger states |
 | **Backend commit** | `63c01f5` (see `.claude/api-sync.json`) |
 | **Last updated** | 2026-09-28 — Codex |
 
 ### What was just done
+**Mobile navbar profile control.** The avatar account dropdown is once again
+shown beside the hamburger after the session resolves to a signed-in user; the
+full profile card remains inside the hamburger. The header now waits for that
+session result before it renders Sign in, avoiding a misleading Sign in flash
+when a logged-in visitor refreshes a marketing page. `npx tsc --noEmit` passes.
+
 **Mobile navbar Sign in fallback.** The header-side mobile Sign in control had
 been removed when account actions moved into the hamburger, so it could never
 appear below the 1100px breakpoint. It is restored beside the hamburger for

@@ -222,19 +222,27 @@ export default function Navbar() {
         </div>
 
         {/*
-          Mobile navbar-e Sign in always reachable. `user` prothome undefined
-          thake, session check shesh howar opekkhay; tai `!user` diye loading
-          state-o CTA dekhi. Signed-in hole result ashlei CTA shore jay, ar
-          tar account controls hamburger-er bhitore thake.
+          Session check cholakale (`undefined`) kono auth CTA dekhi na — na
+          hole logged-in visitor refresh-e Sign in flash dekhto. Check shesh-e
+          signed-out hole Sign in, signed-in hole avatar menu. Account-er full
+          section hamburger-eo thake, tai duto jaigay-i shohoje paoa jay.
         */}
         <div className="ml-auto mr-2 hidden max-[1100px]:flex items-center">
-          {!user && (
+          {user === null && (
             <Link
               href="/auth/signin"
               className="inline-flex items-center rounded-full border border-vv-line bg-vv-bg-warm px-3.5 py-2 text-[13px] font-semibold text-vv-ink transition-colors hover:bg-vv-line/40"
             >
               <span translate="no">{t("nav.signin")}</span>
             </Link>
+          )}
+
+          {user && (
+            <DashboardUserMenu
+              user={user}
+              inDashboard={false}
+              onSignedOut={clearUser}
+            />
           )}
         </div>
 
