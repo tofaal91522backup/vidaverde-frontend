@@ -247,10 +247,15 @@ type TranslateWindow = Window & {
 };
 
 /**
- * Marketing layout-e ekbar mount hoy. Dashboard ar auth page-e na — oigulo
- * English-i thake.
+ * Marketing, auth ar dashboard — protita layout-e ekbar mount hoy.
+ *
+ * `curtain` marketing/auth-e chalu: page anubad na howa porjonto lukano thake,
+ * tai Spanish visitor English jhilik dekhe na. Dashboard-e bondho — oikhane
+ * `<main>`-er bhitore navbar ar sidebar trigger-o boshe, tai proti navigation-e
+ * 1.5s porjonto oigula lukiye gele dashboard-ta bhanga mone hoto. Dashboard-er
+ * lekha emniteo skeleton-er por ase, tai lukanor moto English jhilik nai.
  */
-export function GoogleTranslate() {
+export function GoogleTranslate({ curtain = true }: { curtain?: boolean } = {}) {
   const pathname = usePathname();
 
   useEffect(() => watchForMissedTranslations(), []);
@@ -261,6 +266,7 @@ export function GoogleTranslate() {
     (Google age thekei chalu, `translated-ltr` ache) ekhane boshai.
   */
   useLayoutEffect(() => {
+    if (!curtain) return;
     if (getStoredLanguage() !== "es") return;
     const root = document.documentElement;
     const fullLoad = root.classList.contains("vv-translating");
@@ -273,7 +279,7 @@ export function GoogleTranslate() {
 
     const reveal = revealWhenTranslated(fullLoad ? 2500 : 1500);
     return reveal;
-  }, [pathname]);
+  }, [pathname, curtain]);
 
   useEffect(() => {
     /*

@@ -50,6 +50,31 @@ function isGroupItem(item: SidebarNavItem): item is SidebarGroupItem {
   return Array.isArray((item as SidebarGroupItem).items);
 }
 
+/*
+  Sidebar item-er chehara — hover/active pill-tao ei maap-e.
+
+  shadcn-er default `h-8 p-2`, ar label-ta `truncate`. English-e chole jeto,
+  kintu ES-e label gula lomba: "Email Outbox" hoy "Bandeja de salida de correo
+  electrónico". Truncate hole "Bandeja de salida d…" — kon page sheta bojha
+  jeto na. Tai:
+
+  - `h-auto min-h-9` — lekha duiline hole button ta bare, kate na.
+  - `py-2 px-2.5` — pill-ta lekha-r gaye lege chilo; ektu bosar jayga.
+  - `leading-snug` — duiline hole line duita kachakachi thake.
+  - span-er `truncate` ulto kore deওয়া (`!`) — group item-er label span-e ashe,
+    single item-er bare text-e; duitai ek rokom dekhate hobe.
+
+  Collapsed (icon-only) sidebar-e shadcn-er `size-8! p-2!` important, tai
+  oikhane ekhono age-r moto-i.
+*/
+const labelWraps =
+  "[&>span:last-child]:whitespace-normal! [&>span:last-child]:overflow-visible! [&>span:last-child]:text-clip!";
+
+const itemClass = `h-auto min-h-9 px-2.5 py-2 leading-snug ${labelWraps}`;
+
+/** Sub item nested, tai ektu chhoto — kintu lekha ek-i bhabe wrap kore. */
+const subItemClass = `h-auto min-h-8 px-2 py-1.5 leading-snug ${labelWraps}`;
+
 /** Ei url ta ekhonkar page ta dhore rakhe kina — nije ba tar kono child. */
 function covers(pathname: string, url: string) {
   return pathname === url || pathname.startsWith(`${url}/`);
@@ -114,8 +139,11 @@ export default function AppSidebarItems({
               <SidebarMenuItem>
                 <CollapsibleTrigger asChild>
                   {/* Group bondho thakleও bojha jay bhitore active page ache */}
-                  <SidebarMenuButton className="group" isActive={groupHasActive}>
-                    <Icon className="mr-2 h-4 w-4" />
+                  <SidebarMenuButton
+                    className={`group ${itemClass}`}
+                    isActive={groupHasActive}
+                  >
+                    <Icon className="h-4 w-4" />
                     <span>{item.title}</span>
                     <ChevronRight className="ml-auto h-4 w-4 transition-transform group-data-[state=open]:rotate-90" />
                   </SidebarMenuButton>
@@ -130,6 +158,7 @@ export default function AppSidebarItems({
                         <SidebarMenuSubItem key={sub.url}>
                           <SidebarMenuSubButton
                             asChild
+                            className={subItemClass}
                             isActive={sub.url === activeUrl}
                           >
                             <Link
@@ -138,7 +167,7 @@ export default function AppSidebarItems({
                                 sub.url === activeUrl ? "page" : undefined
                               }
                             >
-                              <SubIcon className="mr-2 h-4 w-4" />
+                              <SubIcon className="h-4 w-4" />
                               {sub.title}
                             </Link>
                           </SidebarMenuSubButton>
@@ -156,9 +185,13 @@ export default function AppSidebarItems({
         const Icon = item.icon;
         return (
           <SidebarMenuItem key={item.url}>
-            <SidebarMenuButton asChild isActive={item.url === activeUrl}>
+            <SidebarMenuButton
+              asChild
+              className={itemClass}
+              isActive={item.url === activeUrl}
+            >
               <Link href={item.url} aria-current={item.url === activeUrl ? "page" : undefined}>
-                <Icon className="mr-2 h-4 w-4" />
+                <Icon className="h-4 w-4" />
                 {item.title}
               </Link>
             </SidebarMenuButton>

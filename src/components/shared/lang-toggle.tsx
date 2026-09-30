@@ -11,12 +11,41 @@ const options: { code: LanguageCode; label: string }[] = [
   { code: "es", label: "ES" },
 ];
 
-export function LangToggle({ className = "" }: { className?: string }) {
+/*
+  Duita chehara, ek-i switch.
+
+  Marketing site-er nijer `vv-*` token gula shudhu light — dashboard-e dark mode
+  ache, tai oikhane oi rong bosale dark background-e ekta shada pill jhulto. Tai
+  dashboard-er variant shadcn-er token use kore ar theme-er shathe bodlay.
+*/
+const tones = {
+  marketing: {
+    wrap: "border-vv-line bg-vv-bg p-1",
+    button: "h-8 min-w-10 px-3 text-[12px]",
+    active: "bg-vv-ink text-vv-bg",
+    idle: "text-vv-ink-2 hover:bg-vv-bg-warm hover:text-vv-ink",
+  },
+  dashboard: {
+    wrap: "border-border bg-background p-0.5",
+    button: "h-7 min-w-9 px-2.5 text-[11px]",
+    active: "bg-primary text-primary-foreground",
+    idle: "text-muted-foreground hover:bg-muted hover:text-foreground",
+  },
+} as const;
+
+export function LangToggle({
+  className = "",
+  variant = "marketing",
+}: {
+  className?: string;
+  variant?: keyof typeof tones;
+}) {
   const { language, setLanguage } = useLanguage();
+  const tone = tones[variant];
 
   return (
     <div
-      className={`inline-flex items-center rounded-full border border-vv-line bg-vv-bg p-1 ${className}`}
+      className={`inline-flex items-center rounded-full border ${tone.wrap} ${className}`}
       aria-label="Select language"
       translate="no"
     >
@@ -38,10 +67,8 @@ export function LangToggle({ className = "" }: { className?: string }) {
               setLanguage(option.code);
               switchSiteLanguage(option.code);
             }}
-            className={`h-8 min-w-10 rounded-full px-3 text-[12px] font-semibold transition-[background,color] ${
-              isActive
-                ? "bg-vv-ink text-vv-bg"
-                : "text-vv-ink-2 hover:bg-vv-bg-warm hover:text-vv-ink"
+            className={`rounded-full font-semibold transition-[background,color] ${tone.button} ${
+              isActive ? tone.active : tone.idle
             }`}
           >
             {option.label}

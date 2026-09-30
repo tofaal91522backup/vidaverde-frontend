@@ -1,3 +1,4 @@
+import { LangToggle } from "@/components/shared/lang-toggle";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import {
   DashboardUserMenu,
@@ -23,10 +24,17 @@ const DashboardNavbar = ({ user }: { user?: DashboardUser }) => {
         <SidebarTrigger className="-ml-1" />
       </div>
 
-      {/* Age ekhane khali ekta "Sign out" button chilo ar baki account-er kaj
-          sidebar footer-e chilo — duita jayga bhag kora chilo. Ekhon shob ek
-          menu-te. */}
-      <DashboardUserMenu user={user} />
+      <div className="flex items-center gap-2">
+        {/* Marketing site-er navbar-e ja ache, dashboard-eo tai — role nirbishese.
+            Bhasha localStorage-e, tai site ar dashboard-er modhye ghurleo ek-i
+            thake. */}
+        <LangToggle variant="dashboard" />
+
+        {/* Age ekhane khali ekta "Sign out" button chilo ar baki account-er kaj
+            sidebar footer-e chilo — duita jayga bhag kora chilo. Ekhon shob ek
+            menu-te. */}
+        <DashboardUserMenu user={user} />
+      </div>
     </header>
   );
 };

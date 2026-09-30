@@ -1,7 +1,7 @@
 import DashboardNavbar from "@/components/layout/navbar/dashboard-navbar";
 import type { DashboardUser } from "@/components/layout/navbar/dashboard-user-menu";
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import { NoTranslateDocument } from "@/components/shared/no-translate-document";
+import { GoogleTranslate } from "@/components/shared/google-translate";
 
 
 export default function DashboardShell({
@@ -25,8 +25,13 @@ export default function DashboardShell({
     //   } as React.CSSProperties
     // }
     >
-      {/* Dashboard English-i — Spanish site theke ashleo Google anubad korbe na */}
-      <NoTranslateDocument />
+      {/*
+        Dashboard-o ekhon EN/ES — navbar-er LangToggle ei widget-ta-i chalay.
+        Age ekhane `<NoTranslateDocument />` chilo ar dashboard English-i thakto;
+        student ba admin-er kachhe sheta ordhek onubad kora site-er moto lagto.
+        `curtain={false}` — karon ekhane `<main>`-er bhitore navbar-o ache.
+      */}
+      <GoogleTranslate curtain={false} />
       {sidebar}
 
       {/* `dashboard-scope` — globals.css-er `section { padding: 96px 0 }` marketing-er

@@ -13,12 +13,39 @@
 | | |
 |---|---|
 | **Active plan** | [docs/plan/ROUND2_INDEX.md](docs/plan/ROUND2_INDEX.md) |
-| **Section** | ✅ Round 2 complete — mobile navbar account control follow-up complete |
-| **Next step** | **Manual testing** — include a refresh while signed in, plus signed-out and signed-in navbar/hamburger states |
+| **Section** | ✅ Round 2 complete — dashboard EN/ES switch added (⚠️ uncommitted) |
+| **Next step** | **Manual testing** — dashboard EN/ES as student and as admin, plus the signed-out/signed-in navbar & hamburger states |
 | **Backend commit** | `63c01f5` (see `.claude/api-sync.json`) |
-| **Last updated** | 2026-09-28 — Codex |
+| **Last updated** | 2026-09-30 — Claude Code |
 
 ### What was just done
+**Dashboard EN/ES switch — uncommitted in the working tree.** The dashboard was
+deliberately English-only: `DashboardShell` mounted `<NoTranslateDocument />`,
+which put `translate="no"` on `<html>` so Google Translate skipped it. That is
+reversed. The shell now mounts `<GoogleTranslate curtain={false} />` and the
+dashboard navbar carries a `<LangToggle variant="dashboard" />`, so every role
+(student and admin both go through the same `DashboardNavbar`) can switch
+language, and the choice is the same `vv-language` localStorage value the
+marketing site uses — switching in one place holds in the other.
+
+Two supporting changes: `LangToggle` grew a `dashboard` variant, because its
+`vv-*` colours are light-only and would have hung a white pill in the
+dashboard's dark mode; and `GoogleTranslate` grew a `curtain` prop. The curtain
+stays on for marketing/auth and is off in the dashboard — the shell's navbar and
+sidebar trigger live *inside* `<main>`, so the existing curtain would have
+hidden them for up to 1.5s on every navigation. `/profile` (outside the shell)
+got the same treatment. `no-translate-document.tsx` is deleted; nothing
+referenced it any more. `npx tsc --noEmit`, `eslint` and `npm run build` pass.
+
+**Sidebar room for Spanish labels.** With the dashboard translated, shadcn's
+`h-8` + `truncate` sidebar item cut "Bandeja de salida de correo electrónico"
+down to "Bandeja de salida d…". Items in `app-sidebar-items.tsx` now grow to fit
+(`h-auto min-h-9`), wrap instead of truncating, and carry a little more padding
+so the hover/active pill is not flush against the text. The icons' duplicate
+`mr-2` was dropped — `gap-2` was already spacing them, and the reclaimed 8px
+keeps more labels on one line. Collapsed icon-only mode is untouched, since
+shadcn's `size-8!`/`p-2!` there are important.
+
 **Mobile navbar profile control.** The avatar account dropdown is once again
 shown beside the hamburger after the session resolves to a signed-in user; the
 full profile card remains inside the hamburger. The header now waits for that

@@ -56,7 +56,10 @@ export default function RootLayout({
           Spanish visitor-er jonno page anubad na howa porjonto lukano — paint-er
           agei (React-er age). Khole `GoogleTranslate` (dekho google-translate.tsx);
           2.5s failsafe — Google block hole English dekhabe, khali page na.
-          Dashboard/profile English-i, oikhane na.
+
+          Dashboard ar /profile-e curtain nai (niche path check). Oigulo ekhon
+          onubad hoy, kintu shell-er navbar ar sidebar `<main>`-er bhitore —
+          lukiye dile bhanga lagto, ar lekha emniteo skeleton-er por ase.
         */}
         {/*
           Inline — stylesheet load howar age-i paint hoy, tai rule-ta ekhanei.
